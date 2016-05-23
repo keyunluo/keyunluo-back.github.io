@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Elasticsearch入门学习(2)——服务URL | 浮舟沧海</title>
+    <title>Elasticsearch入门学习(2)——服务URL | 流光</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
-    <meta name="author" content="流光">
+    <meta name="author" content="浮舟沧海">
     
 
     <meta name="keywords" content="elasticsearch服务URL">
@@ -15,7 +15,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Elasticsearch入门学习(2)——服务URL">
 <meta property="og:url" content="http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html">
-<meta property="og:site_name" content="浮舟沧海">
+<meta property="og:site_name" content="流光">
 <meta property="og:description" content="ElasticSearchelasticsearch 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。">
 <meta property="og:updated_time" content="2016-05-23T08:44:45.438Z">
 <meta name="twitter:card" content="summary">
@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="ElasticSearchelasticsearch 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。">
 
     
-    <link rel="alternative" href="/atom.xml" title="浮舟沧海" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="流光" type="application/atom+xml">
     
     
     <link rel="icon" href="/img/favicon.ico">
@@ -41,11 +41,11 @@
 <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/dudu.png" alt="浮舟沧海" title="浮舟沧海"/></a>
+				<a href="/"><img src="/img/dudu.png" alt="流光" title="流光"/></a>
 			</div>
 			
 			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="浮舟沧海">浮舟沧海</a></h1>
+				<h1 class="site-name"><a href="/" title="流光">流光</a></h1>
 				<h2 class="blog-motto">他跑啊跑啊，只为追上那个曾经被寄予厚望的自己</h2>
 			</div>
 			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
@@ -62,13 +62,15 @@
 					
 						<li><a href="/guestbook">留言</a></li>
 					
+						<li><a href="/resource/share">资源</a></li>
+					
 						<li><a href="/about">关于</a></li>
 					
 					<li>
  					
-						<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+						<form class="search">
 							<label>Search</label>
-						<input name="s" type="hidden" value= 10307725173850298000 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+						<input type="text" id="ts-search-input" name="q" size="30" placeholder="搜索"><br>
 						</form>
 					
 					</li>
@@ -87,7 +89,7 @@
   </h1>
   <p class="article-author">By
        
-		<a href="/about" title="流光" target="_blank" itemprop="author">流光</a>
+		<a href="/about" title="浮舟沧海" target="_blank" itemprop="author">浮舟沧海</a>
 		
   <p class="article-time">
     <time datetime="2016-04-11T11:42:53.000Z" itemprop="datePublished"> 发表于 2016-04-11</time>
@@ -356,7 +358,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html" data-title="Elasticsearch入门学习(2)——服务URL | 浮舟沧海" data-tsina="streamerset" class="share clearfix">
+	  <div data-url="http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html" data-title="Elasticsearch入门学习(2)——服务URL | 流光" data-tsina="streamerset" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -474,8 +476,8 @@
 	
 	
 	<section class="info">
-		<p> 与内心深处的你对话，问问自己，想要怎样的人生 <br/>
-			生活中的痛苦很大程度上在于现实中的自己远比想象中的弱小</p>
+		<p> 间歇性踌躇满志 <br/>
+			持续性混吃等死</p>
 	</section>
 	 
 	<div class="social-font" class="clearfix">
@@ -504,7 +506,7 @@
 		<p class="copyright">
 		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
 		
-		<a href="/about" target="_blank" title="流光">流光</a>
+		<a href="/about" target="_blank" title="浮舟沧海">浮舟沧海</a>
 		
 		
 		</p>
@@ -516,7 +518,7 @@
 <script src="/js/jquery.qrcode-0.12.0.min.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function(){ 
+$(document).ready(function(){
   $('.navbar').click(function(){
     $('header nav').toggleClass('shownav');
   });
@@ -539,7 +541,7 @@ $(document).ready(function(){
   });
   o.click(function(){
     o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');
     m.removeClass('moveMain');
   });
   $(window).scroll(function(){
@@ -547,7 +549,7 @@ $(document).ready(function(){
   });
   
   $(window).resize(function(){
-    getSize(); 
+    getSize();
     if (myWidth >= 1024) {
       $('header nav').removeClass('shownav');
     }else{
@@ -556,14 +558,14 @@ $(document).ready(function(){
       o.css('display', 'none');
       
       $('#toc.toc-aside').css('display', 'none');
-        
+      
     }
   });
 });
 </script>
 
 <script type="text/javascript">
-$(document).ready(function(){ 
+$(document).ready(function(){
   var ai = $('.article-content>iframe'),
       ae = $('.article-content>embed'),
       t  = $('#toc'),
@@ -590,7 +592,7 @@ $(document).ready(function(){
 
 
 <script type="text/javascript">
-$(document).ready(function(){ 
+$(document).ready(function(){
   var $this = $('.share'),
       url = $this.attr('data-url'),
       encodedUrl = encodeURIComponent(url),
@@ -603,7 +605,6 @@ $(document).ready(function(){
   '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
   '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
   '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
   '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
   '<span title="Share to"></span>'
   ].join('');
@@ -635,7 +636,7 @@ $(document).ready(function(){
   $('.article-share-qrcode').hover(function(){}, function(){
       $('.hoverqrcode').hide();
   });
-});   
+});
 </script>
 
 
@@ -647,10 +648,10 @@ $(document).ready(function(){
     ds.type = 'text/javascript';ds.async = true;
     ds.src = '//static.duoshuo.com/embed.js';
     ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
+    (document.getElementsByTagName('head')[0]
     || document.getElementsByTagName('body')[0]).appendChild(ds);
   })();
-</script> 
+</script>
 
 
 
@@ -661,7 +662,7 @@ $(document).ready(function(){
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){ 
+$(document).ready(function(){
   $('.article-content').each(function(i){
     $(this).find('img').each(function(){
       if ($(this).parent().hasClass('fancybox')) return;
@@ -676,7 +677,7 @@ $(document).ready(function(){
   if($.fancybox){
     $('.fancybox').fancybox();
   }
-}); 
+});
 </script>
 
 
@@ -715,6 +716,23 @@ var _hmt = _hmt || [];
 <!-- MathJax End -->
 
 <!-- Tiny_search Begin -->
+
+<script>
+var option = {
+  engineKey: 'eb4726b2a0ea6b569b79'
+};
+(function(w,d,t,u,n,s,e){
+  s = d.createElement(t);
+  s.src = u;
+  s.async = 1;
+  w[n] = function(r){
+    w[n].opts = r;
+  };
+  e = d.getElementsByTagName(t)[0];
+  e.parentNode.insertBefore(s, e);
+})(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+_ts(option);
+</script>
 
 <!-- Tiny_search End -->
 

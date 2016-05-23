@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>浮舟沧海</title>
+  <title>流光</title>
   <subtitle>他跑啊跑啊，只为追上那个曾经被寄予厚望的自己</subtitle>
   <link href="/atom.xml" rel="self"/>
   
@@ -9,7 +9,7 @@
   <id>http://keyunluo.github.io/</id>
   
   <author>
-    <name>流光</name>
+    <name>浮舟沧海</name>
     
   </author>
   
