@@ -59,8 +59,8 @@ creative_commons: none
 
 #### Author information
 author:
-  intro_line1:  "间歇性踌躇满志"
-  intro_line2:  "持续性混吃等死"
+  intro_line1:  "不要轻言你是在为谁付出和牺牲，其实所有的付出和牺牲最终的受益人都是自己。"
+  intro_line2:  "人生是一场与任何人无关的独自的修行，这是一条悲欣交集的道路，路的尽头一定有礼物，就看你配不配得到。"
   weibo: streamerset     ## e.g. wuchong1014 or 2176287895 for http://weibo.com/2176287895
   weibo_verifier:    ## e.g. b3593ceb Your weibo-show widget verifier ,if you use weibo-show it is needed.
   tsina: streamerset     ## e.g. 2176287895  Your weibo ID,It will be used in share button.
