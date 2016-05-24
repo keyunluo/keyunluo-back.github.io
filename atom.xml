@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-05-23T08:44:45.438Z</updated>
+  <updated>2016-05-24T05:22:29.290Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -20,10 +20,10 @@
     <link href="http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html"/>
     <id>http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html</id>
     <published>2016-04-11T11:42:53.000Z</published>
-    <updated>2016-05-23T08:44:45.438Z</updated>
+    <updated>2016-05-24T05:22:29.290Z</updated>
     
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt;elasticsearch 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt; elasticsearch 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;与Elasticsearch交互&quot;&gt;&lt;a href=&quot;#与Elasticsearch交互&quot; class=&quot;headerlink&quot; title=&quot;与Elasticsearch交互&quot;&gt;&lt;/a&gt;与Elasticsearch交互&lt;/h2&gt;&lt;p&gt;如何与Elasticsearch交互取决于你是否使用Java，可以分为&lt;code&gt;Java API交互&lt;/code&gt;和&lt;code&gt;基于HTTP协议，以JSON为数据交互格式的RESTful API&lt;/code&gt;两种，本文主要讲解使用RESTful API，通过9200端口的与Elasticsearch进行通信。使用java则端口为9300.&lt;/p&gt;
@@ -258,7 +258,7 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt;elasticsearch 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt; elasticsearch 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。&lt;/p&gt;
 &lt;/blockquote&gt;
     
     </summary>
