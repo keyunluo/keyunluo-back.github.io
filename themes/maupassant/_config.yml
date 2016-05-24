@@ -1,13 +1,13 @@
 fancybox: true ## If you want to use fancybox please set the value to true.
 duoshuo: streamers ## Your duoshuo_shortname, e.g. username
 disqus: ## Your disqus_shortname, e.g. username
-google_search: true ## Use Google search, true/false.
-baidu_search: ## Use Baidu search, true/false.
+google_search:  ## Use Google search, true/false.
+baidu_search:   ## Use Baidu search, true/false.
 swiftype: ## Your swiftype_key, e.g. m7b11ZrsT8Me7gzApciT
 tinysou: ## Your tinysou_key, e.g. 4ac092ad8d749fdc6293
-self_search: ## Use a jQuery-based local search engine, true/false.
-google_analytics: ## Your Google Analytics tracking id, e.g. UA-42425684-2
-baidu_analytics: ## Your Baidu Analytics tracking id, e.g. 8006843039519956000
+self_search:  true ## Use a jQuery-based local search engine, true/false.
+google_analytics: UA-76470846-1  ## Your Google Analytics tracking id, e.g. UA-42425684-2
+baidu_analytics: e6e27a9120b7717768eb1368c323c565 ## Your Baidu Analytics tracking id, e.g. 8006843039519956000
 shareto: true ## If you want to use the share button please set the value to true.
 busuanzi: true ## If you want to use Busuanzi page views please set the value to true.
 
@@ -18,12 +18,15 @@ menu:
   - page: archive
     directory: archives/
     icon: fa-archive
-  - page: about
-    directory: about/
-    icon: fa-user
   - page: guestbook
     directory: guestbook/
     icon: fa-comments
+  - page: resource
+    directory: resource/share
+    icon: fa-download
+  - page: about
+    directory: about/
+    icon: fa-user
   - page: rss
     directory: atom.xml
     icon: fa-rss
@@ -36,21 +39,17 @@ widgets: ## Six widgets in sidebar provided: search, category, tag, recent_posts
   - recent_comments
   - links
 
+search:
+  - path: search.xml
+  - field: post
+
 links:
-  - title: 虎嗅网
-    url: http://www.huxiu.com/index.php
-  - title: InfoQ
-    url: http://www.infoq.com/cn/
-  - title: 伯乐在线
-    url: http://blog.jobbole.com/
-  - title: Matrix67
-    url: http://www.matrix67.com/blog/
-  - title: 拿客
-    url: http://coderknock.com/
+  - title: 个人算法练习
+    url: http://keyunluo.github.io/algorithm
 
 # Static files
 js: js
 css: css
 
 # Theme version
-version: 0.0.0
+version: 1.0.0

@@ -68,6 +68,16 @@ links:
     url: http://www.example2.com/
   - title: site-name3
     url: http://www.example3.com/
+    
+timeline:
+  - num: 1
+    word: 2014/06/12-Start
+  - num: 2
+    word: 2014/11/29-XXX
+  - num: 3
+    word: 2015/02/18-DDD
+  - num: 4
+    word: More
 
 # Static files
 js: js
@@ -91,6 +101,7 @@ version: 0.0.0
 - menu - Customize your menu of pages here, just follow the format of existied items. Don't forget to create corresponding folders inlcuding `index.md` in `source` folder to ensure the pages will correctly display. [FontAwesome](http://fontawesome.io) icon fonts have been integrated, and you can choose other icons you like [here](http://fontawesome.io/icons/) and use them according to the instruction.
 - widgets - Choose and arrange the widgets in sidebar here.
 - links - Edit your blogroll here.
+- timeline - Show a timeline of the website by setting `layout: timeline` of a page.
 - Static files - Static files directory, for convenience of CDN usage.
 - Theme version - For automatic refresh of static files on CDN.
 
@@ -120,6 +131,35 @@ highlight:
   tab_replace:
 ```
 
+#### Math Equation
+Add
+```YAML
+mathjax: true
+```
+in Hexo's `_config.yml`.
+
+In the post which you would like to use math equation, add `mathjax: true` in the `front-matter`. For example:
+
+```YAML
+title: Test Math
+date: 2016-04-05 14:16:00
+categories: math
+mathjax: true
+---
+```
+The default math delimiters are `$$...$$` and `\\[...\\]` for displayed mathematics,
+and `$...$` and `\\(...\\)` for in-line mathematics.
+
+However, if your post contains dollar signs (`$`), and they appear often in non-mathematical parts, in other words, you want to use `$` as dollar sign not inline math delimiter, please add
+
+```YAML
+mathjax2: true
+```
+in Hexo's `_config.yml` instead of `mathjax: true`. Correspondingly, add `mathjax2: true` to the `front-matter` of the post in which
+you would like to use math equation.
+
+See the [example](http://zhongpu.info/2016/05/06/Mathjax%20and%20Hexo/).
+
 #### Languages
 Seven languages are available for this theme currently: Simplified Chinese (zh-CN), Traditional Chinese (zh-TW), English (en), French (fr-FR), German (de-DE), Korean (ko) and Spanish (es-ES). Contributions of translating to other languages will be highly appreciated.
 
@@ -127,6 +167,9 @@ Seven languages are available for this theme currently: Simplified Chinese (zh-C
 - Check whether your Terminal's current directory is in hexo's root directory which contains `source/`, `themes/`, etc.
 
 - If you have any trouble in using this theme, please feel free to open an [issue](https://github.com/tufu9441/maupassant-hexo/issues).
+
+## Browser Support
+![Imgur](http://i.imgur.com/iO9L5ty.png)
 
 ## Contributing
 All kinds of contributions (enhancements, new features, documentation & code improvements, issues & bugs reporting) are welcome.

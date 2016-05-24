@@ -9,7 +9,7 @@ keywords: elasticsearch服务URL
 ---
 
 
->**ElasticSearch**elasticsearch 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。
+>**ElasticSearch** elasticsearch 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。
 
 <!-- more -->
 

@@ -2,18 +2,21 @@ extends base
 - var current_title = page.title || tag.name || category.name || site.title
 
 block title
-  title= config.title + ' | ' + config.subtitle
+  if config.subtitle
+    title= config.title + ' | ' + config.subtitle
+  else
+    title= config.title
 block content
 
   for post in page.posts.toArray()
     .post
       h2.post-title
         include _partial/helpers
-        a(href=url_for(post.path), class='post-title-link')
+        a(href=url_for(post.path))
           +title(post)
       .post-meta= post.date.format(config.date_format)
       if theme.duoshuo
-        a.ds-thread-count(data-thread-key=post.path, href=url_for(post.path) + '#ds-thread')
+        a.ds-thread-count(data-thread-key=post.path, href=url_for(post.path) + '#comments')
       if theme.disqus
         a.disqus-comment-count(data-disqus-identifier=post.path, href=url_for(post.path) + '#disqus_thread')
       if post.description
