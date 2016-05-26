@@ -7,7 +7,7 @@ swiftype: ## Your swiftype_key, e.g. m7b11ZrsT8Me7gzApciT
 tinysou: ## Your tinysou_key, e.g. 4ac092ad8d749fdc6293
 self_search:  true ## Use a jQuery-based local search engine, true/false.
 google_analytics: UA-76470846-1  ## Your Google Analytics tracking id, e.g. UA-42425684-2
-baidu_analytics: e6e27a9120b7717768eb1368c323c565 ## Your Baidu Analytics tracking id, e.g. 8006843039519956000
+baidu_analytics: 945b21807344d0260f24455bbd82dfea ## Your Baidu Analytics tracking id, e.g. 8006843039519956000
 shareto: true ## If you want to use the share button please set the value to true.
 busuanzi: true ## If you want to use Busuanzi page views please set the value to true.
 
