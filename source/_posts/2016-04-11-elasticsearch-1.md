@@ -145,7 +145,7 @@ keywords: elasticsearch2.2安装
 `head`插件可以很方便的查询数据和监控集群健康状况，下面以`head`插件安装为例，介绍下ES2.x下插件安装的一般步骤。
 
 进入`/opt/bigdata/elasticsearch`目录，运行`bin/plugin install mobz/elasticsearch-head`, 下载完成后，访问网址`http://server:9200/_plugin/head/`，便可以看到如下界面，说明安装成功。
-![head](../../images/blog/2016-04/elasticsearch-head.png)
+![head](/resource/blog/2016-04/elasticsearch-head.png)
 
 
 插件可以分为核心插件和非核心插件，核心插件是官方提供的，可以直接安装，例如`bin/plugin install analysis-icu`，这样就会下载合适的版本安装到Elasticsearch中。非核心插件可以是官方提供的，也可以是社区提供的，可以从官方，Maven或者GitHub中下载安装：`bin/plugin install [org]/[user|component]/[version]`。
