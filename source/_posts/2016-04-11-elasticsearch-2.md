@@ -3,13 +3,13 @@ title: "Elasticsearch入门学习(2)——服务URL"
 date: 2016-04-11 19:42:53 +0800
 comments: true
 toc: true
-categories: elasticsearch
+categories: Elasticsearch
 tags : [elasticsearch , 大数据]
 keywords: elasticsearch服务URL
 ---
 
 
->**ElasticSearch** elasticsearch 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。
+>**ElasticSearch** 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。
 
 <!-- more -->
 

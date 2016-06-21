@@ -22,23 +22,24 @@ blockquote p {
 <hr id="line"/>
 
 # 个人信息
-==========
+==================
 
-> 网&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名: streamers <br/>
+> 姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：仇人太多，不方便透露 <br/>
+> 网&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名: streamers <br/>
 > 只收发邮件的邮箱: <a href="mailto:streamer.ky@foxmail.com">streamer.ky@foxmail.com</a> <br/>
-> 经常转发的微博: <a href="http://weibo.com/streamerset">@streamer_ky</a>  <br/>
+> 经常转发的微&nbsp;博: <a href="http://weibo.com/streamerset">@streamer_ky</a>  <br/>
 > 偶尔写几笔的博客: <a href="http://keyunluo.github.io/">keyunluo</a>  <br/>
-> 写几行烂代码的GitHub：[Streamers](https://github.com/streamers)  <br/>
-> 赚赚积分的CSDN: [浮舟沧海](http://my.csdn.net/l1505624)  <br/>
-> 目前职业: 在读研究生，方向为分布式计算，大数据  <br/>
-> 信&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;仰: 通往卓越的路只有一条，就是静下心来积累 <br/>
+> 写的几行&nbsp;烂代码：[KeYunLuo](https://github.com/keyunluo)  <br/>
+> 赚赚积分的&nbsp;CSDN: [浮舟沧海](http://my.csdn.net/l1505624)  <br/>
+> 目&nbsp;前&nbsp;职&nbsp;&nbsp;业: 在读研究生，方向为分布式计算，大数据  <br/>
+> 信&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;仰: 通往卓越的路只有一条，就是静下心来积累 <br/>
 
 ---
 
 <hr id="line"/>
 
 # 心灵鸡汤
-==========
+==================
 
 > **关于困难**: <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;15岁觉得游泳难,放弃游泳,到20岁遇到一个你喜欢的人约你去游泳,你只好说"我不会喔"。15岁觉得英文难,放弃英文,22岁出现一个很棒但要会英文的工作，你只好说"我不会喔"。打磨自己的过程是疼痛的,但最终能塑造一个更好的自己。**有些事情,当我们年轻的时候无法懂得,当我们懂得的时候已经不再年轻**。<br />
 

@@ -3,11 +3,14 @@ title: "Git 常用命令整理"
 date: 2016-03-07 16:05:36 +0800
 comments: true
 toc: true
-categories: git
+categories: Git
 tags : git
 keywords: git
 ---
 
+>**Git**简单记录Git的常用方法，以备查询。
+
+<!-- more -->
 
 
 ## 初始化配置

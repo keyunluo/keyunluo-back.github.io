@@ -83,7 +83,7 @@ feed:
   limit: 20
   hub:
 ## Themes: https://hexo.io/themes/
-#theme:  jacman
+#theme:  indigo
 theme: maupassant
 stylus:
   compress: true
