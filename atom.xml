@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-05-24T05:22:29.290Z</updated>
+  <updated>2016-07-08T14:14:54.000Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -16,14 +16,333 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>TODO-LIST</title>
+    <link href="http://keyunluo.github.io/2016/06/30/2016-06-30-todolist.html"/>
+    <id>http://keyunluo.github.io/2016/06/30/2016-06-30-todolist.html</id>
+    <published>2016-06-30T01:44:38.000Z</published>
+    <updated>2016-07-08T14:14:54.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;2016-07月-2017-01月待做事项&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;基础算法&quot;&gt;&lt;a href=&quot;#基础算法&quot; class=&quot;headerlink&quot; title=&quot;基础算法&quot;&gt;&lt;/a&gt;基础算法&lt;/h2&gt;&lt;p&gt;参考书籍:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Data Structures and Algorithms in C++, 2nd edition&lt;/em&gt; Michael T. Goodrich等著&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Data Structures and Algorithms in Java, 6th Edition&lt;/em&gt; James Aspnes著&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Data Structures and Algorithms in Python&lt;/em&gt; Michael T. Goodrich等著&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Data Structures and Algorithms with JavaScript&lt;/em&gt; Michael McMillan等著&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;算法导论&lt;/em&gt; 第三版，殷建平 等译&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;快学Scala&lt;/em&gt;  高宇翔 译&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;学习课题:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 数组&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 链表&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 栈和队列&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 树&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 堆和优先队列&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 哈希&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 搜索树&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 集合&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; STL&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 排序&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 图论&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 动态规划&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;分布式系统&quot;&gt;&lt;a href=&quot;#分布式系统&quot; class=&quot;headerlink&quot; title=&quot;分布式系统&quot;&gt;&lt;/a&gt;分布式系统&lt;/h2&gt;&lt;p&gt;参考书籍:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;大规模分布式系统架构与设计实战&lt;/em&gt; 彭渊编 著&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Notes on Theory of Distributed Systems&lt;/em&gt; James Aspnes 著&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;学习课题:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 分布式并行计算的原理与实践&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 分布式协调的实现&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 分布式缓存的实现&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 消息队列的实现&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 分布式文件系统的实现&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 分布式作业调度平台的实现&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Message passing&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Shared memory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;PRML&quot;&gt;&lt;a href=&quot;#PRML&quot; class=&quot;headerlink&quot; title=&quot;PRML&quot;&gt;&lt;/a&gt;PRML&lt;/h2&gt;&lt;p&gt;参考书籍:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;统计学习方法&lt;/em&gt; 李航编著&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;模式识别与机器学习&lt;/em&gt; 马春鹏  译&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Machine Learning A Bayesian and Optimization Perspective&lt;/em&gt; Sergios Theodoridis 编著&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;学习课题:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 统计学习方法&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 感知机&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; k近邻&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 朴素贝叶斯&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 决策树&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 逻辑回归与最大熵模型&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 支持向量机&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 提升方法&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; EM算法及其推广&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 隐马尔科夫模型&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 条件随机场&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 概率分布&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 回归的线性模型&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 分类的线性模型&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 神经网络&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 核方法&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 稀疏核机&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 图模型&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 混合模型和EM&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 近似推断&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 采样方法&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 连续潜在变量&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 顺序数据&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 组合模型&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;大数据&quot;&gt;&lt;a href=&quot;#大数据&quot; class=&quot;headerlink&quot; title=&quot;大数据&quot;&gt;&lt;/a&gt;大数据&lt;/h2&gt;&lt;p&gt;参考书籍:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Data algorithms recipes for scaling up with hadoop and spark&lt;/em&gt; Mahmoud Parsian编著&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Mastering Apache Spark&lt;/em&gt; Mike Frampton编著&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;HBase- The Definitive Guide, 2nd Edition&lt;/em&gt; Lars George编著&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Apache Mahout Beyond MapReduce&lt;/em&gt; Dmitriy Lyubimov等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;学习课题:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;[✔]&lt;/em&gt; Secondary Sort&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Top 10 List&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Left Outer Join&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Order Inversion&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Moving Average&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Market Basket Analysis&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Common Friends&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Recommendation Engines Using MapReduce&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Content-Based Recommendation: Movies&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Smarter Email Marketing with the Markov Model&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; K-Means Clustering&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; k-Nearest Neighbors&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Naive Bayes&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Sentiment Analysis&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Finding, Counting, and Listing All Triangles in Large Graphs&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; K-mer Counting&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; DNA Sequencing&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Cox Regression&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Cochran-Armitage Test for Trend&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Allelic Frequency&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; The T-Test&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Pearson Correlation&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; DNA Base Count&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; RNA Sequencing&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Gene Aggregation&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Linear Regression&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; MapReduce and Monoids&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; The Small Files Problem&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Huge Cache for MapReduce&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; The Bloom Filter&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; HBase Client API: The Basics&lt;ul&gt;
+&lt;li&gt;[x] Data Types and Hierarchy&lt;/li&gt;
+&lt;li&gt;[x] CRUD Operations&lt;/li&gt;
+&lt;li&gt;[x] Batch Operations&lt;/li&gt;
+&lt;li&gt;[x] Scans&lt;/li&gt;
+&lt;li&gt;[x] Miscellaneous Features&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; HBase Client API: Advanced Features&lt;ul&gt;
+&lt;li&gt;[x] Filters&lt;/li&gt;
+&lt;li&gt;[x] Counters&lt;/li&gt;
+&lt;li&gt;[x] Coprocessors&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; HBase Client API: Administrative Features&lt;ul&gt;
+&lt;li&gt;[x] Schema Definition&lt;/li&gt;
+&lt;li&gt;[x] HBaseAdmin&lt;/li&gt;
+&lt;li&gt;[x] ReplicationAdmin&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; HBase Available Clients&lt;ul&gt;
+&lt;li&gt;[x] Gateway Clients&lt;/li&gt;
+&lt;li&gt;[x] FrameworkClients&lt;/li&gt;
+&lt;li&gt;[x] Shell&lt;/li&gt;
+&lt;li&gt;[x] Web-based UI&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Mahout’s in-core algebra&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Mahout’s Distributed Algebra&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Stochastic SVD&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Stochastic PCA&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Data Sketching with Bahmani sketch&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Naive Bayes Example&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;系统技能&quot;&gt;&lt;a href=&quot;#系统技能&quot; class=&quot;headerlink&quot; title=&quot;系统技能&quot;&gt;&lt;/a&gt;系统技能&lt;/h2&gt;&lt;h3 id=&quot;LaTeX&quot;&gt;&lt;a href=&quot;#LaTeX&quot; class=&quot;headerlink&quot; title=&quot;LaTeX&quot;&gt;&lt;/a&gt;LaTeX&lt;/h3&gt;&lt;p&gt;参考书籍:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;LaTeX入门&lt;/strong&gt; 刘海洋编著&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 文本组织&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 自动化工具&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 数学公式&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 图表&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 幻灯片&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;Shell&quot;&gt;&lt;a href=&quot;#Shell&quot; class=&quot;headerlink&quot; title=&quot;Shell&quot;&gt;&lt;/a&gt;Shell&lt;/h3&gt;&lt;p&gt;参考书籍:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Linux Shell脚本攻略&lt;/strong&gt;  第二版，门佳译&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Linux Shell 编程艺术&lt;/strong&gt;  张泽编著&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; shell基础&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 常用命令&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 文件操作&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 文本处理&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Web网页&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 压缩归档&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 网络设置&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 磁盘管理&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 进程管理&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; IO重定向&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 函数编写&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 正则表达式&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 脚本调试&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;2016-07月-2017-01月待做事项&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="TODO" scheme="http://keyunluo.github.io/categories/TODO/"/>
+    
+    
+      <category term="待做事项" scheme="http://keyunluo.github.io/tags/%E5%BE%85%E5%81%9A%E4%BA%8B%E9%A1%B9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>正当毕业时</title>
+    <link href="http://keyunluo.github.io/2016/06/21/2016-06-21-graduation.html"/>
+    <id>http://keyunluo.github.io/2016/06/21/2016-06-21-graduation.html</id>
+    <published>2016-06-21T07:16:53.000Z</published>
+    <updated>2016-06-21T14:32:16.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;就算新的开始依旧美丽，而此刻的心情也必然暗淡。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=&quot;330&quot; height=&quot;86&quot; src=&quot;http://music.163.com/outchain/player?type=2&amp;id=109864&amp;auto=0&amp;height=66&quot;&gt;&lt;/iframe&gt;
+
+
+
+&lt;h2 id=&quot;时光缝隙里的记忆&quot;&gt;&lt;a href=&quot;#时光缝隙里的记忆&quot; class=&quot;headerlink&quot; title=&quot;时光缝隙里的记忆&quot;&gt;&lt;/a&gt;时光缝隙里的记忆&lt;/h2&gt;&lt;p&gt;&amp;nbsp;&amp;nbsp;紧张的毕业答辩之后，整个人顿时轻松了不少，收拾好东西和搬家后，不知不觉间感到些许失落和无所事事。毕业典礼上全院三百多人集体煽情了一把，毕竟这一别很有可能好多人将很难再见上一面。毕业典礼一结束，顺便吃了个学校发的毕业纪念餐，意味着这将是在这个学校的最后一天了。虽然宿舍有些破旧并且并不宽敞，但我依然记得刚开始入学时第一次躺在这张床上的感觉。我是个随遇而安的人，也许在中学时代的羁畔太多，刚入大学的我对这一切新鲜的生活感到异常兴奋和温馨。而如今，生活了四年，严格来说大概三年多一点的日子，依然感到舒适。此时此刻，用白驹过隙、时光荏苒这些曾经“为赋新词强说愁”的词汇来表达此时的心境却感到越发真实贴切。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;曾经以为，我的大学不值得留恋，既没有轰轰烈烈的爱情，也没有叱咤风云的专业技能，日子过得平平淡淡甚至很Dull，所谓的星辰大海依旧虚无缥缈，总体的感觉就是不会玩，也不会学习。然而一路走来，细细回想，在稀里糊涂地走过的四年的青春时光里，越想经历的越多，感悟的更多，到头来才发现虽然没有他人过的精彩，却也在不断地探索前行，在发现一个更大的世界的旅程中磕磕碰碰，所有惯常的令人感动的场景也会让我潸然。&lt;/p&gt;
+&lt;h2 id=&quot;间歇性踌躇满志，持续性混吃等死&quot;&gt;&lt;a href=&quot;#间歇性踌躇满志，持续性混吃等死&quot; class=&quot;headerlink&quot; title=&quot;间歇性踌躇满志，持续性混吃等死&quot;&gt;&lt;/a&gt;间歇性踌躇满志，持续性混吃等死&lt;/h2&gt;&lt;p&gt;&amp;nbsp;&amp;nbsp;那时虽然天气炎热，寝室也没有空调，却满腔热情，早起早睡，精神饱满，而后渐渐地越起越晚，到大一下基本上就有起床困难症了。刚入大学那会，由于上的课主要是数学基础课，做习题花费的时间比较多，总体感觉不是很吃力，但也不是特别用功钻研，并且对程序设计语言课不太感兴趣，归结起来就是很浮躁，这种状态一直延续了整个大学四年。大二时开始上专业基础课，各种实验课搞得我很是困倦，几门硬件相关的课程学习得很是吃力，这也直接导致我对这一方向失去兴趣，后来又参加科创，学习一些数字图像处理的课程，课外花了不少时间，但总感觉收获有限，这一年算过得比较失败。大三开始真正上专业课，对学科开始有了一个初步的了解，下学期就开始考虑保研和实习的事，开始是准备去华为这样的公司实习的，奈何内推时填写实习时间三个月后直接没有了下文，一个偶然的机会就去了中科院电子所苏州研究院，这样暑假就奔波于北京、苏州了。大四开学后就面临着保研的问题，机试不是很好，但凭着底子厚还是有惊无险的获得了保研资格，继续读书。在苏州实习四个月后，十一月底回到学校，后来联系导师，导师让过去做毕设，这样大四后半年就在南大度过的，直到毕设论文答辩前夕。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;归结起来，大学前三年几乎宅在学校，大四到处奔波，从北京、苏州往返于南京，整个大学的状态是“三分钟热度”，“浅尝辄止”成为常态。每次都想在图书馆坐下来好好学习一番，可是不到半小时便注意力分散，看一些技术书籍，常痴迷于各种计算机新技术，常纠结于各种术语之间，最喜欢瞎折腾，装系统编译软件，浪费了好多时间，做不了极客，却积攒了不少吹牛的资本。大学里面的专业课就从来没有认真上过，平时也没有什么预习复习，基本上上课听多少就多少，考前开始认真预习刷试卷，保持着一个伪学霸的状态，成绩不是最好，但也说得过去。&lt;/p&gt;
+&lt;h2 id=&quot;努力学习的意义&quot;&gt;&lt;a href=&quot;#努力学习的意义&quot; class=&quot;headerlink&quot; title=&quot;努力学习的意义&quot;&gt;&lt;/a&gt;努力学习的意义&lt;/h2&gt;&lt;p&gt;&amp;nbsp;&amp;nbsp;&lt;code&gt;谁没有不切实际的梦想，把未来的人生精彩的幻想 常常一个人悄悄的描绘，欣赏那种假设的辉煌&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;以前一直没有认真考虑过这个问题，直到大四这一年东奔西走，渐渐领悟到努力学习的意义。努力和有钱的意义差不多，让你在未来的生活中有更多选择。努力的最大动力，在于你可以选择你想要的生活，而不是被生活选择。努力就意味着掌握了主动权，掌握了改变自身状态的能力，在一个更大的世界里过自己想要的生活。为此，现在的我懊悔不已，既然学习技术，就要做那个最厉害的一个，大多数人都很弱，你只要稍微精通某些方面的知识就会脱颖而出。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;我一直认为我很幸运，从上大学一开始就进入计算机软件培优班到科创获得一等奖，从保研到南大到最终毕设成绩优秀。虽然我不是足够优秀，但运气不会太差。我坚信越努力，越幸运，积极乐观，用努力学习使当初的选择变得正确，一直做个幸运的人。&lt;/p&gt;
+&lt;h2 id=&quot;向着自由的未来前行&quot;&gt;&lt;a href=&quot;#向着自由的未来前行&quot; class=&quot;headerlink&quot; title=&quot;向着自由的未来前行&quot;&gt;&lt;/a&gt;向着自由的未来前行&lt;/h2&gt;&lt;p&gt;&amp;nbsp;&amp;nbsp;&lt;code&gt;我飞出五行之内三界之外，我心头无牵无挂无限自在，我知道生亦何苦死亦何哀，如来如不来一样死性不改。&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;大学毕业，既是终点，也是起点，以后的路也越走越宽。现在的我，希望自己能放下手机，能做一个努力上进，能掌控我的未来的人。积极锻炼身体，保持一个健康的体魄；玩就玩个痛快，尽情释放自我；读书做事不贪图多，唯求精益求精。通往卓越的路只有一条，就是静下心来积累，天下武功，唯快不破。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;我不想被束缚，我希望自由自在的活着，我想看世间最美的一切。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;祝所有在意我的人和我在意的人，人生的道路越走越宽，后会有期。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/resource/blog/2016-06/学位证.jpg&quot; alt=&quot;学位照&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;就算新的开始依旧美丽，而此刻的心情也必然暗淡。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Life" scheme="http://keyunluo.github.io/categories/Life/"/>
+    
+    
+      <category term="生活" scheme="http://keyunluo.github.io/tags/%E7%94%9F%E6%B4%BB/"/>
+    
+      <category term="毕业" scheme="http://keyunluo.github.io/tags/%E6%AF%95%E4%B8%9A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Elasticsearch入门学习(3)——查询</title>
+    <link href="http://keyunluo.github.io/2016/05/27/2016-05-27-elasticsearch-3.html"/>
+    <id>http://keyunluo.github.io/2016/05/27/2016-05-27-elasticsearch-3.html</id>
+    <published>2016-05-27T07:16:53.000Z</published>
+    <updated>2016-06-21T14:32:16.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt;提供了丰富的REST风格的API来满足不同的场景需求，本篇介绍Elasticsearch的查询相关的基础和高级操作。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;检索文档&quot;&gt;&lt;a href=&quot;#检索文档&quot; class=&quot;headerlink&quot; title=&quot;检索文档&quot;&gt;&lt;/a&gt;检索文档&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;通过ID直接查询&lt;/strong&gt;
+执行&lt;code&gt;HTTP GET&lt;/code&gt;请求，通过&lt;code&gt;索引-类型-ID&lt;/code&gt;便可以返回原始的JSON格式的文档，原始的JSON文档在&lt;code&gt;_source&lt;/code&gt;字段里。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dislab@server:~$ curl -XGET &lt;span class=&quot;string&quot;&gt;&#39;http://server:9200/gps_data/20160205/3201000061%2010:20:54?pretty&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_index&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;gps_data&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_type&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;20160205&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_id&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;3201000061 10:20:54&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_version&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;found&quot;&lt;/span&gt; : true,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_source&quot;&lt;/span&gt; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;ZDBH&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;3201000061&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;ROWKEY&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;3201000061 10:20:54&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;GPSSJ&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;2016-02-05 10:20:54&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;XLMC&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;80路&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意到&lt;code&gt;ID&lt;/code&gt;字段插入了&lt;code&gt;%20&lt;/code&gt;的字段，这是因为&lt;code&gt;curl&lt;/code&gt;命令中不能有空格，若有空格则必须替换掉。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;简单搜索&lt;/strong&gt;
+简单搜索不需要指定&lt;code&gt;ID&lt;/code&gt;,需要指定查询字符串，格式为&lt;code&gt;_search?q=key:value&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dislab@server:~$ curl -XGET  http://server:9200/gps_data/20160205/_search?q=GPSSJ:“2016-02-05 10:20:54”&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;took&quot;:695,&quot;timed_out&quot;:false,&quot;_shards&quot;:&amp;#123;&quot;total&quot;:5,&quot;successful&quot;:5,&quot;failed&quot;:0&amp;#125;,&quot;hits&quot;:&amp;#123;&quot;total&quot;:10093722,&quot;max_score&quot;:0.3666257,&quot;hits&quot;:[&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201000158 05:05:05&quot;,&quot;_score&quot;:0.3666257,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201000158&quot;,&quot;ROWKEY&quot;:&quot;3201000158 05:05:05&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 05:05:05&quot;,&quot;XLMC&quot;:&quot;13路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201200106 05:05:05&quot;,&quot;_score&quot;:0.3666257,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201200106&quot;,&quot;ROWKEY&quot;:&quot;3201200106 05:05:05&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 05:05:05&quot;,&quot;XLMC&quot;:&quot;170路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201200154 05:05:05&quot;,&quot;_score&quot;:0.3666257,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201200154&quot;,&quot;ROWKEY&quot;:&quot;3201200154 05:05:05&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 05:05:05&quot;,&quot;XLMC&quot;:&quot;125路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201200126 05:05:05&quot;,&quot;_score&quot;:0.3666257,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201200126&quot;,&quot;ROWKEY&quot;:&quot;3201200126 05:05:05&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 05:05:05&quot;,&quot;XLMC&quot;:&quot;8路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300190 05:05:05&quot;,&quot;_score&quot;:0.3666257,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300190&quot;,&quot;ROWKEY&quot;:&quot;3201300190 05:05:05&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 05:05:05&quot;,&quot;XLMC&quot;:&quot;48路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300169 05:05:05&quot;,&quot;_score&quot;:0.3666257,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300169&quot;,&quot;ROWKEY&quot;:&quot;3201300169 05:05:05&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 05:05:05&quot;,&quot;XLMC&quot;:&quot;48路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100008 05:05:05&quot;,&quot;_score&quot;:0.3666257,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100008&quot;,&quot;ROWKEY&quot;:&quot;3201100008 05:05:05&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 05:05:05&quot;,&quot;XLMC&quot;:&quot;306路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201000166 05:05:05&quot;,&quot;_score&quot;:0.36632675,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201000166&quot;,&quot;ROWKEY&quot;:&quot;3201000166 05:05:05&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 05:05:05&quot;,&quot;XLMC&quot;:&quot;13路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201000179 05:05:05&quot;,&quot;_score&quot;:0.36632675,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201000179&quot;,&quot;ROWKEY&quot;:&quot;3201000179 05:05:05&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 05:05:05&quot;,&quot;XLMC&quot;:&quot;13路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201000019 05:05:05&quot;,&quot;_score&quot;:0.36632675,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201000019&quot;,&quot;ROWKEY&quot;:&quot;3201000019 05:05:05&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 05:05:05&quot;,&quot;XLMC&quot;:&quot;166路&quot;&amp;#125;&amp;#125;]&amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;DSL语句查询&lt;/strong&gt;
+DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现，可以构建复杂的查询。
+上述查询可写成如下的&lt;code&gt;DSL&lt;/code&gt;查询方式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dislab@server:~$ curl -XGET &#39;http://server:9200/gps_data/20160205/_search&#39; -d &#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;     &quot;query&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;         &quot;match&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;             &quot;GPSSJ&quot; : &quot;2016-02-05 10:20:54&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;         &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;     &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt; &#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;took&quot;:854,&quot;timed_out&quot;:false,&quot;_shards&quot;:&amp;#123;&quot;total&quot;:5,&quot;successful&quot;:5,&quot;failed&quot;:0&amp;#125;,&quot;hits&quot;:&amp;#123;&quot;total&quot;:10093722,&quot;max_score&quot;:2.7672434,&quot;hits&quot;:[&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201200801 20:54:10&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201200801&quot;,&quot;ROWKEY&quot;:&quot;3201200801 20:54:10&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 20:54:10&quot;,&quot;XLMC&quot;:&quot;170路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300063 20:54:10&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300063&quot;,&quot;ROWKEY&quot;:&quot;3201300063 20:54:10&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 20:54:10&quot;,&quot;XLMC&quot;:&quot;D9路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201000027 20:10:54&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201000027&quot;,&quot;ROWKEY&quot;:&quot;3201000027 20:10:54&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 20:10:54&quot;,&quot;XLMC&quot;:&quot;7路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201000193 10:54:20&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201000193&quot;,&quot;ROWKEY&quot;:&quot;3201000193 10:54:20&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 10:54:20&quot;,&quot;XLMC&quot;:&quot;13路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201000115 20:10:54&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201000115&quot;,&quot;ROWKEY&quot;:&quot;3201000115 20:10:54&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 20:10:54&quot;,&quot;XLMC&quot;:&quot;13路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 10:54:20&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 10:54:20&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 10:54:20&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201200163 10:20:54&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201200163&quot;,&quot;ROWKEY&quot;:&quot;3201200163 10:20:54&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 10:20:54&quot;,&quot;XLMC&quot;:&quot;201路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201200200 20:10:54&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201200200&quot;,&quot;ROWKEY&quot;:&quot;3201200200 20:10:54&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 20:10:54&quot;,&quot;XLMC&quot;:&quot;170路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201200127 10:20:54&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201200127&quot;,&quot;ROWKEY&quot;:&quot;3201200127 10:20:54&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 10:20:54&quot;,&quot;XLMC&quot;:&quot;125路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201200127 10:54:20&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201200127&quot;,&quot;ROWKEY&quot;:&quot;3201200127 10:54:20&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 10:54:20&quot;,&quot;XLMC&quot;:&quot;125路&quot;&amp;#125;&amp;#125;]&amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;复杂DSL语句查询&lt;/strong&gt;
+&lt;code&gt;DSL&lt;/code&gt;查询可嵌套多种条件形成复杂查询。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dislab@server:~$ curl -XGET &#39;http://server:9200/gps_data/20160205/_search&#39; -d &#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;     &quot;query&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;         &quot;filtered&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;             &quot;filter&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;                 &quot;range&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;                     &quot;ZDBH&quot; : &amp;#123; &quot;gt&quot; : 3201300108 &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;                 &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;             &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;             &quot;query&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;                 &quot;match&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;                     &quot;GPSSJ&quot; : &quot;2016-02-05 10:20:54&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;                 &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;             &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;         &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;     &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt; &#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;took&quot;:657,&quot;timed_out&quot;:false,&quot;_shards&quot;:&amp;#123;&quot;total&quot;:5,&quot;successful&quot;:5,&quot;failed&quot;:0&amp;#125;,&quot;hits&quot;:&amp;#123;&quot;total&quot;:645657,&quot;max_score&quot;:2.7672434,&quot;hits&quot;:[&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300120 20:10:54&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300120&quot;,&quot;ROWKEY&quot;:&quot;3201300120 20:10:54&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 20:10:54&quot;,&quot;XLMC&quot;:&quot;41路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300220 10:20:54&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300220&quot;,&quot;ROWKEY&quot;:&quot;3201300220 10:20:54&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 10:20:54&quot;,&quot;XLMC&quot;:&quot;306路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300131 10:20:54&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300131&quot;,&quot;ROWKEY&quot;:&quot;3201300131 10:20:54&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 10:20:54&quot;,&quot;XLMC&quot;:&quot;48路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300162 10:54:20&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300162&quot;,&quot;ROWKEY&quot;:&quot;3201300162 10:54:20&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 10:54:20&quot;,&quot;XLMC&quot;:&quot;182路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300177 20:54:10&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300177&quot;,&quot;ROWKEY&quot;:&quot;3201300177 20:54:10&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 20:54:10&quot;,&quot;XLMC&quot;:&quot;56路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300165 10:54:20&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300165&quot;,&quot;ROWKEY&quot;:&quot;3201300165 10:54:20&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 10:54:20&quot;,&quot;XLMC&quot;:&quot;48路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300115 20:54:10&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300115&quot;,&quot;ROWKEY&quot;:&quot;3201300115 20:54:10&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 20:54:10&quot;,&quot;XLMC&quot;:&quot;48路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300120 20:54:10&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300120&quot;,&quot;ROWKEY&quot;:&quot;3201300120 20:54:10&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 20:54:10&quot;,&quot;XLMC&quot;:&quot;41路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300171 10:20:54&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300171&quot;,&quot;ROWKEY&quot;:&quot;3201300171 10:20:54&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 10:20:54&quot;,&quot;XLMC&quot;:&quot;56路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201300200 10:20:54&quot;,&quot;_score&quot;:2.7672434,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201300200&quot;,&quot;ROWKEY&quot;:&quot;3201300200 10:20:54&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 10:20:54&quot;,&quot;XLMC&quot;:&quot;306路&quot;&amp;#125;&amp;#125;]&amp;#125;&amp;#125;dislab@server:~$&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;上述查询主要包括一个区间过滤器和match语句。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;全文搜索&lt;/strong&gt;
+使用&lt;code&gt;match&lt;/code&gt;匹配计算相关性，根据结果相关性评分来对结果集进行排序。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dislab@server:~$ curl -XGET &#39;http://server:9200/gps_data/20160205/_search&#39; -d &#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &quot;query&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;         &quot;match&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;             &quot;XLMC&quot; : &quot;57&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;         &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;took&quot;:146,&quot;timed_out&quot;:false,&quot;_shards&quot;:&amp;#123;&quot;total&quot;:5,&quot;successful&quot;:5,&quot;failed&quot;:0&amp;#125;,&quot;hits&quot;:&amp;#123;&quot;total&quot;:143481,&quot;max_score&quot;:2.9686642,&quot;hits&quot;:[&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:17:12&quot;,&quot;_score&quot;:2.9686642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:17:12&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:17:12&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:17:38&quot;,&quot;_score&quot;:2.9686642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:17:38&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:17:38&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:17:42&quot;,&quot;_score&quot;:2.9686642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:17:42&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:17:42&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:01&quot;,&quot;_score&quot;:2.9686642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:01&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:01&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:15&quot;,&quot;_score&quot;:2.9686642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:15&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:15&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:17&quot;,&quot;_score&quot;:2.9686642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:17&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:17&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:23&quot;,&quot;_score&quot;:2.9686642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:23&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:23&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:30&quot;,&quot;_score&quot;:2.9686642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:30&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:30&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:48&quot;,&quot;_score&quot;:2.9686642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:48&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:48&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:49&quot;,&quot;_score&quot;:2.9686642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:49&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:49&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;]&amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;短语搜索&lt;/strong&gt;
+关键字之间是&lt;code&gt;与&lt;/code&gt;关系的短语搜素，要求在搜索过程中关键字是相邻的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XGET &#39;http://server:9200/gps_data/20160205/_search&#39; -d &#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;query&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;match_phrase&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;XLMC&quot; : &quot;57 路&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;took&quot;:236,&quot;timed_out&quot;:false,&quot;_shards&quot;:&amp;#123;&quot;total&quot;:5,&quot;successful&quot;:5,&quot;failed&quot;:0&amp;#125;,&quot;hits&quot;:&amp;#123;&quot;total&quot;:143481,&quot;max_score&quot;:3.5936642,&quot;hits&quot;:[&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 14:22:40&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 14:22:40&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 14:22:40&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 14:22:52&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 14:22:52&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 14:22:52&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 14:23:06&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 14:23:06&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 14:23:06&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 14:23:37&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 14:23:37&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 14:23:37&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 14:23:39&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 14:23:39&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 14:23:39&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 14:23:47&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 14:23:47&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 14:23:47&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 14:23:58&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 14:23:58&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 14:23:58&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 14:24:31&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 14:24:31&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 14:24:31&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 14:24:35&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 14:24:35&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 14:24:35&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 14:25:15&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 14:25:15&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 14:25:15&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;&amp;#125;]&amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;搜索结果高亮&lt;/strong&gt;
+使用&lt;code&gt;highlight&lt;/code&gt;高亮搜索到的匹配关键字。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XGET &#39;http://server:9200/gps_data/20160205/_search&#39; -d &#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;query&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;match_phrase&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;XLMC&quot; : &quot;57 路&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;highlight&quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;fields&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;XLMC&quot; : &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;took&quot;:375,&quot;timed_out&quot;:false,&quot;_shards&quot;:&amp;#123;&quot;total&quot;:5,&quot;successful&quot;:5,&quot;failed&quot;:0&amp;#125;,&quot;hits&quot;:&amp;#123;&quot;total&quot;:143481,&quot;max_score&quot;:3.5936642,&quot;hits&quot;:[&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:17:12&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:17:12&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:17:12&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;,&quot;highlight&quot;:&amp;#123;&quot;XLMC&quot;:[&quot;&amp;lt;em&amp;gt;57&amp;lt;/em&amp;gt;&amp;lt;em&amp;gt;路&amp;lt;/em&amp;gt;&quot;]&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:17:38&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:17:38&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:17:38&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;,&quot;highlight&quot;:&amp;#123;&quot;XLMC&quot;:[&quot;&amp;lt;em&amp;gt;57&amp;lt;/em&amp;gt;&amp;lt;em&amp;gt;路&amp;lt;/em&amp;gt;&quot;]&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:17:42&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:17:42&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:17:42&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;,&quot;highlight&quot;:&amp;#123;&quot;XLMC&quot;:[&quot;&amp;lt;em&amp;gt;57&amp;lt;/em&amp;gt;&amp;lt;em&amp;gt;路&amp;lt;/em&amp;gt;&quot;]&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:01&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:01&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:01&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;,&quot;highlight&quot;:&amp;#123;&quot;XLMC&quot;:[&quot;&amp;lt;em&amp;gt;57&amp;lt;/em&amp;gt;&amp;lt;em&amp;gt;路&amp;lt;/em&amp;gt;&quot;]&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:15&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:15&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:15&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;,&quot;highlight&quot;:&amp;#123;&quot;XLMC&quot;:[&quot;&amp;lt;em&amp;gt;57&amp;lt;/em&amp;gt;&amp;lt;em&amp;gt;路&amp;lt;/em&amp;gt;&quot;]&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:17&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:17&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:17&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;,&quot;highlight&quot;:&amp;#123;&quot;XLMC&quot;:[&quot;&amp;lt;em&amp;gt;57&amp;lt;/em&amp;gt;&amp;lt;em&amp;gt;路&amp;lt;/em&amp;gt;&quot;]&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:23&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:23&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:23&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;,&quot;highlight&quot;:&amp;#123;&quot;XLMC&quot;:[&quot;&amp;lt;em&amp;gt;57&amp;lt;/em&amp;gt;&amp;lt;em&amp;gt;路&amp;lt;/em&amp;gt;&quot;]&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:30&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:30&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:30&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;,&quot;highlight&quot;:&amp;#123;&quot;XLMC&quot;:[&quot;&amp;lt;em&amp;gt;57&amp;lt;/em&amp;gt;&amp;lt;em&amp;gt;路&amp;lt;/em&amp;gt;&quot;]&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:48&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:48&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:48&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;,&quot;highlight&quot;:&amp;#123;&quot;XLMC&quot;:[&quot;&amp;lt;em&amp;gt;57&amp;lt;/em&amp;gt;&amp;lt;em&amp;gt;路&amp;lt;/em&amp;gt;&quot;]&amp;#125;&amp;#125;,&amp;#123;&quot;_index&quot;:&quot;gps_data&quot;,&quot;_type&quot;:&quot;20160205&quot;,&quot;_id&quot;:&quot;3201100090 07:18:49&quot;,&quot;_score&quot;:3.5936642,&quot;_source&quot;:&amp;#123;&quot;ZDBH&quot;:&quot;3201100090&quot;,&quot;ROWKEY&quot;:&quot;3201100090 07:18:49&quot;,&quot;GPSSJ&quot;:&quot;2016-02-05 07:18:49&quot;,&quot;XLMC&quot;:&quot;57路&quot;&amp;#125;,&quot;highlight&quot;:&amp;#123;&quot;XLMC&quot;:[&quot;&amp;lt;em&amp;gt;57&amp;lt;/em&amp;gt;&amp;lt;em&amp;gt;路&amp;lt;/em&amp;gt;&quot;]&amp;#125;&amp;#125;]&amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt;提供了丰富的REST风格的API来满足不同的场景需求，本篇介绍Elasticsearch的查询相关的基础和高级操作。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Elasticsearch" scheme="http://keyunluo.github.io/categories/Elasticsearch/"/>
+    
+    
+      <category term="elasticsearch" scheme="http://keyunluo.github.io/tags/elasticsearch/"/>
+    
+      <category term="大数据" scheme="http://keyunluo.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Elasticsearch入门学习(2)——服务URL</title>
     <link href="http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html"/>
     <id>http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html</id>
     <published>2016-04-11T11:42:53.000Z</published>
-    <updated>2016-05-24T05:22:29.290Z</updated>
+    <updated>2016-06-21T14:32:16.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt; elasticsearch 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt; 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;与Elasticsearch交互&quot;&gt;&lt;a href=&quot;#与Elasticsearch交互&quot; class=&quot;headerlink&quot; title=&quot;与Elasticsearch交互&quot;&gt;&lt;/a&gt;与Elasticsearch交互&lt;/h2&gt;&lt;p&gt;如何与Elasticsearch交互取决于你是否使用Java，可以分为&lt;code&gt;Java API交互&lt;/code&gt;和&lt;code&gt;基于HTTP协议，以JSON为数据交互格式的RESTful API&lt;/code&gt;两种，本文主要讲解使用RESTful API，通过9200端口的与Elasticsearch进行通信。使用java则端口为9300.&lt;/p&gt;
@@ -258,12 +577,12 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt; elasticsearch 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt; 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。&lt;/p&gt;
 &lt;/blockquote&gt;
     
     </summary>
     
-      <category term="elasticsearch" scheme="http://keyunluo.github.io/categories/elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://keyunluo.github.io/categories/Elasticsearch/"/>
     
     
       <category term="elasticsearch" scheme="http://keyunluo.github.io/tags/elasticsearch/"/>
@@ -277,7 +596,7 @@
     <link href="http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-1.html"/>
     <id>http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-1.html</id>
     <published>2016-04-11T10:42:53.000Z</published>
-    <updated>2016-05-23T08:44:45.438Z</updated>
+    <updated>2016-06-21T14:32:16.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt;是一个基于Lucene的接近实时的搜索平台。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口，是当前流行的企业级搜索引擎。本文先从安装Elasticsearch开始，一步一步探索。&lt;/p&gt;
@@ -307,7 +626,7 @@
 &lt;/ul&gt;
 &lt;h2 id=&quot;ES插件安装&quot;&gt;&lt;a href=&quot;#ES插件安装&quot; class=&quot;headerlink&quot; title=&quot;ES插件安装&quot;&gt;&lt;/a&gt;ES插件安装&lt;/h2&gt;&lt;p&gt;&lt;code&gt;head&lt;/code&gt;插件可以很方便的查询数据和监控集群健康状况，下面以&lt;code&gt;head&lt;/code&gt;插件安装为例，介绍下ES2.x下插件安装的一般步骤。&lt;/p&gt;
 &lt;p&gt;进入&lt;code&gt;/opt/bigdata/elasticsearch&lt;/code&gt;目录，运行&lt;code&gt;bin/plugin install mobz/elasticsearch-head&lt;/code&gt;, 下载完成后，访问网址&lt;code&gt;http://server:9200/_plugin/head/&lt;/code&gt;，便可以看到如下界面，说明安装成功。
-&lt;img src=&quot;../../images/blog/2016-04/elasticsearch-head.png&quot; alt=&quot;head&quot;&gt;&lt;/p&gt;
+&lt;img src=&quot;/resource/blog/2016-04/elasticsearch-head.png&quot; alt=&quot;head&quot;&gt;&lt;/p&gt;
 &lt;p&gt;插件可以分为核心插件和非核心插件，核心插件是官方提供的，可以直接安装，例如&lt;code&gt;bin/plugin install analysis-icu&lt;/code&gt;，这样就会下载合适的版本安装到Elasticsearch中。非核心插件可以是官方提供的，也可以是社区提供的，可以从官方，Maven或者GitHub中下载安装：&lt;code&gt;bin/plugin install [org]/[user|component]/[version]&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;例如，安装github上的插件，&lt;code&gt;plugin install lmenezes/elasticsearch-kopf&lt;/code&gt;，插件会尝试先到官方去下载，如果没有找到会到maven.com中去下载，如果在没有找到回到github中去下载。脚本还是非常智能的。当我们从直接maven中央库中安装时可以直接使用下面的方式，最后的版本号是必须要写的。
 &lt;code&gt;plugin install org.elasticsearch.plugin/mapper-attachments/3.0.0&lt;/code&gt;
@@ -322,7 +641,7 @@
     
     </summary>
     
-      <category term="elasticsearch" scheme="http://keyunluo.github.io/categories/elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://keyunluo.github.io/categories/Elasticsearch/"/>
     
     
       <category term="elasticsearch" scheme="http://keyunluo.github.io/tags/elasticsearch/"/>
@@ -336,7 +655,7 @@
     <link href="http://keyunluo.github.io/2016/04/09/2016-04-09-using-sqoop2-oracledb-hadoop.html"/>
     <id>http://keyunluo.github.io/2016/04/09/2016-04-09-using-sqoop2-oracledb-hadoop.html</id>
     <published>2016-04-09T05:28:43.000Z</published>
-    <updated>2016-05-23T08:44:45.438Z</updated>
+    <updated>2016-05-23T08:44:45.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录从Oracle12c导入数据到Hadoop中的流程，使用Sqoop2工具,目前Sqoop2只支持将oracle/mysql数据库中的数据与HDFS中数据相互导入导出，目前并不支持导入到HBase/Hive中，因此在实际业务中并不好用，后面介绍使用Sqoop1导入数据到Hbase的流程。&lt;/p&gt;
@@ -444,7 +763,7 @@
     <link href="http://keyunluo.github.io/2016/03/25/2016-03-25-oracle-12c-using.html"/>
     <id>http://keyunluo.github.io/2016/03/25/2016-03-25-oracle-12c-using.html</id>
     <published>2016-03-25T05:25:56.000Z</published>
-    <updated>2016-05-23T08:44:45.438Z</updated>
+    <updated>2016-05-23T08:44:45.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录开始使用Oracle12c的一些步骤以及注意事项。&lt;/p&gt;
@@ -492,7 +811,7 @@
     <link href="http://keyunluo.github.io/2016/03/20/2016-03-20-ubuntu14-l2tp-vpn.html"/>
     <id>http://keyunluo.github.io/2016/03/20/2016-03-20-ubuntu14-l2tp-vpn.html</id>
     <published>2016-03-20T04:54:12.000Z</published>
-    <updated>2016-05-23T08:44:45.438Z</updated>
+    <updated>2016-05-23T08:44:45.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录在Ubuntu14.04上安装L2TP插件。&lt;/p&gt;
@@ -528,7 +847,7 @@
     <link href="http://keyunluo.github.io/2016/03/07/2016-03-07-hadoop-secondary-sort.html"/>
     <id>http://keyunluo.github.io/2016/03/07/2016-03-07-hadoop-secondary-sort.html</id>
     <published>2016-03-07T12:33:53.000Z</published>
-    <updated>2016-05-23T08:44:45.422Z</updated>
+    <updated>2016-05-23T08:44:45.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;问题概述&quot;&gt;&lt;a href=&quot;#问题概述&quot; class=&quot;headerlink&quot; title=&quot;问题概述&quot;&gt;&lt;/a&gt;问题概述&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;在hadoop中每个reduce的输入的key都是有序的，而value则是无序的。而且同一个job运行多次，由于map完成顺序不同，reduce收到的value顺序是不固定的,为了使reduce收到有序的value,便产生了二次排序的概念。&lt;/p&gt;
@@ -570,10 +889,14 @@
     <link href="http://keyunluo.github.io/2016/03/07/2016-03-07-git-common-command.html"/>
     <id>http://keyunluo.github.io/2016/03/07/2016-03-07-git-common-command.html</id>
     <published>2016-03-07T08:05:36.000Z</published>
-    <updated>2016-05-23T08:44:45.422Z</updated>
+    <updated>2016-06-21T14:32:16.000Z</updated>
     
-    <content type="html">&lt;h2 id=&quot;初始化配置&quot;&gt;&lt;a href=&quot;#初始化配置&quot; class=&quot;headerlink&quot; title=&quot;初始化配置&quot;&gt;&lt;/a&gt;初始化配置&lt;/h2&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#配置使用git仓库的人员姓名&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; user.name &lt;span class=&quot;string&quot;&gt;&quot;Your Name Comes Here&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#配置使用git仓库的人员email&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; user.email you@yourdomain.example.com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#配置到缓存 默认15分钟&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; credential.helper cache&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#修改缓存时间&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; credential.helper &lt;span class=&quot;string&quot;&gt;&#39;cache --timeout=3600&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; color.ui true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; alias.co checkout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; alias.ci commit&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; alias.st status&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; alias.br branch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; core.editor &lt;span class=&quot;string&quot;&gt;&quot;mate -w&quot;&lt;/span&gt;    &lt;span class=&quot;comment&quot;&gt;# 设置Editor使用textmate&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config &lt;span class=&quot;number&quot;&gt;-1&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;#列举所有配置&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#用户的git配置文件~/.gitconfig&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Git&lt;/strong&gt;简单记录Git的常用方法，以备查询。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;初始化配置&quot;&gt;&lt;a href=&quot;#初始化配置&quot; class=&quot;headerlink&quot; title=&quot;初始化配置&quot;&gt;&lt;/a&gt;初始化配置&lt;/h2&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#配置使用git仓库的人员姓名&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; user.name &lt;span class=&quot;string&quot;&gt;&quot;Your Name Comes Here&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#配置使用git仓库的人员email&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; user.email you@yourdomain.example.com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#配置到缓存 默认15分钟&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; credential.helper cache&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#修改缓存时间&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; credential.helper &lt;span class=&quot;string&quot;&gt;&#39;cache --timeout=3600&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; color.ui true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; alias.co checkout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; alias.ci commit&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; alias.st status&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; alias.br branch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; core.editor &lt;span class=&quot;string&quot;&gt;&quot;mate -w&quot;&lt;/span&gt;    &lt;span class=&quot;comment&quot;&gt;# 设置Editor使用textmate&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config &lt;span class=&quot;number&quot;&gt;-1&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;#列举所有配置&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#用户的git配置文件~/.gitconfig&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;!-- more --&gt;
 &lt;hr&gt;
 &lt;h2 id=&quot;查看、添加、提交、删除、找回，重置修改文件&quot;&gt;&lt;a href=&quot;#查看、添加、提交、删除、找回，重置修改文件&quot; class=&quot;headerlink&quot; title=&quot;查看、添加、提交、删除、找回，重置修改文件&quot;&gt;&lt;/a&gt;查看、添加、提交、删除、找回，重置修改文件&lt;/h2&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git help &amp;lt;command&amp;gt;  &lt;span class=&quot;comment&quot;&gt;# 显示command的help&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git show            &lt;span class=&quot;comment&quot;&gt;# 显示某次提交的内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git show $id&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git co  -- &amp;lt;file&amp;gt;   &lt;span class=&quot;comment&quot;&gt;# 抛弃工作区修改&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git co  .           &lt;span class=&quot;comment&quot;&gt;# 抛弃工作区修改&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git add &amp;lt;file&amp;gt;      &lt;span class=&quot;comment&quot;&gt;# 将工作文件修改提交到本地暂存区&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git add .           &lt;span class=&quot;comment&quot;&gt;# 将所有修改过的工作文件提交暂存区&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git rm &amp;lt;file&amp;gt;       &lt;span class=&quot;comment&quot;&gt;# 从版本库中删除文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git rm &amp;lt;file&amp;gt; --cached  &lt;span class=&quot;comment&quot;&gt;# 从版本库中删除文件，但不删除文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git reset &amp;lt;file&amp;gt;    &lt;span class=&quot;comment&quot;&gt;# 从暂存区恢复到工作文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git reset -- .      &lt;span class=&quot;comment&quot;&gt;# 从暂存区恢复到工作文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git reset --hard    &lt;span class=&quot;comment&quot;&gt;# 恢复最近一次提交过的状态，即放弃上次提交后的所有本次修改&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git ci &amp;lt;file&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git ci .&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git ci -a           &lt;span class=&quot;comment&quot;&gt;# 将git add, git rm和git ci等操作都合并在一起做&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git ci -am &lt;span class=&quot;string&quot;&gt;&quot;some comments&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git ci --amend      &lt;span class=&quot;comment&quot;&gt;# 修改最后一次提交记录&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git revert &amp;lt;$id&amp;gt;    &lt;span class=&quot;comment&quot;&gt;# 恢复某次提交的状态，恢复动作本身也创建了一次提交对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git revert HEAD     &lt;span class=&quot;comment&quot;&gt;# 恢复最后一次提交的状态&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#恢复&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;hr&gt;
@@ -635,11 +958,13 @@ origin  git@github.com:apache/hadoop.git   (push)
     
     <summary type="html">
     
-      &lt;h2 id=&quot;初始化配置&quot;&gt;&lt;a href=&quot;#初始化配置&quot; class=&quot;headerlink&quot; title=&quot;初始化配置&quot;&gt;&lt;/a&gt;初始化配置&lt;/h2&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#配置使用git仓库的人员姓名&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; user.name &lt;span class=&quot;string&quot;&gt;&quot;Your Name Comes Here&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#配置使用git仓库的人员email&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; user.email you@yourdomain.example.com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#配置到缓存 默认15分钟&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; credential.helper cache&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#修改缓存时间&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; credential.helper &lt;span class=&quot;string&quot;&gt;&#39;cache --timeout=3600&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; color.ui true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; alias.co checkout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; alias.ci commit&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; alias.st status&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; alias.br branch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config --&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; core.editor &lt;span class=&quot;string&quot;&gt;&quot;mate -w&quot;&lt;/span&gt;    &lt;span class=&quot;comment&quot;&gt;# 设置Editor使用textmate&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git config &lt;span class=&quot;number&quot;&gt;-1&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;#列举所有配置&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#用户的git配置文件~/.gitconfig&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Git&lt;/strong&gt;简单记录Git的常用方法，以备查询。&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     
-      <category term="git" scheme="http://keyunluo.github.io/categories/git/"/>
+      <category term="Git" scheme="http://keyunluo.github.io/categories/Git/"/>
     
     
       <category term="git" scheme="http://keyunluo.github.io/tags/git/"/>

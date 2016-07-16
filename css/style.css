@@ -48,20 +48,35 @@ a:focus {
   border-bottom: 1px solid #ddd;
   position: relative; }
   #header .site-name {
-    margin-bottom: 40px; }
+    margin-bottom: 40px;
+    /*
+        #logo {
+            font: bold 38px/1.12 "WenQuanYi Micro Hei", "Microsoft YaHei", SimSun, sans-serif;
+            color: #333;
+            span, &:hover {
+                color: #777;
+            }
+        }
+        .description {
+            margin: .2em 0 0;
+            color: #999;
+        }
+        */ }
     #header .site-name h1 {
       padding: 0;
       margin: 0;
       height: 0;
       overflow: hidden; }
     #header .site-name #logo {
-      font: bold 38px/1.12 "WenQuanYi Micro Hei", "Microsoft YaHei", SimSun, sans-serif;
-      color: #333; }
+      font: bold 48px/1.12 "YouYuan", Georgia, Times, sans-serif;
+      color: #555; }
       #header .site-name #logo span, #header .site-name #logo:hover {
         color: #777; }
     #header .site-name .description {
-      margin: .2em 0 0;
-      color: #999; }
+      margin: .8em 0 0;
+      color: #999;
+      font: 18px/1.12 "STLiti", Georgia, Times, sans-serif;
+      font-family: "STLiti", "Classic Grotesque W01", "Helvetica Neue", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif; }
   #header #nav-menu {
     margin: 10px 0 -1px;
     padding: 0;
@@ -147,7 +162,8 @@ a:focus {
     margin: 0;
     color: #555;
     text-align: left;
-    font: bold 28px/1.1 "WenQuanYi Micro Hei", "Microsoft YaHei", "TIBch", "Classic Grotesque W01", "Helvetica Neue", Arial; }
+    /*font: bold 28px/1.1 "WenQuanYi Micro Hei", "Microsoft YaHei", "TIBch", "Classic Grotesque W01", "Helvetica Neue", Arial;*/
+    font: bold 25px/1.1 "Microsoft JhengHei", Cambria, "Times New Roman", Georgia, Times, sans-serif; }
     .post .post-title a {
       color: #555; }
   .post .post-meta {
@@ -159,7 +175,7 @@ a:focus {
     text-indent: .15em; }
     .post .post-meta:before {
       font-family: "FontAwesome";
-      content: "\f073";
+      content: "\f274";
       padding-right: 0.3em; }
     .post .post-meta .category:before {
       font-family: "FontAwesome";
@@ -204,17 +220,18 @@ a:focus {
     text-justify: distribute;
     word-break: normal; }
     .post .post-content h2 {
-      margin: 0.5em 0 0.8em;
+      margin: 1.4em 0 1.1em;
       border-bottom: 1px solid #eee;
       overflow: hidden; }
     .post .post-content h3 {
-      margin: 0.5em 0 0.8em; }
+      margin: 1.4em 0 1.1em; }
     .post .post-content pre code {
       padding: 0 2em; }
     .post .post-content p:first-child {
       margin: 0.8em 0 0.8em; }
     .post .post-content p {
-      margin: 0 0 0.8em; }
+      margin: 0 0 0.8em;
+      font: "Microsoft YaHei"; }
       .post .post-content p code {
         color: #E74C3C;
         background: #fff;
