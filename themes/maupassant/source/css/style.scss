@@ -57,6 +57,7 @@ a:focus {
             height: 0;
             overflow: hidden;
         }
+        /*
         #logo {
             font: bold 38px/1.12 "WenQuanYi Micro Hei", "Microsoft YaHei", SimSun, sans-serif;
             color: #333;
@@ -68,6 +69,21 @@ a:focus {
             margin: .2em 0 0;
             color: #999;
         }
+        */
+        #logo {
+            font: bold 48px/1.12 "YouYuan", Georgia, Times, sans-serif;
+            color: #555;
+            span, &:hover {
+                color: #777;
+            }
+        }
+        .description {
+            margin: .8em 0 0;
+            color: #999;
+            font: 18px/1.12 "STLiti", Georgia, Times, sans-serif;
+            font-family: "STLiti", "Classic Grotesque W01", "Helvetica Neue", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif
+        }
+
     }
     #nav-menu {
         margin: 10px 0 -1px;
@@ -171,7 +187,8 @@ a:focus {
         margin: 0;
         color: #555;
         text-align: left;
-        font: bold 28px/1.1 "WenQuanYi Micro Hei", "Microsoft YaHei", "TIBch", "Classic Grotesque W01", "Helvetica Neue", Arial;
+        /*font: bold 28px/1.1 "WenQuanYi Micro Hei", "Microsoft YaHei", "TIBch", "Classic Grotesque W01", "Helvetica Neue", Arial;*/
+        font: bold 25px/1.1 "Microsoft JhengHei", Cambria, "Times New Roman", Georgia, Times, sans-serif;
         a {
             color: #555;
         }
@@ -185,7 +202,7 @@ a:focus {
         text-indent: .15em;
         &:before {
               font-family: "FontAwesome";
-              content: "\f073";
+              content: "\f274";
               padding-right: 0.3em;
         }
         .category {
@@ -245,12 +262,12 @@ a:focus {
         text-justify: distribute;
         word-break: normal;
         h2 {
-            margin: 0.5em 0 0.8em;
+            margin: 1.4em 0 1.1em;
             border-bottom: 1px solid #eee;
             overflow: hidden;
         }
         h3 {
-            margin: 0.5em 0 0.8em
+            margin: 1.4em 0 1.1em
         }
         pre code {
             padding: 0 2em;
@@ -260,6 +277,7 @@ a:focus {
         }
         p {
             margin: 0 0 0.8em;
+            font: "Microsoft YaHei";
             code {
                 color: #E74C3C;
                 background: #fff;
