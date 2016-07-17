@@ -5,3 +5,5 @@ comments: false
 ---
 
 1. 大数据算法：[Data Algorithms Recipes for Scaling Up with Hadoop and Spark - Mahmoud Parsian](/resource/ebooks/data algorithms recipes for scaling up with hadoop and spark.pdf) <br/>
+
+2. 矩阵论:[Coding the Matrix : Linear Algebra through Applications to Computer Science](/resource/ebooks/Coding the Matrix.pdf) <br/>
