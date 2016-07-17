@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-07-17T08:36:41.232Z</updated>
+  <updated>2016-07-17T08:40:35.494Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://keyunluo.github.io/2016/07/17/2016-07-17-anaconda-python.html"/>
     <id>http://keyunluo.github.io/2016/07/17/2016-07-17-anaconda-python.html</id>
     <published>2016-07-17T07:41:02.000Z</published>
-    <updated>2016-07-17T08:36:41.232Z</updated>
+    <updated>2016-07-17T08:40:35.494Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录在Ubuntu16.04上配置Python的科学计算环境包，使用anaconda发行版和清华大学的镜像服务。&lt;/p&gt;
@@ -41,7 +41,7 @@
 &lt;p&gt;或中科大源，速度都很给力&lt;/p&gt;
 &lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;index-url = https://pypi.mirrors.ustc.edu.cn/simple&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h2 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h2&gt;&lt;p&gt;由于安装了Anaconda Python3，所以安装软件时可以用&lt;code&gt;conda install XXX&lt;/code&gt;安装或&lt;code&gt;conda update XXX&lt;/code&gt;来更新，当然也可以用&lt;code&gt;pip3&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;当要为系统的Python2版本安装Numpy时，先安装一些编译依赖项,比如直接用pip安装最新的numpy时会编译错误，原因是缺少必要的库，因此需要安装这些库，一个简介的做法是使用Ubuntu的build-dep命令：&lt;/p&gt;
+&lt;p&gt;当要为系统的Python2版本安装Numpy时，先安装一些编译依赖项,如果直接用pip安装最新的numpy时会编译错误，原因是缺少必要的库，因此需要先安装这些库，一个简单的做法是使用Ubuntu的build-dep命令：&lt;/p&gt;
 &lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;sudo apt build-dep numpy scipy matplotlib&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;然后就可以直接安装了：&lt;code&gt;sudo -H pip install -U numpy&lt;/code&gt;.&lt;/p&gt;
 </content>
