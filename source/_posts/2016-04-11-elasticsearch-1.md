@@ -3,7 +3,7 @@ title: "Elasticsearch入门学习(1)——安装"
 date: 2016-04-11 18:42:53 +0800
 comments: true
 toc: true
-categories: Elasticsearch
+categories: BigData
 tags : [elasticsearch , 大数据]
 keywords: elasticsearch2.2安装
 ---

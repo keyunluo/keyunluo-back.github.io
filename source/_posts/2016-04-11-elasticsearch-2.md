@@ -3,7 +3,7 @@ title: "Elasticsearch入门学习(2)——服务URL"
 date: 2016-04-11 19:42:53 +0800
 comments: true
 toc: true
-categories: Elasticsearch
+categories: BigData
 tags : [elasticsearch , 大数据]
 keywords: elasticsearch服务URL
 ---

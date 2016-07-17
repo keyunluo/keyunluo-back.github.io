@@ -3,7 +3,7 @@ title: "Elasticsearch入门学习(3)——查询"
 date: 2016-05-27 15:16:53 +0800
 comments: true
 toc: true
-categories: Elasticsearch
+categories: BigData
 tags : [elasticsearch , 大数据]
 keywords: elasticsearch查询
 ---

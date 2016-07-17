@@ -2,7 +2,7 @@
 title: "Ubuntu14.04配置L2TP-VPN"
 date: 2016-03-20 12:54:12 +0800
 comments: true
-categories: Ubuntu
+categories: Tools
 tags : VPN
 keywords: Ubuntu, L2TP, VPN
 ---

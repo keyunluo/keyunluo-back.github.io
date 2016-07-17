@@ -1,9 +1,9 @@
 ---
-title: ubuntu16.04配置L2TP-VPN
+title: Ubuntu16.04配置L2TP-VPN
 comments: true
 toc: true
 date: 2016-07-17 13:41:02
-categories: Ubuntu
+categories: Tools
 tags : VPN
 keywords: Ubuntu, L2TP, VPN
 ---

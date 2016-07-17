@@ -3,7 +3,7 @@ title: "Git 常用命令整理"
 date: 2016-03-07 16:05:36 +0800
 comments: true
 toc: true
-categories: Git
+categories: Tools
 tags : git
 keywords: git
 ---
