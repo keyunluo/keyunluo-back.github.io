@@ -61,7 +61,7 @@ index-url = https://pypi.mirrors.ustc.edu.cn/simple
 
 由于安装了Anaconda Python3，所以安装软件时可以用`conda install XXX`安装或`conda update XXX`来更新，当然也可以用`pip3`。
 
-当要为系统的Python2版本安装Numpy时，先安装一些编译依赖项,比如直接用pip安装最新的numpy时会编译错误，原因是缺少必要的库，因此需要安装这些库，一个简介的做法是使用Ubuntu的build-dep命令：
+当要为系统的Python2版本安装Numpy时，先安装一些编译依赖项,如果直接用pip安装最新的numpy时会编译错误，原因是缺少必要的库，因此需要先安装这些库，一个简单的做法是使用Ubuntu的build-dep命令：
 
 ``` python
 sudo apt build-dep numpy scipy matplotlib
