@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[ubuntu16.04配置L2TP-VPN]]></title>
+      <title><![CDATA[Ubuntu16.04配置L2TP-VPN]]></title>
       <url>http://keyunluo.github.io/2016/07/17/2016-07-17-ubuntu16-l2tp-vpn.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本篇博文记录在Ubuntu16.04上安装L2TP插件,之前记录了在<a href="/2016/03/20/2016-03-20-ubuntu14-l2tp-vpn.html">Ubuntu14.04</a>上安装L2TP插件，但ppa上还没有更新这个软件包，故只有手动从源代码编译安装。</p>

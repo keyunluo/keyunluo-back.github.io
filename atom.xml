@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-07-17T06:28:34.489Z</updated>
+  <updated>2016-07-17T07:55:56.905Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>ubuntu16.04配置L2TP-VPN</title>
+    <title>Ubuntu16.04配置L2TP-VPN</title>
     <link href="http://keyunluo.github.io/2016/07/17/2016-07-17-ubuntu16-l2tp-vpn.html"/>
     <id>http://keyunluo.github.io/2016/07/17/2016-07-17-ubuntu16-l2tp-vpn.html</id>
     <published>2016-07-17T05:41:02.000Z</published>
-    <updated>2016-07-17T06:28:34.489Z</updated>
+    <updated>2016-07-17T07:55:56.905Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录在Ubuntu16.04上安装L2TP插件,之前记录了在&lt;a href=&quot;/2016/03/20/2016-03-20-ubuntu14-l2tp-vpn.html&quot;&gt;Ubuntu14.04&lt;/a&gt;上安装L2TP插件，但ppa上还没有更新这个软件包，故只有手动从源代码编译安装。&lt;/p&gt;
@@ -50,7 +50,7 @@
     
     </summary>
     
-      <category term="Ubuntu" scheme="http://keyunluo.github.io/categories/Ubuntu/"/>
+      <category term="Tools" scheme="http://keyunluo.github.io/categories/Tools/"/>
     
     
       <category term="VPN" scheme="http://keyunluo.github.io/tags/VPN/"/>
@@ -62,7 +62,7 @@
     <link href="http://keyunluo.github.io/2016/06/30/2016-06-30-todolist.html"/>
     <id>http://keyunluo.github.io/2016/06/30/2016-06-30-todolist.html</id>
     <published>2016-06-30T01:44:38.000Z</published>
-    <updated>2016-07-08T14:14:54.000Z</updated>
+    <updated>2016-07-17T07:57:01.997Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;2016-07月-2017-01月待做事项&lt;/p&gt;
@@ -256,7 +256,7 @@
     
     </summary>
     
-      <category term="TODO" scheme="http://keyunluo.github.io/categories/TODO/"/>
+      <category term="ToDo" scheme="http://keyunluo.github.io/categories/ToDo/"/>
     
     
       <category term="待做事项" scheme="http://keyunluo.github.io/tags/%E5%BE%85%E5%81%9A%E4%BA%8B%E9%A1%B9/"/>
@@ -314,7 +314,7 @@
     <link href="http://keyunluo.github.io/2016/05/27/2016-05-27-elasticsearch-3.html"/>
     <id>http://keyunluo.github.io/2016/05/27/2016-05-27-elasticsearch-3.html</id>
     <published>2016-05-27T07:16:53.000Z</published>
-    <updated>2016-06-21T14:32:16.000Z</updated>
+    <updated>2016-07-17T07:55:11.861Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt;提供了丰富的REST风格的API来满足不同的场景需求，本篇介绍Elasticsearch的查询相关的基础和高级操作。&lt;/p&gt;
@@ -367,7 +367,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
     </summary>
     
-      <category term="Elasticsearch" scheme="http://keyunluo.github.io/categories/Elasticsearch/"/>
+      <category term="BigData" scheme="http://keyunluo.github.io/categories/BigData/"/>
     
     
       <category term="elasticsearch" scheme="http://keyunluo.github.io/tags/elasticsearch/"/>
@@ -381,7 +381,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     <link href="http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html"/>
     <id>http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html</id>
     <published>2016-04-11T11:42:53.000Z</published>
-    <updated>2016-06-21T14:32:16.000Z</updated>
+    <updated>2016-07-17T07:55:15.109Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt; 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。&lt;/p&gt;
@@ -624,7 +624,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
     </summary>
     
-      <category term="Elasticsearch" scheme="http://keyunluo.github.io/categories/Elasticsearch/"/>
+      <category term="BigData" scheme="http://keyunluo.github.io/categories/BigData/"/>
     
     
       <category term="elasticsearch" scheme="http://keyunluo.github.io/tags/elasticsearch/"/>
@@ -638,7 +638,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     <link href="http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-1.html"/>
     <id>http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-1.html</id>
     <published>2016-04-11T10:42:53.000Z</published>
-    <updated>2016-06-21T14:32:16.000Z</updated>
+    <updated>2016-07-17T07:55:16.798Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt;是一个基于Lucene的接近实时的搜索平台。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口，是当前流行的企业级搜索引擎。本文先从安装Elasticsearch开始，一步一步探索。&lt;/p&gt;
@@ -683,7 +683,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
     </summary>
     
-      <category term="Elasticsearch" scheme="http://keyunluo.github.io/categories/Elasticsearch/"/>
+      <category term="BigData" scheme="http://keyunluo.github.io/categories/BigData/"/>
     
     
       <category term="elasticsearch" scheme="http://keyunluo.github.io/tags/elasticsearch/"/>
@@ -853,7 +853,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     <link href="http://keyunluo.github.io/2016/03/20/2016-03-20-ubuntu14-l2tp-vpn.html"/>
     <id>http://keyunluo.github.io/2016/03/20/2016-03-20-ubuntu14-l2tp-vpn.html</id>
     <published>2016-03-20T04:54:12.000Z</published>
-    <updated>2016-05-23T08:44:45.000Z</updated>
+    <updated>2016-07-17T07:56:05.265Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录在Ubuntu14.04上安装L2TP插件。&lt;/p&gt;
@@ -877,7 +877,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
     </summary>
     
-      <category term="Ubuntu" scheme="http://keyunluo.github.io/categories/Ubuntu/"/>
+      <category term="Tools" scheme="http://keyunluo.github.io/categories/Tools/"/>
     
     
       <category term="VPN" scheme="http://keyunluo.github.io/tags/VPN/"/>
@@ -931,7 +931,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     <link href="http://keyunluo.github.io/2016/03/07/2016-03-07-git-common-command.html"/>
     <id>http://keyunluo.github.io/2016/03/07/2016-03-07-git-common-command.html</id>
     <published>2016-03-07T08:05:36.000Z</published>
-    <updated>2016-06-21T14:32:16.000Z</updated>
+    <updated>2016-07-17T07:55:44.064Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Git&lt;/strong&gt;简单记录Git的常用方法，以备查询。&lt;/p&gt;
@@ -1006,7 +1006,7 @@ origin  git@github.com:apache/hadoop.git   (push)
     
     </summary>
     
-      <category term="Git" scheme="http://keyunluo.github.io/categories/Git/"/>
+      <category term="Tools" scheme="http://keyunluo.github.io/categories/Tools/"/>
     
     
       <category term="git" scheme="http://keyunluo.github.io/tags/git/"/>
