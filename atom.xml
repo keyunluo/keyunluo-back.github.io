@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-07-17T07:55:56.905Z</updated>
+  <updated>2016-07-17T08:36:41.232Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用Anaconda Python科学计算包</title>
+    <link href="http://keyunluo.github.io/2016/07/17/2016-07-17-anaconda-python.html"/>
+    <id>http://keyunluo.github.io/2016/07/17/2016-07-17-anaconda-python.html</id>
+    <published>2016-07-17T07:41:02.000Z</published>
+    <updated>2016-07-17T08:36:41.232Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录在Ubuntu16.04上配置Python的科学计算环境包，使用anaconda发行版和清华大学的镜像服务。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;Anaconda下载与安装&quot;&gt;&lt;a href=&quot;#Anaconda下载与安装&quot; class=&quot;headerlink&quot; title=&quot;Anaconda下载与安装&quot;&gt;&lt;/a&gt;Anaconda下载与安装&lt;/h2&gt;&lt;p&gt;由于使用教育网，便可以很方便的使用IPV6资源，其中就包括镜像服务。Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux, Mac, Windows, 包含了众多流行的科学计算、数据分析的 Python 包。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Anaconda&lt;/code&gt; 安装包可以到 &lt;a href=&quot;https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;清华大学镜像站&lt;/a&gt; 下载，本文使用了&lt;code&gt;Anaconda3-4.1.1-Linux-x86_64.sh&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;安装完成后，默认是已经添加了环境变量的，这里在Ubuntu16.04上安装的，会与系统的Python3版本冲突，因此需要修改环境，为了不影响系统的Python3，将Anaconda的Python路径放至PATH的最后，即在&lt;code&gt;/etc/profile&lt;/code&gt;的最后一行添加&lt;code&gt;export PATH=$PATH:/usr/local/anaconda3/bin&lt;/code&gt;。同时为了抛弃系统的Python3，一个解决方案是使用软链将Anaconda的&lt;code&gt;python&lt;/code&gt;指向&lt;code&gt;/usr/local/bin/python3&lt;/code&gt;,具体入下：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ln -s /usr/local/anaconda3/bin/python /usr/local/bin/python3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;镜像源与PyPi配置&quot;&gt;&lt;a href=&quot;#镜像源与PyPi配置&quot; class=&quot;headerlink&quot; title=&quot;镜像源与PyPi配置&quot;&gt;&lt;/a&gt;镜像源与PyPi配置&lt;/h2&gt;&lt;p&gt;通常Anaconda的官方源速度无法忍受，因此需要更改为国内的源，这里可以清华大学的镜像源：Anaconda Python 免费仓库。&lt;/p&gt;
+&lt;p&gt;Linux下在终端中输入：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;conda config --add channels &lt;span class=&quot;string&quot;&gt;&#39;https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;conda config --set show_channel_urls yes&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Windows下在CMD中输入：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;conda config --set show_channel_urls yes&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;一般我们使用PyPi的安装大部分的Python组件，同理，官方速度也很够呛，因此在这里配置国内的源。
+编辑&lt;code&gt;~/.pip/pip.conf&lt;/code&gt;(没有就创建一个)，里面改为清华源：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;index-url = https://pypi.tuna.tsinghua.edu.cn/simple&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;或中科大源，速度都很给力&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[&lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;index-url = https://pypi.mirrors.ustc.edu.cn/simple&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h2&gt;&lt;p&gt;由于安装了Anaconda Python3，所以安装软件时可以用&lt;code&gt;conda install XXX&lt;/code&gt;安装或&lt;code&gt;conda update XXX&lt;/code&gt;来更新，当然也可以用&lt;code&gt;pip3&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;当要为系统的Python2版本安装Numpy时，先安装一些编译依赖项,比如直接用pip安装最新的numpy时会编译错误，原因是缺少必要的库，因此需要安装这些库，一个简介的做法是使用Ubuntu的build-dep命令：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;sudo apt build-dep numpy scipy matplotlib&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后就可以直接安装了：&lt;code&gt;sudo -H pip install -U numpy&lt;/code&gt;.&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录在Ubuntu16.04上配置Python的科学计算环境包，使用anaconda发行版和清华大学的镜像服务。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Tools" scheme="http://keyunluo.github.io/categories/Tools/"/>
+    
+    
+      <category term="Python" scheme="http://keyunluo.github.io/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>Ubuntu16.04配置L2TP-VPN</title>

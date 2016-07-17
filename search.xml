@@ -4,6 +4,34 @@
   
     
     <entry>
+      <title><![CDATA[使用Anaconda Python科学计算包]]></title>
+      <url>http://keyunluo.github.io/2016/07/17/2016-07-17-anaconda-python.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>本篇博文记录在Ubuntu16.04上配置Python的科学计算环境包，使用anaconda发行版和清华大学的镜像服务。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Anaconda下载与安装"><a href="#Anaconda下载与安装" class="headerlink" title="Anaconda下载与安装"></a>Anaconda下载与安装</h2><p>由于使用教育网，便可以很方便的使用IPV6资源，其中就包括镜像服务。Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux, Mac, Windows, 包含了众多流行的科学计算、数据分析的 Python 包。</p>
+<p><code>Anaconda</code> 安装包可以到 <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/" target="_blank" rel="external">清华大学镜像站</a> 下载，本文使用了<code>Anaconda3-4.1.1-Linux-x86_64.sh</code>。</p>
+<p>安装完成后，默认是已经添加了环境变量的，这里在Ubuntu16.04上安装的，会与系统的Python3版本冲突，因此需要修改环境，为了不影响系统的Python3，将Anaconda的Python路径放至PATH的最后，即在<code>/etc/profile</code>的最后一行添加<code>export PATH=$PATH:/usr/local/anaconda3/bin</code>。同时为了抛弃系统的Python3，一个解决方案是使用软链将Anaconda的<code>python</code>指向<code>/usr/local/bin/python3</code>,具体入下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/anaconda3/bin/python /usr/local/bin/python3</span><br></pre></td></tr></table></figure>
+<h2 id="镜像源与PyPi配置"><a href="#镜像源与PyPi配置" class="headerlink" title="镜像源与PyPi配置"></a>镜像源与PyPi配置</h2><p>通常Anaconda的官方源速度无法忍受，因此需要更改为国内的源，这里可以清华大学的镜像源：Anaconda Python 免费仓库。</p>
+<p>Linux下在终端中输入：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels <span class="string">'https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/'</span></span><br><span class="line">conda config --set show_channel_urls yes</span><br></pre></td></tr></table></figure>
+<p>Windows下在CMD中输入：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --set show_channel_urls yes</span><br></pre></td></tr></table></figure>
+<p>一般我们使用PyPi的安装大部分的Python组件，同理，官方速度也很够呛，因此在这里配置国内的源。
+编辑<code>~/.pip/pip.conf</code>(没有就创建一个)，里面改为清华源：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">global</span>]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
+<p>或中科大源，速度都很给力</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">global</span>]</span><br><span class="line">index-url = https://pypi.mirrors.ustc.edu.cn/simple</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>由于安装了Anaconda Python3，所以安装软件时可以用<code>conda install XXX</code>安装或<code>conda update XXX</code>来更新，当然也可以用<code>pip3</code>。</p>
+<p>当要为系统的Python2版本安装Numpy时，先安装一些编译依赖项,比如直接用pip安装最新的numpy时会编译错误，原因是缺少必要的库，因此需要安装这些库，一个简介的做法是使用Ubuntu的build-dep命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt build-dep numpy scipy matplotlib</span><br></pre></td></tr></table></figure>
+<p>然后就可以直接安装了：<code>sudo -H pip install -U numpy</code>.</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Ubuntu16.04配置L2TP-VPN]]></title>
       <url>http://keyunluo.github.io/2016/07/17/2016-07-17-ubuntu16-l2tp-vpn.html</url>
       <content type="html"><![CDATA[<blockquote>
