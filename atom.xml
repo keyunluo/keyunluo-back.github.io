@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-07-08T14:14:54.000Z</updated>
+  <updated>2016-07-17T06:28:34.489Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -14,6 +14,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ubuntu16.04配置L2TP-VPN</title>
+    <link href="http://keyunluo.github.io/2016/07/17/2016-07-17-ubuntu16-l2tp-vpn.html"/>
+    <id>http://keyunluo.github.io/2016/07/17/2016-07-17-ubuntu16-l2tp-vpn.html</id>
+    <published>2016-07-17T05:41:02.000Z</published>
+    <updated>2016-07-17T06:28:34.489Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录在Ubuntu16.04上安装L2TP插件,之前记录了在&lt;a href=&quot;/2016/03/20/2016-03-20-ubuntu14-l2tp-vpn.html&quot;&gt;Ubuntu14.04&lt;/a&gt;上安装L2TP插件，但ppa上还没有更新这个软件包，故只有手动从源代码编译安装。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;安装依赖软件&quot;&gt;&lt;a href=&quot;#安装依赖软件&quot; class=&quot;headerlink&quot; title=&quot;安装依赖软件&quot;&gt;&lt;/a&gt;安装依赖软件&lt;/h2&gt;&lt;p&gt;从源代码编译时需要很多第三方软件，因此首先需要在系统中安装这些库，具体如下:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;sudo apt  install git libtool automake libglib2.0-dev  intltool ppp-dev libgtk+-3-dev libnma-dev libsecret-1-dev libnm-gtk-dev libnm-glib-dev  libnm-glib-vpn-dev xl2tpd&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;安装好这些库后便可以从&lt;code&gt;github&lt;/code&gt;上&lt;code&gt;clone&lt;/code&gt;最新的代码:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git clone https://github.com/nm-l2tp/network-manager-l2tp&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;编译&quot;&gt;&lt;a href=&quot;#编译&quot; class=&quot;headerlink&quot; title=&quot;编译&quot;&gt;&lt;/a&gt;编译&lt;/h2&gt;&lt;p&gt;使用终端进入源代码目录&lt;code&gt;network-manager-l2tp&lt;/code&gt;，运行如下的&lt;code&gt;configure&lt;/code&gt;命令：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;./configure \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  --prefix=/usr --localstatedir=/var --sysconfdir=/etc \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  --libexecdir=/usr/lib/NetworkManager \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  --&lt;span class=&quot;keyword&quot;&gt;with&lt;/span&gt;-pppd-plugin-dir=/usr/lib/pppd/&lt;span class=&quot;number&quot;&gt;2.4&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.7&lt;/span&gt; \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  --enable-absolute-paths&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;没有报错后，接着便&lt;code&gt;make&lt;/code&gt;和&lt;code&gt;make install&lt;/code&gt; :&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;make&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sudo make install&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h2&gt;&lt;p&gt;安装完成后，还不能直接使用，需要关闭&lt;code&gt;xl2tp&lt;/code&gt;，然后机器重新启动:&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;sudo service xl2tpd stop&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sudo update-rc.d xl2tpd disable&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sudo reboot&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;此时，通过&lt;code&gt;网络-编辑连接-增加-第二层隧道协议&lt;/code&gt;便可以配置L2TP-VPN了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/resource/blog/2016-07/L2TP.png&quot; alt=&quot;L2TP-VPN&quot;&gt;&lt;/p&gt;
+&lt;p&gt;配置好用户名，密码，地址后，基本上就OK了。不过由于笔者实验室配置的L2TP貌似有问题，导致部分网页打不开，比如微博。。。然而却能Ping的通，经过一番摸索后，发现是VPN的&lt;code&gt;PPP&lt;/code&gt;设置中的&lt;code&gt;MTU&lt;/code&gt;值过大，于是将其改到了一个较小的数值，便可以愉快的玩耍了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/resource/blog/2016-07/PPP设置.png&quot; alt=&quot;PPP设置&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录在Ubuntu16.04上安装L2TP插件,之前记录了在&lt;a href=&quot;/2016/03/20/2016-03-20-ubuntu14-l2tp-vpn.html&quot;&gt;Ubuntu14.04&lt;/a&gt;上安装L2TP插件，但ppa上还没有更新这个软件包，故只有手动从源代码编译安装。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Ubuntu" scheme="http://keyunluo.github.io/categories/Ubuntu/"/>
+    
+    
+      <category term="VPN" scheme="http://keyunluo.github.io/tags/VPN/"/>
+    
+  </entry>
   
   <entry>
     <title>TODO-LIST</title>
