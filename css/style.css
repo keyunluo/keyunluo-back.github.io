@@ -61,7 +61,9 @@ a:focus {
         color: #777; }
     #header .site-name .description {
       margin: .2em 0 0;
-      color: #999; }
+      color: #999;
+      font: 18px/1.12  YouYuan ,"STLiti", Georgia, Times, sans-serif;
+      font-family: YouYuan ,"STLiti", "Classic Grotesque W01", "Helvetica Neue", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif; }
   #header #nav-menu {
     margin: 10px 0 -1px;
     padding: 0;
@@ -1382,21 +1384,3 @@ table > tbody > tr:hover {
 
 .highlight table td, .gist table td {
   border: none; }
-
-/* search result*/
-ul.search-result-list {
-  padding-left: 10px; }
-
-a.search-result-title {
-  font-weight: bold;
-  font-size: 15px;
-  color: #555; }
-
-p.search-result {
-  color: #444;
-  text-align: justify; }
-
-em.search-keyword {
-  font-weight: bold;
-  font-style: normal;
-  color: #01579f; }

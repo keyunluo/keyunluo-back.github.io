@@ -4,10 +4,323 @@
   
     
     <entry>
+      <title><![CDATA[使用Anaconda Python科学计算包]]></title>
+      <url>http://keyunluo.github.io/2016/07/17/2016-07-17-anaconda-python.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>本篇博文记录在Ubuntu16.04上配置Python的科学计算环境包，使用anaconda发行版和清华大学的镜像服务。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Anaconda下载与安装"><a href="#Anaconda下载与安装" class="headerlink" title="Anaconda下载与安装"></a>Anaconda下载与安装</h2><p>由于使用教育网，便可以很方便的使用IPV6资源，其中就包括镜像服务。Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux, Mac, Windows, 包含了众多流行的科学计算、数据分析的 Python 包。</p>
+<p><code>Anaconda</code> 安装包可以到 <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/" target="_blank" rel="external">清华大学镜像站</a> 下载，本文使用了<code>Anaconda3-4.1.1-Linux-x86_64.sh</code>。</p>
+<p>安装完成后，默认是已经添加了环境变量的，这里在Ubuntu16.04上安装的，会与系统的Python3版本冲突，因此需要修改环境，为了不影响系统的Python3，将Anaconda的Python路径放至PATH的最后，即在<code>/etc/profile</code>的最后一行添加<code>export PATH=$PATH:/usr/local/anaconda3/bin</code>。同时为了抛弃系统的Python3，一个解决方案是使用软链将Anaconda的<code>python</code>指向<code>/usr/local/bin/python3</code>,具体入下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/anaconda3/bin/python /usr/local/bin/python3</span><br></pre></td></tr></table></figure>
+<h2 id="镜像源与PyPi配置"><a href="#镜像源与PyPi配置" class="headerlink" title="镜像源与PyPi配置"></a>镜像源与PyPi配置</h2><p>通常Anaconda的官方源速度无法忍受，因此需要更改为国内的源，这里可以清华大学的镜像源：Anaconda Python 免费仓库。</p>
+<p>Linux下在终端中输入：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels <span class="string">'https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/'</span></span><br><span class="line">conda config --set show_channel_urls yes</span><br></pre></td></tr></table></figure>
+<p>Windows下在CMD中输入：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --set show_channel_urls yes</span><br></pre></td></tr></table></figure>
+<p>一般我们使用PyPi的安装大部分的Python组件，同理，官方速度也很够呛，因此在这里配置国内的源。
+编辑<code>~/.pip/pip.conf</code>(没有就创建一个)，里面改为清华源：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">global</span>]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
+<p>或中科大源，速度都很给力</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">global</span>]</span><br><span class="line">index-url = https://pypi.mirrors.ustc.edu.cn/simple</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>由于安装了Anaconda Python3，所以安装软件时可以用<code>conda install XXX</code>安装或<code>conda update XXX</code>来更新，当然也可以用<code>pip3</code>。</p>
+<p>当要为系统的Python2版本安装Numpy时，先安装一些编译依赖项,如果直接用pip安装最新的numpy时会编译错误，原因是缺少必要的库，因此需要先安装这些库，一个简单的做法是使用Ubuntu的build-dep命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt build-dep python-numpy python-scipy python-matplotlib</span><br></pre></td></tr></table></figure>
+<p>然后就可以直接安装了：<code>sudo -H pip install -U numpy</code>.</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Ubuntu16.04配置L2TP-VPN]]></title>
+      <url>http://keyunluo.github.io/2016/07/17/2016-07-17-ubuntu16-l2tp-vpn.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>本篇博文记录在Ubuntu16.04上安装L2TP插件,之前记录了在<a href="/2016/03/20/2016-03-20-ubuntu14-l2tp-vpn.html">Ubuntu14.04</a>上安装L2TP插件，但ppa上还没有更新这个软件包，故只有手动从源代码编译安装。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="安装依赖软件"><a href="#安装依赖软件" class="headerlink" title="安装依赖软件"></a>安装依赖软件</h2><p>从源代码编译时需要很多第三方软件，因此首先需要在系统中安装这些库，具体如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt  install git libtool automake libglib2.0-dev  intltool ppp-dev libgtk+-3-dev libnma-dev libsecret-1-dev libnm-gtk-dev libnm-glib-dev  libnm-glib-vpn-dev xl2tpd</span><br></pre></td></tr></table></figure>
+<p>安装好这些库后便可以从<code>github</code>上<code>clone</code>最新的代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/nm-l2tp/network-manager-l2tp</span><br></pre></td></tr></table></figure>
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>使用终端进入源代码目录<code>network-manager-l2tp</code>，运行如下的<code>configure</code>命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./configure \</span><br><span class="line">  --prefix=/usr --localstatedir=/var --sysconfdir=/etc \</span><br><span class="line">  --libexecdir=/usr/lib/NetworkManager \</span><br><span class="line">  --<span class="keyword">with</span>-pppd-plugin-dir=/usr/lib/pppd/<span class="number">2.4</span><span class="number">.7</span> \</span><br><span class="line">  --enable-absolute-paths</span><br></pre></td></tr></table></figure>
+<p>没有报错后，接着便<code>make</code>和<code>make install</code> :</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>安装完成后，还不能直接使用，需要关闭<code>xl2tp</code>，然后机器重新启动:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo service xl2tpd stop</span><br><span class="line">sudo update-rc.d xl2tpd disable</span><br><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
+<p>此时，通过<code>网络-编辑连接-增加-第二层隧道协议</code>便可以配置L2TP-VPN了。</p>
+<p><img src="/resource/blog/2016-07/L2TP.png" alt="L2TP-VPN"></p>
+<p>配置好用户名，密码，地址后，基本上就OK了。不过由于笔者实验室配置的L2TP貌似有问题，导致部分网页打不开，比如微博。。。然而却能Ping的通，经过一番摸索后，发现是VPN的<code>PPP</code>设置中的<code>MTU</code>值过大，于是将其改到了一个较小的数值，便可以愉快的玩耍了。</p>
+<p><img src="/resource/blog/2016-07/PPP设置.png" alt="PPP设置"></p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[TODO-LIST]]></title>
+      <url>http://keyunluo.github.io/2016/06/30/2016-06-30-todolist.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>2016-07月-2017-01月待做事项</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="基础算法"><a href="#基础算法" class="headerlink" title="基础算法"></a>基础算法</h2><p>参考书籍:</p>
+<ul>
+<li><em>Data Structures and Algorithms in C++, 2nd edition</em> Michael T. Goodrich等著</li>
+<li><em>Data Structures and Algorithms in Java, 6th Edition</em> James Aspnes著</li>
+<li><em>Data Structures and Algorithms in Python</em> Michael T. Goodrich等著</li>
+<li><em>Data Structures and Algorithms with JavaScript</em> Michael McMillan等著</li>
+<li><em>算法导论</em> 第三版，殷建平 等译</li>
+<li><em>快学Scala</em>  高宇翔 译</li>
+</ul>
+<p>学习课题:</p>
+<ul>
+<li><em>[x]</em> 数组</li>
+<li><em>[x]</em> 链表</li>
+<li><em>[x]</em> 栈和队列</li>
+<li><em>[x]</em> 树</li>
+<li><em>[x]</em> 堆和优先队列</li>
+<li><em>[x]</em> 哈希</li>
+<li><em>[x]</em> 搜索树</li>
+<li><em>[x]</em> 集合</li>
+<li><em>[x]</em> STL</li>
+<li><em>[x]</em> 排序</li>
+<li><em>[x]</em> 图论</li>
+<li><em>[x]</em> 动态规划</li>
+</ul>
+<h2 id="分布式系统"><a href="#分布式系统" class="headerlink" title="分布式系统"></a>分布式系统</h2><p>参考书籍:</p>
+<ul>
+<li><em>大规模分布式系统架构与设计实战</em> 彭渊编 著</li>
+<li><em>Notes on Theory of Distributed Systems</em> James Aspnes 著</li>
+</ul>
+<p>学习课题:</p>
+<ul>
+<li><em>[x]</em> 分布式并行计算的原理与实践</li>
+<li><em>[x]</em> 分布式协调的实现</li>
+<li><em>[x]</em> 分布式缓存的实现</li>
+<li><em>[x]</em> 消息队列的实现</li>
+<li><em>[x]</em> 分布式文件系统的实现</li>
+<li><em>[x]</em> 分布式作业调度平台的实现</li>
+<li><em>[x]</em> Message passing</li>
+<li><em>[x]</em> Shared memory</li>
+</ul>
+<h2 id="PRML"><a href="#PRML" class="headerlink" title="PRML"></a>PRML</h2><p>参考书籍:</p>
+<ul>
+<li><em>统计学习方法</em> 李航编著</li>
+<li><em>模式识别与机器学习</em> 马春鹏  译</li>
+<li><em>Machine Learning A Bayesian and Optimization Perspective</em> Sergios Theodoridis 编著</li>
+</ul>
+<p>学习课题:</p>
+<ul>
+<li><em>[x]</em> 统计学习方法</li>
+<li><em>[x]</em> 感知机</li>
+<li><em>[x]</em> k近邻</li>
+<li><em>[x]</em> 朴素贝叶斯</li>
+<li><em>[x]</em> 决策树</li>
+<li><em>[x]</em> 逻辑回归与最大熵模型</li>
+<li><em>[x]</em> 支持向量机</li>
+<li><em>[x]</em> 提升方法</li>
+<li><em>[x]</em> EM算法及其推广</li>
+<li><em>[x]</em> 隐马尔科夫模型</li>
+<li><em>[x]</em> 条件随机场</li>
+<li><em>[x]</em> 概率分布</li>
+<li><em>[x]</em> 回归的线性模型</li>
+<li><em>[x]</em> 分类的线性模型</li>
+<li><em>[x]</em> 神经网络</li>
+<li><em>[x]</em> 核方法</li>
+<li><em>[x]</em> 稀疏核机</li>
+<li><em>[x]</em> 图模型</li>
+<li><em>[x]</em> 混合模型和EM</li>
+<li><em>[x]</em> 近似推断</li>
+<li><em>[x]</em> 采样方法</li>
+<li><em>[x]</em> 连续潜在变量</li>
+<li><em>[x]</em> 顺序数据</li>
+<li><em>[x]</em> 组合模型</li>
+</ul>
+<h2 id="大数据"><a href="#大数据" class="headerlink" title="大数据"></a>大数据</h2><p>参考书籍:</p>
+<ul>
+<li><em>Data algorithms recipes for scaling up with hadoop and spark</em> Mahmoud Parsian编著</li>
+<li><em>Mastering Apache Spark</em> Mike Frampton编著</li>
+<li><em>HBase- The Definitive Guide, 2nd Edition</em> Lars George编著</li>
+<li><em>Apache Mahout Beyond MapReduce</em> Dmitriy Lyubimov等</li>
+</ul>
+<p>学习课题:</p>
+<ul>
+<li><em>[✔]</em> Secondary Sort</li>
+<li><em>[x]</em> Top 10 List</li>
+<li><em>[x]</em> Left Outer Join</li>
+<li><em>[x]</em> Order Inversion</li>
+<li><em>[x]</em> Moving Average</li>
+<li><em>[x]</em> Market Basket Analysis</li>
+<li><em>[x]</em> Common Friends</li>
+<li><em>[x]</em> Recommendation Engines Using MapReduce</li>
+<li><em>[x]</em> Content-Based Recommendation: Movies</li>
+<li><em>[x]</em> Smarter Email Marketing with the Markov Model</li>
+<li><em>[x]</em> K-Means Clustering</li>
+<li><em>[x]</em> k-Nearest Neighbors</li>
+<li><em>[x]</em> Naive Bayes</li>
+<li><em>[x]</em> Sentiment Analysis</li>
+<li><em>[x]</em> Finding, Counting, and Listing All Triangles in Large Graphs</li>
+<li><em>[x]</em> K-mer Counting</li>
+<li><em>[x]</em> DNA Sequencing</li>
+<li><em>[x]</em> Cox Regression</li>
+<li><em>[x]</em> Cochran-Armitage Test for Trend</li>
+<li><em>[x]</em> Allelic Frequency</li>
+<li><em>[x]</em> The T-Test</li>
+<li><em>[x]</em> Pearson Correlation</li>
+<li><em>[x]</em> DNA Base Count</li>
+<li><em>[x]</em> RNA Sequencing</li>
+<li><em>[x]</em> Gene Aggregation</li>
+<li><em>[x]</em> Linear Regression</li>
+<li><em>[x]</em> MapReduce and Monoids</li>
+<li><em>[x]</em> The Small Files Problem</li>
+<li><em>[x]</em> Huge Cache for MapReduce</li>
+<li><em>[x]</em> The Bloom Filter</li>
+<li><em>[x]</em> HBase Client API: The Basics<ul>
+<li>[x] Data Types and Hierarchy</li>
+<li>[x] CRUD Operations</li>
+<li>[x] Batch Operations</li>
+<li>[x] Scans</li>
+<li>[x] Miscellaneous Features</li>
+</ul>
+</li>
+<li><em>[x]</em> HBase Client API: Advanced Features<ul>
+<li>[x] Filters</li>
+<li>[x] Counters</li>
+<li>[x] Coprocessors</li>
+</ul>
+</li>
+<li><em>[x]</em> HBase Client API: Administrative Features<ul>
+<li>[x] Schema Definition</li>
+<li>[x] HBaseAdmin</li>
+<li>[x] ReplicationAdmin</li>
+</ul>
+</li>
+<li><em>[x]</em> HBase Available Clients<ul>
+<li>[x] Gateway Clients</li>
+<li>[x] FrameworkClients</li>
+<li>[x] Shell</li>
+<li>[x] Web-based UI</li>
+</ul>
+</li>
+<li><em>[x]</em> Mahout’s in-core algebra</li>
+<li><em>[x]</em> Mahout’s Distributed Algebra</li>
+<li><em>[x]</em> Stochastic SVD</li>
+<li><em>[x]</em> Stochastic PCA</li>
+<li><em>[x]</em> Data Sketching with Bahmani sketch</li>
+<li><em>[x]</em> Naive Bayes Example</li>
+</ul>
+<h2 id="系统技能"><a href="#系统技能" class="headerlink" title="系统技能"></a>系统技能</h2><h3 id="LaTeX"><a href="#LaTeX" class="headerlink" title="LaTeX"></a>LaTeX</h3><p>参考书籍:</p>
+<ul>
+<li><strong>LaTeX入门</strong> 刘海洋编著<ul>
+<li><em>[x]</em> 文本组织</li>
+<li><em>[x]</em> 自动化工具</li>
+<li><em>[x]</em> 数学公式</li>
+<li><em>[x]</em> 图表</li>
+<li><em>[x]</em> 幻灯片</li>
+</ul>
+</li>
+</ul>
+<h3 id="Shell"><a href="#Shell" class="headerlink" title="Shell"></a>Shell</h3><p>参考书籍:</p>
+<ul>
+<li><strong>Linux Shell脚本攻略</strong>  第二版，门佳译</li>
+<li><p><strong>Linux Shell 编程艺术</strong>  张泽编著</p>
+<ul>
+<li><em>[x]</em> shell基础</li>
+<li><em>[x]</em> 常用命令</li>
+<li><em>[x]</em> 文件操作</li>
+<li><em>[x]</em> 文本处理</li>
+<li><em>[x]</em> Web网页</li>
+<li><em>[x]</em> 压缩归档</li>
+<li><em>[x]</em> 网络设置</li>
+<li><em>[x]</em> 磁盘管理</li>
+<li><em>[x]</em> 进程管理</li>
+<li><em>[x]</em> IO重定向</li>
+<li><em>[x]</em> 函数编写</li>
+<li><em>[x]</em> 正则表达式</li>
+<li><em>[x]</em> 脚本调试</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[正当毕业时]]></title>
+      <url>http://keyunluo.github.io/2016/06/21/2016-06-21-graduation.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>就算新的开始依旧美丽，而此刻的心情也必然暗淡。</p>
+</blockquote>
+<a id="more"></a>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=109864&auto=0&height=66"></iframe>
+
+
+
+<h2 id="时光缝隙里的记忆"><a href="#时光缝隙里的记忆" class="headerlink" title="时光缝隙里的记忆"></a>时光缝隙里的记忆</h2><p>&nbsp;&nbsp;紧张的毕业答辩之后，整个人顿时轻松了不少，收拾好东西和搬家后，不知不觉间感到些许失落和无所事事。毕业典礼上全院三百多人集体煽情了一把，毕竟这一别很有可能好多人将很难再见上一面。毕业典礼一结束，顺便吃了个学校发的毕业纪念餐，意味着这将是在这个学校的最后一天了。虽然宿舍有些破旧并且并不宽敞，但我依然记得刚开始入学时第一次躺在这张床上的感觉。我是个随遇而安的人，也许在中学时代的羁畔太多，刚入大学的我对这一切新鲜的生活感到异常兴奋和温馨。而如今，生活了四年，严格来说大概三年多一点的日子，依然感到舒适。此时此刻，用白驹过隙、时光荏苒这些曾经“为赋新词强说愁”的词汇来表达此时的心境却感到越发真实贴切。</p>
+<p>&nbsp;&nbsp;曾经以为，我的大学不值得留恋，既没有轰轰烈烈的爱情，也没有叱咤风云的专业技能，日子过得平平淡淡甚至很Dull，所谓的星辰大海依旧虚无缥缈，总体的感觉就是不会玩，也不会学习。然而一路走来，细细回想，在稀里糊涂地走过的四年的青春时光里，越想经历的越多，感悟的更多，到头来才发现虽然没有他人过的精彩，却也在不断地探索前行，在发现一个更大的世界的旅程中磕磕碰碰，所有惯常的令人感动的场景也会让我潸然。</p>
+<h2 id="间歇性踌躇满志，持续性混吃等死"><a href="#间歇性踌躇满志，持续性混吃等死" class="headerlink" title="间歇性踌躇满志，持续性混吃等死"></a>间歇性踌躇满志，持续性混吃等死</h2><p>&nbsp;&nbsp;那时虽然天气炎热，寝室也没有空调，却满腔热情，早起早睡，精神饱满，而后渐渐地越起越晚，到大一下基本上就有起床困难症了。刚入大学那会，由于上的课主要是数学基础课，做习题花费的时间比较多，总体感觉不是很吃力，但也不是特别用功钻研，并且对程序设计语言课不太感兴趣，归结起来就是很浮躁，这种状态一直延续了整个大学四年。大二时开始上专业基础课，各种实验课搞得我很是困倦，几门硬件相关的课程学习得很是吃力，这也直接导致我对这一方向失去兴趣，后来又参加科创，学习一些数字图像处理的课程，课外花了不少时间，但总感觉收获有限，这一年算过得比较失败。大三开始真正上专业课，对学科开始有了一个初步的了解，下学期就开始考虑保研和实习的事，开始是准备去华为这样的公司实习的，奈何内推时填写实习时间三个月后直接没有了下文，一个偶然的机会就去了中科院电子所苏州研究院，这样暑假就奔波于北京、苏州了。大四开学后就面临着保研的问题，机试不是很好，但凭着底子厚还是有惊无险的获得了保研资格，继续读书。在苏州实习四个月后，十一月底回到学校，后来联系导师，导师让过去做毕设，这样大四后半年就在南大度过的，直到毕设论文答辩前夕。</p>
+<p>&nbsp;&nbsp;归结起来，大学前三年几乎宅在学校，大四到处奔波，从北京、苏州往返于南京，整个大学的状态是“三分钟热度”，“浅尝辄止”成为常态。每次都想在图书馆坐下来好好学习一番，可是不到半小时便注意力分散，看一些技术书籍，常痴迷于各种计算机新技术，常纠结于各种术语之间，最喜欢瞎折腾，装系统编译软件，浪费了好多时间，做不了极客，却积攒了不少吹牛的资本。大学里面的专业课就从来没有认真上过，平时也没有什么预习复习，基本上上课听多少就多少，考前开始认真预习刷试卷，保持着一个伪学霸的状态，成绩不是最好，但也说得过去。</p>
+<h2 id="努力学习的意义"><a href="#努力学习的意义" class="headerlink" title="努力学习的意义"></a>努力学习的意义</h2><p>&nbsp;&nbsp;<code>谁没有不切实际的梦想，把未来的人生精彩的幻想 常常一个人悄悄的描绘，欣赏那种假设的辉煌</code></p>
+<p>&nbsp;&nbsp;以前一直没有认真考虑过这个问题，直到大四这一年东奔西走，渐渐领悟到努力学习的意义。努力和有钱的意义差不多，让你在未来的生活中有更多选择。努力的最大动力，在于你可以选择你想要的生活，而不是被生活选择。努力就意味着掌握了主动权，掌握了改变自身状态的能力，在一个更大的世界里过自己想要的生活。为此，现在的我懊悔不已，既然学习技术，就要做那个最厉害的一个，大多数人都很弱，你只要稍微精通某些方面的知识就会脱颖而出。</p>
+<p>&nbsp;&nbsp;我一直认为我很幸运，从上大学一开始就进入计算机软件培优班到科创获得一等奖，从保研到南大到最终毕设成绩优秀。虽然我不是足够优秀，但运气不会太差。我坚信越努力，越幸运，积极乐观，用努力学习使当初的选择变得正确，一直做个幸运的人。</p>
+<h2 id="向着自由的未来前行"><a href="#向着自由的未来前行" class="headerlink" title="向着自由的未来前行"></a>向着自由的未来前行</h2><p>&nbsp;&nbsp;<code>我飞出五行之内三界之外，我心头无牵无挂无限自在，我知道生亦何苦死亦何哀，如来如不来一样死性不改。</code></p>
+<p>&nbsp;&nbsp;大学毕业，既是终点，也是起点，以后的路也越走越宽。现在的我，希望自己能放下手机，能做一个努力上进，能掌控我的未来的人。积极锻炼身体，保持一个健康的体魄；玩就玩个痛快，尽情释放自我；读书做事不贪图多，唯求精益求精。通往卓越的路只有一条，就是静下心来积累，天下武功，唯快不破。</p>
+<p>&nbsp;&nbsp;我不想被束缚，我希望自由自在的活着，我想看世间最美的一切。</p>
+<p>&nbsp;&nbsp;祝所有在意我的人和我在意的人，人生的道路越走越宽，后会有期。</p>
+<p><img src="/resource/blog/2016-06/学位证.jpg" alt="学位照"></p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Elasticsearch入门学习(3)——查询]]></title>
+      <url>http://keyunluo.github.io/2016/05/27/2016-05-27-elasticsearch-3.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>ElasticSearch</strong>提供了丰富的REST风格的API来满足不同的场景需求，本篇介绍Elasticsearch的查询相关的基础和高级操作。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="检索文档"><a href="#检索文档" class="headerlink" title="检索文档"></a>检索文档</h2><ul>
+<li><strong>通过ID直接查询</strong>
+执行<code>HTTP GET</code>请求，通过<code>索引-类型-ID</code>便可以返回原始的JSON格式的文档，原始的JSON文档在<code>_source</code>字段里。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">dislab@server:~$ curl -XGET <span class="string">'http://server:9200/gps_data/20160205/3201000061%2010:20:54?pretty'</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"_index"</span> : <span class="string">"gps_data"</span>,</span><br><span class="line">  <span class="string">"_type"</span> : <span class="string">"20160205"</span>,</span><br><span class="line">  <span class="string">"_id"</span> : <span class="string">"3201000061 10:20:54"</span>,</span><br><span class="line">  <span class="string">"_version"</span> : <span class="number">1</span>,</span><br><span class="line">  <span class="string">"found"</span> : true,</span><br><span class="line">  <span class="string">"_source"</span> : &#123;</span><br><span class="line">    <span class="string">"ZDBH"</span> : <span class="string">"3201000061"</span>,</span><br><span class="line">    <span class="string">"ROWKEY"</span> : <span class="string">"3201000061 10:20:54"</span>,</span><br><span class="line">    <span class="string">"GPSSJ"</span> : <span class="string">"2016-02-05 10:20:54"</span>,</span><br><span class="line">    <span class="string">"XLMC"</span> : <span class="string">"80路"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意到<code>ID</code>字段插入了<code>%20</code>的字段，这是因为<code>curl</code>命令中不能有空格，若有空格则必须替换掉。</p>
+<ul>
+<li><strong>简单搜索</strong>
+简单搜索不需要指定<code>ID</code>,需要指定查询字符串，格式为<code>_search?q=key:value</code></li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dislab@server:~$ curl -XGET  http://server:9200/gps_data/20160205/_search?q=GPSSJ:“2016-02-05 10:20:54”</span><br><span class="line">&#123;"took":695,"timed_out":false,"_shards":&#123;"total":5,"successful":5,"failed":0&#125;,"hits":&#123;"total":10093722,"max_score":0.3666257,"hits":[&#123;"_index":"gps_data","_type":"20160205","_id":"3201000158 05:05:05","_score":0.3666257,"_source":&#123;"ZDBH":"3201000158","ROWKEY":"3201000158 05:05:05","GPSSJ":"2016-02-05 05:05:05","XLMC":"13路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201200106 05:05:05","_score":0.3666257,"_source":&#123;"ZDBH":"3201200106","ROWKEY":"3201200106 05:05:05","GPSSJ":"2016-02-05 05:05:05","XLMC":"170路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201200154 05:05:05","_score":0.3666257,"_source":&#123;"ZDBH":"3201200154","ROWKEY":"3201200154 05:05:05","GPSSJ":"2016-02-05 05:05:05","XLMC":"125路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201200126 05:05:05","_score":0.3666257,"_source":&#123;"ZDBH":"3201200126","ROWKEY":"3201200126 05:05:05","GPSSJ":"2016-02-05 05:05:05","XLMC":"8路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201300190 05:05:05","_score":0.3666257,"_source":&#123;"ZDBH":"3201300190","ROWKEY":"3201300190 05:05:05","GPSSJ":"2016-02-05 05:05:05","XLMC":"48路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201300169 05:05:05","_score":0.3666257,"_source":&#123;"ZDBH":"3201300169","ROWKEY":"3201300169 05:05:05","GPSSJ":"2016-02-05 05:05:05","XLMC":"48路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100008 05:05:05","_score":0.3666257,"_source":&#123;"ZDBH":"3201100008","ROWKEY":"3201100008 05:05:05","GPSSJ":"2016-02-05 05:05:05","XLMC":"306路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201000166 05:05:05","_score":0.36632675,"_source":&#123;"ZDBH":"3201000166","ROWKEY":"3201000166 05:05:05","GPSSJ":"2016-02-05 05:05:05","XLMC":"13路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201000179 05:05:05","_score":0.36632675,"_source":&#123;"ZDBH":"3201000179","ROWKEY":"3201000179 05:05:05","GPSSJ":"2016-02-05 05:05:05","XLMC":"13路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201000019 05:05:05","_score":0.36632675,"_source":&#123;"ZDBH":"3201000019","ROWKEY":"3201000019 05:05:05","GPSSJ":"2016-02-05 05:05:05","XLMC":"166路"&#125;&#125;]&#125;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>DSL语句查询</strong>
+DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现，可以构建复杂的查询。
+上述查询可写成如下的<code>DSL</code>查询方式</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dislab@server:~$ curl -XGET 'http://server:9200/gps_data/20160205/_search' -d '</span><br><span class="line">&gt; &#123;</span><br><span class="line">&gt;     "query" : &#123;</span><br><span class="line">&gt;         "match" : &#123;</span><br><span class="line">&gt;             "GPSSJ" : "2016-02-05 10:20:54"</span><br><span class="line">&gt;         &#125;</span><br><span class="line">&gt;     &#125;</span><br><span class="line">&gt; &#125;</span><br><span class="line">&gt; '</span><br><span class="line">&#123;"took":854,"timed_out":false,"_shards":&#123;"total":5,"successful":5,"failed":0&#125;,"hits":&#123;"total":10093722,"max_score":2.7672434,"hits":[&#123;"_index":"gps_data","_type":"20160205","_id":"3201200801 20:54:10","_score":2.7672434,"_source":&#123;"ZDBH":"3201200801","ROWKEY":"3201200801 20:54:10","GPSSJ":"2016-02-05 20:54:10","XLMC":"170路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201300063 20:54:10","_score":2.7672434,"_source":&#123;"ZDBH":"3201300063","ROWKEY":"3201300063 20:54:10","GPSSJ":"2016-02-05 20:54:10","XLMC":"D9路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201000027 20:10:54","_score":2.7672434,"_source":&#123;"ZDBH":"3201000027","ROWKEY":"3201000027 20:10:54","GPSSJ":"2016-02-05 20:10:54","XLMC":"7路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201000193 10:54:20","_score":2.7672434,"_source":&#123;"ZDBH":"3201000193","ROWKEY":"3201000193 10:54:20","GPSSJ":"2016-02-05 10:54:20","XLMC":"13路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201000115 20:10:54","_score":2.7672434,"_source":&#123;"ZDBH":"3201000115","ROWKEY":"3201000115 20:10:54","GPSSJ":"2016-02-05 20:10:54","XLMC":"13路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 10:54:20","_score":2.7672434,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 10:54:20","GPSSJ":"2016-02-05 10:54:20","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201200163 10:20:54","_score":2.7672434,"_source":&#123;"ZDBH":"3201200163","ROWKEY":"3201200163 10:20:54","GPSSJ":"2016-02-05 10:20:54","XLMC":"201路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201200200 20:10:54","_score":2.7672434,"_source":&#123;"ZDBH":"3201200200","ROWKEY":"3201200200 20:10:54","GPSSJ":"2016-02-05 20:10:54","XLMC":"170路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201200127 10:20:54","_score":2.7672434,"_source":&#123;"ZDBH":"3201200127","ROWKEY":"3201200127 10:20:54","GPSSJ":"2016-02-05 10:20:54","XLMC":"125路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201200127 10:54:20","_score":2.7672434,"_source":&#123;"ZDBH":"3201200127","ROWKEY":"3201200127 10:54:20","GPSSJ":"2016-02-05 10:54:20","XLMC":"125路"&#125;&#125;]&#125;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>复杂DSL语句查询</strong>
+<code>DSL</code>查询可嵌套多种条件形成复杂查询。</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">dislab@server:~$ curl -XGET 'http://server:9200/gps_data/20160205/_search' -d '</span><br><span class="line">&gt; &#123;</span><br><span class="line">&gt;     "query" : &#123;</span><br><span class="line">&gt;         "filtered" : &#123;</span><br><span class="line">&gt;             "filter" : &#123;</span><br><span class="line">&gt;                 "range" : &#123;</span><br><span class="line">&gt;                     "ZDBH" : &#123; "gt" : 3201300108 &#125;</span><br><span class="line">&gt;                 &#125;</span><br><span class="line">&gt;             &#125;,</span><br><span class="line">&gt;             "query" : &#123;</span><br><span class="line">&gt;                 "match" : &#123;</span><br><span class="line">&gt;                     "GPSSJ" : "2016-02-05 10:20:54"</span><br><span class="line">&gt;                 &#125;</span><br><span class="line">&gt;             &#125;</span><br><span class="line">&gt;         &#125;</span><br><span class="line">&gt;     &#125;</span><br><span class="line">&gt; &#125;</span><br><span class="line">&gt; '</span><br><span class="line">&#123;"took":657,"timed_out":false,"_shards":&#123;"total":5,"successful":5,"failed":0&#125;,"hits":&#123;"total":645657,"max_score":2.7672434,"hits":[&#123;"_index":"gps_data","_type":"20160205","_id":"3201300120 20:10:54","_score":2.7672434,"_source":&#123;"ZDBH":"3201300120","ROWKEY":"3201300120 20:10:54","GPSSJ":"2016-02-05 20:10:54","XLMC":"41路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201300220 10:20:54","_score":2.7672434,"_source":&#123;"ZDBH":"3201300220","ROWKEY":"3201300220 10:20:54","GPSSJ":"2016-02-05 10:20:54","XLMC":"306路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201300131 10:20:54","_score":2.7672434,"_source":&#123;"ZDBH":"3201300131","ROWKEY":"3201300131 10:20:54","GPSSJ":"2016-02-05 10:20:54","XLMC":"48路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201300162 10:54:20","_score":2.7672434,"_source":&#123;"ZDBH":"3201300162","ROWKEY":"3201300162 10:54:20","GPSSJ":"2016-02-05 10:54:20","XLMC":"182路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201300177 20:54:10","_score":2.7672434,"_source":&#123;"ZDBH":"3201300177","ROWKEY":"3201300177 20:54:10","GPSSJ":"2016-02-05 20:54:10","XLMC":"56路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201300165 10:54:20","_score":2.7672434,"_source":&#123;"ZDBH":"3201300165","ROWKEY":"3201300165 10:54:20","GPSSJ":"2016-02-05 10:54:20","XLMC":"48路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201300115 20:54:10","_score":2.7672434,"_source":&#123;"ZDBH":"3201300115","ROWKEY":"3201300115 20:54:10","GPSSJ":"2016-02-05 20:54:10","XLMC":"48路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201300120 20:54:10","_score":2.7672434,"_source":&#123;"ZDBH":"3201300120","ROWKEY":"3201300120 20:54:10","GPSSJ":"2016-02-05 20:54:10","XLMC":"41路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201300171 10:20:54","_score":2.7672434,"_source":&#123;"ZDBH":"3201300171","ROWKEY":"3201300171 10:20:54","GPSSJ":"2016-02-05 10:20:54","XLMC":"56路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201300200 10:20:54","_score":2.7672434,"_source":&#123;"ZDBH":"3201300200","ROWKEY":"3201300200 10:20:54","GPSSJ":"2016-02-05 10:20:54","XLMC":"306路"&#125;&#125;]&#125;&#125;dislab@server:~$</span><br></pre></td></tr></table></figure>
+<p>上述查询主要包括一个区间过滤器和match语句。</p>
+<ul>
+<li><strong>全文搜索</strong>
+使用<code>match</code>匹配计算相关性，根据结果相关性评分来对结果集进行排序。</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dislab@server:~$ curl -XGET 'http://server:9200/gps_data/20160205/_search' -d '</span><br><span class="line">&#123;</span><br><span class="line">     "query" : &#123;</span><br><span class="line">         "match" : &#123;</span><br><span class="line">             "XLMC" : "57"</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line">'</span><br><span class="line">&#123;"took":146,"timed_out":false,"_shards":&#123;"total":5,"successful":5,"failed":0&#125;,"hits":&#123;"total":143481,"max_score":2.9686642,"hits":[&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:17:12","_score":2.9686642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:17:12","GPSSJ":"2016-02-05 07:17:12","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:17:38","_score":2.9686642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:17:38","GPSSJ":"2016-02-05 07:17:38","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:17:42","_score":2.9686642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:17:42","GPSSJ":"2016-02-05 07:17:42","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:01","_score":2.9686642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:01","GPSSJ":"2016-02-05 07:18:01","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:15","_score":2.9686642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:15","GPSSJ":"2016-02-05 07:18:15","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:17","_score":2.9686642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:17","GPSSJ":"2016-02-05 07:18:17","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:23","_score":2.9686642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:23","GPSSJ":"2016-02-05 07:18:23","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:30","_score":2.9686642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:30","GPSSJ":"2016-02-05 07:18:30","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:48","_score":2.9686642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:48","GPSSJ":"2016-02-05 07:18:48","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:49","_score":2.9686642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:49","GPSSJ":"2016-02-05 07:18:49","XLMC":"57路"&#125;&#125;]&#125;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>短语搜索</strong>
+关键字之间是<code>与</code>关系的短语搜素，要求在搜索过程中关键字是相邻的。</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET 'http://server:9200/gps_data/20160205/_search' -d '</span><br><span class="line">&#123;</span><br><span class="line">    "query" : &#123;</span><br><span class="line">        "match_phrase" : &#123;</span><br><span class="line">            "XLMC" : "57 路"</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">'</span><br><span class="line">&#123;"took":236,"timed_out":false,"_shards":&#123;"total":5,"successful":5,"failed":0&#125;,"hits":&#123;"total":143481,"max_score":3.5936642,"hits":[&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 14:22:40","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 14:22:40","GPSSJ":"2016-02-05 14:22:40","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 14:22:52","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 14:22:52","GPSSJ":"2016-02-05 14:22:52","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 14:23:06","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 14:23:06","GPSSJ":"2016-02-05 14:23:06","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 14:23:37","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 14:23:37","GPSSJ":"2016-02-05 14:23:37","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 14:23:39","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 14:23:39","GPSSJ":"2016-02-05 14:23:39","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 14:23:47","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 14:23:47","GPSSJ":"2016-02-05 14:23:47","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 14:23:58","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 14:23:58","GPSSJ":"2016-02-05 14:23:58","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 14:24:31","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 14:24:31","GPSSJ":"2016-02-05 14:24:31","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 14:24:35","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 14:24:35","GPSSJ":"2016-02-05 14:24:35","XLMC":"57路"&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 14:25:15","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 14:25:15","GPSSJ":"2016-02-05 14:25:15","XLMC":"57路"&#125;&#125;]&#125;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>搜索结果高亮</strong>
+使用<code>highlight</code>高亮搜索到的匹配关键字。</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET 'http://server:9200/gps_data/20160205/_search' -d '</span><br><span class="line">&#123;</span><br><span class="line">    "query" : &#123;</span><br><span class="line">        "match_phrase" : &#123;</span><br><span class="line">            "XLMC" : "57 路"</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    "highlight": &#123;</span><br><span class="line">        "fields" : &#123;</span><br><span class="line">            "XLMC" : &#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">'</span><br><span class="line">&#123;"took":375,"timed_out":false,"_shards":&#123;"total":5,"successful":5,"failed":0&#125;,"hits":&#123;"total":143481,"max_score":3.5936642,"hits":[&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:17:12","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:17:12","GPSSJ":"2016-02-05 07:17:12","XLMC":"57路"&#125;,"highlight":&#123;"XLMC":["&lt;em&gt;57&lt;/em&gt;&lt;em&gt;路&lt;/em&gt;"]&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:17:38","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:17:38","GPSSJ":"2016-02-05 07:17:38","XLMC":"57路"&#125;,"highlight":&#123;"XLMC":["&lt;em&gt;57&lt;/em&gt;&lt;em&gt;路&lt;/em&gt;"]&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:17:42","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:17:42","GPSSJ":"2016-02-05 07:17:42","XLMC":"57路"&#125;,"highlight":&#123;"XLMC":["&lt;em&gt;57&lt;/em&gt;&lt;em&gt;路&lt;/em&gt;"]&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:01","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:01","GPSSJ":"2016-02-05 07:18:01","XLMC":"57路"&#125;,"highlight":&#123;"XLMC":["&lt;em&gt;57&lt;/em&gt;&lt;em&gt;路&lt;/em&gt;"]&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:15","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:15","GPSSJ":"2016-02-05 07:18:15","XLMC":"57路"&#125;,"highlight":&#123;"XLMC":["&lt;em&gt;57&lt;/em&gt;&lt;em&gt;路&lt;/em&gt;"]&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:17","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:17","GPSSJ":"2016-02-05 07:18:17","XLMC":"57路"&#125;,"highlight":&#123;"XLMC":["&lt;em&gt;57&lt;/em&gt;&lt;em&gt;路&lt;/em&gt;"]&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:23","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:23","GPSSJ":"2016-02-05 07:18:23","XLMC":"57路"&#125;,"highlight":&#123;"XLMC":["&lt;em&gt;57&lt;/em&gt;&lt;em&gt;路&lt;/em&gt;"]&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:30","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:30","GPSSJ":"2016-02-05 07:18:30","XLMC":"57路"&#125;,"highlight":&#123;"XLMC":["&lt;em&gt;57&lt;/em&gt;&lt;em&gt;路&lt;/em&gt;"]&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:48","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:48","GPSSJ":"2016-02-05 07:18:48","XLMC":"57路"&#125;,"highlight":&#123;"XLMC":["&lt;em&gt;57&lt;/em&gt;&lt;em&gt;路&lt;/em&gt;"]&#125;&#125;,&#123;"_index":"gps_data","_type":"20160205","_id":"3201100090 07:18:49","_score":3.5936642,"_source":&#123;"ZDBH":"3201100090","ROWKEY":"3201100090 07:18:49","GPSSJ":"2016-02-05 07:18:49","XLMC":"57路"&#125;,"highlight":&#123;"XLMC":["&lt;em&gt;57&lt;/em&gt;&lt;em&gt;路&lt;/em&gt;"]&#125;&#125;]&#125;&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Elasticsearch入门学习(2)——服务URL]]></title>
       <url>http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html</url>
       <content type="html"><![CDATA[<blockquote>
-<p><strong>ElasticSearch</strong> elasticsearch 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。</p>
+<p><strong>ElasticSearch</strong> 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。</p>
 </blockquote>
 <a id="more"></a>
 <h2 id="与Elasticsearch交互"><a href="#与Elasticsearch交互" class="headerlink" title="与Elasticsearch交互"></a>与Elasticsearch交互</h2><p>如何与Elasticsearch交互取决于你是否使用Java，可以分为<code>Java API交互</code>和<code>基于HTTP协议，以JSON为数据交互格式的RESTful API</code>两种，本文主要讲解使用RESTful API，通过9200端口的与Elasticsearch进行通信。使用java则端口为9300.</p>
@@ -271,7 +584,7 @@
 </ul>
 <h2 id="ES插件安装"><a href="#ES插件安装" class="headerlink" title="ES插件安装"></a>ES插件安装</h2><p><code>head</code>插件可以很方便的查询数据和监控集群健康状况，下面以<code>head</code>插件安装为例，介绍下ES2.x下插件安装的一般步骤。</p>
 <p>进入<code>/opt/bigdata/elasticsearch</code>目录，运行<code>bin/plugin install mobz/elasticsearch-head</code>, 下载完成后，访问网址<code>http://server:9200/_plugin/head/</code>，便可以看到如下界面，说明安装成功。
-<img src="../../images/blog/2016-04/elasticsearch-head.png" alt="head"></p>
+<img src="/resource/blog/2016-04/elasticsearch-head.png" alt="head"></p>
 <p>插件可以分为核心插件和非核心插件，核心插件是官方提供的，可以直接安装，例如<code>bin/plugin install analysis-icu</code>，这样就会下载合适的版本安装到Elasticsearch中。非核心插件可以是官方提供的，也可以是社区提供的，可以从官方，Maven或者GitHub中下载安装：<code>bin/plugin install [org]/[user|component]/[version]</code>。</p>
 <p>例如，安装github上的插件，<code>plugin install lmenezes/elasticsearch-kopf</code>，插件会尝试先到官方去下载，如果没有找到会到maven.com中去下载，如果在没有找到回到github中去下载。脚本还是非常智能的。当我们从直接maven中央库中安装时可以直接使用下面的方式，最后的版本号是必须要写的。
 <code>plugin install org.elasticsearch.plugin/mapper-attachments/3.0.0</code>
@@ -434,8 +747,12 @@
     <entry>
       <title><![CDATA[Git 常用命令整理]]></title>
       <url>http://keyunluo.github.io/2016/03/07/2016-03-07-git-common-command.html</url>
-      <content type="html"><![CDATA[<h2 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a>初始化配置</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置使用git仓库的人员姓名</span></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">"Your Name Comes Here"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#配置使用git仓库的人员email</span></span><br><span class="line">git config --<span class="keyword">global</span> user.email you@yourdomain.example.com</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置到缓存 默认15分钟</span></span><br><span class="line">git config --<span class="keyword">global</span> credential.helper cache</span><br><span class="line"></span><br><span class="line"><span class="comment">#修改缓存时间</span></span><br><span class="line">git config --<span class="keyword">global</span> credential.helper <span class="string">'cache --timeout=3600'</span></span><br><span class="line"></span><br><span class="line">git config --<span class="keyword">global</span> color.ui true</span><br><span class="line">git config --<span class="keyword">global</span> alias.co checkout</span><br><span class="line">git config --<span class="keyword">global</span> alias.ci commit</span><br><span class="line">git config --<span class="keyword">global</span> alias.st status</span><br><span class="line">git config --<span class="keyword">global</span> alias.br branch</span><br><span class="line">git config --<span class="keyword">global</span> core.editor <span class="string">"mate -w"</span>    <span class="comment"># 设置Editor使用textmate</span></span><br><span class="line">git config <span class="number">-1</span> <span class="comment">#列举所有配置</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#用户的git配置文件~/.gitconfig</span></span><br></pre></td></tr></table></figure>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>Git</strong>简单记录Git的常用方法，以备查询。</p>
+</blockquote>
 <a id="more"></a>
+<h2 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a>初始化配置</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置使用git仓库的人员姓名</span></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">"Your Name Comes Here"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#配置使用git仓库的人员email</span></span><br><span class="line">git config --<span class="keyword">global</span> user.email you@yourdomain.example.com</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置到缓存 默认15分钟</span></span><br><span class="line">git config --<span class="keyword">global</span> credential.helper cache</span><br><span class="line"></span><br><span class="line"><span class="comment">#修改缓存时间</span></span><br><span class="line">git config --<span class="keyword">global</span> credential.helper <span class="string">'cache --timeout=3600'</span></span><br><span class="line"></span><br><span class="line">git config --<span class="keyword">global</span> color.ui true</span><br><span class="line">git config --<span class="keyword">global</span> alias.co checkout</span><br><span class="line">git config --<span class="keyword">global</span> alias.ci commit</span><br><span class="line">git config --<span class="keyword">global</span> alias.st status</span><br><span class="line">git config --<span class="keyword">global</span> alias.br branch</span><br><span class="line">git config --<span class="keyword">global</span> core.editor <span class="string">"mate -w"</span>    <span class="comment"># 设置Editor使用textmate</span></span><br><span class="line">git config <span class="number">-1</span> <span class="comment">#列举所有配置</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#用户的git配置文件~/.gitconfig</span></span><br></pre></td></tr></table></figure>
+<!-- more -->
 <hr>
 <h2 id="查看、添加、提交、删除、找回，重置修改文件"><a href="#查看、添加、提交、删除、找回，重置修改文件" class="headerlink" title="查看、添加、提交、删除、找回，重置修改文件"></a>查看、添加、提交、删除、找回，重置修改文件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">git help &lt;command&gt;  <span class="comment"># 显示command的help</span></span><br><span class="line">git show            <span class="comment"># 显示某次提交的内容</span></span><br><span class="line">git show $id</span><br><span class="line"></span><br><span class="line">git co  -- &lt;file&gt;   <span class="comment"># 抛弃工作区修改</span></span><br><span class="line">git co  .           <span class="comment"># 抛弃工作区修改</span></span><br><span class="line"></span><br><span class="line">git add &lt;file&gt;      <span class="comment"># 将工作文件修改提交到本地暂存区</span></span><br><span class="line">git add .           <span class="comment"># 将所有修改过的工作文件提交暂存区</span></span><br><span class="line"></span><br><span class="line">git rm &lt;file&gt;       <span class="comment"># 从版本库中删除文件</span></span><br><span class="line">git rm &lt;file&gt; --cached  <span class="comment"># 从版本库中删除文件，但不删除文件</span></span><br><span class="line"></span><br><span class="line">git reset &lt;file&gt;    <span class="comment"># 从暂存区恢复到工作文件</span></span><br><span class="line">git reset -- .      <span class="comment"># 从暂存区恢复到工作文件</span></span><br><span class="line">git reset --hard    <span class="comment"># 恢复最近一次提交过的状态，即放弃上次提交后的所有本次修改</span></span><br><span class="line"></span><br><span class="line">git ci &lt;file&gt;</span><br><span class="line">git ci .</span><br><span class="line">git ci -a           <span class="comment"># 将git add, git rm和git ci等操作都合并在一起做</span></span><br><span class="line">git ci -am <span class="string">"some comments"</span></span><br><span class="line">git ci --amend      <span class="comment"># 修改最后一次提交记录</span></span><br><span class="line"></span><br><span class="line">git revert &lt;$id&gt;    <span class="comment"># 恢复某次提交的状态，恢复动作本身也创建了一次提交对象</span></span><br><span class="line">git revert HEAD     <span class="comment"># 恢复最后一次提交的状态</span></span><br><span class="line"><span class="comment">#恢复</span></span><br></pre></td></tr></table></figure>
 <hr>
