@@ -64,7 +64,7 @@ index-url = https://pypi.mirrors.ustc.edu.cn/simple
 当要为系统的Python2版本安装Numpy时，先安装一些编译依赖项,如果直接用pip安装最新的numpy时会编译错误，原因是缺少必要的库，因此需要先安装这些库，一个简单的做法是使用Ubuntu的build-dep命令：
 
 ``` python
-sudo apt build-dep numpy scipy matplotlib
+sudo apt build-dep python-numpy python-scipy python-matplotlib
 ```
 
 然后就可以直接安装了：`sudo -H pip install -U numpy`.
