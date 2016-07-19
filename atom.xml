@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-07-18T13:09:42.165Z</updated>
+  <updated>2016-07-19T08:51:24.636Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -14,6 +14,769 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Markdown中编写LaTex数学公式</title>
+    <link href="http://keyunluo.github.io/2016/07/19/2016-07-19-markdown-math.html"/>
+    <id>http://keyunluo.github.io/2016/07/19/2016-07-19-markdown-math.html</id>
+    <published>2016-07-19T07:31:46.000Z</published>
+    <updated>2016-07-19T08:51:24.636Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;目前hexo中写博客使用Markdown语言，而写博客经常要用到一些数学公式，在Markdown中写LaTeX数学公式则显得非常重要，本节将一些常用的数学公式的写法记录下来，以备日后查询。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;LaTeX-基本语法&quot;&gt;&lt;a href=&quot;#LaTeX-基本语法&quot; class=&quot;headerlink&quot; title=&quot;$\LaTeX$基本语法&quot;&gt;&lt;/a&gt;$\LaTeX$基本语法&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;使用LaTeX&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;$&lt;/code&gt;符号开始&lt;/p&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$ y_k=&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;varphi&lt;/span&gt;&lt;/span&gt;(u_k+v_k)$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$J&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;alpha&lt;/span&gt;&lt;/span&gt;(x) = &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;m=0&amp;#125;&lt;/span&gt;&lt;/span&gt;^&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;infty&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;(-1)^m&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;m! \Gamma (m + \alpha + 1)&amp;#125;&lt;/span&gt;&lt;/span&gt; &amp;#123;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;/span&gt;(&amp;#123; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;x&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;2&amp;#125;&lt;/span&gt;&lt;/span&gt; &amp;#125;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;right&lt;/span&gt;&lt;/span&gt;)&amp;#125;^&amp;#123;2m + &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;alpha&lt;/span&gt;&lt;/span&gt;&amp;#125;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#注意下面的写法：(右对齐)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$ y_k=&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;varphi&lt;/span&gt;&lt;/span&gt;(u_k+v_k)$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;则依次显示为：&lt;/p&gt;
+&lt;p&gt;$ y_k=\varphi(u_k+v_k)$&lt;/p&gt;
+&lt;p&gt;$J\alpha(x) = \sum{m=0}^\infty \frac{(-1)^m}{m! \Gamma (m + \alpha + 1)} {\left({ \frac{x}{2} }\right)}^{2m + \alpha}$&lt;/p&gt;
+&lt;p&gt;$$ y_k=\varphi(u_k+v_k)$$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;输入上下标&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;^&lt;/code&gt;表示上标, &lt;code&gt;_&lt;/code&gt;表示下标。如果上下标的内容多于一个字符，要用&lt;code&gt;{}&lt;/code&gt;把这些内容括起来当成一个整体。上下标是可以嵌套的，也可以同时使用。例如：
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$x^&amp;#123;y^z&amp;#125;=(1+&amp;#123;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;rm&lt;/span&gt;&lt;/span&gt; e&amp;#125;^x)^&amp;#123;-2xy^w&amp;#125;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$f(x)=x_2^3+1$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#如果要在左右两边都有上下标，可以用&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sideset&lt;/span&gt;&lt;/span&gt;命令:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sideset&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;^12&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;^34&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;bigotimes&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;则显示如下：&lt;/p&gt;
+&lt;p&gt;$x^{y^z}=(1+{\rm e}^x)^{-2xy^w}$&lt;/p&gt;
+&lt;p&gt;$f(x)=x_2^3+1$&lt;/p&gt;
+&lt;p&gt;$\sideset{^12}{^34}\bigotimes$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;输入括号和分隔符&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;()、[]和|表示自己，&amp;#123;&amp;#125;表示&amp;#123;&amp;#125;。当要显示大号的括号或分隔符时，要用&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;/span&gt;和&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;right&lt;/span&gt;&lt;/span&gt;命令：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$f(x,y,z) = 3y^2z &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;/span&gt;( 3+&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;7x+5&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1+y^2&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;right&lt;/span&gt;&lt;/span&gt;)$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;有时候要用&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;/span&gt;.或&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;right&lt;/span&gt;&lt;/span&gt;.进行匹配而不显示本身：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;du&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;dt&amp;#125;&lt;/span&gt;&lt;/span&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;|&lt;/span&gt;&lt;/span&gt; _&amp;#123;x=0&amp;#125;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;显示为：&lt;/p&gt;
+&lt;p&gt;$f(x,y,z) = 3y^2z \left( 3+\frac{7x+5}{1+y^2} \right)$&lt;/p&gt;
+&lt;p&gt;$\frac{du}{dt}  | _{x=0}$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;微分方程&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;du&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;dt&amp;#125;&lt;/span&gt;&lt;/span&gt; and &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;d^2 u&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;dx^2&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;$\frac{du}{dt} and \frac{d^2 u}{dx^2}$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;输入偏微分方程&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;eqnarray&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial u&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial t&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= &lt;/span&gt;h^2 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;/span&gt;( &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial^2 u&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial x^2&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;+&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial^2 u&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial y^2&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;+&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial^2 u&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial z^2&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;right&lt;/span&gt;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;eqnarray&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;$$
+\begin{eqnarray}
+\frac{\partial u}{\partial t} \
+= h^2 \left( \frac{\partial^2 u}{\partial x^2} \
++ \frac{\partial^2 u}{\partial y^2} \
++ \frac{\partial^2 u}{\partial z^2}\right)
+\end{eqnarray}
+$$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;输入分数&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;3&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$P(v)=&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1+exp(-v/T)&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;  依次显示为：
+  $\frac{1}{3}$&lt;/p&gt;
+&lt;p&gt;  $P(v)=\frac{1}{1+exp(-v/T)}$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;输入开方&lt;/strong&gt;
+\sqrt&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sqrt&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;2&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sqrt&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[n]&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;3&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;  $\sqrt{2}$&lt;/p&gt;
+&lt;p&gt;  $\sqrt[n]{3}$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;输入省略号&lt;/strong&gt;
+数学公式中常见的省略号有两种，&lt;strong&gt;\ldots&lt;/strong&gt;表示与文本底线对齐的省略号，&lt;strong&gt;\cdots&lt;/strong&gt;表示与文本中线对齐的省略号。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$f(x_1,x_2,&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;ldots&lt;/span&gt;&lt;/span&gt;,x_n) = x_1^2 + x_2^2 + &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;cdots&lt;/span&gt;&lt;/span&gt; + x_n^2$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;   $f(x_1,x_2,\ldots,x_n) = x_1^2 + x_2^2 + \cdots + x_n^2$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;输入向量&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;vec&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;a&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;cdot&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;vec&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;b&amp;#125;&lt;/span&gt;=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;  $\vec{a} \cdot \vec{b}=0$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;输入积分&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;int&lt;/span&gt;&lt;/span&gt;_0^1 x^2 &amp;#123;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;rm&lt;/span&gt;&lt;/span&gt; d&amp;#125;x$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;  $\int_0^1 x^2 {\rm d}x$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;输入极限运算&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;lim&lt;/span&gt;&lt;/span&gt;_&amp;#123;n &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;rightarrow&lt;/span&gt;&lt;/span&gt; +&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;infty&lt;/span&gt;&lt;/span&gt;&amp;#125; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;n(n+1)&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\lim_&amp;#123;u \rightarrow \infty&amp;#125;&lt;/span&gt;&lt;/span&gt;&amp;#125;, &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\lim\limits_&amp;#123;u \rightarrow \infty&amp;#125;&lt;/span&gt;&lt;/span&gt;&amp;#125;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;$\lim_{n \rightarrow +\infty} \frac{1}{n(n+1)}$&lt;/p&gt;
+&lt;p&gt;$\frac{1}{\lim_{u \rightarrow \infty}}$&lt;/p&gt;
+&lt;p&gt;$\frac{1}{\lim\limits_{u \rightarrow \infty}}$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;输入累加、累乘运算&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sum&lt;/span&gt;&lt;/span&gt;_&amp;#123;i=0&amp;#125;^n &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;i^2&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;prod&lt;/span&gt;&lt;/span&gt;_&amp;#123;i=0&amp;#125;^n &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;i^2&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt; $\sum_{i=0}^n \frac{1}{i^2}$&lt;/p&gt;
+&lt;p&gt; $\prod_{i=0}^n \frac{1}{i^2}$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;等效&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;equation&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$&amp;#123;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;3&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;5&amp;#125;&lt;/span&gt;&lt;/span&gt; [3 + 2*( a+ b)]&amp;#125;$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;equation&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$&amp;#123;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;3&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;5&amp;#125;&lt;/span&gt;&lt;/span&gt; [3 + 2*( a+ b)]&amp;#125;$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;${\frac{3}{5} [3 + 2*( a+ b)]}$&lt;/p&gt;
+&lt;h2 id=&quot;希腊字母&quot;&gt;&lt;a href=&quot;#希腊字母&quot; class=&quot;headerlink&quot; title=&quot;希腊字母&quot;&gt;&lt;/a&gt;希腊字母&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;希腊字母(小写)&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;输入&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;希腊字母(大写)&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;输入&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;α&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\alpha&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Α&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;A&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;β&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\beta&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Β&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;γ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\gamma&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Γ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\Gamma&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;δ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\delta&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Δ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\Delta&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;ε或$\epsilon$&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\epsilon或\varepsilon&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Ε&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;E&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;ζ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\zeta&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Ζ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Z&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;η&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\eta&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Η&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;H&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;θ或$\vartheta$&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\theta或\vartheta&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Θ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\Theta&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;ι&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\iota　&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Ι&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;I&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;κ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\kappa&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Κ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;K&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;λ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\lambda&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Λ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\Lambda&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;μ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\mu&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Μ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;M&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;ν&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\nu&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Ν&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;N&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;ξ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\xi&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Ξ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\Xi&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;ο&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;o&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Ο&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;O&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;π或$\varpi$&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\pi或\varpi&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Π&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\Pi&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;ρ或$\varrho$&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\rho或\varrho&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Ρ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;P&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;σ或$\varsigma$&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\sigma或\varsigma&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Σ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\Sigma&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;τ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\tau&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Τ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;T&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;υ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\upsilon&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Υ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\Upsilon&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;φ或$\varphi$&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\phi或\varphi&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Φ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\Phi　&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;χ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\chi&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Χ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;X&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;ψ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\psi&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Ψ&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\Psi&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;ω&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\omega&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Ω&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\Omega&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;三角函数与逻辑数学字符&quot;&gt;&lt;a href=&quot;#三角函数与逻辑数学字符&quot; class=&quot;headerlink&quot; title=&quot;三角函数与逻辑数学字符&quot;&gt;&lt;/a&gt;三角函数与逻辑数学字符&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;数学字符&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;输入&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;数学字符&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;输入&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\pm$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\pm&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\times$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\times&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\div$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\div&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\mid$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\mid&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\nmid$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\nmid&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\cdot$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\cdot&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\circ$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\circ&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\ast$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\ast&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\bigodot$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\bigodot&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\bigotimes$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\bigotimes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\bigoplus$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\bigoplus&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\leq$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\leq&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\geq$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\geq&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\neq$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\neq&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\approx$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\approx&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\equiv$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\equiv&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\sum$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\sum&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\prod$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\prod&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\coprod$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\coprod&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\emptyset$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\emptyset&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\in$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\in&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\notin$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\notin&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\subset$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\subset&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\supset$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\supset&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\subseteq$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\subseteq&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\supseteq$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\supseteq&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\bigcap$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\bigcap&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\bigcup$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\bigcup&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\bigvee$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\bigvee&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\bigwedge$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\bigwedge&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\biguplus$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\biguplus&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\bigsqcup$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\bigsqcup&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\log$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\log&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\lg$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\lg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\ln$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\ln&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\bot$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\bot&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\angle$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\angle&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$30^\circ$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;30^\circ&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\sin$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\sin&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\cos$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\cos&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\tan$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\tan&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\cot$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\cot&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\sec$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\sec&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\csc$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\csc&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\prime$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\prime&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\int$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\int&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\iint$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\iint&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\iiint$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\iiint&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\iiiint$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\iiiint&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\oint$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\oint&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\lim$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\lim&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\infty$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\infty&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\nabla$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\nabla&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\because$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\because&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\therefore$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\therefore&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\forall$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\forall&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\exists$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\exists&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\not=$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\not=&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\not&amp;gt;$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\not&amp;gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\not\subset$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\not\subset&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\hat{y}$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\hat{y}&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\check{y}$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\check{y}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\breve{y}$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\breve{y}&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\overline{a+b+c+d}$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\overline{a+b+c+d}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\underline{a+b+c+d}$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\underline{a+b+c+d}&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\overbrace{a+\underbrace{b+c}{1.0}+d}^{2.0}$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\overbrace{a+\underbrace{b+c}{1.0}+d}^{2.0}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\uparrow$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\uparrow&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\downarrow$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\downarrow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\Uparrow$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\Uparrow&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\Downarrow$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\Downarrow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\rightarrow$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\rightarrow&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\leftarrow$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\leftarrow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\Rightarrow$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\Rightarrow&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\Leftarrow$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\Leftarrow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\longrightarrow$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\longrightarrow&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\longleftarrow$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\longleftarrow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\Longrightarrow$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\Longrightarrow&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\Longleftarrow$&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\Longleftarrow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\ $&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\空格&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;#&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;\#&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;字体转换&quot;&gt;&lt;a href=&quot;#字体转换&quot; class=&quot;headerlink&quot; title=&quot;字体转换&quot;&gt;&lt;/a&gt;字体转换&lt;/h2&gt;&lt;p&gt;要对公式的某一部分字符进行字体转换，可以用{\rm 需转换的部分字符}命令，其中\rm可以参照下表选择合适的字体。一般情况下，公式默认为意大利体。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\rm&lt;/code&gt;　　罗马体&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\it&lt;/code&gt;　　意大利体&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\bf&lt;/code&gt;　　黑体　&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\sf&lt;/code&gt;　　等线体&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\mit&lt;/code&gt; 　数学斜体　&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\tt&lt;/code&gt;　打字机字体&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\sc&lt;/code&gt;　　小体大写字母&lt;/p&gt;
+&lt;h2 id=&quot;表格&quot;&gt;&lt;a href=&quot;#表格&quot; class=&quot;headerlink&quot; title=&quot;表格&quot;&gt;&lt;/a&gt;表格&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;begin&amp;#123;array&amp;#125;&amp;#123;c|lcr&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;n &amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;Left&amp;#125;&lt;/span&gt;&lt;/span&gt; &amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;Center&amp;#125;&lt;/span&gt;&lt;/span&gt; &amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;Right&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;hline&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1 &amp;amp; 0.24 &amp;amp; 1 &amp;amp; 125 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2 &amp;amp; -1 &amp;amp; 189 &amp;amp; -8 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3 &amp;amp; -20 &amp;amp; 2000 &amp;amp; 1+10i &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;end&amp;#123;array&amp;#125; $$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;$$\begin{array}{c|lcr}
+n &amp;amp; \text{Left} &amp;amp; \text{Center} &amp;amp; \text{Right} \\
+\hline
+1 &amp;amp; 0.24 &amp;amp; 1 &amp;amp; 125 \\
+2 &amp;amp; -1 &amp;amp; 189 &amp;amp; -8 \\
+3 &amp;amp; -20 &amp;amp; 2000 &amp;amp; 1+10i \\
+\end{array} $$&lt;/p&gt;
+&lt;h2 id=&quot;花括号用法&quot;&gt;&lt;a href=&quot;#花括号用法&quot; class=&quot;headerlink&quot; title=&quot;花括号用法&quot;&gt;&lt;/a&gt;花括号用法&lt;/h2&gt;&lt;p&gt;$$\begin{array}{cc}
+  a &amp;amp; b \\
+  c &amp;amp; c
+\end{array} $$&lt;/p&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$f(x)=&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;cases&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;0&amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;x=0&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1&amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;x!=0&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;cases&amp;#125;&lt;/span&gt;&lt;/span&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;$$
+f(x)=
+\begin{cases}
+0&amp;amp; \text{x=0}\\
+1&amp;amp; \text{x!=0}
+\end{cases}
+$$&lt;/p&gt;
+&lt;h2 id=&quot;多行数学式对齐&quot;&gt;&lt;a href=&quot;#多行数学式对齐&quot; class=&quot;headerlink&quot; title=&quot;多行数学式对齐&quot;&gt;&lt;/a&gt;多行数学式对齐&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;利用&amp;amp;符号来对齐，在每个等号前添加&amp;amp;符号即可&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;/span&gt; &amp;#123;lcl&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;cos&lt;/span&gt;&lt;/span&gt; 2&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;theta&lt;/span&gt;&lt;/span&gt; &amp;amp; = &amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;cos&lt;/span&gt;&lt;/span&gt;^2 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;theta&lt;/span&gt;&lt;/span&gt; - &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sin&lt;/span&gt;&lt;/span&gt;^2 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;theta&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;             &amp;amp; = &amp;amp; 2 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;cos&lt;/span&gt;&lt;/span&gt;^2 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;theta&lt;/span&gt;&lt;/span&gt; - 1.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;/span&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;/span&gt; &amp;#123;lcl&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;f(x) &amp;amp; = &amp;amp; (a+b)^2 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &amp;amp; = &amp;amp; a^2+2ab+b^2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;/span&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;$$\begin{array} {lcl}
+\cos 2\theta &amp;amp; = &amp;amp; \cos^2 \theta - \sin^2 \theta \\
+             &amp;amp; = &amp;amp; 2 \cos^2 \theta - 1.
+\end{array}$$&lt;/p&gt;
+&lt;p&gt;$$\begin{array} {lcl}
+f(x) &amp;amp; = &amp;amp; (a+b)^2 \\
+     &amp;amp; = &amp;amp; a^2+2ab+b^2
+\end{array}$$&lt;/p&gt;
+&lt;h2 id=&quot;矩阵与行列式&quot;&gt;&lt;a href=&quot;#矩阵与行列式&quot; class=&quot;headerlink&quot; title=&quot;矩阵与行列式&quot;&gt;&lt;/a&gt;矩阵与行列式&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;matrix&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[ ( &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;ccc&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;a &amp;amp; b &amp;amp; c &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;d &amp;amp; e &amp;amp; f &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;g &amp;amp; h &amp;amp; i &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;/span&gt; )]$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[ &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;chi&lt;/span&gt;&lt;/span&gt;(&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;lambda&lt;/span&gt;&lt;/span&gt;) = &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;/span&gt;| &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;ccc&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;lambda&lt;/span&gt;&lt;/span&gt; - a &amp;amp; -b &amp;amp; -c &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-d &amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;lambda&lt;/span&gt;&lt;/span&gt; - e &amp;amp; -f &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-g &amp;amp; -h &amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;lambda&lt;/span&gt;&lt;/span&gt; - i &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;right&lt;/span&gt;&lt;/span&gt;|.]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$ &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      \begin&amp;#123;array&amp;#125;&amp;#123;cc|c&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        1&amp;amp;2&amp;amp;3 \\\\&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        4&amp;amp;5&amp;amp;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      \end&amp;#123;array&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    \right]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;$$
+matrix
+[ ( \begin{array}{ccc}
+a &amp;amp; b &amp;amp; c \\
+d &amp;amp; e &amp;amp; f \\
+g &amp;amp; h &amp;amp; i \end{array} )]$$&lt;/p&gt;
+&lt;p&gt;$$
+[ \chi(\lambda) = \left| \begin{array}{ccc}
+\lambda - a &amp;amp; -b &amp;amp; -c \\
+-d &amp;amp; \lambda - e &amp;amp; -f \\
+-g &amp;amp; -h &amp;amp; \lambda - i \end{array} \right|.]
+$$&lt;/p&gt;
+&lt;p&gt;$$ \left[
+      \begin{array}{cc|c}
+        1&amp;amp;2&amp;amp;3 \\
+        4&amp;amp;5&amp;amp;6
+      \end{array}
+    \right]
+$$&lt;/p&gt;
+&lt;h2 id=&quot;括号的其他用法&quot;&gt;&lt;a href=&quot;#括号的其他用法&quot; class=&quot;headerlink&quot; title=&quot;括号的其他用法&quot;&gt;&lt;/a&gt;括号的其他用法&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;功能&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;语法&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;显示&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;圆括号，小括号&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\left( \frac{a}{b} \right)&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\left( \frac{a}{b} \right)$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;方括号，中括号&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\left[ \frac{a}{b} \right]&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$$\left[ \frac{a}{b} \right]$$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;花括号，大括号&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\left{ \frac{a}{b}\right}&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$$\left\{ \frac{a}{b} \right\}$$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;角括号&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\left \langle \frac{a}{b} \right \rangle&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\left \langle \frac{a}{b} \right \rangle$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;单竖线，绝对值&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\left\mid \frac{a}{b} \right\mid ,或\vert&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\mid \frac{a}{b} \mid$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;双竖线，范式&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\Vert \frac{a}{b} \Vert&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$$\Vert \frac{a}{b} \Vert$$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;取整函数&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\left \lfloor \frac{a}{b} \right \rfloor&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\left \lfloor \frac{a}{b} \right \rfloor$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;取顶函数&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\left \lceil \frac{c}{d} \right \rceil&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\left \lceil \frac{c}{d} \right \rceil   $&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;斜线与反斜线&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\left / \frac{a}{b} \right \backslash&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\left / \frac{a}{b} \right \backslash$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;上下箭头&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\left \uparrow \frac{a}{b} \right \downarrow&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\left \uparrow \frac{a}{b} \right \downarrow$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;混合括号1&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\left [ 0,1 \right )&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\left [ 0,1 \right )$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;混合括号2&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\langle \psi  \mid&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$\langle \psi  \mid $&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;单左括号&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\left { \frac{a}{b} \right .&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$$\left \{ \frac{a}{b} \right .$$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;单右括号&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;\left . \frac{a}{b} \right }&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;$$\left . \frac{a}{b} \right \}$$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;目前hexo中写博客使用Markdown语言，而写博客经常要用到一些数学公式，在Markdown中写LaTeX数学公式则显得非常重要，本节将一些常用的数学公式的写法记录下来，以备日后查询。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Tools" scheme="http://keyunluo.github.io/categories/Tools/"/>
+    
+    
+      <category term="Markdown" scheme="http://keyunluo.github.io/tags/Markdown/"/>
+    
+      <category term="Latex" scheme="http://keyunluo.github.io/tags/Latex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python Scipy学习(1)</title>
+    <link href="http://keyunluo.github.io/2016/07/19/2016-07-19-python-scipy.html"/>
+    <id>http://keyunluo.github.io/2016/07/19/2016-07-19-python-scipy.html</id>
+    <published>2016-07-19T06:41:02.000Z</published>
+    <updated>2016-07-19T11:59:59.890Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;SciPy是另一种使用NumPy来做高等数学、信号处理、优化、统计和许多其它科学任务的语言扩展,SciPy在NumPy的基础上增加了众多的数学、科学以及工程计算中常用的模块。例如线性代数、常微分方程数值求解、信号处理、图像处理、稀疏矩阵等等,本节主要学习其统计和优化模块。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;常用模块&quot;&gt;&lt;a href=&quot;#常用模块&quot; class=&quot;headerlink&quot; title=&quot;常用模块&quot;&gt;&lt;/a&gt;常用模块&lt;/h2&gt;&lt;p&gt;由于SciPy以NumPy为基础，那么import scipy的同时便import 了numpy库。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;统计子库-scipy.stats&lt;/li&gt;
+&lt;li&gt;线性代数-scipy.linalg&lt;/li&gt;
+&lt;li&gt;拟合与优化-scipy.optimize&lt;/li&gt;
+&lt;li&gt;插值-scipy.interpolate&lt;/li&gt;
+&lt;li&gt;数值积分-scipy.integate&lt;/li&gt;
+&lt;li&gt;稀疏矩阵-scipy.sparse&lt;/li&gt;
+&lt;li&gt;图像操作scipy.misc&lt;/li&gt;
+&lt;li&gt;图像处理-scipy.ndimage&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;统计&quot;&gt;&lt;a href=&quot;#统计&quot; class=&quot;headerlink&quot; title=&quot;统计&quot;&gt;&lt;/a&gt;统计&lt;/h2&gt;&lt;p&gt;scipy.stats的主要功能有以下几个方面：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;数值随机变量对象（包括密度分布函数，累积分布函数，样本函数等）&lt;/li&gt;
+&lt;li&gt;一些估计方法&lt;/li&gt;
+&lt;li&gt;一些测试方法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;随机变量与分布:考虑$Beta$函数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;numpy 中提供了获取随机变量的样本的方法：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]: &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;]: np.random.beta(&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;, size=&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Out[&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;]: array([ &lt;span class=&quot;number&quot;&gt;0.6167565&lt;/span&gt; ,  &lt;span class=&quot;number&quot;&gt;0.67994589&lt;/span&gt;,  &lt;span class=&quot;number&quot;&gt;0.32346476&lt;/span&gt;])&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;但是np.random.beta(a,b)是根据下面的函数得到的：&lt;/p&gt;
+&lt;p&gt;$f(x;a,b)=\frac{x^{(a-1)}(1-x)^{(b-1)} }{\int_0^1 u^{(a-1)}u^{(b-1)} {\rm d}u} , (0 \le x \le 1)$&lt;/p&gt;
+&lt;p&gt;为了获取更多beta分布的特性，我们经常使用scipy.stats:
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; scipy.stats &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; beta&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; matplotlib.pyplot &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; hist, plot, show&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;q = beta(&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;)      &lt;span class=&quot;comment&quot;&gt;# Beta(a, b), with a = b = 5 q是一个对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;obs = q.rvs(&lt;span class=&quot;number&quot;&gt;2000&lt;/span&gt;)   &lt;span class=&quot;comment&quot;&gt;# 2000 observations 获得2000个样本&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;hist(obs, bins=&lt;span class=&quot;number&quot;&gt;40&lt;/span&gt;, normed=&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;grid = np.linspace(&lt;span class=&quot;number&quot;&gt;0.01&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.99&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plot(grid, q.pdf(grid), &lt;span class=&quot;string&quot;&gt;&#39;k-&#39;&lt;/span&gt;, linewidth=&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;show()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;结果如图：
+&lt;img src=&quot;/resource/blog/2016-07/beta.png&quot; alt=&quot;beta分布特性&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;q.cdf(&lt;span class=&quot;number&quot;&gt;0.4&lt;/span&gt;)      &lt;span class=&quot;comment&quot;&gt;# Cumulative distribution function  累积密度函数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;0.26656768000000003&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;q.pdf(&lt;span class=&quot;number&quot;&gt;0.4&lt;/span&gt;)      &lt;span class=&quot;comment&quot;&gt;# Density function   密度函数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2.0901888000000013&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;q.ppf(&lt;span class=&quot;number&quot;&gt;0.8&lt;/span&gt;)      &lt;span class=&quot;comment&quot;&gt;# Quantile (inverse cdf) function&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;0.63391348346427079&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;q.mean()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;0.5&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;线性回归&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;19&lt;/span&gt;]: &lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; scipy.stats &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; linregress&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;]: x = np.random.randn(&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;21&lt;/span&gt;]: y = &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; * x + &lt;span class=&quot;number&quot;&gt;0.1&lt;/span&gt; * np.random.randn(&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;22&lt;/span&gt;]: gradient, intercept, r_value, p_value, std_err = linregress(x, y)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;23&lt;/span&gt;]: gradient, intercept&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Out[&lt;span class=&quot;number&quot;&gt;23&lt;/span&gt;]: (&lt;span class=&quot;number&quot;&gt;1.9962554379482236&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.008172822032671799&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;线性代数&quot;&gt;&lt;a href=&quot;#线性代数&quot; class=&quot;headerlink&quot; title=&quot;线性代数&quot;&gt;&lt;/a&gt;线性代数&lt;/h2&gt;&lt;p&gt;NumPy和SciPy都提供了线性代数函数库linalg，SciPy的线性代数库比NumPy更加全面。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;解线性方程组&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;numpy.linalg.solve(A, b)&lt;/code&gt;和&lt;code&gt;scipy.linalg.solve(A, b)&lt;/code&gt;可以用来解线性方程组$Ax = b $，也就是计算$ x = A^{-1}b$ 。这里$A$为(M, M)的方形矩阵，$x$和$b$为长为M的向量。有时候$A$是固定的，需要对多组$b$进行求解，因此第二个参数也可以是(M, N)的矩阵$B$。这样计算出来的$X$也为(M, N)的矩阵。它相当于计算$A^{-1}B$。&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; scipy &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; linalg&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;M, N = &lt;span class=&quot;number&quot;&gt;500&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;A = np.random.rand(M, M)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;B = np.random.rand(M, N)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;X1 = linalg.solve(A, B)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;X2 = np.dot(linalg.inv(A), B)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;np.allclose(X1, X2)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;lu_factor(A)对矩阵$A$进行LU分解，得到一个元组：(LU矩阵，排序数组)，将这个元组传递给lu_solve(),即可对不同的$B$进行求解。&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;luf = linalg.lu_factor(A)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;X3 = linalg.lu_solve(luf, B)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;np.allclose(X1, X3)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;最小二乘解&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;lstsq()比solve()更一般化，它不要求矩阵$A$是正方形的，也就是说方程的个数可以少于、等于或者多于未知数的个数。它找到一组解$x$，使得$\Vert b - A \cdot x \Vert$最小。我们称所得到的结果为最小二乘解，即它使得所有等式的误差的平方和最小。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;奇异值分解-SVD&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;奇异值分解是线性代数中一种重要的矩阵分解，在信号处理、统计学等领域有重要应用。假设$M$是一个m×n阶矩阵，存在一个分解使得：$ M = U \sum V^{*} $。其中$U$是m×m阶矩阵；$ \sum $是半正定m×n阶对角矩阵；而$V^*$，即$V$的共轭转置，是n×n阶矩阵。这样的分解就称作$M$的奇异值分解。$ \sum $对角线上的元素为$M$的奇异值。通常奇异值按照从大到小的顺序排列。&lt;/p&gt;
+&lt;h2 id=&quot;拟合与优化&quot;&gt;&lt;a href=&quot;#拟合与优化&quot; class=&quot;headerlink&quot; title=&quot;拟合与优化&quot;&gt;&lt;/a&gt;拟合与优化&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;求根与稳定点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;稳定点：已知连续函数$f(x)$ ,则函数$f(x)$的稳定点为$x_0$，使得条件$f(x_0) = x_0$成立。&lt;/p&gt;
+&lt;p&gt;例如：$f(x)=sin(4(x-\frac{1}{4})) + x + x^{20} -1$&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; scipy.optimize &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; bisect&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;f =&lt;span class=&quot;keyword&quot;&gt;lambda&lt;/span&gt; x : np.sin(&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; * (x &lt;span class=&quot;number&quot;&gt;-0.25&lt;/span&gt;)) + x + x**&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;-1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bisect(f,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;0.4082935042797544&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;非线性方程组求解&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;fsolve()可以对非线性方程组进行求解。它的基本调用形式为fsolve(func, x0)。其中func是计算方程组误差的函数，它的参数x是一个数组，其值为方程组的一组可能的解。func返回将x代入方程组之后得到的每个方程的误差，x0为未知数的一组初始值。假设要对下面的方程组进行求解:
+$$ f1(u1,u2,u3) = 0 ,f2(u1,u2,u3) = 0 , f3(u1,u2,u3) = 0 $$&lt;/p&gt;
+&lt;p&gt;那么func函数可以如下定义：
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(x)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    u1,u2,u3 = x&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; [f1(u1,u2,u3), f2(u1,u2,u3), f3(u1,u2,u3)]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;例如：对下列方程组求解：
+$$ 5x_1 +3 =0;4x_0^2 - 2sin(x_1x_2)=0;x_1x_2-1.5=0$$&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; math &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; sin, cos&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; scipy &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; optimize&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(x)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    x0, x1, x2 = x.tolist()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;*x1+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;*x0*x0 - &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;*sin(x1*x2),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        x1*x2 - &lt;span class=&quot;number&quot;&gt;1.5&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# f计算方程组的误差，[1,1,1]是未知数的初始值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;result = optimize.fsolve(f, [&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(result)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(f(result))&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;f()是计算方程组的误差的函数，x参数是一组可能的解。fsolve()在调用f()时，传递给f()的参数是一个数组。&lt;/p&gt;
+&lt;p&gt;调用fsolve()时，传递计算误差的函数f()，以及未知数的初始值。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;SciPy是另一种使用NumPy来做高等数学、信号处理、优化、统计和许多其它科学任务的语言扩展,SciPy在NumPy的基础上增加了众多的数学、科学以及工程计算中常用的模块。例如线性代数、常微分方程数值求解、信号处理、图像处理、稀疏矩阵等等,本节主要学习其统计和优化模块。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Programming" scheme="http://keyunluo.github.io/categories/Programming/"/>
+    
+    
+      <category term="Python" scheme="http://keyunluo.github.io/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>Python Matplotlib绘图基础</title>
@@ -186,7 +949,7 @@
     <link href="http://keyunluo.github.io/2016/07/18/2016-07-18-python-numpy-array.html"/>
     <id>http://keyunluo.github.io/2016/07/18/2016-07-18-python-numpy-array.html</id>
     <published>2016-07-18T08:50:05.000Z</published>
-    <updated>2016-07-18T10:34:17.220Z</updated>
+    <updated>2016-07-19T08:16:38.692Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;NumPy 是 Numerical Python 的简称，是高性能计算和数据分析的基础包。本篇博文记录Numpy的数组一般用法，主要学习多维数组等用法。&lt;/p&gt;
@@ -418,7 +1181,7 @@
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;logical_and, logical_or, logical_xor&lt;/td&gt;
-&lt;td&gt;计算各个元素逻辑操作的真值。等价于中缀操作符 &amp;amp;, ^&lt;/td&gt;
+&lt;td&gt;计算各个元素逻辑操作的真值。等价于中缀操作符 &amp;amp;, $\mid$ ,^&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;

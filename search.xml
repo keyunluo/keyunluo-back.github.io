@@ -4,6 +4,731 @@
   
     
     <entry>
+      <title><![CDATA[Markdown中编写LaTex数学公式]]></title>
+      <url>http://keyunluo.github.io/2016/07/19/2016-07-19-markdown-math.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>目前hexo中写博客使用Markdown语言，而写博客经常要用到一些数学公式，在Markdown中写LaTeX数学公式则显得非常重要，本节将一些常用的数学公式的写法记录下来，以备日后查询。</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<h2 id="LaTeX-基本语法"><a href="#LaTeX-基本语法" class="headerlink" title="$\LaTeX$基本语法"></a>$\LaTeX$基本语法</h2><ul>
+<li><strong>使用LaTeX</strong></li>
+</ul>
+<p><code>$</code>符号开始</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$ y_k=<span class="tag">\<span class="name">varphi</span></span>(u_k+v_k)$</span></span><br><span class="line"><span class="formula">$J<span class="tag">\<span class="name">alpha</span></span>(x) = <span class="tag">\<span class="name">sum</span><span class="string">&#123;m=0&#125;</span></span>^<span class="tag">\<span class="name">infty</span></span> <span class="tag">\<span class="name">frac</span><span class="string">&#123;(-1)^m&#125;</span><span class="string">&#123;m! \Gamma (m + \alpha + 1)&#125;</span></span> &#123;<span class="tag">\<span class="name">left</span></span>(&#123; <span class="tag">\<span class="name">frac</span><span class="string">&#123;x&#125;</span><span class="string">&#123;2&#125;</span></span> &#125;<span class="tag">\<span class="name">right</span></span>)&#125;^&#123;2m + <span class="tag">\<span class="name">alpha</span></span>&#125;$</span></span><br><span class="line">#注意下面的写法：(右对齐)</span><br><span class="line"><span class="formula">$$ y_k=<span class="tag">\<span class="name">varphi</span></span>(u_k+v_k)$$</span></span><br></pre></td></tr></table></figure>
+<p>则依次显示为：</p>
+<p>$ y_k=\varphi(u_k+v_k)$</p>
+<p>$J\alpha(x) = \sum{m=0}^\infty \frac{(-1)^m}{m! \Gamma (m + \alpha + 1)} {\left({ \frac{x}{2} }\right)}^{2m + \alpha}$</p>
+<p>$$ y_k=\varphi(u_k+v_k)$$</p>
+<ul>
+<li><strong>输入上下标</strong></li>
+</ul>
+<p><code>^</code>表示上标, <code>_</code>表示下标。如果上下标的内容多于一个字符，要用<code>{}</code>把这些内容括起来当成一个整体。上下标是可以嵌套的，也可以同时使用。例如：
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$x^&#123;y^z&#125;=(1+&#123;<span class="tag">\<span class="name">rm</span></span> e&#125;^x)^&#123;-2xy^w&#125;$</span></span><br><span class="line"><span class="formula">$f(x)=x_2^3+1$</span></span><br><span class="line">#如果要在左右两边都有上下标，可以用<span class="tag">\<span class="name">sideset</span></span>命令:</span><br><span class="line"><span class="formula">$<span class="tag">\<span class="name">sideset</span><span class="string">&#123;^12&#125;</span><span class="string">&#123;^34&#125;</span></span><span class="tag">\<span class="name">bigotimes</span></span>$</span></span><br></pre></td></tr></table></figure></p>
+<p>则显示如下：</p>
+<p>$x^{y^z}=(1+{\rm e}^x)^{-2xy^w}$</p>
+<p>$f(x)=x_2^3+1$</p>
+<p>$\sideset{^12}{^34}\bigotimes$</p>
+<ul>
+<li><strong>输入括号和分隔符</strong></li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">()、[]和|表示自己，&#123;&#125;表示&#123;&#125;。当要显示大号的括号或分隔符时，要用<span class="tag">\<span class="name">left</span></span>和<span class="tag">\<span class="name">right</span></span>命令：</span><br><span class="line"><span class="formula">$f(x,y,z) = 3y^2z <span class="tag">\<span class="name">left</span></span>( 3+<span class="tag">\<span class="name">frac</span><span class="string">&#123;7x+5&#125;</span><span class="string">&#123;1+y^2&#125;</span></span> <span class="tag">\<span class="name">right</span></span>)$</span></span><br><span class="line">有时候要用<span class="tag">\<span class="name">left</span></span>.或<span class="tag">\<span class="name">right</span></span>.进行匹配而不显示本身：</span><br><span class="line"><span class="formula">$<span class="tag">\<span class="name">frac</span><span class="string">&#123;du&#125;</span><span class="string">&#123;dt&#125;</span></span>  <span class="tag">\<span class="name">|</span></span> _&#123;x=0&#125;$</span></span><br></pre></td></tr></table></figure>
+<p>显示为：</p>
+<p>$f(x,y,z) = 3y^2z \left( 3+\frac{7x+5}{1+y^2} \right)$</p>
+<p>$\frac{du}{dt}  | _{x=0}$</p>
+<ul>
+<li><strong>微分方程</strong></li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$<span class="tag">\<span class="name">frac</span><span class="string">&#123;du&#125;</span><span class="string">&#123;dt&#125;</span></span> and <span class="tag">\<span class="name">frac</span><span class="string">&#123;d^2 u&#125;</span><span class="string">&#123;dx^2&#125;</span></span>$</span></span><br></pre></td></tr></table></figure>
+<p>$\frac{du}{dt} and \frac{d^2 u}{dx^2}$</p>
+<ul>
+<li><strong>输入偏微分方程</strong></li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$$</span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;eqnarray&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">frac</span><span class="string">&#123;\partial u&#125;</span><span class="string">&#123;\partial t&#125;</span></span> <span class="tag">\<span class="name">\</span></span><br><span class="line">= </span>h^2 <span class="tag">\<span class="name">left</span></span>( <span class="tag">\<span class="name">frac</span><span class="string">&#123;\partial^2 u&#125;</span><span class="string">&#123;\partial x^2&#125;</span></span> <span class="tag">\<span class="name">\</span></span></span><br><span class="line"><span class="tag">\<span class="name">+</span></span> <span class="tag">\<span class="name">frac</span><span class="string">&#123;\partial^2 u&#125;</span><span class="string">&#123;\partial y^2&#125;</span></span> <span class="tag">\<span class="name">\</span></span></span><br><span class="line"><span class="tag">\<span class="name">+</span></span> <span class="tag">\<span class="name">frac</span><span class="string">&#123;\partial^2 u&#125;</span><span class="string">&#123;\partial z^2&#125;</span></span><span class="tag">\<span class="name">right</span></span>)</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;eqnarray&#125;</span></span></span><br><span class="line">$$</span></span><br></pre></td></tr></table></figure>
+<p>$$
+\begin{eqnarray}
+\frac{\partial u}{\partial t} \
+= h^2 \left( \frac{\partial^2 u}{\partial x^2} \
++ \frac{\partial^2 u}{\partial y^2} \
++ \frac{\partial^2 u}{\partial z^2}\right)
+\end{eqnarray}
+$$</p>
+<ul>
+<li><strong>输入分数</strong></li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$<span class="tag">\<span class="name">frac</span><span class="string">&#123;1&#125;</span><span class="string">&#123;3&#125;</span></span>$</span></span><br><span class="line"><span class="formula">$P(v)=<span class="tag">\<span class="name">frac</span><span class="string">&#123;1&#125;</span><span class="string">&#123;1+exp(-v/T)&#125;</span></span>$</span></span><br></pre></td></tr></table></figure>
+<p>  依次显示为：
+  $\frac{1}{3}$</p>
+<p>  $P(v)=\frac{1}{1+exp(-v/T)}$</p>
+<ul>
+<li><strong>输入开方</strong>
+\sqrt</li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$<span class="tag">\<span class="name">sqrt</span><span class="string">&#123;2&#125;</span></span>$</span></span><br><span class="line"><span class="formula">$<span class="tag">\<span class="name">sqrt</span><span class="string">[n]</span><span class="string">&#123;3&#125;</span></span>$</span></span><br></pre></td></tr></table></figure>
+<p>  $\sqrt{2}$</p>
+<p>  $\sqrt[n]{3}$</p>
+<ul>
+<li><strong>输入省略号</strong>
+数学公式中常见的省略号有两种，<strong>\ldots</strong>表示与文本底线对齐的省略号，<strong>\cdots</strong>表示与文本中线对齐的省略号。</li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$f(x_1,x_2,<span class="tag">\<span class="name">ldots</span></span>,x_n) = x_1^2 + x_2^2 + <span class="tag">\<span class="name">cdots</span></span> + x_n^2$</span></span><br></pre></td></tr></table></figure>
+<p>   $f(x_1,x_2,\ldots,x_n) = x_1^2 + x_2^2 + \cdots + x_n^2$</p>
+<ul>
+<li><strong>输入向量</strong></li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$<span class="tag">\<span class="name">vec</span><span class="string">&#123;a&#125;</span></span> <span class="tag">\<span class="name">cdot</span></span> <span class="tag">\<span class="name">vec</span><span class="string">&#123;b&#125;</span>=<span class="number">0</span></span>$</span></span><br></pre></td></tr></table></figure>
+<p>  $\vec{a} \cdot \vec{b}=0$</p>
+<ul>
+<li><strong>输入积分</strong></li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$<span class="tag">\<span class="name">int</span></span>_0^1 x^2 &#123;<span class="tag">\<span class="name">rm</span></span> d&#125;x$</span></span><br></pre></td></tr></table></figure>
+<p>  $\int_0^1 x^2 {\rm d}x$</p>
+<ul>
+<li><strong>输入极限运算</strong></li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$<span class="tag">\<span class="name">lim</span></span>_&#123;n <span class="tag">\<span class="name">rightarrow</span></span> +<span class="tag">\<span class="name">infty</span></span>&#125; <span class="tag">\<span class="name">frac</span><span class="string">&#123;1&#125;</span><span class="string">&#123;n(n+1)&#125;</span></span>$</span></span><br><span class="line"><span class="formula">$<span class="tag">\<span class="name">frac</span><span class="string">&#123;1&#125;</span><span class="string">&#123;\lim_&#123;u \rightarrow \infty&#125;</span></span>&#125;, <span class="tag">\<span class="name">frac</span><span class="string">&#123;1&#125;</span><span class="string">&#123;\lim\limits_&#123;u \rightarrow \infty&#125;</span></span>&#125;$</span></span><br></pre></td></tr></table></figure>
+<p>$\lim_{n \rightarrow +\infty} \frac{1}{n(n+1)}$</p>
+<p>$\frac{1}{\lim_{u \rightarrow \infty}}$</p>
+<p>$\frac{1}{\lim\limits_{u \rightarrow \infty}}$</p>
+<ul>
+<li><strong>输入累加、累乘运算</strong></li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$<span class="tag">\<span class="name">sum</span></span>_&#123;i=0&#125;^n <span class="tag">\<span class="name">frac</span><span class="string">&#123;1&#125;</span><span class="string">&#123;i^2&#125;</span></span>$</span></span><br><span class="line"><span class="formula">$<span class="tag">\<span class="name">prod</span></span>_&#123;i=0&#125;^n <span class="tag">\<span class="name">frac</span><span class="string">&#123;1&#125;</span><span class="string">&#123;i^2&#125;</span></span>$</span></span><br></pre></td></tr></table></figure>
+<p> $\sum_{i=0}^n \frac{1}{i^2}$</p>
+<p> $\prod_{i=0}^n \frac{1}{i^2}$</p>
+<ul>
+<li><strong>等效</strong></li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$$</span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;equation&#125;</span></span></span><br><span class="line">$&#123;<span class="tag">\<span class="name">frac</span><span class="string">&#123;3&#125;</span><span class="string">&#123;5&#125;</span></span> [3 + 2*( a+ b)]&#125;$</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;equation&#125;</span></span></span><br><span class="line">$$</span></span><br><span class="line"></span><br><span class="line"><span class="formula">$$</span><br><span class="line">$&#123;<span class="tag">\<span class="name">frac</span><span class="string">&#123;3&#125;</span><span class="string">&#123;5&#125;</span></span> [3 + 2*( a+ b)]&#125;$</span><br><span class="line">$$</span></span><br></pre></td></tr></table></figure>
+<p>${\frac{3}{5} [3 + 2*( a+ b)]}$</p>
+<h2 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">希腊字母(小写)</th>
+<th style="text-align:left">输入</th>
+<th style="text-align:center">希腊字母(大写)</th>
+<th style="text-align:left">输入</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">α</td>
+<td style="text-align:left">\alpha</td>
+<td style="text-align:center">Α</td>
+<td style="text-align:left">A</td>
+</tr>
+<tr>
+<td style="text-align:center">β</td>
+<td style="text-align:left">\beta</td>
+<td style="text-align:center">Β</td>
+<td style="text-align:left">B</td>
+</tr>
+<tr>
+<td style="text-align:center">γ</td>
+<td style="text-align:left">\gamma</td>
+<td style="text-align:center">Γ</td>
+<td style="text-align:left">\Gamma</td>
+</tr>
+<tr>
+<td style="text-align:center">δ</td>
+<td style="text-align:left">\delta</td>
+<td style="text-align:center">Δ</td>
+<td style="text-align:left">\Delta</td>
+</tr>
+<tr>
+<td style="text-align:center">ε或$\epsilon$</td>
+<td style="text-align:left">\epsilon或\varepsilon</td>
+<td style="text-align:center">Ε</td>
+<td style="text-align:left">E</td>
+</tr>
+<tr>
+<td style="text-align:center">ζ</td>
+<td style="text-align:left">\zeta</td>
+<td style="text-align:center">Ζ</td>
+<td style="text-align:left">Z</td>
+</tr>
+<tr>
+<td style="text-align:center">η</td>
+<td style="text-align:left">\eta</td>
+<td style="text-align:center">Η</td>
+<td style="text-align:left">H</td>
+</tr>
+<tr>
+<td style="text-align:center">θ或$\vartheta$</td>
+<td style="text-align:left">\theta或\vartheta</td>
+<td style="text-align:center">Θ</td>
+<td style="text-align:left">\Theta</td>
+</tr>
+<tr>
+<td style="text-align:center">ι</td>
+<td style="text-align:left">\iota　</td>
+<td style="text-align:center">Ι</td>
+<td style="text-align:left">I</td>
+</tr>
+<tr>
+<td style="text-align:center">κ</td>
+<td style="text-align:left">\kappa</td>
+<td style="text-align:center">Κ</td>
+<td style="text-align:left">K</td>
+</tr>
+<tr>
+<td style="text-align:center">λ</td>
+<td style="text-align:left">\lambda</td>
+<td style="text-align:center">Λ</td>
+<td style="text-align:left">\Lambda</td>
+</tr>
+<tr>
+<td style="text-align:center">μ</td>
+<td style="text-align:left">\mu</td>
+<td style="text-align:center">Μ</td>
+<td style="text-align:left">M</td>
+</tr>
+<tr>
+<td style="text-align:center">ν</td>
+<td style="text-align:left">\nu</td>
+<td style="text-align:center">Ν</td>
+<td style="text-align:left">N</td>
+</tr>
+<tr>
+<td style="text-align:center">ξ</td>
+<td style="text-align:left">\xi</td>
+<td style="text-align:center">Ξ</td>
+<td style="text-align:left">\Xi</td>
+</tr>
+<tr>
+<td style="text-align:center">ο</td>
+<td style="text-align:left">o</td>
+<td style="text-align:center">Ο</td>
+<td style="text-align:left">O</td>
+</tr>
+<tr>
+<td style="text-align:center">π或$\varpi$</td>
+<td style="text-align:left">\pi或\varpi</td>
+<td style="text-align:center">Π</td>
+<td style="text-align:left">\Pi</td>
+</tr>
+<tr>
+<td style="text-align:center">ρ或$\varrho$</td>
+<td style="text-align:left">\rho或\varrho</td>
+<td style="text-align:center">Ρ</td>
+<td style="text-align:left">P</td>
+</tr>
+<tr>
+<td style="text-align:center">σ或$\varsigma$</td>
+<td style="text-align:left">\sigma或\varsigma</td>
+<td style="text-align:center">Σ</td>
+<td style="text-align:left">\Sigma</td>
+</tr>
+<tr>
+<td style="text-align:center">τ</td>
+<td style="text-align:left">\tau</td>
+<td style="text-align:center">Τ</td>
+<td style="text-align:left">T</td>
+</tr>
+<tr>
+<td style="text-align:center">υ</td>
+<td style="text-align:left">\upsilon</td>
+<td style="text-align:center">Υ</td>
+<td style="text-align:left">\Upsilon</td>
+</tr>
+<tr>
+<td style="text-align:center">φ或$\varphi$</td>
+<td style="text-align:left">\phi或\varphi</td>
+<td style="text-align:center">Φ</td>
+<td style="text-align:left">\Phi　</td>
+</tr>
+<tr>
+<td style="text-align:center">χ</td>
+<td style="text-align:left">\chi</td>
+<td style="text-align:center">Χ</td>
+<td style="text-align:left">X</td>
+</tr>
+<tr>
+<td style="text-align:center">ψ</td>
+<td style="text-align:left">\psi</td>
+<td style="text-align:center">Ψ</td>
+<td style="text-align:left">\Psi</td>
+</tr>
+<tr>
+<td style="text-align:center">ω</td>
+<td style="text-align:left">\omega</td>
+<td style="text-align:center">Ω</td>
+<td style="text-align:left">\Omega</td>
+</tr>
+</tbody>
+</table>
+<h2 id="三角函数与逻辑数学字符"><a href="#三角函数与逻辑数学字符" class="headerlink" title="三角函数与逻辑数学字符"></a>三角函数与逻辑数学字符</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">数学字符</th>
+<th style="text-align:center">输入</th>
+<th style="text-align:center">数学字符</th>
+<th style="text-align:center">输入</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$\pm$</td>
+<td style="text-align:center">\pm</td>
+<td style="text-align:center">$\times$</td>
+<td style="text-align:center">\times</td>
+</tr>
+<tr>
+<td style="text-align:center">$\div$</td>
+<td style="text-align:center">\div</td>
+<td style="text-align:center">$\mid$</td>
+<td style="text-align:center">\mid</td>
+</tr>
+<tr>
+<td style="text-align:center">$\nmid$</td>
+<td style="text-align:center">\nmid</td>
+<td style="text-align:center">$\cdot$</td>
+<td style="text-align:center">\cdot</td>
+</tr>
+<tr>
+<td style="text-align:center">$\circ$</td>
+<td style="text-align:center">\circ</td>
+<td style="text-align:center">$\ast$</td>
+<td style="text-align:center">\ast</td>
+</tr>
+<tr>
+<td style="text-align:center">$\bigodot$</td>
+<td style="text-align:center">\bigodot</td>
+<td style="text-align:center">$\bigotimes$</td>
+<td style="text-align:center">\bigotimes</td>
+</tr>
+<tr>
+<td style="text-align:center">$\bigoplus$</td>
+<td style="text-align:center">\bigoplus</td>
+<td style="text-align:center">$\leq$</td>
+<td style="text-align:center">\leq</td>
+</tr>
+<tr>
+<td style="text-align:center">$\geq$</td>
+<td style="text-align:center">\geq</td>
+<td style="text-align:center">$\neq$</td>
+<td style="text-align:center">\neq</td>
+</tr>
+<tr>
+<td style="text-align:center">$\approx$</td>
+<td style="text-align:center">\approx</td>
+<td style="text-align:center">$\equiv$</td>
+<td style="text-align:center">\equiv</td>
+</tr>
+<tr>
+<td style="text-align:center">$\sum$</td>
+<td style="text-align:center">\sum</td>
+<td style="text-align:center">$\prod$</td>
+<td style="text-align:center">\prod</td>
+</tr>
+<tr>
+<td style="text-align:center">$\coprod$</td>
+<td style="text-align:center">\coprod</td>
+<td style="text-align:center">$\emptyset$</td>
+<td style="text-align:center">\emptyset</td>
+</tr>
+<tr>
+<td style="text-align:center">$\in$</td>
+<td style="text-align:center">\in</td>
+<td style="text-align:center">$\notin$</td>
+<td style="text-align:center">\notin</td>
+</tr>
+<tr>
+<td style="text-align:center">$\subset$</td>
+<td style="text-align:center">\subset</td>
+<td style="text-align:center">$\supset$</td>
+<td style="text-align:center">\supset</td>
+</tr>
+<tr>
+<td style="text-align:center">$\subseteq$</td>
+<td style="text-align:center">\subseteq</td>
+<td style="text-align:center">$\supseteq$</td>
+<td style="text-align:center">\supseteq</td>
+</tr>
+<tr>
+<td style="text-align:center">$\bigcap$</td>
+<td style="text-align:center">\bigcap</td>
+<td style="text-align:center">$\bigcup$</td>
+<td style="text-align:center">\bigcup</td>
+</tr>
+<tr>
+<td style="text-align:center">$\bigvee$</td>
+<td style="text-align:center">\bigvee</td>
+<td style="text-align:center">$\bigwedge$</td>
+<td style="text-align:center">\bigwedge</td>
+</tr>
+<tr>
+<td style="text-align:center">$\biguplus$</td>
+<td style="text-align:center">\biguplus</td>
+<td style="text-align:center">$\bigsqcup$</td>
+<td style="text-align:center">\bigsqcup</td>
+</tr>
+<tr>
+<td style="text-align:center">$\log$</td>
+<td style="text-align:center">\log</td>
+<td style="text-align:center">$\lg$</td>
+<td style="text-align:center">\lg</td>
+</tr>
+<tr>
+<td style="text-align:center">$\ln$</td>
+<td style="text-align:center">\ln</td>
+<td style="text-align:center">$\bot$</td>
+<td style="text-align:center">\bot</td>
+</tr>
+<tr>
+<td style="text-align:center">$\angle$</td>
+<td style="text-align:center">\angle</td>
+<td style="text-align:center">$30^\circ$</td>
+<td style="text-align:center">30^\circ</td>
+</tr>
+<tr>
+<td style="text-align:center">$\sin$</td>
+<td style="text-align:center">\sin</td>
+<td style="text-align:center">$\cos$</td>
+<td style="text-align:center">\cos</td>
+</tr>
+<tr>
+<td style="text-align:center">$\tan$</td>
+<td style="text-align:center">\tan</td>
+<td style="text-align:center">$\cot$</td>
+<td style="text-align:center">\cot</td>
+</tr>
+<tr>
+<td style="text-align:center">$\sec$</td>
+<td style="text-align:center">\sec</td>
+<td style="text-align:center">$\csc$</td>
+<td style="text-align:center">\csc</td>
+</tr>
+<tr>
+<td style="text-align:center">$\prime$</td>
+<td style="text-align:center">\prime</td>
+<td style="text-align:center">$\int$</td>
+<td style="text-align:center">\int</td>
+</tr>
+<tr>
+<td style="text-align:center">$\iint$</td>
+<td style="text-align:center">\iint</td>
+<td style="text-align:center">$\iiint$</td>
+<td style="text-align:center">\iiint</td>
+</tr>
+<tr>
+<td style="text-align:center">$\iiiint$</td>
+<td style="text-align:center">\iiiint</td>
+<td style="text-align:center">$\oint$</td>
+<td style="text-align:center">\oint</td>
+</tr>
+<tr>
+<td style="text-align:center">$\lim$</td>
+<td style="text-align:center">\lim</td>
+<td style="text-align:center">$\infty$</td>
+<td style="text-align:center">\infty</td>
+</tr>
+<tr>
+<td style="text-align:center">$\nabla$</td>
+<td style="text-align:center">\nabla</td>
+<td style="text-align:center">$\because$</td>
+<td style="text-align:center">\because</td>
+</tr>
+<tr>
+<td style="text-align:center">$\therefore$</td>
+<td style="text-align:center">\therefore</td>
+<td style="text-align:center">$\forall$</td>
+<td style="text-align:center">\forall</td>
+</tr>
+<tr>
+<td style="text-align:center">$\exists$</td>
+<td style="text-align:center">\exists</td>
+<td style="text-align:center">$\not=$</td>
+<td style="text-align:center">\not=</td>
+</tr>
+<tr>
+<td style="text-align:center">$\not&gt;$</td>
+<td style="text-align:center">\not&gt;</td>
+<td style="text-align:center">$\not\subset$</td>
+<td style="text-align:center">\not\subset</td>
+</tr>
+<tr>
+<td style="text-align:center">$\hat{y}$</td>
+<td style="text-align:center">\hat{y}</td>
+<td style="text-align:center">$\check{y}$</td>
+<td style="text-align:center">\check{y}</td>
+</tr>
+<tr>
+<td style="text-align:center">$\breve{y}$</td>
+<td style="text-align:center">\breve{y}</td>
+<td style="text-align:center">$\overline{a+b+c+d}$</td>
+<td style="text-align:center">\overline{a+b+c+d}</td>
+</tr>
+<tr>
+<td style="text-align:center">$\underline{a+b+c+d}$</td>
+<td style="text-align:center">\underline{a+b+c+d}</td>
+<td style="text-align:center">$\overbrace{a+\underbrace{b+c}{1.0}+d}^{2.0}$</td>
+<td style="text-align:center">\overbrace{a+\underbrace{b+c}{1.0}+d}^{2.0}</td>
+</tr>
+<tr>
+<td style="text-align:center">$\uparrow$</td>
+<td style="text-align:center">\uparrow</td>
+<td style="text-align:center">$\downarrow$</td>
+<td style="text-align:center">\downarrow</td>
+</tr>
+<tr>
+<td style="text-align:center">$\Uparrow$</td>
+<td style="text-align:center">\Uparrow</td>
+<td style="text-align:center">$\Downarrow$</td>
+<td style="text-align:center">\Downarrow</td>
+</tr>
+<tr>
+<td style="text-align:center">$\rightarrow$</td>
+<td style="text-align:center">\rightarrow</td>
+<td style="text-align:center">$\leftarrow$</td>
+<td style="text-align:center">\leftarrow</td>
+</tr>
+<tr>
+<td style="text-align:center">$\Rightarrow$</td>
+<td style="text-align:center">\Rightarrow</td>
+<td style="text-align:center">$\Leftarrow$</td>
+<td style="text-align:center">\Leftarrow</td>
+</tr>
+<tr>
+<td style="text-align:center">$\longrightarrow$</td>
+<td style="text-align:center">\longrightarrow</td>
+<td style="text-align:center">$\longleftarrow$</td>
+<td style="text-align:center">\longleftarrow</td>
+</tr>
+<tr>
+<td style="text-align:center">$\Longrightarrow$</td>
+<td style="text-align:center">\Longrightarrow</td>
+<td style="text-align:center">$\Longleftarrow$</td>
+<td style="text-align:center">\Longleftarrow</td>
+</tr>
+<tr>
+<td style="text-align:center">$\ $</td>
+<td style="text-align:center">\空格</td>
+<td style="text-align:center">#</td>
+<td style="text-align:center">\#</td>
+</tr>
+</tbody>
+</table>
+<h2 id="字体转换"><a href="#字体转换" class="headerlink" title="字体转换"></a>字体转换</h2><p>要对公式的某一部分字符进行字体转换，可以用{\rm 需转换的部分字符}命令，其中\rm可以参照下表选择合适的字体。一般情况下，公式默认为意大利体。</p>
+<p><code>\rm</code>　　罗马体</p>
+<p><code>\it</code>　　意大利体</p>
+<p><code>\bf</code>　　黑体　</p>
+<p><code>\sf</code>　　等线体</p>
+<p><code>\mit</code> 　数学斜体　</p>
+<p><code>\tt</code>　打字机字体</p>
+<p><code>\sc</code>　　小体大写字母</p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$$<span class="tag">\<span class="name">\</span></span>begin&#123;array&#125;&#123;c|lcr&#125;</span><br><span class="line">n &amp; <span class="tag">\<span class="name">text</span><span class="string">&#123;Left&#125;</span></span> &amp; <span class="tag">\<span class="name">text</span><span class="string">&#123;Center&#125;</span></span> &amp; <span class="tag">\<span class="name">text</span><span class="string">&#123;Right&#125;</span></span> <span class="tag">\<span class="name">\</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line"><span class="tag">\<span class="name">hline</span></span></span><br><span class="line">1 &amp; 0.24 &amp; 1 &amp; 125 <span class="tag">\<span class="name">\</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line">2 &amp; -1 &amp; 189 &amp; -8 <span class="tag">\<span class="name">\</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line">3 &amp; -20 &amp; 2000 &amp; 1+10i <span class="tag">\<span class="name">\</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line"><span class="tag">\<span class="name">\</span></span>end&#123;array&#125; $$</span></span><br></pre></td></tr></table></figure>
+<p>$$\begin{array}{c|lcr}
+n &amp; \text{Left} &amp; \text{Center} &amp; \text{Right} \\
+\hline
+1 &amp; 0.24 &amp; 1 &amp; 125 \\
+2 &amp; -1 &amp; 189 &amp; -8 \\
+3 &amp; -20 &amp; 2000 &amp; 1+10i \\
+\end{array} $$</p>
+<h2 id="花括号用法"><a href="#花括号用法" class="headerlink" title="花括号用法"></a>花括号用法</h2><p>$$\begin{array}{cc}
+  a &amp; b \\
+  c &amp; c
+\end{array} $$</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$$f(x)=</span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;cases&#125;</span></span></span><br><span class="line">0&amp; <span class="tag">\<span class="name">text</span><span class="string">&#123;x=0&#125;</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line">1&amp; <span class="tag">\<span class="name">text</span><span class="string">&#123;x!=0&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;cases&#125;</span></span>$$</span></span><br></pre></td></tr></table></figure>
+<p>$$
+f(x)=
+\begin{cases}
+0&amp; \text{x=0}\\
+1&amp; \text{x!=0}
+\end{cases}
+$$</p>
+<h2 id="多行数学式对齐"><a href="#多行数学式对齐" class="headerlink" title="多行数学式对齐"></a>多行数学式对齐</h2><p><strong>利用&amp;符号来对齐，在每个等号前添加&amp;符号即可</strong></p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$$<span class="tag">\<span class="name">begin</span><span class="string">&#123;array&#125;</span></span> &#123;lcl&#125;</span><br><span class="line"><span class="tag">\<span class="name">cos</span></span> 2<span class="tag">\<span class="name">theta</span></span> &amp; = &amp; <span class="tag">\<span class="name">cos</span></span>^2 <span class="tag">\<span class="name">theta</span></span> - <span class="tag">\<span class="name">sin</span></span>^2 <span class="tag">\<span class="name">theta</span></span> <span class="tag">\<span class="name">\</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line">             &amp; = &amp; 2 <span class="tag">\<span class="name">cos</span></span>^2 <span class="tag">\<span class="name">theta</span></span> - 1.</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;array&#125;</span></span>$$</span></span><br><span class="line"></span><br><span class="line"><span class="formula">$$<span class="tag">\<span class="name">begin</span><span class="string">&#123;array&#125;</span></span> &#123;lcl&#125;</span><br><span class="line">f(x) &amp; = &amp; (a+b)^2 <span class="tag">\<span class="name">\</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line">     &amp; = &amp; a^2+2ab+b^2</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;array&#125;</span></span>$$</span></span><br></pre></td></tr></table></figure>
+<p>$$\begin{array} {lcl}
+\cos 2\theta &amp; = &amp; \cos^2 \theta - \sin^2 \theta \\
+             &amp; = &amp; 2 \cos^2 \theta - 1.
+\end{array}$$</p>
+<p>$$\begin{array} {lcl}
+f(x) &amp; = &amp; (a+b)^2 \\
+     &amp; = &amp; a^2+2ab+b^2
+\end{array}$$</p>
+<h2 id="矩阵与行列式"><a href="#矩阵与行列式" class="headerlink" title="矩阵与行列式"></a>矩阵与行列式</h2><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$$</span><br><span class="line">matrix</span><br><span class="line">[ ( <span class="tag">\<span class="name">begin</span><span class="string">&#123;array&#125;</span><span class="string">&#123;ccc&#125;</span></span></span><br><span class="line">a &amp; b &amp; c <span class="tag">\<span class="name">\</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line">d &amp; e &amp; f <span class="tag">\<span class="name">\</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line">g &amp; h &amp; i <span class="tag">\<span class="name">end</span><span class="string">&#123;array&#125;</span></span> )]$$</span></span><br><span class="line"></span><br><span class="line"><span class="formula">$$</span><br><span class="line">[ <span class="tag">\<span class="name">chi</span></span>(<span class="tag">\<span class="name">lambda</span></span>) = <span class="tag">\<span class="name">left</span></span>| <span class="tag">\<span class="name">begin</span><span class="string">&#123;array&#125;</span><span class="string">&#123;ccc&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">lambda</span></span> - a &amp; -b &amp; -c <span class="tag">\<span class="name">\</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line">-d &amp; <span class="tag">\<span class="name">lambda</span></span> - e &amp; -f <span class="tag">\<span class="name">\</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line">-g &amp; -h &amp; <span class="tag">\<span class="name">lambda</span></span> - i <span class="tag">\<span class="name">end</span><span class="string">&#123;array&#125;</span></span> <span class="tag">\<span class="name">right</span></span>|.]</span><br><span class="line">$$</span></span><br><span class="line"></span><br><span class="line"><span class="formula">$$ <span class="tag">\<span class="name">left</span><span class="string">[</span><br><span class="line">      \begin&#123;array&#125;&#123;cc|c&#125;</span><br><span class="line">        1&amp;2&amp;3 \\\\</span><br><span class="line">        4&amp;5&amp;6</span><br><span class="line">      \end&#123;array&#125;</span><br><span class="line">    \right]</span></span></span><br><span class="line">$$</span></span><br></pre></td></tr></table></figure>
+<p>$$
+matrix
+[ ( \begin{array}{ccc}
+a &amp; b &amp; c \\
+d &amp; e &amp; f \\
+g &amp; h &amp; i \end{array} )]$$</p>
+<p>$$
+[ \chi(\lambda) = \left| \begin{array}{ccc}
+\lambda - a &amp; -b &amp; -c \\
+-d &amp; \lambda - e &amp; -f \\
+-g &amp; -h &amp; \lambda - i \end{array} \right|.]
+$$</p>
+<p>$$ \left[
+      \begin{array}{cc|c}
+        1&amp;2&amp;3 \\
+        4&amp;5&amp;6
+      \end{array}
+    \right]
+$$</p>
+<h2 id="括号的其他用法"><a href="#括号的其他用法" class="headerlink" title="括号的其他用法"></a>括号的其他用法</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">功能</th>
+<th style="text-align:left">语法</th>
+<th style="text-align:center">显示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">圆括号，小括号</td>
+<td style="text-align:left">\left( \frac{a}{b} \right)</td>
+<td style="text-align:center">$\left( \frac{a}{b} \right)$</td>
+</tr>
+<tr>
+<td style="text-align:left">方括号，中括号</td>
+<td style="text-align:left">\left[ \frac{a}{b} \right]</td>
+<td style="text-align:center">$$\left[ \frac{a}{b} \right]$$</td>
+</tr>
+<tr>
+<td style="text-align:left">花括号，大括号</td>
+<td style="text-align:left">\left{ \frac{a}{b}\right}</td>
+<td style="text-align:center">$$\left\{ \frac{a}{b} \right\}$$</td>
+</tr>
+<tr>
+<td style="text-align:left">角括号</td>
+<td style="text-align:left">\left \langle \frac{a}{b} \right \rangle</td>
+<td style="text-align:center">$\left \langle \frac{a}{b} \right \rangle$</td>
+</tr>
+<tr>
+<td style="text-align:left">单竖线，绝对值</td>
+<td style="text-align:left">\left\mid \frac{a}{b} \right\mid ,或\vert</td>
+<td style="text-align:center">$\mid \frac{a}{b} \mid$</td>
+</tr>
+<tr>
+<td style="text-align:left">双竖线，范式</td>
+<td style="text-align:left">\Vert \frac{a}{b} \Vert</td>
+<td style="text-align:center">$$\Vert \frac{a}{b} \Vert$$</td>
+</tr>
+<tr>
+<td style="text-align:left">取整函数</td>
+<td style="text-align:left">\left \lfloor \frac{a}{b} \right \rfloor</td>
+<td style="text-align:center">$\left \lfloor \frac{a}{b} \right \rfloor$</td>
+</tr>
+<tr>
+<td style="text-align:left">取顶函数</td>
+<td style="text-align:left">\left \lceil \frac{c}{d} \right \rceil</td>
+<td style="text-align:center">$\left \lceil \frac{c}{d} \right \rceil   $</td>
+</tr>
+<tr>
+<td style="text-align:left">斜线与反斜线</td>
+<td style="text-align:left">\left / \frac{a}{b} \right \backslash</td>
+<td style="text-align:center">$\left / \frac{a}{b} \right \backslash$</td>
+</tr>
+<tr>
+<td style="text-align:left">上下箭头</td>
+<td style="text-align:left">\left \uparrow \frac{a}{b} \right \downarrow</td>
+<td style="text-align:center">$\left \uparrow \frac{a}{b} \right \downarrow$</td>
+</tr>
+<tr>
+<td style="text-align:left">混合括号1</td>
+<td style="text-align:left">\left [ 0,1 \right )</td>
+<td style="text-align:center">$\left [ 0,1 \right )$</td>
+</tr>
+<tr>
+<td style="text-align:left">混合括号2</td>
+<td style="text-align:left">\langle \psi  \mid</td>
+<td style="text-align:center">$\langle \psi  \mid $</td>
+</tr>
+<tr>
+<td style="text-align:left">单左括号</td>
+<td style="text-align:left">\left { \frac{a}{b} \right .</td>
+<td style="text-align:center">$$\left \{ \frac{a}{b} \right .$$</td>
+</tr>
+<tr>
+<td style="text-align:left">单右括号</td>
+<td style="text-align:left">\left . \frac{a}{b} \right }</td>
+<td style="text-align:center">$$\left . \frac{a}{b} \right \}$$</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Python Scipy学习(1)]]></title>
+      <url>http://keyunluo.github.io/2016/07/19/2016-07-19-python-scipy.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>SciPy是另一种使用NumPy来做高等数学、信号处理、优化、统计和许多其它科学任务的语言扩展,SciPy在NumPy的基础上增加了众多的数学、科学以及工程计算中常用的模块。例如线性代数、常微分方程数值求解、信号处理、图像处理、稀疏矩阵等等,本节主要学习其统计和优化模块。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="常用模块"><a href="#常用模块" class="headerlink" title="常用模块"></a>常用模块</h2><p>由于SciPy以NumPy为基础，那么import scipy的同时便import 了numpy库。</p>
+<ul>
+<li>统计子库-scipy.stats</li>
+<li>线性代数-scipy.linalg</li>
+<li>拟合与优化-scipy.optimize</li>
+<li>插值-scipy.interpolate</li>
+<li>数值积分-scipy.integate</li>
+<li>稀疏矩阵-scipy.sparse</li>
+<li>图像操作scipy.misc</li>
+<li>图像处理-scipy.ndimage</li>
+</ul>
+<h2 id="统计"><a href="#统计" class="headerlink" title="统计"></a>统计</h2><p>scipy.stats的主要功能有以下几个方面：</p>
+<ol>
+<li>数值随机变量对象（包括密度分布函数，累积分布函数，样本函数等）</li>
+<li>一些估计方法</li>
+<li>一些测试方法</li>
+</ol>
+<ul>
+<li>随机变量与分布:考虑$Beta$函数</li>
+</ul>
+<p>numpy 中提供了获取随机变量的样本的方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">1</span>]: <span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">In [<span class="number">2</span>]: np.random.beta(<span class="number">5</span>, <span class="number">5</span>, size=<span class="number">3</span>)</span><br><span class="line">Out[<span class="number">2</span>]: array([ <span class="number">0.6167565</span> ,  <span class="number">0.67994589</span>,  <span class="number">0.32346476</span>])</span><br></pre></td></tr></table></figure>
+<p>但是np.random.beta(a,b)是根据下面的函数得到的：</p>
+<p>$f(x;a,b)=\frac{x^{(a-1)}(1-x)^{(b-1)} }{\int_0^1 u^{(a-1)}u^{(b-1)} {\rm d}u} , (0 \le x \le 1)$</p>
+<p>为了获取更多beta分布的特性，我们经常使用scipy.stats:
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.stats <span class="keyword">import</span> beta</span><br><span class="line"><span class="keyword">from</span> matplotlib.pyplot <span class="keyword">import</span> hist, plot, show</span><br><span class="line">q = beta(<span class="number">5</span>, <span class="number">5</span>)      <span class="comment"># Beta(a, b), with a = b = 5 q是一个对象</span></span><br><span class="line">obs = q.rvs(<span class="number">2000</span>)   <span class="comment"># 2000 observations 获得2000个样本</span></span><br><span class="line">hist(obs, bins=<span class="number">40</span>, normed=<span class="keyword">True</span>)</span><br><span class="line">grid = np.linspace(<span class="number">0.01</span>, <span class="number">0.99</span>, <span class="number">100</span>)</span><br><span class="line">plot(grid, q.pdf(grid), <span class="string">'k-'</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">show()</span><br></pre></td></tr></table></figure></p>
+<p>结果如图：
+<img src="/resource/blog/2016-07/beta.png" alt="beta分布特性"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>q.cdf(<span class="number">0.4</span>)      <span class="comment"># Cumulative distribution function  累积密度函数</span></span><br><span class="line"><span class="number">0.26656768000000003</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>q.pdf(<span class="number">0.4</span>)      <span class="comment"># Density function   密度函数</span></span><br><span class="line"><span class="number">2.0901888000000013</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>q.ppf(<span class="number">0.8</span>)      <span class="comment"># Quantile (inverse cdf) function</span></span><br><span class="line"><span class="number">0.63391348346427079</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>q.mean()</span><br><span class="line"><span class="number">0.5</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>线性回归</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">19</span>]: <span class="keyword">from</span> scipy.stats <span class="keyword">import</span> linregress</span><br><span class="line"></span><br><span class="line">In [<span class="number">20</span>]: x = np.random.randn(<span class="number">200</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="number">21</span>]: y = <span class="number">2</span> * x + <span class="number">0.1</span> * np.random.randn(<span class="number">200</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="number">22</span>]: gradient, intercept, r_value, p_value, std_err = linregress(x, y)</span><br><span class="line"></span><br><span class="line">In [<span class="number">23</span>]: gradient, intercept</span><br><span class="line">Out[<span class="number">23</span>]: (<span class="number">1.9962554379482236</span>, <span class="number">0.008172822032671799</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="线性代数"><a href="#线性代数" class="headerlink" title="线性代数"></a>线性代数</h2><p>NumPy和SciPy都提供了线性代数函数库linalg，SciPy的线性代数库比NumPy更加全面。</p>
+<ul>
+<li>解线性方程组</li>
+</ul>
+<p><code>numpy.linalg.solve(A, b)</code>和<code>scipy.linalg.solve(A, b)</code>可以用来解线性方程组$Ax = b $，也就是计算$ x = A^{-1}b$ 。这里$A$为(M, M)的方形矩阵，$x$和$b$为长为M的向量。有时候$A$是固定的，需要对多组$b$进行求解，因此第二个参数也可以是(M, N)的矩阵$B$。这样计算出来的$X$也为(M, N)的矩阵。它相当于计算$A^{-1}B$。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> scipy <span class="keyword">import</span> linalg</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>M, N = <span class="number">500</span>, <span class="number">50</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>A = np.random.rand(M, M)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>B = np.random.rand(M, N)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>X1 = linalg.solve(A, B)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>X2 = np.dot(linalg.inv(A), B)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.allclose(X1, X2)</span><br><span class="line"><span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<p>lu_factor(A)对矩阵$A$进行LU分解，得到一个元组：(LU矩阵，排序数组)，将这个元组传递给lu_solve(),即可对不同的$B$进行求解。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>luf = linalg.lu_factor(A)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>X3 = linalg.lu_solve(luf, B)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.allclose(X1, X3)</span><br><span class="line"><span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>最小二乘解</li>
+</ul>
+<p>lstsq()比solve()更一般化，它不要求矩阵$A$是正方形的，也就是说方程的个数可以少于、等于或者多于未知数的个数。它找到一组解$x$，使得$\Vert b - A \cdot x \Vert$最小。我们称所得到的结果为最小二乘解，即它使得所有等式的误差的平方和最小。</p>
+<ul>
+<li>奇异值分解-SVD</li>
+</ul>
+<p>奇异值分解是线性代数中一种重要的矩阵分解，在信号处理、统计学等领域有重要应用。假设$M$是一个m×n阶矩阵，存在一个分解使得：$ M = U \sum V^{*} $。其中$U$是m×m阶矩阵；$ \sum $是半正定m×n阶对角矩阵；而$V^*$，即$V$的共轭转置，是n×n阶矩阵。这样的分解就称作$M$的奇异值分解。$ \sum $对角线上的元素为$M$的奇异值。通常奇异值按照从大到小的顺序排列。</p>
+<h2 id="拟合与优化"><a href="#拟合与优化" class="headerlink" title="拟合与优化"></a>拟合与优化</h2><ul>
+<li>求根与稳定点</li>
+</ul>
+<p>稳定点：已知连续函数$f(x)$ ,则函数$f(x)$的稳定点为$x_0$，使得条件$f(x_0) = x_0$成立。</p>
+<p>例如：$f(x)=sin(4(x-\frac{1}{4})) + x + x^{20} -1$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy.optimize <span class="keyword">import</span> bisect</span><br><span class="line">f =<span class="keyword">lambda</span> x : np.sin(<span class="number">4</span> * (x <span class="number">-0.25</span>)) + x + x**<span class="number">20</span> <span class="number">-1</span></span><br><span class="line">bisect(f,<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line"><span class="number">0.4082935042797544</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>非线性方程组求解</li>
+</ul>
+<p>fsolve()可以对非线性方程组进行求解。它的基本调用形式为fsolve(func, x0)。其中func是计算方程组误差的函数，它的参数x是一个数组，其值为方程组的一组可能的解。func返回将x代入方程组之后得到的每个方程的误差，x0为未知数的一组初始值。假设要对下面的方程组进行求解:
+$$ f1(u1,u2,u3) = 0 ,f2(u1,u2,u3) = 0 , f3(u1,u2,u3) = 0 $$</p>
+<p>那么func函数可以如下定义：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x)</span>:</span></span><br><span class="line">    u1,u2,u3 = x</span><br><span class="line">    <span class="keyword">return</span> [f1(u1,u2,u3), f2(u1,u2,u3), f3(u1,u2,u3)]</span><br></pre></td></tr></table></figure></p>
+<p>例如：对下列方程组求解：
+$$ 5x_1 +3 =0;4x_0^2 - 2sin(x_1x_2)=0;x_1x_2-1.5=0$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> sin, cos</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> optimize</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x)</span>:</span></span><br><span class="line">    x0, x1, x2 = x.tolist()</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="number">5</span>*x1+<span class="number">3</span>,</span><br><span class="line">        <span class="number">4</span>*x0*x0 - <span class="number">2</span>*sin(x1*x2),</span><br><span class="line">        x1*x2 - <span class="number">1.5</span></span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># f计算方程组的误差，[1,1,1]是未知数的初始值</span></span><br><span class="line">result = optimize.fsolve(f, [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>])</span><br><span class="line">print(result)</span><br><span class="line">print(f(result))</span><br></pre></td></tr></table></figure>
+<p>f()是计算方程组的误差的函数，x参数是一组可能的解。fsolve()在调用f()时，传递给f()的参数是一个数组。</p>
+<p>调用fsolve()时，传递计算误差的函数f()，以及未知数的初始值。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Python Matplotlib绘图基础]]></title>
       <url>http://keyunluo.github.io/2016/07/18/2016-07-18-python-matplotlib.html</url>
       <content type="html"><![CDATA[<blockquote>
@@ -366,7 +1091,7 @@
 </tr>
 <tr>
 <td>logical_and, logical_or, logical_xor</td>
-<td>计算各个元素逻辑操作的真值。等价于中缀操作符 &amp;, ^</td>
+<td>计算各个元素逻辑操作的真值。等价于中缀操作符 &amp;, $\mid$ ,^</td>
 </tr>
 </tbody>
 </table>
