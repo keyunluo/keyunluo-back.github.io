@@ -336,7 +336,7 @@ array([ 2.,  0.,  6.])
 |mod |基于元素的模（取余）|
 |copysign   | 拷贝第二个参数的符号到第一个参数 |
 |greater, greater_equal, less, less_equal, not_equal| 基于元素的比较，产生布尔数组。等价于中缀操作符 >, >=, <, <=, ==, !=
-|logical_and, logical_or, logical_xor |   计算各个元素逻辑操作的真值。等价于中缀操作符 &, ^ |
+|logical_and, logical_or, logical_xor |   计算各个元素逻辑操作的真值。等价于中缀操作符 &, $\mid$ ,^ |
 
 ## 转置数组和交换坐标轴
 
