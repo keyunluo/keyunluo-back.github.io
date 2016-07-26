@@ -4,6 +4,152 @@
   
     
     <entry>
+      <title><![CDATA[统计学习方法——概论]]></title>
+      <url>http://keyunluo.github.io/2016/07/26/2016-07-26-statical-learning-1.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>统计学习(statistical learning)做的事情是：基于数据建立概率统计模型，然后用模型对数据进行预测和分析。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="统计学习三要素"><a href="#统计学习三要素" class="headerlink" title="统计学习三要素"></a>统计学习三要素</h2><ol>
+<li><p>模型</p>
+<ul>
+<li><p><strong>模型</strong> 就是所要学习的条件概率分布或决策函数。    $Y=f(X)$ 或 $P(Y|X)$</p>
+</li>
+<li><p><strong>模型的假设空间</strong> 包括所有可能的条件概率分布或决策函数。</p>
+<p>$\mathcal{F} = \{f | Y=f_\theta(X), \theta\in R^n \}$</p>
+<p>或 $ \mathcal{F} = \{P | P_\theta(Y|X), \theta\in R_n \}$。 其中 $ \theta$的取值空间$R^n$称为<strong>参数空间</strong>。</p>
+</li>
+</ul>
+</li>
+<li><p>策略
+ <strong>策略</strong>也即学习的准则。一般来说监督学习的策略即指经验风险或结构风险函数最优化。</p>
+<ul>
+<li><p>经验风险</p>
+<ul>
+<li>损失函数 ：$ L(Y, f(X))$<ol>
+<li>0-1损失函数</li>
+<li>平方损失函数</li>
+<li>绝对损失函数</li>
+<li>对数损失函数</li>
+</ol>
+</li>
+<li><p>风险函数
+  <strong>风险函数(risk function)又叫期望损失(expected loss)</strong>，是理论模型$f(X)$关于联合分布$P(X,Y)$的平均意义下的损失。损失函数的期望是：</p>
+<p>$$ R_{exp}(f) = E_p[L(Y,f(X))]=\int_{\mathcal{X}\times \mathcal{Y}}L(y,f(x))P(x,y)dxdy $$</p>
+</li>
+<li><p>经验风险
+  风险函数和联合分布$P(X, Y)$，用作为模型的后者求作为策略的前者，显然是病态的。故取训练数据集上的平均损失称为<strong>经验风险(empirical risk)</strong>。</p>
+<p>$$ R_{emp}(f) = \frac1N\sum_{i=1}^N L(y_i, f(x_i)) $$</p>
+<p> 当训练样本数量$N$趋于无穷时，$R<em>{emp}$趋于$R</em>{exp}$。</p>
+</li>
+</ul>
+</li>
+<li><p>结构风险</p>
+<p>  <strong>结构风险(structural risk)</strong>在经验风险的基础上添加正则化项(regularization，也叫罚项(penalty term))。</p>
+<p>  $$ R_{srm}(f)=\frac1N\sum_{i=1}^N L(y_i,f(x_i))+ \lambda J(f), \lambda \geq 0 $$</p>
+</li>
+<li><p>经验风险最小化</p>
+<p>  在$\mathcal{F}$找到一个$f$使得$R_{emp}$最小。
+  p.s. 当模型是条件概率分布，损失函数是对数损失函数时，经验风险最小化等价于<strong>极大似然估计</strong>。</p>
+</li>
+<li><p>结构风险最小化</p>
+<p>  为防止经验风险最小化有可能带来的过拟合，添加<strong>代表模型复杂度</strong>的罚项$J(f)$。</p>
+</li>
+</ul>
+</li>
+<li>算法
+ 最优化算法</li>
+</ol>
+<hr>
+<h2 id="模型评估与模型选择"><a href="#模型评估与模型选择" class="headerlink" title="模型评估与模型选择"></a>模型评估与模型选择</h2><h3 id="误差"><a href="#误差" class="headerlink" title="误差"></a>误差</h3><ol>
+<li><p>训练误差</p>
+<p> <strong>训练误差(training error)</strong>是学习到的模型$Y=\hat{f}(X)$关于训练数据集的平均损失。</p>
+<p> $$R_{emp}(\hat{f}) = \frac1N\sum_{i=1}^N L(y_i, \hat{f}(x_i))$$</p>
+</li>
+<li><p>测试误差</p>
+<p> <strong>测试误差(test error)</strong>是学习到的模型$Y=\hat{f}(X)$关于测试数据集的平均损失。</p>
+<p> $$e_{test}(\hat{f}) = \frac1{N’}\sum_{i=1}^{N’} L(y_i, \hat{f}(x_i))$$
+当损失函数是0-1损失时，测试误差即为测试数据集上的误差率。</p>
+</li>
+</ol>
+<h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3><p>正则化方法就是在经验风险函数上添加正则化项。<strong>正则化项(regularizer)</strong>一般是模型复杂度的单调递增函数。如可以是模型参数向量的范数。</p>
+<p>正则化的一般形式：</p>
+<p>$$ min_{f \in \mathcal{F} } \frac1N\sum_{i=1}^N L(y_i,f(x_i))+ \lambda J(f)$$</p>
+<p>其中第一项是经验风险，第二项是正则化项，正则化项可以取不同的形式，例如，在回归问题中，损失函数是平方损失，正则化项可以是参数向量的$L_2$范数：</p>
+<p>$$L(w)=\frac1N\sum_{i=1}^N L(y_i,f(x_i))+ \frac{\lambda}{2} {\Vert w \Vert}^2$$</p>
+<ul>
+<li>奥卡姆剃刀(Occam’s razor)原理：在所有可能选择的模型中，能够很好解释已知数据并且十分简单才是最好的模型。</li>
+</ul>
+<h3 id="交叉验证"><a href="#交叉验证" class="headerlink" title="交叉验证"></a>交叉验证</h3><p>将数据集随机分为训练集、验证集(validation set)和测试集，分别用于模型的训练、选择和评估。</p>
+<ol>
+<li>简单交叉验证
+ 分两部分：训练集和测试集</li>
+<li>$S$折交叉验证
+ 等分$S$部分：$S-1$份做训练集，1份做测试集。重复进行。</li>
+<li>留一交叉验证
+ $S$折交叉验证的特例$S=N$。</li>
+</ol>
+<h3 id="泛化能力"><a href="#泛化能力" class="headerlink" title="泛化能力"></a>泛化能力</h3><ol>
+<li><p>泛化误差</p>
+<p> <strong>泛化误差(generalization error)</strong>学到的模型$\hat{f}$对未知数据预测的误差。</p>
+<p> $$R_{exp}(\hat{f}) = E_p[L(Y,\hat{f}(X))]=\int _{\mathcal{X}\times \mathcal{Y}}L(y,\hat{f}(x))P(x,y)dxdy$$</p>
+<p> 泛化误差就是学习到的模型的期望风险。</p>
+</li>
+<li><p>泛化误差上界</p>
+<ul>
+<li>样本容量增加，泛化误差上界趋近于0</li>
+<li>假设空间容量增加，泛化误差上界增大</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="监督学习分类"><a href="#监督学习分类" class="headerlink" title="监督学习分类"></a>监督学习分类</h2><h3 id="按学习方法分类"><a href="#按学习方法分类" class="headerlink" title="按学习方法分类"></a>按学习方法分类</h3><ol>
+<li>生成方法-&gt;生成模型<ul>
+<li>由数据学习联合概率分布$P(X,Y)$后，求出概率分布$P(Y|X) = P(X,Y)/P(X)$。</li>
+<li>包括：朴素贝叶斯法、隐马尔科夫模型</li>
+</ul>
+</li>
+<li>判别方法-&gt;判别模型<ul>
+<li>由数据直接学习决策函数$f(X)$或者条件概率分布$P(Y|X)$。</li>
+<li>包括：k近邻法、感知机、逻辑斯蒂回归模型、最大熵模型、支持向量机、提升方法、条件随机场。</li>
+</ul>
+</li>
+<li>区别：<ul>
+<li>生成方法：<ul>
+<li>可还原出$P(X,Y)$</li>
+<li>学习收敛速度快，当N增大时，更快收敛于真实模型</li>
+<li>当存在隐变量时，仍可以使用</li>
+</ul>
+</li>
+<li>判别方法<ul>
+<li>直接学习$f(X)$或$P(Y|X)$，往往学习的准确率更高</li>
+<li>可对数据进行抽象、特征定义以简化学习问题</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="研究议题"><a href="#研究议题" class="headerlink" title="研究议题"></a>研究议题</h3><p>输入变量和输出变量均为连续变量的预测问题称为回归问题，如函数拟合；输出变量为有限个离散变量的预测问题称为分类问题，学习出的分类模型或分类决策函数称为分类器（classifier）；输入变量与输出变量均为变量序列的预测问题称为标注问题，如词性标注，输入词序列，输出是（词，词性）的标记序列。</p>
+<ol>
+<li>分类问题<ul>
+<li>评价指标<ul>
+<li>精确率(precision)
+  $$P = \frac{TP}{TP+FP}$$</li>
+<li>召回率(recall)
+  $$R = \frac{TP}{TP+FN}$$</li>
+<li>$F_1$
+  $$F_1 = \frac{2}{\frac1P + \frac1R} = \frac{2TP}{2TP+FP+FN}$$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>标注问题</li>
+<li>回归问题</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[PlantUML时序图绘制]]></title>
       <url>http://keyunluo.github.io/2016/07/25/2016-07-25-plantuml-sequence.html</url>
       <content type="html"><![CDATA[<blockquote>
@@ -691,11 +837,7 @@ n &amp; \text{Left} &amp; \text{Center} &amp; \text{Right} \\
 2 &amp; -1 &amp; 189 &amp; -8 \\
 3 &amp; -20 &amp; 2000 &amp; 1+10i \\
 \end{array} $$</p>
-<h2 id="花括号用法"><a href="#花括号用法" class="headerlink" title="花括号用法"></a>花括号用法</h2><p>$$\begin{array}{cc}
-  a &amp; b \\
-  c &amp; c
-\end{array} $$</p>
-<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$$f(x)=</span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;cases&#125;</span></span></span><br><span class="line">0&amp; <span class="tag">\<span class="name">text</span><span class="string">&#123;x=0&#125;</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line">1&amp; <span class="tag">\<span class="name">text</span><span class="string">&#123;x!=0&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;cases&#125;</span></span>$$</span></span><br></pre></td></tr></table></figure>
+<h2 id="花括号用法"><a href="#花括号用法" class="headerlink" title="花括号用法"></a>花括号用法</h2><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$$f(x)=</span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;cases&#125;</span></span></span><br><span class="line">0&amp; <span class="tag">\<span class="name">text</span><span class="string">&#123;x=0&#125;</span></span><span class="tag">\<span class="name">\</span></span></span><br><span class="line">1&amp; <span class="tag">\<span class="name">text</span><span class="string">&#123;x!=0&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;cases&#125;</span></span>$$</span></span><br></pre></td></tr></table></figure>
 <p>$$
 f(x)=
 \begin{cases}

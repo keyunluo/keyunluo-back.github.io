@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-07-25T13:29:23.975Z</updated>
+  <updated>2016-07-26T13:01:19.155Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -14,6 +14,170 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>统计学习方法——概论</title>
+    <link href="http://keyunluo.github.io/2016/07/26/2016-07-26-statical-learning-1.html"/>
+    <id>http://keyunluo.github.io/2016/07/26/2016-07-26-statical-learning-1.html</id>
+    <published>2016-07-26T11:25:02.000Z</published>
+    <updated>2016-07-26T13:01:19.155Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;统计学习(statistical learning)做的事情是：基于数据建立概率统计模型，然后用模型对数据进行预测和分析。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;统计学习三要素&quot;&gt;&lt;a href=&quot;#统计学习三要素&quot; class=&quot;headerlink&quot; title=&quot;统计学习三要素&quot;&gt;&lt;/a&gt;统计学习三要素&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;模型&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;模型&lt;/strong&gt; 就是所要学习的条件概率分布或决策函数。    $Y=f(X)$ 或 $P(Y|X)$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;模型的假设空间&lt;/strong&gt; 包括所有可能的条件概率分布或决策函数。&lt;/p&gt;
+&lt;p&gt;$\mathcal{F} = \{f | Y=f_\theta(X), \theta\in R^n \}$&lt;/p&gt;
+&lt;p&gt;或 $ \mathcal{F} = \{P | P_\theta(Y|X), \theta\in R_n \}$。 其中 $ \theta$的取值空间$R^n$称为&lt;strong&gt;参数空间&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;策略
+ &lt;strong&gt;策略&lt;/strong&gt;也即学习的准则。一般来说监督学习的策略即指经验风险或结构风险函数最优化。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;经验风险&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;损失函数 ：$ L(Y, f(X))$&lt;ol&gt;
+&lt;li&gt;0-1损失函数&lt;/li&gt;
+&lt;li&gt;平方损失函数&lt;/li&gt;
+&lt;li&gt;绝对损失函数&lt;/li&gt;
+&lt;li&gt;对数损失函数&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;风险函数
+  &lt;strong&gt;风险函数(risk function)又叫期望损失(expected loss)&lt;/strong&gt;，是理论模型$f(X)$关于联合分布$P(X,Y)$的平均意义下的损失。损失函数的期望是：&lt;/p&gt;
+&lt;p&gt;$$ R_{exp}(f) = E_p[L(Y,f(X))]=\int_{\mathcal{X}\times \mathcal{Y}}L(y,f(x))P(x,y)dxdy $$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;经验风险
+  风险函数和联合分布$P(X, Y)$，用作为模型的后者求作为策略的前者，显然是病态的。故取训练数据集上的平均损失称为&lt;strong&gt;经验风险(empirical risk)&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;$$ R_{emp}(f) = \frac1N\sum_{i=1}^N L(y_i, f(x_i)) $$&lt;/p&gt;
+&lt;p&gt; 当训练样本数量$N$趋于无穷时，$R&lt;em&gt;{emp}$趋于$R&lt;/em&gt;{exp}$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;结构风险&lt;/p&gt;
+&lt;p&gt;  &lt;strong&gt;结构风险(structural risk)&lt;/strong&gt;在经验风险的基础上添加正则化项(regularization，也叫罚项(penalty term))。&lt;/p&gt;
+&lt;p&gt;  $$ R_{srm}(f)=\frac1N\sum_{i=1}^N L(y_i,f(x_i))+ \lambda J(f), \lambda \geq 0 $$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;经验风险最小化&lt;/p&gt;
+&lt;p&gt;  在$\mathcal{F}$找到一个$f$使得$R_{emp}$最小。
+  p.s. 当模型是条件概率分布，损失函数是对数损失函数时，经验风险最小化等价于&lt;strong&gt;极大似然估计&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;结构风险最小化&lt;/p&gt;
+&lt;p&gt;  为防止经验风险最小化有可能带来的过拟合，添加&lt;strong&gt;代表模型复杂度&lt;/strong&gt;的罚项$J(f)$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;算法
+ 最优化算法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;模型评估与模型选择&quot;&gt;&lt;a href=&quot;#模型评估与模型选择&quot; class=&quot;headerlink&quot; title=&quot;模型评估与模型选择&quot;&gt;&lt;/a&gt;模型评估与模型选择&lt;/h2&gt;&lt;h3 id=&quot;误差&quot;&gt;&lt;a href=&quot;#误差&quot; class=&quot;headerlink&quot; title=&quot;误差&quot;&gt;&lt;/a&gt;误差&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;训练误差&lt;/p&gt;
+&lt;p&gt; &lt;strong&gt;训练误差(training error)&lt;/strong&gt;是学习到的模型$Y=\hat{f}(X)$关于训练数据集的平均损失。&lt;/p&gt;
+&lt;p&gt; $$R_{emp}(\hat{f}) = \frac1N\sum_{i=1}^N L(y_i, \hat{f}(x_i))$$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;测试误差&lt;/p&gt;
+&lt;p&gt; &lt;strong&gt;测试误差(test error)&lt;/strong&gt;是学习到的模型$Y=\hat{f}(X)$关于测试数据集的平均损失。&lt;/p&gt;
+&lt;p&gt; $$e_{test}(\hat{f}) = \frac1{N’}\sum_{i=1}^{N’} L(y_i, \hat{f}(x_i))$$
+当损失函数是0-1损失时，测试误差即为测试数据集上的误差率。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;正则化&quot;&gt;&lt;a href=&quot;#正则化&quot; class=&quot;headerlink&quot; title=&quot;正则化&quot;&gt;&lt;/a&gt;正则化&lt;/h3&gt;&lt;p&gt;正则化方法就是在经验风险函数上添加正则化项。&lt;strong&gt;正则化项(regularizer)&lt;/strong&gt;一般是模型复杂度的单调递增函数。如可以是模型参数向量的范数。&lt;/p&gt;
+&lt;p&gt;正则化的一般形式：&lt;/p&gt;
+&lt;p&gt;$$ min_{f \in \mathcal{F} } \frac1N\sum_{i=1}^N L(y_i,f(x_i))+ \lambda J(f)$$&lt;/p&gt;
+&lt;p&gt;其中第一项是经验风险，第二项是正则化项，正则化项可以取不同的形式，例如，在回归问题中，损失函数是平方损失，正则化项可以是参数向量的$L_2$范数：&lt;/p&gt;
+&lt;p&gt;$$L(w)=\frac1N\sum_{i=1}^N L(y_i,f(x_i))+ \frac{\lambda}{2} {\Vert w \Vert}^2$$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;奥卡姆剃刀(Occam’s razor)原理：在所有可能选择的模型中，能够很好解释已知数据并且十分简单才是最好的模型。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;交叉验证&quot;&gt;&lt;a href=&quot;#交叉验证&quot; class=&quot;headerlink&quot; title=&quot;交叉验证&quot;&gt;&lt;/a&gt;交叉验证&lt;/h3&gt;&lt;p&gt;将数据集随机分为训练集、验证集(validation set)和测试集，分别用于模型的训练、选择和评估。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;简单交叉验证
+ 分两部分：训练集和测试集&lt;/li&gt;
+&lt;li&gt;$S$折交叉验证
+ 等分$S$部分：$S-1$份做训练集，1份做测试集。重复进行。&lt;/li&gt;
+&lt;li&gt;留一交叉验证
+ $S$折交叉验证的特例$S=N$。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;泛化能力&quot;&gt;&lt;a href=&quot;#泛化能力&quot; class=&quot;headerlink&quot; title=&quot;泛化能力&quot;&gt;&lt;/a&gt;泛化能力&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;泛化误差&lt;/p&gt;
+&lt;p&gt; &lt;strong&gt;泛化误差(generalization error)&lt;/strong&gt;学到的模型$\hat{f}$对未知数据预测的误差。&lt;/p&gt;
+&lt;p&gt; $$R_{exp}(\hat{f}) = E_p[L(Y,\hat{f}(X))]=\int _{\mathcal{X}\times \mathcal{Y}}L(y,\hat{f}(x))P(x,y)dxdy$$&lt;/p&gt;
+&lt;p&gt; 泛化误差就是学习到的模型的期望风险。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;泛化误差上界&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;样本容量增加，泛化误差上界趋近于0&lt;/li&gt;
+&lt;li&gt;假设空间容量增加，泛化误差上界增大&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;监督学习分类&quot;&gt;&lt;a href=&quot;#监督学习分类&quot; class=&quot;headerlink&quot; title=&quot;监督学习分类&quot;&gt;&lt;/a&gt;监督学习分类&lt;/h2&gt;&lt;h3 id=&quot;按学习方法分类&quot;&gt;&lt;a href=&quot;#按学习方法分类&quot; class=&quot;headerlink&quot; title=&quot;按学习方法分类&quot;&gt;&lt;/a&gt;按学习方法分类&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;生成方法-&amp;gt;生成模型&lt;ul&gt;
+&lt;li&gt;由数据学习联合概率分布$P(X,Y)$后，求出概率分布$P(Y|X) = P(X,Y)/P(X)$。&lt;/li&gt;
+&lt;li&gt;包括：朴素贝叶斯法、隐马尔科夫模型&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;判别方法-&amp;gt;判别模型&lt;ul&gt;
+&lt;li&gt;由数据直接学习决策函数$f(X)$或者条件概率分布$P(Y|X)$。&lt;/li&gt;
+&lt;li&gt;包括：k近邻法、感知机、逻辑斯蒂回归模型、最大熵模型、支持向量机、提升方法、条件随机场。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;区别：&lt;ul&gt;
+&lt;li&gt;生成方法：&lt;ul&gt;
+&lt;li&gt;可还原出$P(X,Y)$&lt;/li&gt;
+&lt;li&gt;学习收敛速度快，当N增大时，更快收敛于真实模型&lt;/li&gt;
+&lt;li&gt;当存在隐变量时，仍可以使用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;判别方法&lt;ul&gt;
+&lt;li&gt;直接学习$f(X)$或$P(Y|X)$，往往学习的准确率更高&lt;/li&gt;
+&lt;li&gt;可对数据进行抽象、特征定义以简化学习问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;研究议题&quot;&gt;&lt;a href=&quot;#研究议题&quot; class=&quot;headerlink&quot; title=&quot;研究议题&quot;&gt;&lt;/a&gt;研究议题&lt;/h3&gt;&lt;p&gt;输入变量和输出变量均为连续变量的预测问题称为回归问题，如函数拟合；输出变量为有限个离散变量的预测问题称为分类问题，学习出的分类模型或分类决策函数称为分类器（classifier）；输入变量与输出变量均为变量序列的预测问题称为标注问题，如词性标注，输入词序列，输出是（词，词性）的标记序列。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;分类问题&lt;ul&gt;
+&lt;li&gt;评价指标&lt;ul&gt;
+&lt;li&gt;精确率(precision)
+  $$P = \frac{TP}{TP+FP}$$&lt;/li&gt;
+&lt;li&gt;召回率(recall)
+  $$R = \frac{TP}{TP+FN}$$&lt;/li&gt;
+&lt;li&gt;$F_1$
+  $$F_1 = \frac{2}{\frac1P + \frac1R} = \frac{2TP}{2TP+FP+FN}$$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;标注问题&lt;/li&gt;
+&lt;li&gt;回归问题&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;统计学习(statistical learning)做的事情是：基于数据建立概率统计模型，然后用模型对数据进行预测和分析。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="MachineLearning" scheme="http://keyunluo.github.io/categories/MachineLearning/"/>
+    
+    
+      <category term="机器学习" scheme="http://keyunluo.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>PlantUML时序图绘制</title>
@@ -240,7 +404,7 @@
     <link href="http://keyunluo.github.io/2016/07/19/2016-07-19-markdown-math.html"/>
     <id>http://keyunluo.github.io/2016/07/19/2016-07-19-markdown-math.html</id>
     <published>2016-07-19T07:31:46.000Z</published>
-    <updated>2016-07-19T08:51:24.636Z</updated>
+    <updated>2016-07-26T13:08:21.607Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;目前hexo中写博客使用Markdown语言，而写博客经常要用到一些数学公式，在Markdown中写LaTeX数学公式则显得非常重要，本节将一些常用的数学公式的写法记录下来，以备日后查询。&lt;/p&gt;
@@ -761,11 +925,7 @@ n &amp;amp; \text{Left} &amp;amp; \text{Center} &amp;amp; \text{Right} \\
 2 &amp;amp; -1 &amp;amp; 189 &amp;amp; -8 \\
 3 &amp;amp; -20 &amp;amp; 2000 &amp;amp; 1+10i \\
 \end{array} $$&lt;/p&gt;
-&lt;h2 id=&quot;花括号用法&quot;&gt;&lt;a href=&quot;#花括号用法&quot; class=&quot;headerlink&quot; title=&quot;花括号用法&quot;&gt;&lt;/a&gt;花括号用法&lt;/h2&gt;&lt;p&gt;$$\begin{array}{cc}
-  a &amp;amp; b \\
-  c &amp;amp; c
-\end{array} $$&lt;/p&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$f(x)=&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;cases&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;0&amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;x=0&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1&amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;x!=0&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;cases&amp;#125;&lt;/span&gt;&lt;/span&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;花括号用法&quot;&gt;&lt;a href=&quot;#花括号用法&quot; class=&quot;headerlink&quot; title=&quot;花括号用法&quot;&gt;&lt;/a&gt;花括号用法&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$f(x)=&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;cases&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;0&amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;x=0&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1&amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;x!=0&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;cases&amp;#125;&lt;/span&gt;&lt;/span&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;$$
 f(x)=
 \begin{cases}
@@ -2473,13 +2633,13 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
       <category term="BigData" scheme="http://keyunluo.github.io/categories/BigData/"/>
     
     
+      <category term="hadoop" scheme="http://keyunluo.github.io/tags/hadoop/"/>
+    
       <category term="Oracle" scheme="http://keyunluo.github.io/tags/Oracle/"/>
     
       <category term="DataBase" scheme="http://keyunluo.github.io/tags/DataBase/"/>
     
       <category term="sqoop" scheme="http://keyunluo.github.io/tags/sqoop/"/>
-    
-      <category term="hadoop" scheme="http://keyunluo.github.io/tags/hadoop/"/>
     
   </entry>
   
@@ -2564,48 +2724,6 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
     
       <category term="VPN" scheme="http://keyunluo.github.io/tags/VPN/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>大数据二次排序</title>
-    <link href="http://keyunluo.github.io/2016/03/07/2016-03-07-hadoop-secondary-sort.html"/>
-    <id>http://keyunluo.github.io/2016/03/07/2016-03-07-hadoop-secondary-sort.html</id>
-    <published>2016-03-07T12:33:53.000Z</published>
-    <updated>2016-05-23T08:44:45.000Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;问题概述&quot;&gt;&lt;a href=&quot;#问题概述&quot; class=&quot;headerlink&quot; title=&quot;问题概述&quot;&gt;&lt;/a&gt;问题概述&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;在hadoop中每个reduce的输入的key都是有序的，而value则是无序的。而且同一个job运行多次，由于map完成顺序不同，reduce收到的value顺序是不固定的,为了使reduce收到有序的value,便产生了二次排序的概念。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;&lt;strong&gt;二次排序实例&lt;/strong&gt;
-考虑到在科学实验中的温度数据，它们可能的格式如下，每一列分别为 &lt;code&gt;year&lt;/code&gt;,&lt;code&gt;month&lt;/code&gt;,&lt;code&gt;day&lt;/code&gt;,&lt;code&gt;temperature&lt;/code&gt;:
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2012&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;01&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;01&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2012&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;01&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;02&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2012&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;01&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;03&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2012&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;01&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2012&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;01&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;05&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2012&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;01&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;06&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2001&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;01&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2001&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;02&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;19&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2001&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;03&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2001&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;12&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;我们想按照&lt;code&gt;year-month&lt;/code&gt;对温度数据进行升序排序并输出，并且我们希望对&lt;code&gt;reducer&lt;/code&gt;中的迭代值是已经排序的。因此，期望的输出为：
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2012&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;-01&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;10.&lt;/span&gt;..&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2001&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;-11&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;12&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;19.&lt;/span&gt;..&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h2 id=&quot;解决方案&quot;&gt;&lt;a href=&quot;#解决方案&quot; class=&quot;headerlink&quot; title=&quot;解决方案&quot;&gt;&lt;/a&gt;解决方案&lt;/h2&gt;&lt;p&gt;为了使用MapReduce编程框架,当数据量很大时在reduce阶段在内存中对同一个key里面的值进行排序是不太可能的，因此&lt;code&gt;通过向原生key增加一部分或全部值(value)作为复合key来实现排序操作&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;方法概要&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;1&lt;/em&gt;:使用&lt;code&gt;Value-to-Key&lt;/code&gt;设计模式：设计复合Key-Value,&lt;code&gt;(K，V1,V2)=&amp;gt;(K1,V2)&lt;/code&gt;，其中K是原生Key，V1是要排序的值，V2是其他值，K1是复合Key，显然K1=(K,V1)。&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;2&lt;/em&gt;:使用MapReduce执行框架进行排序(注意：不是直接在内存中排序，而是利用集群节点进行排序)。&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;3&lt;/em&gt;:在多个Key-Value键值对中保存状态来进行处理，可以通过原生键对mapper输出的中间结果进行partition操作。&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;问题概述&quot;&gt;&lt;a href=&quot;#问题概述&quot; class=&quot;headerlink&quot; title=&quot;问题概述&quot;&gt;&lt;/a&gt;问题概述&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;在hadoop中每个reduce的输入的key都是有序的，而value则是无序的。而且同一个job运行多次，由于map完成顺序不同，reduce收到的value顺序是不固定的,为了使reduce收到有序的value,便产生了二次排序的概念。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="BigData" scheme="http://keyunluo.github.io/categories/BigData/"/>
-    
-    
-      <category term="hadoop" scheme="http://keyunluo.github.io/tags/hadoop/"/>
-    
-      <category term="二次排序" scheme="http://keyunluo.github.io/tags/%E4%BA%8C%E6%AC%A1%E6%8E%92%E5%BA%8F/"/>
     
   </entry>
   
