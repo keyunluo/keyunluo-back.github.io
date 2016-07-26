@@ -43,7 +43,7 @@ mathjax: true
 
         $$ R\_{emp}(f) = \frac1N\sum_{i=1}^N L(y_i, f(x_i)) $$
 
-           当训练样本数量$N$趋于无穷时，$R_{emp}$趋于$R_{exp}$。
+           当训练样本数量$N$趋于无穷时，$R\_{emp}$趋于$R\_{exp}$。
 
     * 结构风险
 
