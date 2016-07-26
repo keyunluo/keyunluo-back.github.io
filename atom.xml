@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-07-26T13:01:19.155Z</updated>
+  <updated>2016-07-26T13:10:56.168Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://keyunluo.github.io/2016/07/26/2016-07-26-statical-learning-1.html"/>
     <id>http://keyunluo.github.io/2016/07/26/2016-07-26-statical-learning-1.html</id>
     <published>2016-07-26T11:25:02.000Z</published>
-    <updated>2016-07-26T13:01:19.155Z</updated>
+    <updated>2016-07-26T13:10:56.168Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;统计学习(statistical learning)做的事情是：基于数据建立概率统计模型，然后用模型对数据进行预测和分析。&lt;/p&gt;
@@ -56,7 +56,7 @@
 &lt;li&gt;&lt;p&gt;经验风险
   风险函数和联合分布$P(X, Y)$，用作为模型的后者求作为策略的前者，显然是病态的。故取训练数据集上的平均损失称为&lt;strong&gt;经验风险(empirical risk)&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;$$ R_{emp}(f) = \frac1N\sum_{i=1}^N L(y_i, f(x_i)) $$&lt;/p&gt;
-&lt;p&gt; 当训练样本数量$N$趋于无穷时，$R&lt;em&gt;{emp}$趋于$R&lt;/em&gt;{exp}$。&lt;/p&gt;
+&lt;p&gt; 当训练样本数量$N$趋于无穷时，$R_{emp}$趋于$R_{exp}$。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
