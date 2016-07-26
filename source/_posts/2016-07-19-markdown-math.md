@@ -298,11 +298,6 @@ n & \text{Left} & \text{Center} & \text{Right} \\\\
 
 ## 花括号用法
 
-$$\\begin{array}{cc}
-  a & b \\\\
-  c & c
-\\end{array} $$
-
 ``` tex
 $$f(x)=
 \begin{cases}
