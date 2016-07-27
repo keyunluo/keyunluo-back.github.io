@@ -34,6 +34,10 @@ rpm -e yum-rhn-plugin-2.0.1-4.el7.noarch --nodeps
 rpm -e yum-metadata-parser-1.1.4-10.el7.x86_64 --nodeps
 rpm -e yum-langpacks-0.4.2-3.el7.noarch --nodeps
 rpm -e PackageKit-yum-0.8.9-11.el7.x86_64 --nodeps
+rpm -e subscription-manager-gui --nodeps
+rpm -e subscription-manager-firstboot --nodeps
+rpm -e --nodeps redhat-release-server
+rpm -e --nodeps redhat-logos
 ```
 
 ## 设置代理
@@ -49,9 +53,21 @@ export http_proxy
 
 ### 为YUM设置代理
 
-编辑 `sudo gedit /etc/yum.conf` ，增加一行：
+编辑 `sudo vim /etc/yum.conf` ，添加一行`proxy=http://192.168.100.2:8899/`,更改如下：
 
 ``` python
+[main]
+cachedir=/var/cache/yum/$basearch/$releasever
+keepcache=0
+debuglevel=2
+logfile=/var/log/yum.log
+exactarch=1
+obsoletes=1
+gpgcheck=1
+plugins=1
+installonly_limit=5
+bugtracker_url=http://bugs.centos.org/set_project.php?project_id=23&ref=http://bugs.centos.org/bug_report_page.php?category=yum
+distroverpkg=centos-release
 proxy=http://192.168.100.2:8899/
 ```
 
@@ -129,17 +145,20 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
 ``` python
 yum clean all
-rpm -e subscription-manager-gui --nodeps
-rpm -e subscription-manager-firstboot --nodeps
+
 yum install subscription-manager-gui
 yum install libdevmapper* -y
 yum insall PackageKit
 
 yum remove rhnlib redhat-support-tool redhat-support-lib-python
 
-rpm -e --nodeps redhat-release-server
-rpm -e --nodeps redhat-logos
-
 yum clean all
 yum upgrade
+```
+
+## 查看更新后的结果：
+
+``` python
+[hadoop@slave10 ~]$ cat /etc/redhat-release
+CentOS Linux release 7.2.1511 (Core)
 ```
