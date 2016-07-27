@@ -40,8 +40,8 @@ rpm -e PackageKit-yum-0.8.9-11.el7.x86_64 --nodeps
 
 代理服务器使用的是`tinyproxy`,安装在`192.168.100.102`中，可以访问外网。
 
-系统级代理：写入：/etc/profile
-``` python
+注意：不使用此方法——系统级代理：写入：/etc/profile
+```
 http_proxy="http://192.168.100.2:8899/"
 export http_proxy
 ```
@@ -55,7 +55,7 @@ export http_proxy
 proxy=http://192.168.100.2:8899/
 ```
 
-### 为wget设置代理代理
+### 为wget设置代理
 
 编辑/etc/wgetrc，在最后加入
 ``` python
