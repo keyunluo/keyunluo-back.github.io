@@ -148,7 +148,7 @@ yum clean all
 
 yum install subscription-manager-gui
 yum install libdevmapper* -y
-yum insall PackageKit
+yum install PackageKit
 
 yum remove rhnlib redhat-support-tool redhat-support-lib-python
 
