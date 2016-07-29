@@ -255,6 +255,7 @@ sudo service nginx reload
 
 这样，镜像就搭好了。
 
+![镜像](/resource/blog/2016-07/Cloudera-Parcel-Repo.png)
 
 
 
