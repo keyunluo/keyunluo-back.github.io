@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-07-29T12:38:24.898Z</updated>
+  <updated>2016-08-01T17:14:20.044Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -14,6 +14,123 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hadoop源码学习——Hadoop-Common-Project</title>
+    <link href="http://keyunluo.github.io/2016/08/01/2016-08-01-hadoop-common-project.html"/>
+    <id>http://keyunluo.github.io/2016/08/01/2016-08-01-hadoop-common-project.html</id>
+    <published>2016-08-01T16:17:02.000Z</published>
+    <updated>2016-08-01T17:14:20.044Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Hadoop-Common-Project模块包括了一系列支撑其他Hadoop模块的公共工具，本系列文章从源代码的角度分析其实现。本文主要从总体上了解Hadoop-Common-Project模块。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;Hadoop主要模块&quot;&gt;&lt;a href=&quot;#Hadoop主要模块&quot; class=&quot;headerlink&quot; title=&quot;Hadoop主要模块&quot;&gt;&lt;/a&gt;Hadoop主要模块&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;hadoop                       (主要的Hadoop模块)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;hadoop-project           (所有Hadoop Maven 模块的Parent POM，由以下部分组成：        )&lt;ul&gt;
+&lt;li&gt;hadoop-project-dist      (Parent POM for modules that generate distributions.)&lt;/li&gt;
+&lt;li&gt;hadoop-annotations       (Generates the Hadoop doclet used to generated the Javadocs)&lt;/li&gt;
+&lt;li&gt;hadoop-assemblies        (Maven assemblies used by the different modules)&lt;/li&gt;
+&lt;li&gt;hadoop-common-project    (Hadoop Common)&lt;/li&gt;
+&lt;li&gt;hadoop-hdfs-project      (Hadoop HDFS)&lt;/li&gt;
+&lt;li&gt;hadoop-mapreduce-project (Hadoop MapReduce)&lt;/li&gt;
+&lt;li&gt;hadoop-tools             (Hadoop tools like Streaming, Distcp, etc.)&lt;/li&gt;
+&lt;li&gt;hadoop-dist              (Hadoop distribution assembler)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;hadoop-2.6.4-src结构&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── BUILDING.txt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── dev-support&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-assemblies&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-client&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-common-project&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-dist&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-hdfs-project&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-main.iml&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-mapreduce-project&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-maven-plugins&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-minicluster&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-project&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-project-dist&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-tools&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-yarn-project&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── LICENSE.txt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── NOTICE.txt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── pom.xml&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;└── README.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;Hadoop-Common-Project&quot;&gt;&lt;a href=&quot;#Hadoop-Common-Project&quot; class=&quot;headerlink&quot; title=&quot;Hadoop-Common-Project&quot;&gt;&lt;/a&gt;Hadoop-Common-Project&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;结构&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;├── dev-support：补丁等开发支持&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-annotations：Hadoop注解&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-auth：Hadoop授权&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-auth-examples：Hadoop授权例子&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-common：Hadoop Common模块&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-common-project.iml&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-kms：基于KeyProvider API的密钥管理服务器&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-minikdc：基于Apache Directory服务器迷你型密钥分发中心(KDC)，能够被嵌入到测试用例或作为一个独立的KDC从命令行使用&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── hadoop-nfs：Hadoop NFS模块&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── pom.xml&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;└── target&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Hadoop-Common-Project模块包括了一系列支撑其他Hadoop模块的公共工具，本系列文章从源代码的角度分析其实现。本文主要从总体上了解Hadoop-Common-Project模块。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="SourceCodeLearning" scheme="http://keyunluo.github.io/categories/SourceCodeLearning/"/>
+    
+    
+      <category term="Hadoop" scheme="http://keyunluo.github.io/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java中的注解(1)</title>
+    <link href="http://keyunluo.github.io/2016/08/01/2016-08-01-java-annotation-1.html"/>
+    <id>http://keyunluo.github.io/2016/08/01/2016-08-01-java-annotation-1.html</id>
+    <published>2016-08-01T11:25:02.000Z</published>
+    <updated>2016-08-01T19:04:30.233Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;从JDK1.5开始，Java增加了对元数据(MetaData)的支持，也就是Annotation。Annotation是代码里的特殊标记，这些标记可以在编译，类加载，运行时被读取，并进行相应的处理。通过使用注解，程序开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充信息。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;注解&quot;&gt;&lt;a href=&quot;#注解&quot; class=&quot;headerlink&quot; title=&quot;注解&quot;&gt;&lt;/a&gt;注解&lt;/h2&gt;&lt;p&gt;Annotation提供了一种为程序元素设置元数据的方法，从某些方面来看，Annotation就像修饰符一样，可用于修饰包，类，构造器，方法，成员变量，参数，局部变量的声明，这些信息被存储在Annotation的”name=value”中。Annotation不影响程序代码的执行，无论增加或删除Annotation，代码都将始终如一的执行。若希望让程序中的Annotation在运行时起一定的作用，只有通过某种配套的工具对Annotation中的信息进行访问和处理，这种工具统称为APT(Annotation Processing Tool)。&lt;/p&gt;
+&lt;p&gt;Java中有5个基本Annotation，它们都定义在&lt;code&gt;java.lang&lt;/code&gt;包下。使用Annotation时需要在其前面增加@符号，并把该Annotation当做一个修饰符使用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;@Override&lt;/li&gt;
+&lt;li&gt;@Deprecated&lt;/li&gt;
+&lt;li&gt;@SupressWarnings&lt;/li&gt;
+&lt;li&gt;@SafeVarargs (Since Java7)&lt;/li&gt;
+&lt;li&gt;@FunctionalInterface (Since Java8)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;限定重写父类方法：-Override&quot;&gt;&lt;a href=&quot;#限定重写父类方法：-Override&quot; class=&quot;headerlink&quot; title=&quot;限定重写父类方法：@Override&quot;&gt;&lt;/a&gt;限定重写父类方法：@Override&lt;/h2&gt;&lt;p&gt;@Override用来指定方法重载的，它可以强制一个子类必须覆盖父类的方法。@Override的作用是告诉编译器来检查这个方法，保证父类中的某个方法必须被重写，这样可以在编译阶段发现错误。&lt;/p&gt;
+&lt;p&gt;例子：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;pulic &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Fruit&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;水果的info方法...&quot;&lt;/span&gt;)；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Apple&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Fruit&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;//使用@Override指定下面方法必须重写父类方法&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;苹果重写水果的Info方法...&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;标记已过时：-Deprecated&quot;&gt;&lt;a href=&quot;#标记已过时：-Deprecated&quot; class=&quot;headerlink&quot; title=&quot;标记已过时：@Deprecated&quot;&gt;&lt;/a&gt;标记已过时：@Deprecated&lt;/h2&gt;&lt;p&gt;@Deprecated用来表示某个程序元素(类，方法等)已过时，当其他程序使用已过时的类，方法时，编译器将给出警告。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;pulic &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Apple&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//定义info方法已过时&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Deprecated&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;苹果的info方法...&quot;&lt;/span&gt;)；&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;AppleTest&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;//编译器将给出警告&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Apple().info();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;@Deprecated的作用与文档注释中的@deprecated标记的作用基本相同，但它们的用法不同，前者是Java5才支持的注解，无需放到文档的注释部分，而是直接放到要修饰的方法，类，接口等。&lt;/p&gt;
+&lt;h2 id=&quot;抑制编译器警告：-SuppressWarnings&quot;&gt;&lt;a href=&quot;#抑制编译器警告：-SuppressWarnings&quot; class=&quot;headerlink&quot; title=&quot;抑制编译器警告：@SuppressWarnings&quot;&gt;&lt;/a&gt;抑制编译器警告：@SuppressWarnings&lt;/h2&gt;&lt;p&gt;@SuppressWarnings指示被该Annotation修饰的程序元素(以及该程序元素中的所有子元素)取消显示指定的编译器警告。在通常情况下，如果程序中没有限定泛型限制的集合将会引起编译器警告，为了避免这种编译器警告，可以使用@SuppressWarning修饰。例如，下面的程序取消了没有使用泛型的编译器警告：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 关闭整个类中的编译器警告&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@SuppressWarnings&lt;/span&gt;(value=&lt;span class=&quot;string&quot;&gt;&quot;unchecked&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;SuppressWarningTest&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    List&amp;lt;String&amp;gt; mylist = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ArrayList();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;Java7中的”堆污染“警告与-SafeVarargs&quot;&gt;&lt;a href=&quot;#Java7中的”堆污染“警告与-SafeVarargs&quot; class=&quot;headerlink&quot; title=&quot;Java7中的”堆污染“警告与@SafeVarargs&quot;&gt;&lt;/a&gt;Java7中的”堆污染“警告与@SafeVarargs&lt;/h2&gt;&lt;p&gt;在泛型擦除时，如下代码可能导致运行时异常：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;List list = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ArrayList&amp;lt;Integer&amp;gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;list.add(&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;);  &lt;span class=&quot;comment&quot;&gt;//添加元素时引发unchecked异常&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 下面的代码引起”未经检查的转换“的警告，编译，运行完全正常&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;List&amp;lt;String&amp;gt; ls = list;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 但只要访问ls里的元素，如下面的代码就会引起运行时的异常&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(ls.get(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Java把引发这种错误的原因称为”堆污染”(heap pollution),当把一个不带泛型的对象赋值给一个带泛型的变量时，往往就会发生这种堆污染现象。&lt;/p&gt;
+&lt;p&gt;对于形参个数可变的方法，该形参的类型又是泛型，将更容易导致”堆污染“，例如如下的工具类：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ErrorUtils&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;faultyMethod&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(List&amp;lt;String&amp;gt;... listStrArray)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;//Java语言不允许创建泛型数组，因此listArray只能被当成List[]处理&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;//此时相当于把List&amp;lt;String&amp;gt;赋给了List，已经发生了”堆污染“&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    List[] listArray = listStrArray;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    List&amp;lt;Integer&amp;gt; myList = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ArrayList&amp;lt;Integer&amp;gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    myList.add(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Random().next(&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;//把listArray的第一个元素赋为myArray&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    listArray[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] = myList;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    String s = listArray[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;].get[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在Java6以及更早的版本中，Java编译器认为faultyMethod()方法没有任何问题，等到使用该方法时：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ErrorUtilsTest&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;publc &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ErrorUtils.faultyMethod(Arrays.asList(&lt;span class=&quot;string&quot;&gt;&quot;Hello&quot;&lt;/span&gt;),Arrays)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;会引发一个unchecked警告，在运行时会引发ClassCastException异常。&lt;/p&gt;
+&lt;p&gt;从Java7开始，Java编译器进行更加严格的检查，在编译ErrorUtils时就会发出一个如下的警告：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ErrorUtils.java:&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;:警告[unchecked] 参数化 varargs类型List&amp;lt;String&amp;gt;的堆可能已经受到污染&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;但有些时候，开发者不希望看到这个警告，则可以使用如下三种方式来抑制这个警告：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用@SafeVarargs修饰引发该警告的方法或构造器。&lt;/li&gt;
+&lt;li&gt;使用@SuppressWarnings(“unchecked”)修饰。&lt;/li&gt;
+&lt;li&gt;编译时使用-Xlint:varargs选项。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通常使用@SafeVarargs修饰，编译上述两个程序时都不会发出任何警告。&lt;/p&gt;
+&lt;h2 id=&quot;Java8的函数式接口与-FunctionalInterface&quot;&gt;&lt;a href=&quot;#Java8的函数式接口与-FunctionalInterface&quot; class=&quot;headerlink&quot; title=&quot;Java8的函数式接口与@FunctionalInterface&quot;&gt;&lt;/a&gt;Java8的函数式接口与@FunctionalInterface&lt;/h2&gt;&lt;p&gt;Java8规定：如果接口中只有一个抽象方法（可以包含多个默认方法或多个static方法），该接口就是函数式接口。@FunctionalInterface就是用来指定某个接口必须是函数式接口。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@FunctionalInterface&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;FunctionalInterface&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;foo类方法&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;bar默认方法&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;;  &lt;span class=&quot;comment&quot;&gt;//只定义一个抽象方法&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;@FunctionalInterface告诉编译器检查这个接口，保证该接口只能包含一个抽象方法，否则就编译出错。如果再增加一个抽象方法abc()，则会编译出错：意外的@FunctionalInterface注释。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;从JDK1.5开始，Java增加了对元数据(MetaData)的支持，也就是Annotation。Annotation是代码里的特殊标记，这些标记可以在编译，类加载，运行时被读取，并进行相应的处理。通过使用注解，程序开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充信息。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Programming" scheme="http://keyunluo.github.io/categories/Programming/"/>
+    
+    
+      <category term="Java" scheme="http://keyunluo.github.io/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>搭建Cloudera集群</title>
@@ -230,7 +347,7 @@
     <link href="http://keyunluo.github.io/2016/07/26/2016-07-26-statical-learning-1.html"/>
     <id>http://keyunluo.github.io/2016/07/26/2016-07-26-statical-learning-1.html</id>
     <published>2016-07-26T19:25:02.000Z</published>
-    <updated>2016-07-27T04:06:56.385Z</updated>
+    <updated>2016-07-29T12:38:24.895Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;统计学习(statistical learning)做的事情是：基于数据建立概率统计模型，然后用模型对数据进行预测和分析。&lt;/p&gt;
@@ -394,7 +511,7 @@
     <link href="http://keyunluo.github.io/2016/07/25/2016-07-25-plantuml-sequence.html"/>
     <id>http://keyunluo.github.io/2016/07/25/2016-07-25-plantuml-sequence.html</id>
     <published>2016-07-25T16:50:02.000Z</published>
-    <updated>2016-07-27T04:06:56.372Z</updated>
+    <updated>2016-07-29T12:38:24.894Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;PlantUML是一个开源项目，并支持快速绘制常见的UML图像,本节主要学习其时序图的用法,时序图通过描述对象之间发送消息的时间顺序显示多个对象之间的动态协作。&lt;/p&gt;
@@ -502,7 +619,7 @@
     <link href="http://keyunluo.github.io/2016/07/25/2016-07-25-hexo-uml.html"/>
     <id>http://keyunluo.github.io/2016/07/25/2016-07-25-hexo-uml.html</id>
     <published>2016-07-25T15:50:02.000Z</published>
-    <updated>2016-07-27T04:06:56.361Z</updated>
+    <updated>2016-08-01T16:12:01.836Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;UML是一种开放的方法，用于说明、可视化、构建和编写一个正在开发的、面向对象的、软件密集系统的制品的开放方法。本文介绍在Hexo中的两种绘图组件。&lt;/p&gt;
@@ -518,12 +635,13 @@
 &lt;h3 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h3&gt;&lt;p&gt;diagram_type: sequence,robustness,flow,默认是时序图。&lt;/p&gt;
 &lt;p&gt;实例：&lt;/p&gt;
 &lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;``` sequence&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@found &quot;You&quot;, -&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;  @message &quot;Think&quot;, -&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;    @message &quot;Write your idea&quot;, &quot;JUMLY&quot;, -&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;      @create &quot;Diagram&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;jumly&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@found &quot;Browser&quot;, -&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;  @message &quot;http request&quot;, &quot;HTTP Server&quot;, -&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;    @create &quot;HTTP Session&quot;, -&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;      @message &quot;init&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;      @message &quot;aquire lock&quot;, &quot;Database&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;    @message &quot;do something&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;    @message &quot;release lock&quot;, &quot;Database&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;    @reply &quot;&quot;, &quot;Browser&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;img src=&quot;/diagrams/2016-07-25-hexo-uml-diagram-0.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/diagrams/2016-07-25-hexo-uml-diagram-1.png&quot; alt=&quot;&quot;&gt;
-流程图的例子：
+&lt;p&gt;&lt;img src=&quot;/resource/diagrams/2016-07-25-hexo-uml-diagram-0.png&quot; alt=&quot;sequence&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/resource/diagrams/2016-07-25-hexo-uml-diagram-1.png&quot; alt=&quot;sequence&quot;&gt;&lt;/p&gt;
+&lt;p&gt;流程图的例子：
 &lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;//纵向流程图&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;st=&amp;gt;start: Start:&amp;gt;http://www.google.com[blank]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;e=&amp;gt;end:&amp;gt;http://www.google.com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;op1=&amp;gt;operation: My Operation&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sub1=&amp;gt;subroutine: My Subroutine&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cond=&amp;gt;condition: Yes&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;or No?:&amp;gt;http://www.google.com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;io=&amp;gt;inputoutput: catch something...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;st-&amp;gt;op1-&amp;gt;cond&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cond(yes)-&amp;gt;io-&amp;gt;e&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cond(no)-&amp;gt;sub1(right)-&amp;gt;op1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;//横向流程图&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;st=&amp;gt;start: Start|past:&amp;gt;http://www.google.com[blank]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;e=&amp;gt;end: End|future:&amp;gt;http://www.google.com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;op1=&amp;gt;operation: My Operation|past&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;op2=&amp;gt;operation: Stuff|current&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sub1=&amp;gt;subroutine: My Subroutine|invalid&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cond=&amp;gt;condition: Yes&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;or No?|approved:&amp;gt;http://www.google.com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;c2=&amp;gt;condition: Good idea|rejected&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;io=&amp;gt;inputoutput: catch something...|future&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;st-&amp;gt;op1(right)-&amp;gt;cond&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cond(yes, right)-&amp;gt;c2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cond(no)-&amp;gt;sub1(left)-&amp;gt;op1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;c2(yes)-&amp;gt;io-&amp;gt;e&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;c2(no)-&amp;gt;op2-&amp;gt;e&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/diagrams/2016-07-25-hexo-uml-diagram-2.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/diagrams/2016-07-25-hexo-uml-diagram-3.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/resource/diagrams/2016-07-25-hexo-uml-diagram-2.png&quot; alt=&quot;flow&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/resource/diagrams/2016-07-25-hexo-uml-diagram-3.png&quot; alt=&quot;flow&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/resource/diagrams/2016-07-25-hexo-uml-diagram-4.png&quot; alt=&quot;flow&quot;&gt;&lt;/p&gt;
 &lt;h2 id=&quot;hexo-tag-plantuml&quot;&gt;&lt;a href=&quot;#hexo-tag-plantuml&quot; class=&quot;headerlink&quot; title=&quot;hexo-tag-plantuml&quot;&gt;&lt;/a&gt;hexo-tag-plantuml&lt;/h2&gt;&lt;p&gt;PlantUML是一个快速创建UML图形的组件，通过简单和直观的语言来定义图形，PlantUML支持的图形有：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;时序图(sequence diagram)&lt;/li&gt;
@@ -566,7 +684,7 @@
     <link href="http://keyunluo.github.io/2016/07/23/2016-07-23-python-pandas.html"/>
     <id>http://keyunluo.github.io/2016/07/23/2016-07-23-python-pandas.html</id>
     <published>2016-07-23T17:50:02.000Z</published>
-    <updated>2016-07-27T04:06:56.344Z</updated>
+    <updated>2016-07-29T12:38:24.893Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Pandas包含高级的数据结构和精巧的工具，使得在Python中处理数据非常快速和简单。Pandas建造在NumPy之上，它使得以NumPy为中心的应用很容易使用。&lt;/p&gt;
@@ -614,7 +732,7 @@
     <link href="http://keyunluo.github.io/2016/07/19/2016-07-19-python-scipy.html"/>
     <id>http://keyunluo.github.io/2016/07/19/2016-07-19-python-scipy.html</id>
     <published>2016-07-19T14:41:02.000Z</published>
-    <updated>2016-07-20T01:45:09.042Z</updated>
+    <updated>2016-07-29T12:38:24.893Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;SciPy是另一种使用NumPy来做高等数学、信号处理、优化、统计和许多其它科学任务的语言扩展,SciPy在NumPy的基础上增加了众多的数学、科学以及工程计算中常用的模块。例如线性代数、常微分方程数值求解、信号处理、图像处理、稀疏矩阵等等,本节主要学习其统计和优化模块。&lt;/p&gt;
@@ -1373,7 +1491,7 @@ $$&lt;/p&gt;
     <link href="http://keyunluo.github.io/2016/07/18/2016-07-18-python-matplotlib.html"/>
     <id>http://keyunluo.github.io/2016/07/18/2016-07-18-python-matplotlib.html</id>
     <published>2016-07-18T20:10:34.000Z</published>
-    <updated>2016-07-20T01:45:09.026Z</updated>
+    <updated>2016-07-29T12:38:24.891Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地进行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。。&lt;/p&gt;
@@ -1429,7 +1547,7 @@ $$&lt;/p&gt;
     <link href="http://keyunluo.github.io/2016/07/18/2016-07-18-python-numpy-matrix.html"/>
     <id>http://keyunluo.github.io/2016/07/18/2016-07-18-python-numpy-matrix.html</id>
     <published>2016-07-18T19:25:02.000Z</published>
-    <updated>2016-07-20T01:45:09.026Z</updated>
+    <updated>2016-07-29T12:38:24.892Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录Numpy的矩阵一般用法，主要学习numpy在线性代数中的应用。&lt;/p&gt;
@@ -1539,7 +1657,7 @@ $$&lt;/p&gt;
     <link href="http://keyunluo.github.io/2016/07/18/2016-07-18-python-numpy-array.html"/>
     <id>http://keyunluo.github.io/2016/07/18/2016-07-18-python-numpy-array.html</id>
     <published>2016-07-18T16:50:05.000Z</published>
-    <updated>2016-07-20T01:45:09.026Z</updated>
+    <updated>2016-07-29T12:38:24.892Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;NumPy 是 Numerical Python 的简称，是高性能计算和数据分析的基础包。本篇博文记录Numpy的数组一般用法，主要学习多维数组等用法。&lt;/p&gt;
@@ -1804,7 +1922,7 @@ $$&lt;/p&gt;
     <link href="http://keyunluo.github.io/2016/07/18/2016-07-18-python-datastructure.html"/>
     <id>http://keyunluo.github.io/2016/07/18/2016-07-18-python-datastructure.html</id>
     <published>2016-07-18T12:41:02.000Z</published>
-    <updated>2016-07-20T01:45:09.026Z</updated>
+    <updated>2016-07-29T12:38:24.891Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文学习并总结Python的基本数据结构常用用法，包括基本数据类型和四个比较重要的基本数据结构：列表，元组，字典，集合。
@@ -2027,7 +2145,7 @@ Python支持四种不同的数字类型：&lt;ul&gt;
     <link href="http://keyunluo.github.io/2016/07/17/2016-07-17-anaconda-python.html"/>
     <id>http://keyunluo.github.io/2016/07/17/2016-07-17-anaconda-python.html</id>
     <published>2016-07-17T15:41:02.000Z</published>
-    <updated>2016-07-18T11:00:11.601Z</updated>
+    <updated>2016-07-29T12:38:24.889Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录在Ubuntu16.04上配置Python的科学计算环境包，使用anaconda发行版和清华大学的镜像服务。&lt;/p&gt;
@@ -2073,7 +2191,7 @@ Python支持四种不同的数字类型：&lt;ul&gt;
     <link href="http://keyunluo.github.io/2016/07/17/2016-07-17-ubuntu16-l2tp-vpn.html"/>
     <id>http://keyunluo.github.io/2016/07/17/2016-07-17-ubuntu16-l2tp-vpn.html</id>
     <published>2016-07-17T13:41:02.000Z</published>
-    <updated>2016-07-17T08:49:09.479Z</updated>
+    <updated>2016-07-29T12:38:24.890Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本篇博文记录在Ubuntu16.04上安装L2TP插件,之前记录了在&lt;a href=&quot;/2016/03/20/2016-03-20-ubuntu14-l2tp-vpn.html&quot;&gt;Ubuntu14.04&lt;/a&gt;上安装L2TP插件，但ppa上还没有更新这个软件包，故只有手动从源代码编译安装。&lt;/p&gt;
@@ -2115,7 +2233,7 @@ Python支持四种不同的数字类型：&lt;ul&gt;
     <link href="http://keyunluo.github.io/2016/06/30/2016-06-30-todolist.html"/>
     <id>http://keyunluo.github.io/2016/06/30/2016-06-30-todolist.html</id>
     <published>2016-06-30T09:44:38.000Z</published>
-    <updated>2016-07-17T08:49:09.464Z</updated>
+    <updated>2016-07-29T12:38:24.888Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;2016-07月-2017-01月待做事项&lt;/p&gt;
@@ -2321,7 +2439,7 @@ Python支持四种不同的数字类型：&lt;ul&gt;
     <link href="http://keyunluo.github.io/2016/06/21/2016-06-21-graduation.html"/>
     <id>http://keyunluo.github.io/2016/06/21/2016-06-21-graduation.html</id>
     <published>2016-06-21T07:16:53.000Z</published>
-    <updated>2016-07-17T01:15:18.367Z</updated>
+    <updated>2016-07-29T12:38:24.888Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;就算新的开始依旧美丽，而此刻的心情也必然暗淡。&lt;/p&gt;
@@ -2367,7 +2485,7 @@ Python支持四种不同的数字类型：&lt;ul&gt;
     <link href="http://keyunluo.github.io/2016/05/27/2016-05-27-elasticsearch-3.html"/>
     <id>http://keyunluo.github.io/2016/05/27/2016-05-27-elasticsearch-3.html</id>
     <published>2016-05-27T07:16:53.000Z</published>
-    <updated>2016-07-17T08:49:09.463Z</updated>
+    <updated>2016-07-29T12:38:24.886Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt;提供了丰富的REST风格的API来满足不同的场景需求，本篇介绍Elasticsearch的查询相关的基础和高级操作。&lt;/p&gt;
@@ -2416,322 +2534,6 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
       &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt;提供了丰富的REST风格的API来满足不同的场景需求，本篇介绍Elasticsearch的查询相关的基础和高级操作。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="BigData" scheme="http://keyunluo.github.io/categories/BigData/"/>
-    
-    
-      <category term="elasticsearch" scheme="http://keyunluo.github.io/tags/elasticsearch/"/>
-    
-      <category term="大数据" scheme="http://keyunluo.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Elasticsearch入门学习(2)——服务URL</title>
-    <link href="http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html"/>
-    <id>http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html</id>
-    <published>2016-04-11T11:42:53.000Z</published>
-    <updated>2016-07-17T08:49:09.463Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt; 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h2 id=&quot;与Elasticsearch交互&quot;&gt;&lt;a href=&quot;#与Elasticsearch交互&quot; class=&quot;headerlink&quot; title=&quot;与Elasticsearch交互&quot;&gt;&lt;/a&gt;与Elasticsearch交互&lt;/h2&gt;&lt;p&gt;如何与Elasticsearch交互取决于你是否使用Java，可以分为&lt;code&gt;Java API交互&lt;/code&gt;和&lt;code&gt;基于HTTP协议，以JSON为数据交互格式的RESTful API&lt;/code&gt;两种，本文主要讲解使用RESTful API，通过9200端口的与Elasticsearch进行通信。使用java则端口为9300.&lt;/p&gt;
-&lt;p&gt;向Elasticsearch发出的请求的组成部分与其它普通的HTTP请求是一样的：&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -X&amp;lt;VERB&amp;gt; &#39;&amp;lt;PROTOCOL&amp;gt;://&amp;lt;HOST&amp;gt;:&amp;lt;PORT&amp;gt;/&amp;lt;PATH&amp;gt;?&amp;lt;QUERY_STRING&amp;gt;&#39; -d &#39;&amp;lt;BODY&amp;gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;VERB HTTP方法：GET, POST, PUT, HEAD, DELETE&lt;/li&gt;
-&lt;li&gt;PROTOCOL http或者https协议（只有在Elasticsearch前面有https代理的时候可用）&lt;/li&gt;
-&lt;li&gt;HOST Elasticsearch集群中的任何一个节点的主机名，如果是在本地的节点，那么就叫localhost&lt;/li&gt;
-&lt;li&gt;PORT Elasticsearch HTTP服务所在的端口，默认为9200&lt;/li&gt;
-&lt;li&gt;PATH API路径（例如_count将返回集群中文档的数量），PATH可以包含多个组件，例如_cluster/stats或者_nodes/stats/jvm&lt;/li&gt;
-&lt;li&gt;QUERY_STRING 一些可选的查询请求参数，例如?pretty参数将使请求返回更加美观易读的JSON数据&lt;/li&gt;
-&lt;li&gt;BODY 一个JSON格式的请求主体（如果请求需要的话）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;例如，为了计算集群中的文档数量，我们可以这样做：&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[hadoop@slave01 ~]$ curl -XGET &#39;http://localhost:9200/_count?pretty&#39; -d &#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;query&quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;match_all&quot;: &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;count&quot; : 3498781,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;_shards&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;total&quot; : 37,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;successful&quot; : 37,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;failed&quot; : 0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;Elasticsearch返回一个类似200 OK的HTTP状态码和JSON格式的响应主体（除了HEAD请求）。&lt;/p&gt;
-&lt;h2 id=&quot;Elasticsearch常见服务URL&quot;&gt;&lt;a href=&quot;#Elasticsearch常见服务URL&quot; class=&quot;headerlink&quot; title=&quot;Elasticsearch常见服务URL&quot;&gt;&lt;/a&gt;Elasticsearch常见服务URL&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;HTTP方法: POST新增，PUT更新，GET获取，DELETE删除，HEAD判断是否存在&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;集群健康查看:&lt;code&gt;curl  &amp;#39;http://server:9200/_cat/health?v&amp;#39;&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;epoch      timestamp cluster       status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;1460378717&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;45&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;17&lt;/span&gt;  Elasticsearch green           &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;         &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;74&lt;/span&gt;  &lt;span class=&quot;number&quot;&gt;37&lt;/span&gt;    &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;    &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;        &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;             &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;                  -                &lt;span class=&quot;number&quot;&gt;100.0&lt;/span&gt;%&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;节点健康查看:&lt;code&gt;curl  &amp;#39;http://server:9200/_cat/nodes?v&amp;#39;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;host            ip              heap.percent ram.percent load node.role master name&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.100&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.107&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.100&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.107&lt;/span&gt;           &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;          &lt;span class=&quot;number&quot;&gt;22&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0.00&lt;/span&gt; d         -      ES-Hadoop-Spark-Node1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.100&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.110&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.100&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.110&lt;/span&gt;           &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;          &lt;span class=&quot;number&quot;&gt;23&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0.01&lt;/span&gt; d         -      ES-Hadoop-Spark-Node2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.100&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.101&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.100&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.101&lt;/span&gt;           &lt;span class=&quot;number&quot;&gt;19&lt;/span&gt;          &lt;span class=&quot;number&quot;&gt;27&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1.80&lt;/span&gt; d         *      ES-Hadoop-Spark-Master&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;列出集群索引:&lt;code&gt;curl  &amp;#39;http://server:9200/_cat/indices?v&amp;#39;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;health status index                 pri rep docs.count docs.deleted store.size pri.store.size&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;green  open   demo                    &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;   &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;          &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;            &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;      &lt;span class=&quot;number&quot;&gt;7.9&lt;/span&gt;kb          &lt;span class=&quot;number&quot;&gt;3.9&lt;/span&gt;kb&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;green  open   my_index                &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;   &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;         &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;            &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;53.4&lt;/span&gt;kb         &lt;span class=&quot;number&quot;&gt;26.7&lt;/span&gt;kb&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;green  open   .marvel-es&lt;span class=&quot;number&quot;&gt;-2016.03&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.29&lt;/span&gt;   &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;   &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;162773&lt;/span&gt;           &lt;span class=&quot;number&quot;&gt;54&lt;/span&gt;     &lt;span class=&quot;number&quot;&gt;94.6&lt;/span&gt;mb         &lt;span class=&quot;number&quot;&gt;47.3&lt;/span&gt;mb&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;创建customer索引,pretty表示打印json响应:&lt;code&gt;curl -XPUT &amp;#39;http://server:9200/customer?pretty&amp;#39;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;acknowledged&quot;&lt;/span&gt; : &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;索引数据：&lt;code&gt;curl -XPUT &amp;#39;http://server:9200/customer/external/1?pretty&amp;#39; &amp;#39;-d { &amp;quot;name&amp;quot;:&amp;quot;JOhn Doe&amp;quot;}&amp;#39;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_index&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;customer&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_type&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;external&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_id&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;1&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_version&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_shards&quot;&lt;/span&gt; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;total&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;successful&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;failed&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;created&quot;&lt;/span&gt; : &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;查询数据：&lt;code&gt;curl -XGET &amp;#39;http://server:9200/customer/external/1?pretty&amp;#39;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_index&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;customer&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_type&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;external&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_id&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;1&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_version&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;found&quot;&lt;/span&gt; : &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_source&quot;&lt;/span&gt; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;name&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;JOhn Doe&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;删除索引:&lt;code&gt;curl -XDELETE &amp;#39;http://server:9200/customer?pretty&lt;/code&gt; `&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;通过id更新索引数据:&lt;code&gt;curl -XPUT &amp;#39;http://server:9200/customer/external/1?pretty&amp;#39; &amp;#39;-d { &amp;quot;name&amp;quot;:&amp;quot;JOhn Doe&amp;quot;}&amp;#39;&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_index&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;customer&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_type&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;external&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_id&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;1&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_version&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_shards&quot;&lt;/span&gt; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;total&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;successful&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;failed&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;created&quot;&lt;/span&gt; : &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;添加索引数据随机id:&lt;code&gt;curl -XPOST &amp;#39;http://server:9200/customer/external?pretty&amp;#39; &amp;#39;-d { &amp;quot;name&amp;quot;:&amp;quot;JOhn Doe&amp;quot;}&amp;#39;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_index&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;customer&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_type&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;external&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_id&quot;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;AVQFbXxylcDfhGhMoLpJ&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_version&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;_shards&quot;&lt;/span&gt; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;total&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;successful&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;failed&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;created&quot;&lt;/span&gt; : &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;通过id删除：&lt;code&gt;curl -XDELETE &amp;#39;http://server:9200/customer/external/2?pretty&amp;#39;&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;通过查询删除:&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XDELETE &#39;http://server:9200/customer/external/_query?pretty&#39; -d &#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;query&quot;: &amp;#123; &quot;match&quot;: &amp;#123; &quot;name&quot;: &quot;John&quot; &amp;#125; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;批量新增&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST &#39;http://server:9200/customer/external/_bulk?pretty&#39; -d &#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;index&quot;:&amp;#123;&quot;_id&quot;:&quot;1&quot;&amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;name&quot;: &quot;John Doe&quot; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;index&quot;:&amp;#123;&quot;_id&quot;:&quot;2&quot;&amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;name&quot;: &quot;Jane Doe&quot; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;批量更新/删除&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST &#39;http://server:9200/customer/external/_bulk?pretty&#39; -d &#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;update&quot;:&amp;#123;&quot;_id&quot;:&quot;1&quot;&amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;doc&quot;: &amp;#123; &quot;name&quot;: &quot;John Doe becomes Jane Doe&quot; &amp;#125; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;delete&quot;:&amp;#123;&quot;_id&quot;:&quot;2&quot;&amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;读文件批量索引&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST &#39;http://server:9200/bank/account/_bulk?pretty&#39; --data-binary @accounts.json&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;批量索引操作&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST &#39;http://server:9200/bank/_search?pretty&#39; -d &#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;query&quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;bool&quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &quot;must&quot;: [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123; &quot;match&quot;: &amp;#123; &quot;address&quot;: &quot;mill&quot; &amp;#125; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123; &quot;match&quot;: &amp;#123; &quot;address&quot;: &quot;lane&quot; &amp;#125; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      ]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;查看进程信息，包括打开文件数，是否锁定内存等:&lt;code&gt;curl &amp;#39;http://server:9200/_nodes/process?pretty&amp;#39;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;索引相关&quot;&gt;&lt;a href=&quot;#索引相关&quot; class=&quot;headerlink&quot; title=&quot;索引相关&quot;&gt;&lt;/a&gt;索引相关&lt;/h2&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;URL&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;说明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/_search&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;不解释&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/_aliases&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;获取或操作索引的别名&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/type/&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;创建或操作类型&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/_mapping&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;创建或操作mapping&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/_settings&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;创建或操作设置(number_of_shards是不可更改的)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/_open&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;打开被关闭的索引&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/_close&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;关闭索引&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/_refresh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;刷新索引（使新加内容对搜索可见）&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/_flush&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;刷新索引，将变动提交到lucene索引文件中，并清空elasticsearch的transaction log&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/_optimize&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;优化segement，个人认为主要是对segement进行合并&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/_status&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;获得索引的状态信息&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/_segments&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;获得索引的segments的状态信息&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/_explain&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;不执行实际搜索，而返回解释信息&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/_analyze&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;不执行实际搜索，根据输入的参数进行文本分析&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/type/id&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;操作指定文档，不解释&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/type/id/_create&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;创建一个文档，如果该文件已经存在，则返回失败&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/index/type/id/_update&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;更新一个文件，如果改文件不存在，则返回失败&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&quot;集群相关&quot;&gt;&lt;a href=&quot;#集群相关&quot; class=&quot;headerlink&quot; title=&quot;集群相关&quot;&gt;&lt;/a&gt;集群相关&lt;/h2&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;URL&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;说明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/_cluster/nodes&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;获得集群中的节点列表和信息&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/_cluster/health&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;获得集群信息&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/_cluster/state&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;获得集群里的所有信息（集群信息、节点信息、mapping信息等）&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&quot;节点相关&quot;&gt;&lt;a href=&quot;#节点相关&quot; class=&quot;headerlink&quot; title=&quot;节点相关&quot;&gt;&lt;/a&gt;节点相关&lt;/h2&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;URL&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;说明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/_nodes/process&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;主要看file descriptor 这个信息&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/_nodes/process/stats&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;统计信息（内存、CPU等）&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/_nodes/jvm&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;获得各节点的虚拟机统计和配置信息&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/_nodes/jvm/stats&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;更详细的虚拟机信息&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/_nodes/http&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;获得各个节点的http信息（如ip地址）&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/_nodes/http/stats&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;获得各个节点处理http请求的统计情况&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/_nodes/thread_pool&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;获得各种类型的线程池，（elasticsearch分别对不同的操作提供不同的线程池）的配置信息&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;/_nodes/thread_pool/stats&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;获得各种类型的线程池的统计信息&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;以上这些操作可以通过如：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;/_nodes/${nodeId}/jvm/stats&lt;/code&gt;，&lt;code&gt;/_nodes/${nodeip}/jvm/stats&lt;/code&gt;，&lt;code&gt;/_nodes/${nodeattribute}/jvm/stats&lt;/code&gt;的形式针对指定节点的操作。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt; 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="BigData" scheme="http://keyunluo.github.io/categories/BigData/"/>
-    
-    
-      <category term="elasticsearch" scheme="http://keyunluo.github.io/tags/elasticsearch/"/>
-    
-      <category term="大数据" scheme="http://keyunluo.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Elasticsearch入门学习(1)——安装</title>
-    <link href="http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-1.html"/>
-    <id>http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-1.html</id>
-    <published>2016-04-11T10:42:53.000Z</published>
-    <updated>2016-07-17T08:49:09.452Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt;是一个基于Lucene的接近实时的搜索平台。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口，是当前流行的企业级搜索引擎。本文先从安装Elasticsearch开始，一步一步探索。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h2 id=&quot;ES下载和安装&quot;&gt;&lt;a href=&quot;#ES下载和安装&quot; class=&quot;headerlink&quot; title=&quot;ES下载和安装&quot;&gt;&lt;/a&gt;ES下载和安装&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;es(官方下载地址)[&lt;a href=&quot;https://www.elastic.co/downloads/elasticsearch]，最新版本为2.3.1。不过github上有一个更好的选择(ElasticSearch-RTF)[https://github.com/medcl/elasticsearch-rtf.git],这个版本中已经集成了中文分词插件等，并且已经将插件配置好了，最新版本为2.2.1&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.elastic.co/downloads/elasticsearch]，最新版本为2.3.1。不过github上有一个更好的选择(ElasticSearch-RTF)[https://github.com/medcl/elasticsearch-rtf.git],这个版本中已经集成了中文分词插件等，并且已经将插件配置好了，最新版本为2.2.1&lt;/a&gt; ，非常适合初学者。安装时注意了，不要使用root权限用户安装es，否则es启动会报错，应该创建一个普通的用户安装es。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;运行环境&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Linux和windows均可&lt;/li&gt;
-&lt;li&gt;jdk7+&lt;/li&gt;
-&lt;li&gt;32位/64位&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;配置文件&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;本文将Elasticsearch安装在&lt;code&gt;/opt/bigdata/elasticsearch&lt;/code&gt;目录下，版本为&lt;code&gt;2.2.0&lt;/code&gt;，集群为&lt;code&gt;Redhat7&lt;/code&gt;，配置文件为&lt;code&gt;/opt/bigdata/elasticsearch/config/elasticsearch.yml&lt;/code&gt;，下面贴上配置文件：&lt;/p&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;62&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;63&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;64&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;65&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;66&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;67&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;68&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;69&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;70&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;71&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;72&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;73&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;74&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;75&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;76&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;77&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;78&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;79&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;80&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;81&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;82&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;83&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;84&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;85&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;86&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;87&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;88&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;89&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;90&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;91&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;92&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;93&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;94&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;95&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;96&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;97&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;98&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;99&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;100&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;101&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;102&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;# ======================== Elasticsearch Configuration =========================&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# NOTE: Elasticsearch comes with reasonable defaults &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; most settings.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#       Before you &lt;span class=&quot;built_in&quot;&gt;set&lt;/span&gt; out to tweak and tune the configuration, make sure you&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#       understand what are you trying to accomplish and the consequences.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# The primary way of configuring a node is via &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt; file. This &lt;span class=&quot;keyword&quot;&gt;template&lt;/span&gt; lists&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# the most important settings you may want to configure &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; a production cluster.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Please see the documentation &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; further information on configuration options:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# &amp;lt;http:&lt;span class=&quot;comment&quot;&gt;//www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# ---------------------------------- Cluster -----------------------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Use a descriptive name &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; your cluster:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# 集群名称&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; cluster.name: Elasticsearch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# ------------------------------------ Node ------------------------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Use a descriptive name &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; the node:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# 节点信息&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; node.name: ES-Hadoop-Spark-Master&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; node.master: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; node.data: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; index.number_of_replicas: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Add custom attributes to the node:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# node.rack: r1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# ----------------------------------- Paths ------------------------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Path to directory where to store the data (separate multiple locations by comma):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# 数据路径&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; path.data: /opt/elasticsearch/data&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Path to &lt;span class=&quot;built_in&quot;&gt;log&lt;/span&gt; files:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# path.logs: /path/to/logs&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; path.logs: /opt/elasticsearch/logs&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; path.work: /opt/elasticsearch/work&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# ----------------------------------- Memory -----------------------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Lock the memory on startup:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# bootstrap.mlockall: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Make sure that the `ES_HEAP_SIZE` environment variable is &lt;span class=&quot;built_in&quot;&gt;set&lt;/span&gt; to about half the memory&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# available on the system and that the owner of the process is allowed to use &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt; limit.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Elasticsearch performs poorly when the system is swapping the memory.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# ---------------------------------- Network -----------------------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Set the bind address to a specific IP (IPv4 or IPv6):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# 网络，设置为外网可以访问&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; network.host: &lt;span class=&quot;number&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.0&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Set a custom port &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; HTTP:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# 端口，默认&lt;span class=&quot;number&quot;&gt;9200&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; http.port: &lt;span class=&quot;number&quot;&gt;9200&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# For more information, see the documentation at:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# &amp;lt;http:&lt;span class=&quot;comment&quot;&gt;//www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# --------------------------------- Discovery ----------------------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Pass an initial &lt;span class=&quot;built_in&quot;&gt;list&lt;/span&gt; of hosts to perform discovery when &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; node is started:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# The &lt;span class=&quot;keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;list&lt;/span&gt; of hosts is [&lt;span class=&quot;string&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;[::1]&quot;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# discovery.zen.ping.unicast.hosts: [&lt;span class=&quot;string&quot;&gt;&quot;host1&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;host2&quot;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Prevent the &lt;span class=&quot;string&quot;&gt;&quot;split brain&quot;&lt;/span&gt; by configuring the majority of nodes (total number of nodes / &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# discovery.zen.minimum_master_nodes: &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# For more information, see the documentation at:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# &amp;lt;http:&lt;span class=&quot;comment&quot;&gt;//www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery.html&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# 设置节点自动发现&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; discovery.zen.minimum_master_nodes: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; discovery.zen.ping.timeout: &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;s    ##节点间自动发现的响应时间&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; discovery.zen.ping.unicast.hosts: [&lt;span class=&quot;string&quot;&gt;&quot;192.168.100.101&quot;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# ---------------------------------- Gateway -----------------------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Block initial recovery after a full cluster restart until N nodes are started:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# gateway.recover_after_nodes: &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# For more information, see the documentation at:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# &amp;lt;http:&lt;span class=&quot;comment&quot;&gt;//www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway.html&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# ---------------------------------- Various -----------------------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Disable starting multiple nodes on a single system:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# node.max_local_storage_nodes: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Require &lt;span class=&quot;keyword&quot;&gt;explicit&lt;/span&gt; names when deleting indices:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# action.destructive_requires_name: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;在上述配置中，已经设置主节点为&lt;code&gt;192.168.100.101&lt;/code&gt;，还有两个从节点&lt;code&gt;192.168.100.107&lt;/code&gt;以及&lt;code&gt;192.168.100.110&lt;/code&gt;，它们的配置不同点在于&lt;code&gt;Node&lt;/code&gt;的设置，从节点中设置如下：&lt;code&gt;node.name: ES-Hadoop-Spark-Node1&lt;/code&gt;，&lt;code&gt;node.master: false&lt;/code&gt;,因为设置了节点的自动发现机制，所以在启动Elasticsearch后，集群会自动根据&lt;code&gt;cluster.name: Elasticsearch&lt;/code&gt;来添加数据节点。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;启动集群
-进入&lt;code&gt;/opt/bigdata/elasticsearch&lt;/code&gt;，运行&lt;code&gt;bin/elasticsearch&lt;/code&gt;,便可以启动&lt;code&gt;elasticsearch&lt;/code&gt;，如果想当shell关闭时任然要在后台运行elasticsearch服务，可以运行命令&lt;code&gt;nohub bin/elasticsearch &amp;amp;&lt;/code&gt;,这样当shell关闭时，仍可访问服务。分别进入到两个数据节点，运行同样的命令，这样，集群便搭建好了。
-当然我们也可以在启动的时候修改集群的名称和节点的名称。例如：
-&lt;code&gt;bin/elasticsearch --cluster.name my_cluster_name --node.name my_node_name&lt;/code&gt;来指定集群名字和主节点。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;ES插件安装&quot;&gt;&lt;a href=&quot;#ES插件安装&quot; class=&quot;headerlink&quot; title=&quot;ES插件安装&quot;&gt;&lt;/a&gt;ES插件安装&lt;/h2&gt;&lt;p&gt;&lt;code&gt;head&lt;/code&gt;插件可以很方便的查询数据和监控集群健康状况，下面以&lt;code&gt;head&lt;/code&gt;插件安装为例，介绍下ES2.x下插件安装的一般步骤。&lt;/p&gt;
-&lt;p&gt;进入&lt;code&gt;/opt/bigdata/elasticsearch&lt;/code&gt;目录，运行&lt;code&gt;bin/plugin install mobz/elasticsearch-head&lt;/code&gt;, 下载完成后，访问网址&lt;code&gt;http://server:9200/_plugin/head/&lt;/code&gt;，便可以看到如下界面，说明安装成功。
-&lt;img src=&quot;/resource/blog/2016-04/elasticsearch-head.png&quot; alt=&quot;head&quot;&gt;&lt;/p&gt;
-&lt;p&gt;插件可以分为核心插件和非核心插件，核心插件是官方提供的，可以直接安装，例如&lt;code&gt;bin/plugin install analysis-icu&lt;/code&gt;，这样就会下载合适的版本安装到Elasticsearch中。非核心插件可以是官方提供的，也可以是社区提供的，可以从官方，Maven或者GitHub中下载安装：&lt;code&gt;bin/plugin install [org]/[user|component]/[version]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;例如，安装github上的插件，&lt;code&gt;plugin install lmenezes/elasticsearch-kopf&lt;/code&gt;，插件会尝试先到官方去下载，如果没有找到会到maven.com中去下载，如果在没有找到回到github中去下载。脚本还是非常智能的。当我们从直接maven中央库中安装时可以直接使用下面的方式，最后的版本号是必须要写的。
-&lt;code&gt;plugin install org.elasticsearch.plugin/mapper-attachments/3.0.0&lt;/code&gt;
-从自定义网址或者本地安装：&lt;code&gt;plugin install [url]&lt;/code&gt;，例如，在本地文件系统中安装一个插件，可以运行：&lt;code&gt;plugin install file:///path/to/plugin.zip&lt;/code&gt;。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;ElasticSearch&lt;/strong&gt;是一个基于Lucene的接近实时的搜索平台。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口，是当前流行的企业级搜索引擎。本文先从安装Elasticsearch开始，一步一步探索。&lt;/p&gt;
 &lt;/blockquote&gt;
     
     </summary>
