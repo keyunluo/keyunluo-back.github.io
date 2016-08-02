@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-08-02T18:11:20.634Z</updated>
+  <updated>2016-08-02T18:18:09.952Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hadoop源码学习——Hadoop-Common-annotations</title>
+    <title>Hadoop源码学习(2)——Hadoop-Common-annotations</title>
     <link href="http://keyunluo.github.io/2016/08/02/2016-08-02-hadoop-common--annotation.html"/>
     <id>http://keyunluo.github.io/2016/08/02/2016-08-02-hadoop-common--annotation.html</id>
     <published>2016-08-02T17:25:02.000Z</published>
-    <updated>2016-08-02T18:11:20.634Z</updated>
+    <updated>2016-08-02T18:18:09.952Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本节学习Hadoop-Common-Project中的hadoop-annotation模块，该模块主要实现了hadoop项目中的注解。&lt;/p&gt;
@@ -168,11 +168,11 @@
   </entry>
   
   <entry>
-    <title>Hadoop源码学习——Hadoop-Common-Project</title>
+    <title>Hadoop源码学习(1)——Hadoop-Common-Project</title>
     <link href="http://keyunluo.github.io/2016/08/01/2016-08-01-hadoop-common-project.html"/>
     <id>http://keyunluo.github.io/2016/08/01/2016-08-01-hadoop-common-project.html</id>
     <published>2016-08-01T16:17:02.000Z</published>
-    <updated>2016-08-01T17:14:20.044Z</updated>
+    <updated>2016-08-02T18:17:58.962Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Hadoop-Common-Project模块包括了一系列支撑其他Hadoop模块的公共工具，本系列文章从源代码的角度分析其实现。本文主要从总体上了解Hadoop-Common-Project模块。&lt;/p&gt;

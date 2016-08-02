@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[Hadoop源码学习——Hadoop-Common-annotations]]></title>
+      <title><![CDATA[Hadoop源码学习(2)——Hadoop-Common-annotations]]></title>
       <url>http://keyunluo.github.io/2016/08/02/2016-08-02-hadoop-common--annotation.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本节学习Hadoop-Common-Project中的hadoop-annotation模块，该模块主要实现了hadoop项目中的注解。</p>
@@ -120,7 +120,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Hadoop源码学习——Hadoop-Common-Project]]></title>
+      <title><![CDATA[Hadoop源码学习(1)——Hadoop-Common-Project]]></title>
       <url>http://keyunluo.github.io/2016/08/01/2016-08-01-hadoop-common-project.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>Hadoop-Common-Project模块包括了一系列支撑其他Hadoop模块的公共工具，本系列文章从源代码的角度分析其实现。本文主要从总体上了解Hadoop-Common-Project模块。</p>
