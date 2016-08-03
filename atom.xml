@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-08-02T18:18:09.952Z</updated>
+  <updated>2016-08-03T18:53:24.783Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -16,11 +16,79 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hadoop源码学习(2)——Hadoop-Common-annotations</title>
+    <title>Hadoop源码学习(3)——Hadoop-Common-Conf(1)</title>
+    <link href="http://keyunluo.github.io/2016/08/03/2016-08-03-hadoop-common-conf-1.html"/>
+    <id>http://keyunluo.github.io/2016/08/03/2016-08-03-hadoop-common-conf-1.html</id>
+    <published>2016-08-03T09:25:02.000Z</published>
+    <updated>2016-08-03T18:53:24.783Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本节学习Hadoop-Common-Project中的hadoop-common-conf模块，该模块主要实现了hadoop项目中的配置信息处理。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;hadoop-common-源代码结构&quot;&gt;&lt;a href=&quot;#hadoop-common-源代码结构&quot; class=&quot;headerlink&quot; title=&quot;hadoop-common 源代码结构&quot;&gt;&lt;/a&gt;hadoop-common 源代码结构&lt;/h2&gt;&lt;p&gt;hadoop-common是hadoop项目中的核心模块，在src/main中定义了很多基础功能，此外还有protobuf等定义，本文学习org.apache.hadoop.conf配置类的设计。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;java&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── org&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│   └── apache&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│       └── hadoop&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── conf&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── crypto&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── fs&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── ha&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── HadoopIllegalArgumentException.java&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── http&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── io&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── ipc&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── jmx&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── log&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── metrics&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── metrics2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── net&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── record&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── security&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── service&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── tools&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           ├── tracing&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;│           └── util&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;└── overview.html&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21 directories, 2 files&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;Java中的配置文件&quot;&gt;&lt;a href=&quot;#Java中的配置文件&quot; class=&quot;headerlink&quot; title=&quot;Java中的配置文件&quot;&gt;&lt;/a&gt;Java中的配置文件&lt;/h2&gt;&lt;p&gt;JDK提供了java.util.Properties类，用于处理简单的配置文件，它只支持键值对，形式如下：&lt;code&gt;ENTRY=VALUE&lt;/code&gt;。由于Properties是基于HashTable的，它部支持节，对配置文件进行分类。&lt;/p&gt;
+&lt;p&gt;java.util.Properties中处理属性列表的主要方法：
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//用指定的键在此属性列表中搜索属性&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;getProperty&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String key)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 功能同上，参数defaultValue提供了默认值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;getProperty&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String key,String defaultValue)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Properties.setProperty()最终调用Hashtable的方法put&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;synchronized&lt;/span&gt; object &lt;span class=&quot;title&quot;&gt;setProperty&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String key,String value)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;由于Java本身提供的配置文件功能简单，Java社区出现了大量的配置信息的读/写方案，其中比较有名的是Apache Jakarta Commons提供的Commons Configuration，其支持文本，XML配置文件格式，支持加载多个配置文件，支持分层或多级配置等。&lt;/p&gt;
+&lt;p&gt;Hadoop没有使用Java自带的配置文件类以及第三方类，而是自己实现了一套独有的配置文件管理系统，并提供了自己的API，即使用org.apache.hadoop.conf.Configuration处理配置信息。&lt;/p&gt;
+&lt;h2 id=&quot;Configuration配置文件概述&quot;&gt;&lt;a href=&quot;#Configuration配置文件概述&quot; class=&quot;headerlink&quot; title=&quot;Configuration配置文件概述&quot;&gt;&lt;/a&gt;Configuration配置文件概述&lt;/h2&gt;&lt;p&gt;Hadoop配置文件采用ＸＭＬ格式，一个例子如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;configuration&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;name&lt;/span&gt;&amp;gt;&lt;/span&gt;mapreduce.framework.name&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;name&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;yarn&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;name&lt;/span&gt;&amp;gt;&lt;/span&gt;mapred.child.java.opts&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;name&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;-Xmx4096m&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;configuration&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Hadoop配置文件的根元素是configuration，一般只包含子元素property。同时，Hadoop可以将多个配置文件合并，产生一个配置，如core-site.xml和core-default.xml，通过Configure类的loadResource()方法，把它们合并成一个配置：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Configuration conf = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Configuration();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;conf.addResource(&lt;span class=&quot;string&quot;&gt;&quot;core-default.xml&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;conf.addResource(&lt;span class=&quot;string&quot;&gt;&quot;core-site.xml&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果这两个资源都包含了相同的配置项。并且前面的一个资源配置项没有标记为final，那么后面的配置将覆盖前面的配置。&lt;/p&gt;
+&lt;p&gt;Hadoop配置系统还有一个很重要的功能，就是属性扩展，即可以使用&lt;code&gt;${}&lt;/code&gt;进行引用。&lt;/p&gt;
+&lt;p&gt;使用Configuration类的一般过程是：构造Configuration对象，通过类的addResource()方法添加需要加载的资源；然后通过get&lt;em&gt;和set&lt;/em&gt;方法访问/设置配置项，资源会在第一次使用的时候自动加载到对象中。&lt;/p&gt;
+&lt;h2 id=&quot;Configuration-类分析&quot;&gt;&lt;a href=&quot;#Configuration-类分析&quot; class=&quot;headerlink&quot; title=&quot;Configuration 类分析&quot;&gt;&lt;/a&gt;Configuration 类分析&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;类图&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;/resource/blog/2016-08/hadoop-common-conf.png&quot; alt=&quot;hadoop-common-conf&quot;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Configuration.addSource&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;资源Resource由Object和Name构成。数组resources保存了所有通过addResource()方法添加Configuration对象的资源，Configuration.addSource()有如下六种形式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;public void addResource(String name) ：CLASSPATH资源,如 “core-site.xml”&lt;/li&gt;
+&lt;li&gt;public void addResource(URL url) : 如 “&lt;a href=&quot;http://server.com/core-site.xml&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://server.com/core-site.xml&lt;/a&gt;“&lt;/li&gt;
+&lt;li&gt;public void addResource(Path file) : hadoop文件路径，如 “hdfs://server:54300/conf/core-site.xml”&lt;/li&gt;
+&lt;li&gt;public void addResource(InputStream in) : 一个已经打开的输入流&lt;/li&gt;
+&lt;li&gt;public void addResource(InputStream in, String name) ：一个已经打开的输入流，传入Resource的名称&lt;/li&gt;
+&lt;li&gt;public void addResource(Configuration conf) ： Configuration对象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;资源加载&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;资源加载通过对象的addResource()方法或类的静态addDefaultResource()方法添加到Configuration对象中，添加的资源不会被立即加载，而是通过reloadConfiguration()方法清空properties和finalParameters。&lt;/p&gt;
+&lt;p&gt;静态方法addDefaultResource()也能清空Configuration对象中的数据，这是通过静态成员REGISTRY作为媒介进行的。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;addResource&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(InputStream in, String name)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  addResourceObject(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Resource(in, name));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;synchronized&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;reloadConfiguration&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  properties = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;                            &lt;span class=&quot;comment&quot;&gt;// trigger reload&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  finalParameters.clear();                      &lt;span class=&quot;comment&quot;&gt;// clear site-limits&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;synchronized&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;addResourceObject&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Resource resource)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  resources.add(resource);                      &lt;span class=&quot;comment&quot;&gt;// add to resources&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  reloadConfiguration();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;synchronized&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;addDefaultResource&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String name)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(!defaultResources.contains(name)) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    defaultResources.add(name);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(Configuration conf : REGISTRY.keySet()) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(conf.loadDefaults) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        conf.reloadConfiguration();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;成员变量properties中的数据，直到需要的时候才会加载进来，在getProps()方法中，如果发现properties为空，将触发loadResource()方法加载配置资源。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;synchronized&lt;/span&gt; Properties &lt;span class=&quot;title&quot;&gt;getProps&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (properties == &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      properties = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Properties();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      HashMap&amp;lt;String, String[]&amp;gt; backup =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; HashMap&amp;lt;String, String[]&amp;gt;(updatingResource);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      loadResources(properties, resources, quietmode);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (overlay!= &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        properties.putAll(overlay);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (Map.Entry&amp;lt;Object,Object&amp;gt; item: overlay.entrySet()) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          String key = (String)item.getKey();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          updatingResource.put(key, backup.get(key));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; properties;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;配置属性扩展高效算法&quot;&gt;&lt;a href=&quot;#配置属性扩展高效算法&quot; class=&quot;headerlink&quot; title=&quot;配置属性扩展高效算法&quot;&gt;&lt;/a&gt;配置属性扩展高效算法&lt;/h2&gt;&lt;p&gt;代码中提到了一种快速的属性替换算法，比正则表达式快15倍以上。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;62&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;63&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;64&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;65&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;66&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;67&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;68&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;69&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;70&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;71&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;72&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;73&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;74&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;75&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;76&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;77&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;78&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;79&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;80&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;81&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;82&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;83&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;84&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;85&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;86&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;87&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;88&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;89&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;90&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;91&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;92&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;93&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;94&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;95&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;96&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;97&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;98&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;99&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;100&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;101&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;102&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;103&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;104&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;105&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;106&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;107&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;108&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;109&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;110&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;111&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;112&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;113&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;114&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;115&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;116&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; MAX_SUBST = &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; SUB_START_IDX = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; SUB_END_IDX = SUB_START_IDX + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * This is a manual implementation of the following regex&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * &quot;\\$\\&amp;#123;[^\\&amp;#125;\\$\u0020]+\\&amp;#125;&quot;. It can be 15x more efficient than&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * a regex matcher as demonstrated by HADOOP-11506. This is noticeable with&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * Hadoop apps building on the assumption Configuration#get is an O(1)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * hash table lookup, especially when the eval is a long string.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@param&lt;/span&gt; eval a string that may contain variables requiring expansion.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@return&lt;/span&gt; a 2-element int array res such that&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * eval.substring(res[0], res[1]) is &quot;var&quot; for the left-most occurrence of&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * $&amp;#123;var&amp;#125; in eval. If no variable is found -1, -1 is returned.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;[] findSubVariable(String eval) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;[] result = &amp;#123;-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; matchStart;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; leftBrace;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// scanning for a brace first because it&#39;s less frequent than $&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// that can occur in nested class names&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;//&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  match_loop:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (matchStart = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, leftBrace = eval.indexOf(&lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;&#39;&lt;/span&gt;, matchStart);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       &lt;span class=&quot;comment&quot;&gt;// minimum left brace position (follows &#39;$&#39;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       leftBrace &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       &lt;span class=&quot;comment&quot;&gt;// right brace of a smallest valid expression &quot;$&amp;#123;c&amp;#125;&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       &amp;amp;&amp;amp; leftBrace + &lt;span class=&quot;string&quot;&gt;&quot;&amp;#123;c&quot;&lt;/span&gt;.length() &amp;lt; eval.length();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       leftBrace = eval.indexOf(&lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;&#39;&lt;/span&gt;, matchStart)) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; matchedLen = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (eval.charAt(leftBrace - &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;) == &lt;span class=&quot;string&quot;&gt;&#39;$&#39;&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; subStart = leftBrace + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;; &lt;span class=&quot;comment&quot;&gt;// after &#39;&amp;#123;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = subStart; i &amp;lt; eval.length(); i++) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;switch&lt;/span&gt; (eval.charAt(i)) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&amp;#125;&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (matchedLen &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) &amp;#123; &lt;span class=&quot;comment&quot;&gt;// match&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              result[SUB_START_IDX] = subStart;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              result[SUB_END_IDX] = subStart + matchedLen;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &lt;span class=&quot;keyword&quot;&gt;break&lt;/span&gt; match_loop;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// fall through to skip 1 char&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39; &#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;$&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            matchStart = i + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;continue&lt;/span&gt; match_loop;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;keyword&quot;&gt;default&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            matchedLen++;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;comment&quot;&gt;// scanned from &quot;$&amp;#123;&quot;  to the end of eval, and no reset via &#39; &#39;, &#39;$&#39;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;comment&quot;&gt;//    no match!&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;break&lt;/span&gt; match_loop;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;comment&quot;&gt;// not a start of a variable&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;comment&quot;&gt;//&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      matchStart = leftBrace + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; result;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * Attempts to repeatedly expand the value &amp;#123;&lt;span class=&quot;doctag&quot;&gt;@code&lt;/span&gt; expr&amp;#125; by replacing the&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * left-most substring of the form &quot;$&amp;#123;var&amp;#125;&quot; in the following precedence order&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * &amp;lt;ol&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; *   &amp;lt;li&amp;gt;by the value of the Java system property &quot;var&quot; if defined&amp;lt;/li&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; *   &amp;lt;li&amp;gt;by the value of the configuration key &quot;var&quot; if defined&amp;lt;/li&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * &amp;lt;/ol&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * If var is unbounded the current state of expansion &quot;prefix$&amp;#123;var&amp;#125;suffix&quot; is&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * returned.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@param&lt;/span&gt; expr the literal value of a config key&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@return&lt;/span&gt; null if expr is null, otherwise the value resulting from expanding&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * expr using the algorithm above.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@throws&lt;/span&gt; IllegalArgumentException when more than&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * &amp;#123;&lt;span class=&quot;doctag&quot;&gt;@link&lt;/span&gt; Configuration#MAX_SUBST&amp;#125; replacements are required&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;substituteVars&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String expr)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (expr == &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  String eval = expr;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; s = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; s &amp;lt; MAX_SUBST; s++) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;[] varBounds = findSubVariable(eval);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (varBounds[SUB_START_IDX] == -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; eval;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; String var = eval.substring(varBounds[SUB_START_IDX],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        varBounds[SUB_END_IDX]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    String val = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      val = System.getProperty(var);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125; &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt;(SecurityException se) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      LOG.warn(&lt;span class=&quot;string&quot;&gt;&quot;Unexpected SecurityException in Configuration&quot;&lt;/span&gt;, se);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (val == &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      val = getRaw(var);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (val == &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; eval; &lt;span class=&quot;comment&quot;&gt;// return literal $&amp;#123;var&amp;#125;: var is unbound&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; dollar = varBounds[SUB_START_IDX] - &lt;span class=&quot;string&quot;&gt;&quot;$&amp;#123;&quot;&lt;/span&gt;.length();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; afterRightBrace = varBounds[SUB_END_IDX] + &lt;span class=&quot;string&quot;&gt;&quot;&amp;#125;&quot;&lt;/span&gt;.length();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// substitute&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    eval = eval.substring(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, dollar)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;           + val&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;           + eval.substring(afterRightBrace);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; IllegalStateException(&lt;span class=&quot;string&quot;&gt;&quot;Variable substitution depth too large: &quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                  + MAX_SUBST + &lt;span class=&quot;string&quot;&gt;&quot; &quot;&lt;/span&gt; + expr);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本节学习Hadoop-Common-Project中的hadoop-common-conf模块，该模块主要实现了hadoop项目中的配置信息处理。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="SourceCodeLearning" scheme="http://keyunluo.github.io/categories/SourceCodeLearning/"/>
+    
+    
+      <category term="Hadoop" scheme="http://keyunluo.github.io/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hadoop源码学习(2)——Hadoop-Common-Annotations</title>
     <link href="http://keyunluo.github.io/2016/08/02/2016-08-02-hadoop-common--annotation.html"/>
     <id>http://keyunluo.github.io/2016/08/02/2016-08-02-hadoop-common--annotation.html</id>
     <published>2016-08-02T17:25:02.000Z</published>
-    <updated>2016-08-02T18:18:09.952Z</updated>
+    <updated>2016-08-03T16:09:38.159Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本节学习Hadoop-Common-Project中的hadoop-annotation模块，该模块主要实现了hadoop项目中的注解。&lt;/p&gt;
@@ -2377,212 +2445,6 @@ Python支持四种不同的数字类型：&lt;ul&gt;
     
     
       <category term="VPN" scheme="http://keyunluo.github.io/tags/VPN/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>TODO-LIST</title>
-    <link href="http://keyunluo.github.io/2016/06/30/2016-06-30-todolist.html"/>
-    <id>http://keyunluo.github.io/2016/06/30/2016-06-30-todolist.html</id>
-    <published>2016-06-30T09:44:38.000Z</published>
-    <updated>2016-07-29T12:38:24.888Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;2016-07月-2017-01月待做事项&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h2 id=&quot;基础算法&quot;&gt;&lt;a href=&quot;#基础算法&quot; class=&quot;headerlink&quot; title=&quot;基础算法&quot;&gt;&lt;/a&gt;基础算法&lt;/h2&gt;&lt;p&gt;参考书籍:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;Data Structures and Algorithms in C++, 2nd edition&lt;/em&gt; Michael T. Goodrich等著&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Data Structures and Algorithms in Java, 6th Edition&lt;/em&gt; James Aspnes著&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Data Structures and Algorithms in Python&lt;/em&gt; Michael T. Goodrich等著&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Data Structures and Algorithms with JavaScript&lt;/em&gt; Michael McMillan等著&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;算法导论&lt;/em&gt; 第三版，殷建平 等译&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;快学Scala&lt;/em&gt;  高宇翔 译&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;学习课题:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 数组&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 链表&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 栈和队列&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 树&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 堆和优先队列&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 哈希&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 搜索树&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 集合&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; STL&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 排序&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 图论&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 动态规划&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;分布式系统&quot;&gt;&lt;a href=&quot;#分布式系统&quot; class=&quot;headerlink&quot; title=&quot;分布式系统&quot;&gt;&lt;/a&gt;分布式系统&lt;/h2&gt;&lt;p&gt;参考书籍:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;大规模分布式系统架构与设计实战&lt;/em&gt; 彭渊编 著&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Notes on Theory of Distributed Systems&lt;/em&gt; James Aspnes 著&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;学习课题:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 分布式并行计算的原理与实践&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 分布式协调的实现&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 分布式缓存的实现&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 消息队列的实现&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 分布式文件系统的实现&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 分布式作业调度平台的实现&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Message passing&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Shared memory&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;PRML&quot;&gt;&lt;a href=&quot;#PRML&quot; class=&quot;headerlink&quot; title=&quot;PRML&quot;&gt;&lt;/a&gt;PRML&lt;/h2&gt;&lt;p&gt;参考书籍:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;统计学习方法&lt;/em&gt; 李航编著&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;模式识别与机器学习&lt;/em&gt; 马春鹏  译&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Machine Learning A Bayesian and Optimization Perspective&lt;/em&gt; Sergios Theodoridis 编著&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;学习课题:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 统计学习方法&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 感知机&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; k近邻&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 朴素贝叶斯&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 决策树&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 逻辑回归与最大熵模型&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 支持向量机&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 提升方法&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; EM算法及其推广&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 隐马尔科夫模型&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 条件随机场&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 概率分布&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 回归的线性模型&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 分类的线性模型&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 神经网络&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 核方法&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 稀疏核机&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 图模型&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 混合模型和EM&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 近似推断&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 采样方法&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 连续潜在变量&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 顺序数据&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 组合模型&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;大数据&quot;&gt;&lt;a href=&quot;#大数据&quot; class=&quot;headerlink&quot; title=&quot;大数据&quot;&gt;&lt;/a&gt;大数据&lt;/h2&gt;&lt;p&gt;参考书籍:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;Data algorithms recipes for scaling up with hadoop and spark&lt;/em&gt; Mahmoud Parsian编著&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Mastering Apache Spark&lt;/em&gt; Mike Frampton编著&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;HBase- The Definitive Guide, 2nd Edition&lt;/em&gt; Lars George编著&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Apache Mahout Beyond MapReduce&lt;/em&gt; Dmitriy Lyubimov等&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;学习课题:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;[✔]&lt;/em&gt; Secondary Sort&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Top 10 List&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Left Outer Join&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Order Inversion&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Moving Average&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Market Basket Analysis&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Common Friends&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Recommendation Engines Using MapReduce&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Content-Based Recommendation: Movies&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Smarter Email Marketing with the Markov Model&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; K-Means Clustering&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; k-Nearest Neighbors&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Naive Bayes&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Sentiment Analysis&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Finding, Counting, and Listing All Triangles in Large Graphs&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; K-mer Counting&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; DNA Sequencing&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Cox Regression&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Cochran-Armitage Test for Trend&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Allelic Frequency&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; The T-Test&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Pearson Correlation&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; DNA Base Count&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; RNA Sequencing&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Gene Aggregation&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Linear Regression&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; MapReduce and Monoids&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; The Small Files Problem&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Huge Cache for MapReduce&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; The Bloom Filter&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; HBase Client API: The Basics&lt;ul&gt;
-&lt;li&gt;[x] Data Types and Hierarchy&lt;/li&gt;
-&lt;li&gt;[x] CRUD Operations&lt;/li&gt;
-&lt;li&gt;[x] Batch Operations&lt;/li&gt;
-&lt;li&gt;[x] Scans&lt;/li&gt;
-&lt;li&gt;[x] Miscellaneous Features&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; HBase Client API: Advanced Features&lt;ul&gt;
-&lt;li&gt;[x] Filters&lt;/li&gt;
-&lt;li&gt;[x] Counters&lt;/li&gt;
-&lt;li&gt;[x] Coprocessors&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; HBase Client API: Administrative Features&lt;ul&gt;
-&lt;li&gt;[x] Schema Definition&lt;/li&gt;
-&lt;li&gt;[x] HBaseAdmin&lt;/li&gt;
-&lt;li&gt;[x] ReplicationAdmin&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; HBase Available Clients&lt;ul&gt;
-&lt;li&gt;[x] Gateway Clients&lt;/li&gt;
-&lt;li&gt;[x] FrameworkClients&lt;/li&gt;
-&lt;li&gt;[x] Shell&lt;/li&gt;
-&lt;li&gt;[x] Web-based UI&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Mahout’s in-core algebra&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Mahout’s Distributed Algebra&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Stochastic SVD&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Stochastic PCA&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Data Sketching with Bahmani sketch&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Naive Bayes Example&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;系统技能&quot;&gt;&lt;a href=&quot;#系统技能&quot; class=&quot;headerlink&quot; title=&quot;系统技能&quot;&gt;&lt;/a&gt;系统技能&lt;/h2&gt;&lt;h3 id=&quot;LaTeX&quot;&gt;&lt;a href=&quot;#LaTeX&quot; class=&quot;headerlink&quot; title=&quot;LaTeX&quot;&gt;&lt;/a&gt;LaTeX&lt;/h3&gt;&lt;p&gt;参考书籍:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;LaTeX入门&lt;/strong&gt; 刘海洋编著&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 文本组织&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 自动化工具&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 数学公式&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 图表&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 幻灯片&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;Shell&quot;&gt;&lt;a href=&quot;#Shell&quot; class=&quot;headerlink&quot; title=&quot;Shell&quot;&gt;&lt;/a&gt;Shell&lt;/h3&gt;&lt;p&gt;参考书籍:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Linux Shell脚本攻略&lt;/strong&gt;  第二版，门佳译&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Linux Shell 编程艺术&lt;/strong&gt;  张泽编著&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; shell基础&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 常用命令&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 文件操作&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 文本处理&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; Web网页&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 压缩归档&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 网络设置&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 磁盘管理&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 进程管理&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; IO重定向&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 函数编写&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 正则表达式&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;[x]&lt;/em&gt; 脚本调试&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;2016-07月-2017-01月待做事项&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="ToDo" scheme="http://keyunluo.github.io/categories/ToDo/"/>
-    
-    
-      <category term="待做事项" scheme="http://keyunluo.github.io/tags/%E5%BE%85%E5%81%9A%E4%BA%8B%E9%A1%B9/"/>
     
   </entry>
   
