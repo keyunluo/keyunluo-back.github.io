@@ -4,6 +4,227 @@
   
     
     <entry>
+      <title><![CDATA[Java中的IO流(1)]]></title>
+      <url>http://keyunluo.github.io/2016/08/06/2016-08-06-java-io-1.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>Java中的IO流是实现输入输出的基础，在Java中把不同的输入/输出源(键盘、文件、网络连接等)抽象表述为“流(stream)”,通过流的方式Java可以使用相同的方式来访问不同的输入/输出源。stream是从起源(source)到接受(sink)的有序数据。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="流的分类"><a href="#流的分类" class="headerlink" title="流的分类"></a>流的分类</h2><ol>
+<li><p>输入流和输出流 (按流的流向来分)</p>
+<p> 输入流：InputStream和Reader作为基类</p>
+<p> 输出流：OutputStream和Writer作为基类</p>
+</li>
+<li><p>字节流和字符流 (操作的数据大小)</p>
+<p> 字节流：8位字节，由InputStream和OutputStream作为基类</p>
+<p> 字符流：16位字符，主要由Reader和Writer作为基类</p>
+</li>
+<li><p>节点流和处理流 (流的角色)</p>
+<p> 节点流：可以从/向一个特定的IO设备(磁盘、网络)读写数据的流，也被称为低级流</p>
+<p> 处理流：对一个已经存在的流进行连接或封装，通过封装后的流来实现数据的读写功能，也被称为高级流</p>
+</li>
+<li><p>处理流的功能</p>
+<ul>
+<li>性能的提高：以增加缓冲的方式来提高输入/输出的效率</li>
+<li>操作的便捷：一次性输入/输出大批量的内容</li>
+<li>屏蔽了设备无关性：代码书写更加简洁</li>
+</ul>
+</li>
+</ol>
+<h2 id="InputStream和Reader"><a href="#InputStream和Reader" class="headerlink" title="InputStream和Reader"></a>InputStream和Reader</h2><p>InputStream和Reader是所有输入流的抽象基类,本身不能创建实例，但它们分别有一个用于读取文件的输入流:FileInputStream和FileReader，它们都是节点流——会和指定文件关联。</p>
+<ul>
+<li><p>InputStream
+主要包含下面三个方法：</p>
+<ul>
+<li><strong>int read()</strong>:从输入流中读取单个字节，返回所读取的字节数据(字节数据可以直接转换成int类型)</li>
+<li><strong>int read(byte[] b)</strong>:从输入流中最多读取b.length个字节的数据，并将其存储在字节数组b中，返回实际读取的字节数</li>
+<li><strong>int read(byte[] b,int off ,int len)</strong>:从输入流中最多读取len个字节的数据，并将其存储在数组b中，放入数组b中时，并不是从数组起点开始，而是从off位置开始，返回实际读取的字节数</li>
+</ul>
+</li>
+<li><p>Reader
+主要包含下面三个方法：</p>
+<ul>
+<li><strong>int read()</strong>:从输入流中读取单个字符，返回所读取的字符数据(字符数据可以直接转换成int类型)</li>
+<li><strong>int read(char[] cbuf)</strong>:从输入流中最多读取cbuf.length个字符的数据，并将其存储在字符数组cbuf中，返回实际读取的字符数</li>
+<li><strong>int read(char[] cbuf,int off ,int len)</strong>:从输入流中最多读取len个字符的数据，并将其存储在字符数组cbuf中，放入数组cbuf中时，并不是从数组起点开始，而是从off位置开始，返回实际读取的字符数</li>
+</ul>
+</li>
+<li><p>一个简单的例子-FileInputStream：读取源文件本身</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileInput</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">        <span class="comment">// 创建字节输入流</span></span><br><span class="line">        FileInputStream fin = <span class="keyword">new</span> FileInputStream(<span class="string">"FileInput.java"</span>);</span><br><span class="line">        <span class="comment">// 创建一个长度为1024的缓冲</span></span><br><span class="line">        <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="comment">// 用于保存实际读取的字节数</span></span><br><span class="line">        <span class="keyword">int</span> hasRead = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 使用循环来重复读取</span></span><br><span class="line">        <span class="keyword">while</span> ((hasRead = fin.read(buf)) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="comment">// 读取字节，将字节数组转换成字符串输入</span></span><br><span class="line">            System.out.print(<span class="keyword">new</span> String(buf,<span class="number">0</span>,hasRead));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 关闭文件输入流，放在finally块里面更加安全</span></span><br><span class="line">        fin.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面程序最后使用了fin.close()来关闭该文件输入流，与JDBC编程一样，程序打开的文件IO资源不属于内存里的资源，垃圾回收机制无法回收该资源。Java7改写了所有的IO资源类，它们都实现了AutoCloseable接口，因此都可以通过自动关闭资源的try语句来关闭这些IO流。</p>
+<ul>
+<li>一个简单的例子-FileReader：读取源文件本身</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileReaderInput</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="comment">// 创建字符输入流</span></span><br><span class="line">        FileReader fre = <span class="keyword">new</span> FileReader(<span class="string">"FileReaderInput.java"</span>);</span><br><span class="line">        <span class="comment">// 创建一个长度为32的缓冲</span></span><br><span class="line">        <span class="keyword">char</span>[] buf = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">32</span>];</span><br><span class="line">        <span class="comment">// 用于保存实际读取的字符数</span></span><br><span class="line">        <span class="keyword">int</span> hasRead = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 使用循环来重复读取</span></span><br><span class="line">        <span class="keyword">while</span> ((hasRead = fre.read(buf)) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="comment">// 读取字符，将字符数组转换成字符串输入</span></span><br><span class="line">            System.out.print(<span class="keyword">new</span> String(buf,<span class="number">0</span>,hasRead));</span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException ex)&#123;</span><br><span class="line">        ex.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>输入流移动记录指针</p>
+<ul>
+<li>void mark(int readAheadLimit):在记录指针当前位置记录一个标记(mark)</li>
+<li>boolean markSupported():判断此输入流是否支持mark()操作</li>
+<li>void reset():将此流的记录指针重新定位到上一次记录标记(mark)的位置</li>
+<li>long skip(long n):记录指针向前移动n个字节/字符</li>
+</ul>
+</li>
+</ul>
+<h2 id="OutputStream和Writer"><a href="#OutputStream和Writer" class="headerlink" title="OutputStream和Writer"></a>OutputStream和Writer</h2><h3 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h3><p>OutputStream和Writer也非常类似，两个流都提供了如下三个方法：</p>
+<ul>
+<li>void write(int c):将指定的字节/字符输出到输出流中，其中c既可以表示字节，也可以表示字符</li>
+<li>void write(byte[]/char[] buf):将字节数组/字符数组中的数据输出到指定输出流中</li>
+<li>void write(byte[]/char[] buf,int off,int len):将字节数组/字符数组从off位置开始，长度为len的字节/字符输出到输出流中</li>
+</ul>
+<p>因为字符流直接以字符作为操作单位，所以Writer可以用字符串来代替字符数组，即以String对象作为参数，Writer里还包含如下两个方法：</p>
+<ul>
+<li>void write(String str):将str字符串里包含的字符输出到指定输出流中</li>
+<li>void write(String str,int off,int len):将str字符串里从off位置开始，长度为len的字符输出到指定输出流中</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>从FileInputStream输入，使用FileOutputStream输出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileInputOutput</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="comment">// 创建字节输入流</span></span><br><span class="line">        FileInputStream fin = <span class="keyword">new</span> FileInputStream(<span class="string">"FileInputOutput.java"</span>);</span><br><span class="line">        <span class="comment">// 创建字符输出流</span></span><br><span class="line">        FileOutputStream fout = <span class="keyword">new</span> FileOutputStream(<span class="string">"FileInputOutput-new.txt"</span>);</span><br><span class="line">        <span class="comment">// 创建一个长度为32的缓冲</span></span><br><span class="line">        <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">32</span>];</span><br><span class="line">        <span class="comment">// 用于保存实际读取的字符数</span></span><br><span class="line">        <span class="keyword">int</span> hasRead = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 使用循环来重复读取</span></span><br><span class="line">        <span class="keyword">while</span> ((hasRead = fin.read(buf)) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="comment">// 读取字符，将字符数组转换成字符串输入</span></span><br><span class="line">            fout.write(buf,<span class="number">0</span>,hasRead);</span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException ex)&#123;</span><br><span class="line">        ex.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="处理流"><a href="#处理流" class="headerlink" title="处理流"></a>处理流</h2><p>使用处理流的典型思路是，使用处理流来包装节点流，程序通过处理流来执行输入/输出功能，让节点流与底层的IO设备交互。</p>
+<p>例如，使用PrintStream处理流来包装OutputStream，使用处理流后在输出时更加方便：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrintStreamTest</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span>(</span><br><span class="line">            FileOutputStream fout = <span class="keyword">new</span> FileOutputStream(<span class="string">"test.txt"</span>);</span><br><span class="line">            PrintStream ps = <span class="keyword">new</span> PrintStream(fout))&#123;</span><br><span class="line">            <span class="comment">// 使用PrintStream执行输出</span></span><br><span class="line">            ps.println(<span class="string">"普通字符串"</span>);</span><br><span class="line">            <span class="comment">// 直接使用PrintStream输出对象</span></span><br><span class="line">            ps.println(<span class="keyword">new</span> PrintStreamTest());</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException ex)&#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="输入-输出流体系"><a href="#输入-输出流体系" class="headerlink" title="输入/输出流体系"></a>输入/输出流体系</h2><p>Java的输入/输出流体系提供了将近40个类，这些类的常用分类如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">分类</th>
+<th style="text-align:left">字节输入流</th>
+<th style="text-align:left">字节输出流</th>
+<th style="text-align:left">字符输入流</th>
+<th style="text-align:left">字符输出流</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">节点流抽象基类</td>
+<td style="text-align:left">InputStream</td>
+<td style="text-align:left">OutputStream</td>
+<td style="text-align:left">Reader</td>
+<td style="text-align:left">Writer</td>
+</tr>
+<tr>
+<td style="text-align:left">访问文件</td>
+<td style="text-align:left">FileInputStream</td>
+<td style="text-align:left">FileOutputStream</td>
+<td style="text-align:left">FileReader</td>
+<td style="text-align:left">FileWriter</td>
+</tr>
+<tr>
+<td style="text-align:left">访问数组</td>
+<td style="text-align:left">ByteArrayInputStream</td>
+<td style="text-align:left">ByteArrayOutputStream</td>
+<td style="text-align:left">CharArrayReader</td>
+<td style="text-align:left">CharArrayWriter</td>
+</tr>
+<tr>
+<td style="text-align:left">访问管道</td>
+<td style="text-align:left">PipedInputStream</td>
+<td style="text-align:left">PipedOutputStream</td>
+<td style="text-align:left">PipedReader</td>
+<td style="text-align:left">PipedWriter</td>
+</tr>
+<tr>
+<td style="text-align:left">访问字符串</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left">StringReader</td>
+<td style="text-align:left">StringWriter</td>
+</tr>
+<tr>
+<td style="text-align:left">缓冲流</td>
+<td style="text-align:left">BufferedInputStream</td>
+<td style="text-align:left">BufferedOutputStream</td>
+<td style="text-align:left">BufferedReader</td>
+<td style="text-align:left">BufferedWriter</td>
+</tr>
+<tr>
+<td style="text-align:left">转换流</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left">InputStreamReader</td>
+<td style="text-align:left">OutputStreamWriter</td>
+</tr>
+<tr>
+<td style="text-align:left">对象流</td>
+<td style="text-align:left">ObjectInputStream</td>
+<td style="text-align:left">ObjectOutputStream</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">处理流抽象基类</td>
+<td style="text-align:left">FilterInputStream</td>
+<td style="text-align:left">FilterOutputStream</td>
+<td style="text-align:left">FilterReader</td>
+<td style="text-align:left">FilterWriter</td>
+</tr>
+<tr>
+<td style="text-align:left">打印流</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">PrintStream</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">PrintWriter</td>
+</tr>
+<tr>
+<td style="text-align:left">推回输入流</td>
+<td style="text-align:left">PushbackInputStream</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">PushbackReader</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">特殊流</td>
+<td style="text-align:left">DataInputStream</td>
+<td style="text-align:left">DataOutputStream</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="转换流"><a href="#转换流" class="headerlink" title="转换流"></a>转换流</h2><p>转换流实现将字节流转换为字符流，其中InputStreamReader将字节输入流转换成字符输入流，OutputStreamWriter将字节输出流转换成字符输出流。</p>
+<p>例子：Java使用System.in代表标准输入，即键盘输入，但这个标准输入流是InputStream类的实例，考虑到键盘输入内容都是文本内容，所以可以使用InputStreamReader将其转换为字符输入流，将普通的Reader包装成BufferedReader，利用BufferedReader的readLine()方法可以一次读取一行内容。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KeyIn</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span>(</span><br><span class="line">            <span class="comment">// 将System.in对象转换为Reader对象</span></span><br><span class="line">            InputStreamReader reader = <span class="keyword">new</span> InputStreamReader(System.in);</span><br><span class="line">            <span class="comment">// 将普通的Reader包装成BufferedReader</span></span><br><span class="line">            BufferedReader br = <span class="keyword">new</span> BufferedReader(reader))&#123;</span><br><span class="line">            String line = <span class="keyword">null</span>;</span><br><span class="line">            <span class="comment">// 采用循环的方式逐行读取</span></span><br><span class="line">            <span class="keyword">while</span> ((line = br.readLine()) !=<span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="comment">// 如果读取的是“exit”，则程序退出</span></span><br><span class="line">                <span class="keyword">if</span> (line.equals(<span class="string">"exit"</span>))&#123;</span><br><span class="line">                    System.exit(<span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 打印读取的内容</span></span><br><span class="line">                System.out.println(<span class="string">"输入内容为："</span>+line);</span><br><span class="line">            &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException ex)&#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="推回输入流"><a href="#推回输入流" class="headerlink" title="推回输入流"></a>推回输入流</h2><p>在输入/输出流体系中，有两个流与众不同，就是PushbackInputStream和PushbackReader，它们都提供了如下三个方法：</p>
+<ul>
+<li>void unread(byte[]/char[] buf)：将一个字节/字符数组内容推回到推回缓冲区里面，从而允许重复读取刚刚读取的内容。</li>
+<li>void unread(byte[]/char[] buf , int off ,int len):将一个字节/字符数组里从off开始，长度为len字节/字符的内容推回到推回缓冲区里，从而允许重复读取刚刚读取的内容。</li>
+<li>void unread(int b):将一个字节/字符内容推回到推回缓冲区里面，从而允许重复读取刚刚读取的内容。</li>
+</ul>
+<p>当程序差创建一个推回输入流时，需要指定推回缓冲区的大小，默认的推回缓冲区大小是1，如果程序中的退回到退回缓冲区的内容超过了退回缓冲区的大小，将会引发Pushback buffer overflow的IOException异常。</p>
+<p>例子：程序试图找出程序中的”new PushbackReader”字符串，当找到该字符串时，程序只打印目标字符串之前的内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PushBackStream</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span>(</span><br><span class="line">            <span class="comment">// 创键一个PushbackReader对象，指定推回缓冲区的大小为64</span></span><br><span class="line">            PushbackReader pr = <span class="keyword">new</span> PushbackReader(<span class="keyword">new</span> FileReader(<span class="string">"PushBackStream.java"</span>),<span class="number">64</span>))&#123;</span><br><span class="line">            <span class="keyword">char</span>[] buf = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">32</span>];</span><br><span class="line">            <span class="comment">// 用以保存上次读取的字符串内容</span></span><br><span class="line">            String lastContent = <span class="string">""</span>;</span><br><span class="line">            <span class="keyword">int</span> hasRead = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> ((hasRead = pr.read(buf)) &gt;<span class="number">0</span>)&#123;</span><br><span class="line">                String content = <span class="keyword">new</span> String(buf,<span class="number">0</span>,hasRead);</span><br><span class="line">                <span class="keyword">int</span> targetIndex = <span class="number">0</span>;</span><br><span class="line">                <span class="comment">// 将上次读取的字符串和本次读取的字符串拼接起来</span></span><br><span class="line">                <span class="comment">// 查看是否包含目标字符串，如果包含目标字符串</span></span><br><span class="line">                <span class="keyword">if</span> ((targetIndex = (lastContent + content).indexOf(<span class="string">"new PushbackReader"</span>)) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                    <span class="comment">// 将本次内容和上次内容一起推回缓冲区</span></span><br><span class="line">                    pr.unread((lastContent+content).toCharArray());</span><br><span class="line">                    <span class="comment">// 重新定义一个长度为targetIndex的char数组</span></span><br><span class="line">                    <span class="keyword">if</span> (targetIndex &gt; <span class="number">32</span>) buf = <span class="keyword">new</span> <span class="keyword">char</span>[targetIndex];</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//再次读取指定长度的内容(就是目标字符串之前的内容)</span></span><br><span class="line">                    pr.read(buf, <span class="number">0</span> ,targetIndex);</span><br><span class="line">                    <span class="comment">//打印读取的内容</span></span><br><span class="line">                    System.out.println(<span class="keyword">new</span> String(buf , <span class="number">0</span> ,targetIndex));</span><br><span class="line">                    System.exit(<span class="number">0</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="comment">// 打印上次读取的内容</span></span><br><span class="line">                    System.out.println(lastContent);</span><br><span class="line">                    <span class="comment">// 将本次内容设置为上次内容</span></span><br><span class="line">                    lastContent = content;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException ex)&#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hadoop源码学习(5)——Hadoop-Common-IO(1)]]></title>
+      <url>http://keyunluo.github.io/2016/08/06/2016-08-06-hadoop-io-1.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>本节学习Hadoop-Common-Project中的hadoop-common-io模块，该模块由传统的I/O系统发展而来，但又有些不同，Hadoop需要处理P、T级别的数据，所以在org.apache.hadoop.io包中包含了一些面向海量数据处理的基本输入输出工具，本节主要学习IOUtils类。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Hadoop-IO-目录结构"><a href="#Hadoop-IO-目录结构" class="headerlink" title="Hadoop-IO 目录结构"></a>Hadoop-IO 目录结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── AbstractMapWritable.java</span><br><span class="line">├── ArrayFile.java</span><br><span class="line">├── ArrayPrimitiveWritable.java</span><br><span class="line">├── ArrayWritable.java</span><br><span class="line">├── BinaryComparable.java</span><br><span class="line">├── BloomMapFile.java</span><br><span class="line">├── BooleanWritable.java</span><br><span class="line">├── BoundedByteArrayOutputStream.java</span><br><span class="line">├── ByteBufferPool.java</span><br><span class="line">├── BytesWritable.java</span><br><span class="line">├── ByteWritable.java</span><br><span class="line">├── Closeable.java</span><br><span class="line">├── compress</span><br><span class="line">├── CompressedWritable.java</span><br><span class="line">├── DataInputBuffer.java</span><br><span class="line">├── DataInputByteBuffer.java</span><br><span class="line">├── DataOutputBuffer.java</span><br><span class="line">├── DataOutputByteBuffer.java</span><br><span class="line">├── DataOutputOutputStream.java</span><br><span class="line">├── DefaultStringifier.java</span><br><span class="line">├── DoubleWritable.java</span><br><span class="line">├── ElasticByteBufferPool.java</span><br><span class="line">├── EnumSetWritable.java</span><br><span class="line">├── FastByteComparisons.java</span><br><span class="line">├── file</span><br><span class="line">├── FloatWritable.java</span><br><span class="line">├── GenericWritable.java</span><br><span class="line">├── InputBuffer.java</span><br><span class="line">├── IntWritable.java</span><br><span class="line">├── IOUtils.java</span><br><span class="line">├── LongWritable.java</span><br><span class="line">├── MapFile.java</span><br><span class="line">├── MapWritable.java</span><br><span class="line">├── MD5Hash.java</span><br><span class="line">├── MultipleIOException.java</span><br><span class="line">├── nativeio</span><br><span class="line">├── NullWritable.java</span><br><span class="line">├── ObjectWritable.java</span><br><span class="line">├── OutputBuffer.java</span><br><span class="line">├── package.html</span><br><span class="line">├── RawComparator.java</span><br><span class="line">├── ReadaheadPool.java</span><br><span class="line">├── retry</span><br><span class="line">├── SecureIOUtils.java</span><br><span class="line">├── SequenceFile.java</span><br><span class="line">├── serializer</span><br><span class="line">├── SetFile.java</span><br><span class="line">├── ShortWritable.java</span><br><span class="line">├── SortedMapWritable.java</span><br><span class="line">├── Stringifier.java</span><br><span class="line">├── Text.java</span><br><span class="line">├── TwoDArrayWritable.java</span><br><span class="line">├── UTF8.java</span><br><span class="line">├── VersionedWritable.java</span><br><span class="line">├── VersionMismatchException.java</span><br><span class="line">├── VIntWritable.java</span><br><span class="line">├── VLongWritable.java</span><br><span class="line">├── WritableComparable.java</span><br><span class="line">├── WritableComparator.java</span><br><span class="line">├── WritableFactories.java</span><br><span class="line">├── WritableFactory.java</span><br><span class="line">├── Writable.java</span><br><span class="line">├── WritableName.java</span><br><span class="line">└── WritableUtils.java</span><br><span class="line"></span><br><span class="line">5 directories, 59 files</span><br></pre></td></tr></table></figure>
+<p>Hadoop 提供了一些如下一些与IO相关的类：</p>
+<ul>
+<li>org.apache.hadoop.io (基础类型读写)</li>
+<li>org.apache.hadoop.io.compress (数据压缩，减少文件所需的存储空间，加快数据传输速度)</li>
+<li>org.apache.hadoop.io.file.tfile (TFile文件类型)</li>
+<li>org.apache.hadoop.io.nativeio (JNI包装的本地IO接口)</li>
+<li>org.apache.hadoop.io.retry (RPC重试)</li>
+<li>org.apache.hadoop.io.serializer (序列化)</li>
+<li>org.apache.hadoop.io.serializer.avro  (为Avro提供数据序列化操作)</li>
+</ul>
+<h2 id="org-apache-hadoop-io"><a href="#org-apache-hadoop-io" class="headerlink" title="org.apache.hadoop.io"></a>org.apache.hadoop.io</h2><p>该包下的类提供了一些基础类型的读写，包括Writable机制、Comparable机制、数据类型(Int、Byte、Bytes、Long、Double、Float、Boolean、Text、Map)、基于文件的数据结构(SequenceFile、MapFile)、Buffer机制(InputBuffer、OutputBuffer)、线程池(Pool)、IO操作工具等。</p>
+<h2 id="IOUtils类详细学习"><a href="#IOUtils类详细学习" class="headerlink" title="IOUtils类详细学习"></a>IOUtils类详细学习</h2><h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><p><img src="/resource/blog/2016-08/hadoop-common-io-ioutils.png" alt="IOUtils"></p>
+<p>从类图中可以看出，主要由字节流拷贝、字节流读取出错包装、读取指定位置的全部字节、跳过指定位置的全部字节、关闭可关闭对象/流/Socket、空输出流写、全部输出流写等。</p>
+<h3 id="字节流拷贝"><a href="#字节流拷贝" class="headerlink" title="字节流拷贝"></a>字节流拷贝</h3><p>该方法有五种形式，核心方法是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">copyBytes</span><span class="params">(InputStream in, OutputStream out, <span class="keyword">int</span> buffSize)</span></span><br><span class="line">  <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">  <span class="comment">// 判断是否是处理流：PrintStream</span></span><br><span class="line">  PrintStream ps = out <span class="keyword">instanceof</span> PrintStream ? (PrintStream)out : <span class="keyword">null</span>;</span><br><span class="line">  <span class="keyword">byte</span> buf[] = <span class="keyword">new</span> <span class="keyword">byte</span>[buffSize];</span><br><span class="line">  <span class="keyword">int</span> bytesRead = in.read(buf);</span><br><span class="line">  <span class="comment">// 循环写</span></span><br><span class="line">  <span class="keyword">while</span> (bytesRead &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">    out.write(buf, <span class="number">0</span>, bytesRead);</span><br><span class="line">    <span class="keyword">if</span> ((ps != <span class="keyword">null</span>) &amp;&amp; ps.checkError()) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Unable to write to output stream."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    bytesRead = in.read(buf);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以及copy指定大小的数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">copyBytes</span><span class="params">(InputStream in, OutputStream out, <span class="keyword">long</span> count,</span><br><span class="line">    <span class="keyword">boolean</span> close)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">  <span class="comment">// 缓冲区大小</span></span><br><span class="line">  <span class="keyword">byte</span> buf[] = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4096</span>];</span><br><span class="line">  <span class="comment">// 需要拷贝的数据大小</span></span><br><span class="line">  <span class="keyword">long</span> bytesRemaining = count;</span><br><span class="line">  <span class="keyword">int</span> bytesRead;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (bytesRemaining &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">int</span> bytesToRead = (<span class="keyword">int</span>)</span><br><span class="line">        (bytesRemaining &lt; buf.length ? bytesRemaining : buf.length);</span><br><span class="line"></span><br><span class="line">      bytesRead = in.read(buf, <span class="number">0</span>, bytesToRead);</span><br><span class="line">      <span class="keyword">if</span> (bytesRead == -<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">      out.write(buf, <span class="number">0</span>, bytesRead);</span><br><span class="line">      bytesRemaining -= bytesRead;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 关闭读写指针</span></span><br><span class="line">    <span class="keyword">if</span> (close) &#123;</span><br><span class="line">      out.close();</span><br><span class="line">      out = <span class="keyword">null</span>;</span><br><span class="line">      in.close();</span><br><span class="line">      in = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="comment">// 关闭流</span></span><br><span class="line">    <span class="keyword">if</span> (close) &#123;</span><br><span class="line">      closeStream(out);</span><br><span class="line">      closeStream(in);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="读取全部字节"><a href="#读取全部字节" class="headerlink" title="读取全部字节"></a>读取全部字节</h3><p>从输入流中读取</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">readFully</span><span class="params">(InputStream in, <span class="keyword">byte</span> buf[],</span><br><span class="line">    <span class="keyword">int</span> off, <span class="keyword">int</span> len)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> toRead = len;</span><br><span class="line">  <span class="keyword">while</span> (toRead &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">int</span> ret = in.read(buf, off, toRead);</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IOException( <span class="string">"Premature EOF from inputStream"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    toRead -= ret;</span><br><span class="line">    off += ret;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[统计学习方法——感知机]]></title>
       <url>http://keyunluo.github.io/2016/08/05/2016-08-05-statical-learning-2.html</url>
       <content type="html"><![CDATA[<blockquote>
@@ -386,6 +607,7 @@
 <li>结构</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">├── dev-support：补丁等开发支持</span><br><span class="line">├── hadoop-annotations：Hadoop注解</span><br><span class="line">├── hadoop-auth：Hadoop授权</span><br><span class="line">├── hadoop-auth-examples：Hadoop授权例子</span><br><span class="line">├── hadoop-common：Hadoop Common模块</span><br><span class="line">├── hadoop-common-project.iml</span><br><span class="line">├── hadoop-kms：基于KeyProvider API的密钥管理服务器</span><br><span class="line">├── hadoop-minikdc：基于Apache Directory服务器迷你型密钥分发中心(KDC)，能够被嵌入到测试用例或作为一个独立的KDC从命令行使用</span><br><span class="line">├── hadoop-nfs：Hadoop NFS模块</span><br><span class="line">├── pom.xml</span><br><span class="line">└── target</span><br></pre></td></tr></table></figure>
+<p>Hadoop-Common奠定了整个Hadoop项目的基石，其中hadoop-common是核心，IO、FS、HA、IPC、NET等构成了分布式系统的基础。</p>
 ]]></content>
     </entry>
     
