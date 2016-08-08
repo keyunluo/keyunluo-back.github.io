@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-08-07T18:40:25.465Z</updated>
+  <updated>2016-08-08T18:18:35.956Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -14,6 +14,218 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java中的NIO2</title>
+    <link href="http://keyunluo.github.io/2016/08/08/2016-08-08-java-nio2.html"/>
+    <id>http://keyunluo.github.io/2016/08/08/2016-08-08-java-nio2.html</id>
+    <published>2016-08-08T09:25:02.000Z</published>
+    <updated>2016-08-08T18:18:35.956Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Java7对原有的NIO进行了重大改进，提供了全面的文件IO和文件系统的访问支持，基于异步Channel的IO。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;Path、Paths和Files核心API&quot;&gt;&lt;a href=&quot;#Path、Paths和Files核心API&quot; class=&quot;headerlink&quot; title=&quot;Path、Paths和Files核心API&quot;&gt;&lt;/a&gt;Path、Paths和Files核心API&lt;/h2&gt;&lt;p&gt;早起的JAVA只提供了一个File类来访问文件系统，功能有限并且性能低下。NIO.2引入了一个Path接口，Path接口代表一个平台无关的平台路径，此外，NIO.2还提供了Files和Paths两个工具类，其中Files包含了大量的静态的工具方法来操作文件，Paths则包含了两个返回Path的静态工厂方法。&lt;/p&gt;
+&lt;h3 id=&quot;Path接口的功能和用法&quot;&gt;&lt;a href=&quot;#Path接口的功能和用法&quot; class=&quot;headerlink&quot; title=&quot;Path接口的功能和用法&quot;&gt;&lt;/a&gt;Path接口的功能和用法&lt;/h3&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.Path;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.Paths;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;NioPath&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 以当前路径来创建Path对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Path path = Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;/home/streamer/tmp/NioPath.java&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;path里包含的路径数量:&quot;&lt;/span&gt;+path.getNameCount());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;path的根路径:&quot;&lt;/span&gt;+path.getRoot());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取path对应的绝对路径&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Path absolutePath = path.toAbsolutePath();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;path的绝对路径:&quot;&lt;/span&gt;+absolutePath);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取绝对路径的根路径&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;绝对路径的根路径:&quot;&lt;/span&gt;+absolutePath.getRoot());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取绝对路径所包含的路径数量&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;绝对路径包含的路径数量:&quot;&lt;/span&gt;+absolutePath.getNameCount());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;绝对路径第三层路径:&quot;&lt;/span&gt;+absolutePath.getName(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 以多个String来构建Path对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Path path2= Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;/usr&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;local&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;anaconda3&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;构建的PATH:&quot;&lt;/span&gt;+path2);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;显示的如下结果：
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;path里包含的路径数量:&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;path的根路径:/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;path的绝对路径:/home/streamer/tmp/NioPath.java&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;绝对路径的根路径:/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;绝对路径包含的路径数量:&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;绝对路径第三层路径:NioPath.java&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;构建的PATH:/usr/local/anaconda3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Files类的用法&quot;&gt;&lt;a href=&quot;#Files类的用法&quot; class=&quot;headerlink&quot; title=&quot;Files类的用法&quot;&gt;&lt;/a&gt;Files类的用法&lt;/h3&gt;&lt;p&gt;Files是一个操作文件的工具类，它提供了大量便捷的工具方法&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.Files;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.Paths;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.FileStore;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.charset.Charset;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.FileOutputStream;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.List;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.ArrayList;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;NioFile&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; Exception&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 复制文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Files.copy(Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;NioFile.java&quot;&lt;/span&gt;),&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileOutputStream(&lt;span class=&quot;string&quot;&gt;&quot;NioFile.txt&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 判断NioFile.java是否为隐藏文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;NioFile.java是否为隐藏文件:&quot;&lt;/span&gt;+Files.isHidden(Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;NioFile.java&quot;&lt;/span&gt;)));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 一次性读取NioFile.java文件的所有行&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        List&amp;lt;String&amp;gt; lines = Files.readAllLines(Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;NioFile.java&quot;&lt;/span&gt;),Charset.forName(&lt;span class=&quot;string&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(lines);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 判断指定文件的大小&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;NioFile.java文件的大小：&quot;&lt;/span&gt;+Files.size(Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;NioFile.java&quot;&lt;/span&gt;)));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 直接将多个字符串写入到指定文件中&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        List&amp;lt;String&amp;gt; poem = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ArrayList&amp;lt;&amp;gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        poem.add(&lt;span class=&quot;string&quot;&gt;&quot;水晶潭底银鱼跃&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        poem.add(&lt;span class=&quot;string&quot;&gt;&quot;清徐风中碧竿横&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Files.write(Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;poem.txt&quot;&lt;/span&gt;),poem,Charset.forName(&lt;span class=&quot;string&quot;&gt;&quot;gbk&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 使用Java8新增的Stream API列出当前目录下所有文件和子目录&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Files.list(Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;.&quot;&lt;/span&gt;)).forEach(path -&amp;gt; System.out.println(path));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 使用Java8新增的Stream API读取文件内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Files.lines(Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;poem.txt&quot;&lt;/span&gt;),Charset.forName(&lt;span class=&quot;string&quot;&gt;&quot;gbk&quot;&lt;/span&gt;)).forEach(line -&amp;gt; System.out.println(line));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 判断/data的总空间、可用空间&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        FileStore cStore = Files.getFileStore(Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;/data/&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;/data:共有空间：&quot;&lt;/span&gt;+cStore.getTotalSpace());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;/data:可用空间：&quot;&lt;/span&gt;+cStore.getUsableSpace());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;使用FileVisitor遍历文件和目录&quot;&gt;&lt;a href=&quot;#使用FileVisitor遍历文件和目录&quot; class=&quot;headerlink&quot; title=&quot;使用FileVisitor遍历文件和目录&quot;&gt;&lt;/a&gt;使用FileVisitor遍历文件和目录&lt;/h2&gt;&lt;p&gt;Files类提供了如下两个方法来遍历文件和子目录：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;walkFileTree(Path start,FileVisitor&amp;lt;? super Path&amp;gt; visitor):遍历start目录下的所有文件和子目录&lt;/li&gt;
+&lt;li&gt;walkFileTree(Path start,Set&lt;filevisitoption&gt; options,int maxDepth,FileVisitor&amp;lt;? super Path&amp;gt; visitor):与上一个方法类似，该方法最多遍历maxDepth深度的文件&lt;/filevisitoption&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上面两个方法都需要FileVisitor参数，FileVisitor代表一个文件访问器，walkFileTree()方法会自动遍历start路径下的所有文件和子目录，遍历文件和子目录都会触发FileVisitor中的相应方法。FileVisitor中定义了如下四种方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;FileVisitResult postVisitDirectory(T dir,IOException exc):访问子目录之后触发该方法&lt;/li&gt;
+&lt;li&gt;FileVisitResult preVisitDirectory(T dir,BasicFileAttributes attrs):访问子目录之前触发该方法&lt;/li&gt;
+&lt;li&gt;FileVisitResult visitFile(T dir,BasicFileAttributes attrs):访问file文件时触发该方法&lt;/li&gt;
+&lt;li&gt;FileVisitResult visitFileFailed(T dir,IOException exc):访问file文件失败时触发该方法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上面4个方法都返回一个FileVisitResult对象，它是一个枚举类，代表访问之后的后续行为，FileVisitResult定义了如下几种后续行为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CONTINUE:代表”继续访问”的后续行为&lt;/li&gt;
+&lt;li&gt;SKIP_SIBLINGS:代表”继续访问”的后续行为,但不访问该文件或目录的兄弟文件或目录&lt;/li&gt;
+&lt;li&gt;SKIP_SUBTREE:代表”继续访问”的后续行为,但不访问该文件或目录的子目录树&lt;/li&gt;
+&lt;li&gt;TERMINATE:代表”终止访问”的后续行为&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;实际编程时没必要为FileVisitor的四个方法都提供实现，可以通过继承SimpleFileVisitor(FileVisitor的实现类)来实现自己的”文件访问器”。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.Files;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.FileVisitor;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.SimpleFileVisitor;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.FileVisitResult;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.Path;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.Paths;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.attribute.BasicFileAttributes;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.IOException;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;NioFileVisitor&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; Exception&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 遍历/usr/local/anaconda3/include 目录下的所有文件和子目录&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Files.walkFileTree(Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;/usr&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;local&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;anaconda3&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;include&quot;&lt;/span&gt;), &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; SimpleFileVisitor&amp;lt;Path&amp;gt;()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 访问文件时触发该方法&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; FileVisitResult &lt;span class=&quot;title&quot;&gt;visitFile&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Path file, BasicFileAttributes attrs)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; IOException&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;正在访问：&quot;&lt;/span&gt;+file+&lt;span class=&quot;string&quot;&gt;&quot;文件&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;comment&quot;&gt;// 找到了Python.h文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (file.endsWith(&lt;span class=&quot;string&quot;&gt;&quot;Python.h&quot;&lt;/span&gt;))&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;--已经找到目标文件--&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; FileVisitResult.TERMINATE;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; FileVisitResult.CONTINUE;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 开始访问目录时触发该方法&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; FileVisitResult &lt;span class=&quot;title&quot;&gt;preVisitDirectory&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Path dir,BasicFileAttributes attrs)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; IOException&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;正在访问:&quot;&lt;/span&gt;+dir+&lt;span class=&quot;string&quot;&gt;&quot;路径&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; FileVisitResult.CONTINUE;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;使用WatchService监控文件变化&quot;&gt;&lt;a href=&quot;#使用WatchService监控文件变化&quot; class=&quot;headerlink&quot; title=&quot;使用WatchService监控文件变化&quot;&gt;&lt;/a&gt;使用WatchService监控文件变化&lt;/h2&gt;&lt;p&gt;NIO.2的Path类提供了如下方法来监听文件系统的变化：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;register(WatchService watcher,WatchEvent.Kind&amp;lt;?&amp;gt; … events):用watcher监听该path代表的目录下的文件变化，events参数指定要监听哪些类型的事件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一旦使用register()方法完成注册后，接下来就可以调用WatchService的如下三个方法来获取被监听目录的文件变化事件。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;WatchKey poll():获取下一个WatchKey，如果没有WatchKey发生就立即返回null&lt;/li&gt;
+&lt;li&gt;WatchKey poll(long timeout,TimeUnit unit):尝试等待timeout时间去获取下一个WatchKey&lt;/li&gt;
+&lt;li&gt;WatchKey take():获取下一个WatchKey，如果没有WatchKey发生就一直等待&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果程序需要一直监控，则应该选择使用take()方法；如果程序只需要监控指定时间，择可以考虑使用poll方法，下面的程序使用WatchService来监控/data根目录下文件的变化：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.Paths;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.WatchKey;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.WatchEvent;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.WatchService;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.StandardWatchEventKinds;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.FileSystems;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;NioWatchService&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; Exception&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取文件系统的WatchService对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        WatchService watchService = FileSystems.getDefault().newWatchService();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 为/data根路径注册监听&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;/data/&quot;&lt;/span&gt;).register(watchService&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                , StandardWatchEventKinds.ENTRY_CREATE&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                , StandardWatchEventKinds.ENTRY_MODIFY&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                , StandardWatchEventKinds.ENTRY_DELETE);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 获取下一个文件变化事件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            WatchKey key = watchService.take();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (WatchEvent&amp;lt;?&amp;gt; event : key.pollEvents())&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                System.out.println(event.context()+ &lt;span class=&quot;string&quot;&gt;&quot; 文件发生了 &quot;&lt;/span&gt;+ event.kind() +&lt;span class=&quot;string&quot;&gt;&quot;事件!&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 重设WatchKey&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;boolean&lt;/span&gt; valid = key.reset();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 如果重设失败，退出监听&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (!valid) &lt;span class=&quot;keyword&quot;&gt;break&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;事件:
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;➜  data touch test.txt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;➜  data echo &lt;span class=&quot;string&quot;&gt;&quot;test&quot;&lt;/span&gt; &amp;gt;&amp;gt; test.txt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;➜  data rm test.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;结果：
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;test.txt 文件发生了 ENTRY_CREATE事件!&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;test.txt 文件发生了 ENTRY_MODIFY事件!&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;test.txt 文件发生了 ENTRY_MODIFY事件!&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;test.txt 文件发生了 ENTRY_DELETE事件!&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&quot;访问文件属性&quot;&gt;&lt;a href=&quot;#访问文件属性&quot; class=&quot;headerlink&quot; title=&quot;访问文件属性&quot;&gt;&lt;/a&gt;访问文件属性&lt;/h2&gt;&lt;p&gt;Java7的NIO.2在java.nio.file.attribute包下提供了大量的工具类，通过这些工具类，开发者可以非常简单地读取、修改文件属性，这些工具类主要分为如下两类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;XxxAttributeView：代表某种文件属性的视图&lt;/li&gt;
+&lt;li&gt;XxxAttributes:代表某种文件属性的集合，程序一般通过XxxAttributeView对象来获取XxxAttributes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在这些工具类中，FileAttributeView是其他XxxAttributeView的父接口&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;View&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;功能&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;AclFileAttributeView&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;开发者可以为特定文件设置ACL(Access Control List) 及文件所有者属性，它的getAcl()方法返回List&lt;aclentry&gt;对象，该返回值代表了该文件的权限集，通过setAcl(List)方法可以修改该文件的ACL&lt;/aclentry&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;BasicFileAttributeView&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;它可以获取或修改文件的基本属性，包括文件的最后修改时间、最后访问时间、创建时间、大小、是否为目录、是否为符号链接等，它的readAttribute方法返回一个BasicFileAttribute对象，对文件夹基本属性的修改是通过BasicFileAttribute对象完成的。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;DosFileAttributeView&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;主要用于获取或修改文件DOS相关属性，如文件是否只读、隐藏，是否为系统文件、存档文件等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;FileOwnerAttributeView&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;获取或修改文件的所有者&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;PosixFileAttributeView&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;用于获取或修改POSIX属性，它的readAttribute()方法返回一个PosixFileAttribute对象，该对象可用于获取或修改文件的所有者、组所有者和访问权限信息，仅在*nx系统上有用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;UserDefinedFileAttributeView&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;让开发者为文件设置一些自定义属性&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;下面程序示范了如何读取、修改文件的属性&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;62&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;63&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.Files;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.Path;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.Paths;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.FileSystems;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.attribute.BasicFileAttributeView;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.attribute.BasicFileAttributes;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.attribute.FileOwnerAttributeView;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.attribute.UserPrincipal;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.attribute.UserDefinedFileAttributeView;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.attribute.PosixFileAttributeView;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.file.attribute.PosixFileAttributes;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.ByteBuffer;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.charset.Charset;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.List;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.Date;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;NioAttributeView&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; Exception&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取将要操作的文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Path path = Paths.get(&lt;span class=&quot;string&quot;&gt;&quot;NioAttributeView.java&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取访问基本属性的BasicFileAttributeView&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        BasicFileAttributeView basicView = Files.getFileAttributeView(path,BasicFileAttributeView.class);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取访问基本属性的BasicFileAttributes&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        BasicFileAttributes basicAttr = basicView.readAttributes();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 访问文件的基本属性&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;创建时间：&quot;&lt;/span&gt;+ &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Date(basicAttr.creationTime().toMillis()));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;最后访问时间：&quot;&lt;/span&gt;+ &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Date(basicAttr.lastAccessTime().toMillis()));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;最后修改时间：&quot;&lt;/span&gt;+ &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Date(basicAttr.lastModifiedTime().toMillis()));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;文件大小：&quot;&lt;/span&gt;+ basicAttr.size());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取访问文件属主属性的FileOwnerAttributeView&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        FileOwnerAttributeView ownerView = Files.getFileAttributeView(path,FileOwnerAttributeView.class);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取该文件所属用户&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;所有者：&quot;&lt;/span&gt;+ ownerView.getOwner());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取系统中streamer对应的用户&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        UserPrincipal user = FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName(&lt;span class=&quot;string&quot;&gt;&quot;streamer&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 修改用户&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ownerView.setOwner(user);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取访问自定义属性的FileOwnerAttributeView&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        UserDefinedFileAttributeView userView = Files.getFileAttributeView(path,UserDefinedFileAttributeView.class);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 添加一个自定义属性&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        userView.write(&lt;span class=&quot;string&quot;&gt;&quot;发行版&quot;&lt;/span&gt;,Charset.defaultCharset().encode(&lt;span class=&quot;string&quot;&gt;&quot;streamer&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        userView.write(&lt;span class=&quot;string&quot;&gt;&quot;编辑器&quot;&lt;/span&gt;,Charset.defaultCharset().encode(&lt;span class=&quot;string&quot;&gt;&quot;vim/gedit&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        List&amp;lt;String&amp;gt; attrNames = userView.list();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 遍历所有的自定义属性&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (String name : attrNames)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ByteBuffer buf = ByteBuffer.allocate(userView.size(name));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        userView.read(name,buf);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        buf.flip();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        String value = Charset.defaultCharset().decode(buf).toString();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(name + &lt;span class=&quot;string&quot;&gt;&quot;-----&amp;gt;&quot;&lt;/span&gt; + value);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取访问Posix属性的PosixFileAttributeView&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        PosixFileAttributeView posixView = Files.getFileAttributeView(path,PosixFileAttributeView.class);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 获取访问基本属性的PosixFileAttributes&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        PosixFileAttributes posixAttr = posixView.readAttributes();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 访问文件的基本属性&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;创建者：&quot;&lt;/span&gt;+ posixAttr.owner().toString());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;结果如下：
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;➜  tmp sudo chown root:root NioAttributeView.java&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;➜  tmp sudo chmod 777 NioAttributeView.java&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;➜  tmp javac NioAttributeView.java&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;➜  tmp sudo java NioAttributeView&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;创建时间：Mon Aug 08 18:14:40 UTC 2016&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;最后访问时间：Mon Aug 08 18:15:04 UTC 2016&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;最后修改时间：Mon Aug 08 18:14:40 UTC 2016&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;文件大小：3211&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;所有者：root&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;发行版-----&amp;gt;streamer&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;编辑器-----&amp;gt;vim/gedit&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;创建者：streamer&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Java7对原有的NIO进行了重大改进，提供了全面的文件IO和文件系统的访问支持，基于异步Channel的IO。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Programming" scheme="http://keyunluo.github.io/categories/Programming/"/>
+    
+    
+      <category term="Java" scheme="http://keyunluo.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java中的NIO块</title>
+    <link href="http://keyunluo.github.io/2016/08/08/2016-08-08-java-nio.html"/>
+    <id>http://keyunluo.github.io/2016/08/08/2016-08-08-java-nio.html</id>
+    <published>2016-08-08T08:25:02.000Z</published>
+    <updated>2016-08-08T11:33:36.474Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Java中的IO的输入流和输出流都是阻塞式的，如果没有读到有效数据则程序会在此处阻塞该线程的执行，并且，传统的输入流、输出流都是通过字节的移动来处理的，通常效率不高，新的IO(NIO)从JDK1.4版本开始，新增了许多用于处理输入/输出的类。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;新IO采用内存映射文件的方式来处理输入/输出，新IO将文件或文件的一段区域映射到内存中，这样就可以像访问内存一样访问文件，速度要快的多。&lt;/p&gt;
+&lt;p&gt;Java中与新IO相关的包如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;java.nio包：包含了各种与Buffer相关的类&lt;/li&gt;
+&lt;li&gt;java.nio.channels包：主要包含了与Channel和Selector相关的类&lt;/li&gt;
+&lt;li&gt;java.nio.charset包：主要包含与字符集相关的类&lt;/li&gt;
+&lt;li&gt;java.nio.channels.spi包：主要包含与Channel相关的服务提供者编程接口&lt;/li&gt;
+&lt;li&gt;java.nio.charset.spi包：主要包含与字符集相关的服务提供者编程接口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Channel(通道)和Buffer(缓冲)是新IO中的两个核心对象，Channel是对传统的输入输出系统的模拟，在新IO中，所有的数据都要通过通道传输，与传统的输入输出流相比，主要在于它提供了一个map()方法，通过该map()方法可以将”一块数据”映射到内存中。&lt;/p&gt;
+&lt;p&gt;Buffer可以被理解为一个容器，它的本质是一个数组，发送到Channel中的所有对象都必须首先放在Buffer中，Buffer可以到Channel中取数据，也允许使用Channel直接将文件的某块数据映射成Buffer。&lt;/p&gt;
+&lt;p&gt;除了Channel和Buffer之外，新IO还提供了用于将Unicode字符串映射成字节序列以及逆映射操作的Charset类，也提供了用于支持费非阻塞式输入输出的Selector类。&lt;/p&gt;
+&lt;h2 id=&quot;使用Buffer&quot;&gt;&lt;a href=&quot;#使用Buffer&quot; class=&quot;headerlink&quot; title=&quot;使用Buffer&quot;&gt;&lt;/a&gt;使用Buffer&lt;/h2&gt;&lt;p&gt;Buffer可以保存多个类型相同的数据，它是一个抽象类，最常用的子类是ByteBuffer，其他基本类型Boolean除外，都有相应的Buffer类：CharBuffer、ShortBuffer、IntBuffer、FloatBuffer、DoubleBuffer。&lt;/p&gt;
+&lt;p&gt;比较常用的是ByteBuffer和CharBuffer，通过&lt;code&gt;static XxxBuffer allocate(int capacity)&lt;/code&gt;创建一个容量为capacity的XxxBuffer对象。其中ByteBuffer类还有一个子类：MappedByteBuffer，它哟关于表示Channel将磁盘文件的部分或全部内容映射到内存中后得到的结果，通常MappedByteBuffer对象由Channel的map()方法返回。&lt;/p&gt;
+&lt;p&gt;Buffer中有三个重要的概念：容量(capacity)、界限(limit)和位置(position):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;容量：该Buffer的最大数据容量，创建后不能更改&lt;/li&gt;
+&lt;li&gt;界限：第一个不能被读写的缓冲区位置索引&lt;/li&gt;
+&lt;li&gt;位置：下一个可以被读出或者写入的缓冲区的位置索引&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;除此之外，Buffer里还支持一个可选的标记mark，Buffer允许直接将position定位到该mark处，这些值满足如下大小关系：&lt;code&gt;0=&amp;lt;mark=&amp;lt;position=&amp;lt;limit=&amp;lt;capacity&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Buffer的主要作用就是装入数据(put)，然后输出数据(get)，几个重要的方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;flip():将limit设置为position所在位置，并将position设为0，为输出数据做准备&lt;/li&gt;
+&lt;li&gt;clear():将position置为0，将limit置为capacity，为装入数据做准备&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;使用Channel&quot;&gt;&lt;a href=&quot;#使用Channel&quot; class=&quot;headerlink&quot; title=&quot;使用Channel&quot;&gt;&lt;/a&gt;使用Channel&lt;/h2&gt;&lt;p&gt;Channel类似于传统的流对象，但有两个显著的差别：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Channel可以直接将指定文件的部分或全部直接映射成Buffer&lt;/li&gt;
+&lt;li&gt;程序不能直接访问Channel中数据，Channel只能与Buffer进行交互&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Java为Channel接口提供了DatagramChannel(UDP网络通信)、FileChannel、Pipe.SinkChannel(线程间通信管道)、Pipe.SourceChannel、SelectableChannel、ServerSocketChannel(TCP网络通信)、SocketChannel等实现类。&lt;/p&gt;
+&lt;p&gt;所有的Channel都不应该通过构造器直接创建，而是通过传统的节点InputStream、outputStream的getChannel()方法来返回对应的Channel。&lt;/p&gt;
+&lt;p&gt;Channel中最常见的三类方法是map()、read()、write()。map()方法的方法签名为：&lt;code&gt;MappedByteBuffer map(FileChannel.MapMode mode,long position,long size)&lt;/code&gt;,第一个参数执行映射的模式：只读、读写，而第二个、第三个参数用于控制将Channel的哪些数据映射成ByteBuffer。&lt;/p&gt;
+&lt;h3 id=&quot;例子1-Channel读写&quot;&gt;&lt;a href=&quot;#例子1-Channel读写&quot; class=&quot;headerlink&quot; title=&quot;例子1:Channel读写&quot;&gt;&lt;/a&gt;例子1:Channel读写&lt;/h3&gt;&lt;p&gt;直接将FileChannel的全部数据映射成ByteBuffer&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.File;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.FileInputStream;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.FileOutputStream;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.IOException;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.MappedByteBuffer;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.CharBuffer;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.channels.FileChannel;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.charset.Charset;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.charset.CharsetDecoder;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;FileChannelTest&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        File file = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; File(&lt;span class=&quot;string&quot;&gt;&quot;FileChannelTest.java&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;(FileChannel inChannel = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileInputStream(file).getChannel();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            FileChannel outChannel = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileOutputStream(&lt;span class=&quot;string&quot;&gt;&quot;out.txt&quot;&lt;/span&gt;).getChannel())&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 将FileChannel里的全部数据映射成ByteBuffer&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            MappedByteBuffer buffer = inChannel.map(FileChannel.MapMode.READ_ONLY,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,file.length());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            buffer.clear();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 直接将buffer里面的数据全部取出&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            outChannel.write(buffer);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 再次调用buffer的clear()方法，复原limit、position的位置&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            buffer.clear();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 使用UTF-8的字符集来创建解码器&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            Charset charset = Charset.forName(&lt;span class=&quot;string&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 创建解码器(CharsetDecoder)对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            CharsetDecoder decoder = charset.newDecoder();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 使用解码器将ByteBuffer转换成CharBuffer&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            CharBuffer charBuffer = decoder.decode(buffer);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// CharBuffer的toString方法可以获取对应的字符串&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            System.out.println(charBuffer.toString());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (IOException ex)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            ex.printStackTrace();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;不仅InputStream、OutputStream包含了getChannel()方法，在RandomAccessFile中也包含了该方法，RandomAccessFile返回的FileChannel()是只读的还是读写的，取决于RandomAccessFile打开文件的模式。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;File file = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; File(&lt;span class=&quot;string&quot;&gt;&quot;a.txt&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;FileChannel randomChannel = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; RandomAccessFile(file,&lt;span class=&quot;string&quot;&gt;&quot;rw&quot;&lt;/span&gt;).getChannel();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ByteBuffer buffer = randomChannel.map(FileChannel.MapMode.READ_ONLY,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,file.length());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;randomChannel.position(file.length());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;randomChannel.write(buffer);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;例子2-多次map&quot;&gt;&lt;a href=&quot;#例子2-多次map&quot; class=&quot;headerlink&quot; title=&quot;例子2:多次map&quot;&gt;&lt;/a&gt;例子2:多次map&lt;/h3&gt;&lt;p&gt;如果channel对应的文件过大，一次性将所有的文件内容映射到内存引起性能下降，可以多次映射&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.File;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.FileInputStream;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.IOException;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.ByteBuffer;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.CharBuffer;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.channels.FileChannel;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.charset.Charset;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.nio.charset.CharsetDecoder;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ReadFile&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; IOException&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 创建文件输入流&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    FileInputStream fin = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileInputStream(&lt;span class=&quot;string&quot;&gt;&quot;ReadFile.java&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 创建一个FileChannel&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    FileChannel fch = fin.getChannel()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    )&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 定义一个ByteBuffer对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ByteBuffer bbuf = ByteBuffer.allocate(&lt;span class=&quot;number&quot;&gt;256&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 将FileChannel中的数据放入ByteBuffer中&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; (fch.read(bbuf) != -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 锁定Buffer的空白区&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    bbuf.flip();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 创建Charset对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Charset charset = Charset.forName(&lt;span class=&quot;string&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 创建解码器对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    CharsetDecoder decoder = charset.newDecoder();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 将ByteBuffer的内容转码&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    CharBuffer cbuf = decoder.decode(bbuf);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    System.out.println(cbuf);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 将Buffer初始化，为下一次读取数据作准备&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    bbuf.clear();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;字符集和Charset&quot;&gt;&lt;a href=&quot;#字符集和Charset&quot; class=&quot;headerlink&quot; title=&quot;字符集和Charset&quot;&gt;&lt;/a&gt;字符集和Charset&lt;/h2&gt;&lt;p&gt;编码：将明文的字符序列转换成计算机中的二进制序列&lt;/p&gt;
+&lt;p&gt;解码：将二进制序列转换成字符序列&lt;/p&gt;
+&lt;p&gt;比较常用的字符编码：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GBK: 简体中文字符集&lt;/li&gt;
+&lt;li&gt;BIG5: 繁体中文字符集&lt;/li&gt;
+&lt;li&gt;ISO-8859-1/ISO-LATIN-1: 拉丁字母表&lt;/li&gt;
+&lt;li&gt;UTF-8: 8位UCS转换格式&lt;/li&gt;
+&lt;li&gt;UTF-16BE: 16位UCS转换格式，大端字节(最低位地址存放高位字节)字母顺序&lt;/li&gt;
+&lt;li&gt;UTF-16LE: 16位UCS转换格式，小端字节(最低位地址存放低位字节)字母顺序&lt;/li&gt;
+&lt;li&gt;UTF-16: 16位UCS转换格式，字节顺序由可选的字节顺序标记来标识&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一旦知道了字符集的别名后，程序就可以调用Charset的forName()方法来创建对应的Charset对象，然后通过该对象的newDecoder/newEncoder这两个方法分别返回CharsetDecoder和CharsetEncoder对象，调用CharsetDecoder的decode方法就可以将ByteBuffer转换成CharBuffer，调用CharsetEncoder的encode方法就可以将CharBuffer或String转换成ByteBuffer。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Charset cn = Charset.forName(&lt;span class=&quot;string&quot;&gt;&quot;GBK&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CharsetEncoder cnEncoder = cn.newEncoder();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CharsetDecoder cnDecoder = cn.newDecoder();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CharBuffer cbuf = CharBuffer.allocate(&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cbuf.put(&lt;span class=&quot;string&quot;&gt;&#39;孙&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cbuf.put(&lt;span class=&quot;string&quot;&gt;&#39;悟&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cbuf.put(&lt;span class=&quot;string&quot;&gt;&#39;空&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cbuf.flip();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ByteBuffer bbuf = cnEncoder.encode(cbuf);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(cnDecoder.decode(bbuf));&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Charset类提供了如下三个方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CharBuffer decode(ByteBuffer bb): 将ByteBuffer中的字节序列转换成字符序列的便捷方法&lt;/li&gt;
+&lt;li&gt;ByteBuffer encode(CharBuffer cb):将CharBuffer中的字符序列转换成字节序列的便捷方法&lt;/li&gt;
+&lt;li&gt;ByteBuffer encode(String str): 将String中的字符序列转换成字节序列的便捷方法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在获取了Charset对象后，如果仅仅需要进行简单的编码、解码操作，无需创键CharsetEncoder和CharsetDecoder对象，直接调用Charset的encode()和decode()方法进行编码、解码即可。&lt;/p&gt;
+&lt;p&gt;String类里面也提供了一个getBytes(String charset)方法，该方法返回byte[],也可以使用指定的字符集将字符串转换成字节序列。&lt;/p&gt;
+&lt;h2 id=&quot;文件锁&quot;&gt;&lt;a href=&quot;#文件锁&quot; class=&quot;headerlink&quot; title=&quot;文件锁&quot;&gt;&lt;/a&gt;文件锁&lt;/h2&gt;&lt;p&gt;在NIO中，Java提供了FileLock来支持文件锁定功能，在FileChannel中提供的lock()/tryLock()方法可以获得文件锁FileLock对象，从而锁定文件(排它锁)。lock()尝试锁定文件时，如果无法获得文件锁，程序将抑制阻塞，而tryLock则返回null。&lt;/p&gt;
+&lt;p&gt;如果FileChannel只想锁定部分内容，择可以使用如下的方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;lock(long position,long size,boolean shared):对文件从position开始，长度为size的内容加锁，该方法是阻塞式的。&lt;/li&gt;
+&lt;li&gt;tryLock(long position,long size,boolean shared):对文件从position开始，长度为size的内容加锁，该方法是非阻塞式的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当参数shared是true时，表明该锁是一个共享锁，它将允许多个进程来读取该文件，但阻止其他进程获得对该文件的排它锁。当shared为false时，表明该锁是一个排它锁，它将锁住对该文件的读写。程序通过调用FileLock的isShared来判断它获得的锁是否为共享锁。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Java中的IO的输入流和输出流都是阻塞式的，如果没有读到有效数据则程序会在此处阻塞该线程的执行，并且，传统的输入流、输出流都是通过字节的移动来处理的，通常效率不高，新的IO(NIO)从JDK1.4版本开始，新增了许多用于处理输入/输出的类。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Programming" scheme="http://keyunluo.github.io/categories/Programming/"/>
+    
+    
+      <category term="Java" scheme="http://keyunluo.github.io/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>Java中的序列化</title>
@@ -1571,765 +1783,6 @@
     
     
       <category term="Python" scheme="http://keyunluo.github.io/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python Scipy学习(1)</title>
-    <link href="http://keyunluo.github.io/2016/07/19/2016-07-19-python-scipy.html"/>
-    <id>http://keyunluo.github.io/2016/07/19/2016-07-19-python-scipy.html</id>
-    <published>2016-07-19T14:41:02.000Z</published>
-    <updated>2016-07-29T12:38:24.893Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;SciPy是另一种使用NumPy来做高等数学、信号处理、优化、统计和许多其它科学任务的语言扩展,SciPy在NumPy的基础上增加了众多的数学、科学以及工程计算中常用的模块。例如线性代数、常微分方程数值求解、信号处理、图像处理、稀疏矩阵等等,本节主要学习其统计和优化模块。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h2 id=&quot;常用模块&quot;&gt;&lt;a href=&quot;#常用模块&quot; class=&quot;headerlink&quot; title=&quot;常用模块&quot;&gt;&lt;/a&gt;常用模块&lt;/h2&gt;&lt;p&gt;由于SciPy以NumPy为基础，那么import scipy的同时便import 了numpy库。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;统计子库-scipy.stats&lt;/li&gt;
-&lt;li&gt;线性代数-scipy.linalg&lt;/li&gt;
-&lt;li&gt;拟合与优化-scipy.optimize&lt;/li&gt;
-&lt;li&gt;插值-scipy.interpolate&lt;/li&gt;
-&lt;li&gt;数值积分-scipy.integate&lt;/li&gt;
-&lt;li&gt;稀疏矩阵-scipy.sparse&lt;/li&gt;
-&lt;li&gt;图像操作scipy.misc&lt;/li&gt;
-&lt;li&gt;图像处理-scipy.ndimage&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;统计&quot;&gt;&lt;a href=&quot;#统计&quot; class=&quot;headerlink&quot; title=&quot;统计&quot;&gt;&lt;/a&gt;统计&lt;/h2&gt;&lt;p&gt;scipy.stats的主要功能有以下几个方面：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;数值随机变量对象（包括密度分布函数，累积分布函数，样本函数等）&lt;/li&gt;
-&lt;li&gt;一些估计方法&lt;/li&gt;
-&lt;li&gt;一些测试方法&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;随机变量与分布:考虑$Beta$函数&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;numpy 中提供了获取随机变量的样本的方法：&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]: &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;]: np.random.beta(&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;, size=&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Out[&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;]: array([ &lt;span class=&quot;number&quot;&gt;0.6167565&lt;/span&gt; ,  &lt;span class=&quot;number&quot;&gt;0.67994589&lt;/span&gt;,  &lt;span class=&quot;number&quot;&gt;0.32346476&lt;/span&gt;])&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;但是np.random.beta(a,b)是根据下面的函数得到的：&lt;/p&gt;
-&lt;p&gt;$f(x;a,b)=\frac{x^{(a-1)}(1-x)^{(b-1)} }{\int_0^1 u^{(a-1)}u^{(b-1)} {\rm d}u} , (0 \le x \le 1)$&lt;/p&gt;
-&lt;p&gt;为了获取更多beta分布的特性，我们经常使用scipy.stats:
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; scipy.stats &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; beta&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; matplotlib.pyplot &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; hist, plot, show&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;q = beta(&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;)      &lt;span class=&quot;comment&quot;&gt;# Beta(a, b), with a = b = 5 q是一个对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;obs = q.rvs(&lt;span class=&quot;number&quot;&gt;2000&lt;/span&gt;)   &lt;span class=&quot;comment&quot;&gt;# 2000 observations 获得2000个样本&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;hist(obs, bins=&lt;span class=&quot;number&quot;&gt;40&lt;/span&gt;, normed=&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;grid = np.linspace(&lt;span class=&quot;number&quot;&gt;0.01&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.99&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;plot(grid, q.pdf(grid), &lt;span class=&quot;string&quot;&gt;&#39;k-&#39;&lt;/span&gt;, linewidth=&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;show()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;结果如图：
-&lt;img src=&quot;/resource/blog/2016-07/beta.png&quot; alt=&quot;beta分布特性&quot;&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;q.cdf(&lt;span class=&quot;number&quot;&gt;0.4&lt;/span&gt;)      &lt;span class=&quot;comment&quot;&gt;# Cumulative distribution function  累积密度函数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;0.26656768000000003&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;q.pdf(&lt;span class=&quot;number&quot;&gt;0.4&lt;/span&gt;)      &lt;span class=&quot;comment&quot;&gt;# Density function   密度函数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2.0901888000000013&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;q.ppf(&lt;span class=&quot;number&quot;&gt;0.8&lt;/span&gt;)      &lt;span class=&quot;comment&quot;&gt;# Quantile (inverse cdf) function&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;0.63391348346427079&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;q.mean()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;0.5&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;线性回归&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;19&lt;/span&gt;]: &lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; scipy.stats &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; linregress&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;]: x = np.random.randn(&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;21&lt;/span&gt;]: y = &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; * x + &lt;span class=&quot;number&quot;&gt;0.1&lt;/span&gt; * np.random.randn(&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;22&lt;/span&gt;]: gradient, intercept, r_value, p_value, std_err = linregress(x, y)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;In [&lt;span class=&quot;number&quot;&gt;23&lt;/span&gt;]: gradient, intercept&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Out[&lt;span class=&quot;number&quot;&gt;23&lt;/span&gt;]: (&lt;span class=&quot;number&quot;&gt;1.9962554379482236&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.008172822032671799&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;线性代数&quot;&gt;&lt;a href=&quot;#线性代数&quot; class=&quot;headerlink&quot; title=&quot;线性代数&quot;&gt;&lt;/a&gt;线性代数&lt;/h2&gt;&lt;p&gt;NumPy和SciPy都提供了线性代数函数库linalg，SciPy的线性代数库比NumPy更加全面。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;解线性方程组&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;numpy.linalg.solve(A, b)&lt;/code&gt;和&lt;code&gt;scipy.linalg.solve(A, b)&lt;/code&gt;可以用来解线性方程组$Ax = b $，也就是计算$ x = A^{-1}b$ 。这里$A$为(M, M)的方形矩阵，$x$和$b$为长为M的向量。有时候$A$是固定的，需要对多组$b$进行求解，因此第二个参数也可以是(M, N)的矩阵$B$。这样计算出来的$X$也为(M, N)的矩阵。它相当于计算$A^{-1}B$。&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; np&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; scipy &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; linalg&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;M, N = &lt;span class=&quot;number&quot;&gt;500&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;A = np.random.rand(M, M)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;B = np.random.rand(M, N)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;X1 = linalg.solve(A, B)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;X2 = np.dot(linalg.inv(A), B)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;np.allclose(X1, X2)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;lu_factor(A)对矩阵$A$进行LU分解，得到一个元组：(LU矩阵，排序数组)，将这个元组传递给lu_solve(),即可对不同的$B$进行求解。&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;luf = linalg.lu_factor(A)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;X3 = linalg.lu_solve(luf, B)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;np.allclose(X1, X3)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;最小二乘解&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;lstsq()比solve()更一般化，它不要求矩阵$A$是正方形的，也就是说方程的个数可以少于、等于或者多于未知数的个数。它找到一组解$x$，使得$\Vert b - A \cdot x \Vert$最小。我们称所得到的结果为最小二乘解，即它使得所有等式的误差的平方和最小。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;奇异值分解-SVD&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;奇异值分解是线性代数中一种重要的矩阵分解，在信号处理、统计学等领域有重要应用。假设$M$是一个m×n阶矩阵，存在一个分解使得：$ M = U \sum V^{*} $。其中$U$是m×m阶矩阵；$ \sum $是半正定m×n阶对角矩阵；而$V^*$，即$V$的共轭转置，是n×n阶矩阵。这样的分解就称作$M$的奇异值分解。$ \sum $对角线上的元素为$M$的奇异值。通常奇异值按照从大到小的顺序排列。&lt;/p&gt;
-&lt;h2 id=&quot;拟合与优化&quot;&gt;&lt;a href=&quot;#拟合与优化&quot; class=&quot;headerlink&quot; title=&quot;拟合与优化&quot;&gt;&lt;/a&gt;拟合与优化&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;求根与稳定点&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;稳定点：已知连续函数$f(x)$ ,则函数$f(x)$的稳定点为$x_0$，使得条件$f(x_0) = x_0$成立。&lt;/p&gt;
-&lt;p&gt;例如：$f(x)=sin(4(x-\frac{1}{4})) + x + x^{20} -1$&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; scipy.optimize &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; bisect&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;f =&lt;span class=&quot;keyword&quot;&gt;lambda&lt;/span&gt; x : np.sin(&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; * (x &lt;span class=&quot;number&quot;&gt;-0.25&lt;/span&gt;)) + x + x**&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;-1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bisect(f,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;0.4082935042797544&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;非线性方程组求解&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;fsolve()可以对非线性方程组进行求解。它的基本调用形式为fsolve(func, x0)。其中func是计算方程组误差的函数，它的参数x是一个数组，其值为方程组的一组可能的解。func返回将x代入方程组之后得到的每个方程的误差，x0为未知数的一组初始值。假设要对下面的方程组进行求解:
-$$ f1(u1,u2,u3) = 0 ,f2(u1,u2,u3) = 0 , f3(u1,u2,u3) = 0 $$&lt;/p&gt;
-&lt;p&gt;那么func函数可以如下定义：
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(x)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    u1,u2,u3 = x&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; [f1(u1,u2,u3), f2(u1,u2,u3), f3(u1,u2,u3)]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;例如：对下列方程组求解：
-$$ 5x_1 +3 =0;4x_0^2 - 2sin(x_1x_2)=0;x_1x_2-1.5=0$$&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; math &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; sin, cos&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; scipy &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; optimize&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(x)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    x0, x1, x2 = x.tolist()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;*x1+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;*x0*x0 - &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;*sin(x1*x2),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        x1*x2 - &lt;span class=&quot;number&quot;&gt;1.5&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# f计算方程组的误差，[1,1,1]是未知数的初始值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;result = optimize.fsolve(f, [&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(result)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(f(result))&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;f()是计算方程组的误差的函数，x参数是一组可能的解。fsolve()在调用f()时，传递给f()的参数是一个数组。&lt;/p&gt;
-&lt;p&gt;调用fsolve()时，传递计算误差的函数f()，以及未知数的初始值。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;SciPy是另一种使用NumPy来做高等数学、信号处理、优化、统计和许多其它科学任务的语言扩展,SciPy在NumPy的基础上增加了众多的数学、科学以及工程计算中常用的模块。例如线性代数、常微分方程数值求解、信号处理、图像处理、稀疏矩阵等等,本节主要学习其统计和优化模块。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="Programming" scheme="http://keyunluo.github.io/categories/Programming/"/>
-    
-    
-      <category term="Python" scheme="http://keyunluo.github.io/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Markdown中编写LaTex数学公式</title>
-    <link href="http://keyunluo.github.io/2016/07/19/2016-07-19-markdown-math.html"/>
-    <id>http://keyunluo.github.io/2016/07/19/2016-07-19-markdown-math.html</id>
-    <published>2016-07-19T07:31:46.000Z</published>
-    <updated>2016-07-27T04:06:56.343Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;目前hexo中写博客使用Markdown语言，而写博客经常要用到一些数学公式，在Markdown中写LaTeX数学公式则显得非常重要，本节将一些常用的数学公式的写法记录下来，以备日后查询。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;LaTeX-基本语法&quot;&gt;&lt;a href=&quot;#LaTeX-基本语法&quot; class=&quot;headerlink&quot; title=&quot;$\LaTeX$基本语法&quot;&gt;&lt;/a&gt;$\LaTeX$基本语法&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;使用LaTeX&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;$&lt;/code&gt;符号开始&lt;/p&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$ y_k=&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;varphi&lt;/span&gt;&lt;/span&gt;(u_k+v_k)$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$J&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;alpha&lt;/span&gt;&lt;/span&gt;(x) = &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;m=0&amp;#125;&lt;/span&gt;&lt;/span&gt;^&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;infty&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;(-1)^m&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;m! \Gamma (m + \alpha + 1)&amp;#125;&lt;/span&gt;&lt;/span&gt; &amp;#123;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;/span&gt;(&amp;#123; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;x&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;2&amp;#125;&lt;/span&gt;&lt;/span&gt; &amp;#125;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;right&lt;/span&gt;&lt;/span&gt;)&amp;#125;^&amp;#123;2m + &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;alpha&lt;/span&gt;&lt;/span&gt;&amp;#125;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#注意下面的写法：(右对齐)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$ y_k=&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;varphi&lt;/span&gt;&lt;/span&gt;(u_k+v_k)$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;则依次显示为：&lt;/p&gt;
-&lt;p&gt;$ y_k=\varphi(u_k+v_k)$&lt;/p&gt;
-&lt;p&gt;$J\alpha(x) = \sum{m=0}^\infty \frac{(-1)^m}{m! \Gamma (m + \alpha + 1)} {\left({ \frac{x}{2} }\right)}^{2m + \alpha}$&lt;/p&gt;
-&lt;p&gt;$$ y_k=\varphi(u_k+v_k)$$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;输入上下标&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;^&lt;/code&gt;表示上标, &lt;code&gt;_&lt;/code&gt;表示下标。如果上下标的内容多于一个字符，要用&lt;code&gt;{}&lt;/code&gt;把这些内容括起来当成一个整体。上下标是可以嵌套的，也可以同时使用。例如：
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$x^&amp;#123;y^z&amp;#125;=(1+&amp;#123;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;rm&lt;/span&gt;&lt;/span&gt; e&amp;#125;^x)^&amp;#123;-2xy^w&amp;#125;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$f(x)=x_2^3+1$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#如果要在左右两边都有上下标，可以用&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sideset&lt;/span&gt;&lt;/span&gt;命令:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sideset&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;^12&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;^34&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;bigotimes&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;则显示如下：&lt;/p&gt;
-&lt;p&gt;$x^{y^z}=(1+{\rm e}^x)^{-2xy^w}$&lt;/p&gt;
-&lt;p&gt;$f(x)=x_2^3+1$&lt;/p&gt;
-&lt;p&gt;$\sideset{^12}{^34}\bigotimes$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;输入括号和分隔符&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;()、[]和|表示自己，&amp;#123;&amp;#125;表示&amp;#123;&amp;#125;。当要显示大号的括号或分隔符时，要用&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;/span&gt;和&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;right&lt;/span&gt;&lt;/span&gt;命令：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$f(x,y,z) = 3y^2z &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;/span&gt;( 3+&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;7x+5&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1+y^2&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;right&lt;/span&gt;&lt;/span&gt;)$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;有时候要用&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;/span&gt;.或&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;right&lt;/span&gt;&lt;/span&gt;.进行匹配而不显示本身：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;du&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;dt&amp;#125;&lt;/span&gt;&lt;/span&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;|&lt;/span&gt;&lt;/span&gt; _&amp;#123;x=0&amp;#125;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;显示为：&lt;/p&gt;
-&lt;p&gt;$f(x,y,z) = 3y^2z \left( 3+\frac{7x+5}{1+y^2} \right)$&lt;/p&gt;
-&lt;p&gt;$\frac{du}{dt}  | _{x=0}$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;微分方程&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;du&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;dt&amp;#125;&lt;/span&gt;&lt;/span&gt; and &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;d^2 u&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;dx^2&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;$\frac{du}{dt} and \frac{d^2 u}{dx^2}$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;输入偏微分方程&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;eqnarray&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial u&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial t&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= &lt;/span&gt;h^2 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;/span&gt;( &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial^2 u&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial x^2&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;+&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial^2 u&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial y^2&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;+&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial^2 u&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\partial z^2&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;right&lt;/span&gt;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;eqnarray&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;$$
-\begin{eqnarray}
-\frac{\partial u}{\partial t} \
-= h^2 \left( \frac{\partial^2 u}{\partial x^2} \
-+ \frac{\partial^2 u}{\partial y^2} \
-+ \frac{\partial^2 u}{\partial z^2}\right)
-\end{eqnarray}
-$$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;输入分数&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;3&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$P(v)=&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1+exp(-v/T)&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;  依次显示为：
-  $\frac{1}{3}$&lt;/p&gt;
-&lt;p&gt;  $P(v)=\frac{1}{1+exp(-v/T)}$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;输入开方&lt;/strong&gt;
-\sqrt&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sqrt&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;2&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sqrt&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[n]&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;3&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;  $\sqrt{2}$&lt;/p&gt;
-&lt;p&gt;  $\sqrt[n]{3}$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;输入省略号&lt;/strong&gt;
-数学公式中常见的省略号有两种，&lt;strong&gt;\ldots&lt;/strong&gt;表示与文本底线对齐的省略号，&lt;strong&gt;\cdots&lt;/strong&gt;表示与文本中线对齐的省略号。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$f(x_1,x_2,&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;ldots&lt;/span&gt;&lt;/span&gt;,x_n) = x_1^2 + x_2^2 + &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;cdots&lt;/span&gt;&lt;/span&gt; + x_n^2$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;   $f(x_1,x_2,\ldots,x_n) = x_1^2 + x_2^2 + \cdots + x_n^2$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;输入向量&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;vec&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;a&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;cdot&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;vec&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;b&amp;#125;&lt;/span&gt;=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;  $\vec{a} \cdot \vec{b}=0$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;输入积分&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;int&lt;/span&gt;&lt;/span&gt;_0^1 x^2 &amp;#123;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;rm&lt;/span&gt;&lt;/span&gt; d&amp;#125;x$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;  $\int_0^1 x^2 {\rm d}x$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;输入极限运算&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;lim&lt;/span&gt;&lt;/span&gt;_&amp;#123;n &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;rightarrow&lt;/span&gt;&lt;/span&gt; +&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;infty&lt;/span&gt;&lt;/span&gt;&amp;#125; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;n(n+1)&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\lim_&amp;#123;u \rightarrow \infty&amp;#125;&lt;/span&gt;&lt;/span&gt;&amp;#125;, &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;\lim\limits_&amp;#123;u \rightarrow \infty&amp;#125;&lt;/span&gt;&lt;/span&gt;&amp;#125;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;$\lim_{n \rightarrow +\infty} \frac{1}{n(n+1)}$&lt;/p&gt;
-&lt;p&gt;$\frac{1}{\lim_{u \rightarrow \infty}}$&lt;/p&gt;
-&lt;p&gt;$\frac{1}{\lim\limits_{u \rightarrow \infty}}$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;输入累加、累乘运算&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sum&lt;/span&gt;&lt;/span&gt;_&amp;#123;i=0&amp;#125;^n &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;i^2&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;prod&lt;/span&gt;&lt;/span&gt;_&amp;#123;i=0&amp;#125;^n &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;1&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;i^2&amp;#125;&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt; $\sum_{i=0}^n \frac{1}{i^2}$&lt;/p&gt;
-&lt;p&gt; $\prod_{i=0}^n \frac{1}{i^2}$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;等效&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;equation&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$&amp;#123;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;3&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;5&amp;#125;&lt;/span&gt;&lt;/span&gt; [3 + 2*( a+ b)]&amp;#125;$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;equation&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$&amp;#123;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;frac&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;3&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;5&amp;#125;&lt;/span&gt;&lt;/span&gt; [3 + 2*( a+ b)]&amp;#125;$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;${\frac{3}{5} [3 + 2*( a+ b)]}$&lt;/p&gt;
-&lt;h2 id=&quot;希腊字母&quot;&gt;&lt;a href=&quot;#希腊字母&quot; class=&quot;headerlink&quot; title=&quot;希腊字母&quot;&gt;&lt;/a&gt;希腊字母&lt;/h2&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;希腊字母(小写)&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;输入&lt;/th&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;希腊字母(大写)&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;输入&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;α&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\alpha&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Α&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;A&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;β&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\beta&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Β&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;B&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;γ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\gamma&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Γ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\Gamma&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;δ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\delta&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Δ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\Delta&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;ε或$\epsilon$&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\epsilon或\varepsilon&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Ε&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;E&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;ζ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\zeta&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Ζ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Z&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;η&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\eta&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Η&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;H&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;θ或$\vartheta$&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\theta或\vartheta&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Θ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\Theta&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;ι&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\iota　&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Ι&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;I&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;κ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\kappa&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Κ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;K&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;λ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\lambda&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Λ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\Lambda&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;μ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\mu&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Μ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;M&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;ν&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\nu&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Ν&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;N&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;ξ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\xi&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Ξ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\Xi&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;ο&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;o&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Ο&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;O&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;π或$\varpi$&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\pi或\varpi&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Π&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\Pi&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;ρ或$\varrho$&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\rho或\varrho&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Ρ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;P&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;σ或$\varsigma$&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\sigma或\varsigma&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Σ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\Sigma&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;τ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\tau&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Τ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;T&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;υ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\upsilon&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Υ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\Upsilon&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;φ或$\varphi$&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\phi或\varphi&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Φ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\Phi　&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;χ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\chi&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Χ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;X&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;ψ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\psi&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Ψ&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\Psi&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;ω&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\omega&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Ω&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\Omega&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&quot;三角函数与逻辑数学字符&quot;&gt;&lt;a href=&quot;#三角函数与逻辑数学字符&quot; class=&quot;headerlink&quot; title=&quot;三角函数与逻辑数学字符&quot;&gt;&lt;/a&gt;三角函数与逻辑数学字符&lt;/h2&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;数学字符&lt;/th&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;输入&lt;/th&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;数学字符&lt;/th&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;输入&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\pm$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\pm&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\times$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\times&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\div$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\div&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\mid$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\mid&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\nmid$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\nmid&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\cdot$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\cdot&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\circ$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\circ&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\ast$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\ast&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\bigodot$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\bigodot&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\bigotimes$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\bigotimes&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\bigoplus$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\bigoplus&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\leq$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\leq&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\geq$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\geq&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\neq$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\neq&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\approx$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\approx&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\equiv$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\equiv&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\sum$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\sum&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\prod$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\prod&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\coprod$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\coprod&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\emptyset$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\emptyset&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\in$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\in&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\notin$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\notin&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\subset$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\subset&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\supset$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\supset&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\subseteq$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\subseteq&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\supseteq$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\supseteq&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\bigcap$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\bigcap&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\bigcup$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\bigcup&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\bigvee$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\bigvee&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\bigwedge$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\bigwedge&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\biguplus$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\biguplus&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\bigsqcup$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\bigsqcup&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\log$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\log&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\lg$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\lg&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\ln$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\ln&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\bot$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\bot&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\angle$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\angle&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$30^\circ$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;30^\circ&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\sin$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\sin&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\cos$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\cos&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\tan$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\tan&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\cot$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\cot&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\sec$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\sec&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\csc$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\csc&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\prime$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\prime&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\int$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\int&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\iint$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\iint&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\iiint$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\iiint&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\iiiint$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\iiiint&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\oint$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\oint&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\lim$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\lim&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\infty$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\infty&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\nabla$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\nabla&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\because$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\because&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\therefore$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\therefore&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\forall$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\forall&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\exists$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\exists&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\not=$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\not=&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\not&amp;gt;$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\not&amp;gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\not\subset$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\not\subset&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\hat{y}$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\hat{y}&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\check{y}$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\check{y}&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\breve{y}$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\breve{y}&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\overline{a+b+c+d}$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\overline{a+b+c+d}&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\underline{a+b+c+d}$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\underline{a+b+c+d}&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\overbrace{a+\underbrace{b+c}{1.0}+d}^{2.0}$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\overbrace{a+\underbrace{b+c}{1.0}+d}^{2.0}&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\uparrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\uparrow&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\downarrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\downarrow&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\Uparrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\Uparrow&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\Downarrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\Downarrow&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\rightarrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\rightarrow&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\leftarrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\leftarrow&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\Rightarrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\Rightarrow&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\Leftarrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\Leftarrow&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\longrightarrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\longrightarrow&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\longleftarrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\longleftarrow&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\Longrightarrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\Longrightarrow&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\Longleftarrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\Longleftarrow&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\ $&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\空格&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;#&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;\#&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&quot;字体转换&quot;&gt;&lt;a href=&quot;#字体转换&quot; class=&quot;headerlink&quot; title=&quot;字体转换&quot;&gt;&lt;/a&gt;字体转换&lt;/h2&gt;&lt;p&gt;要对公式的某一部分字符进行字体转换，可以用{\rm 需转换的部分字符}命令，其中\rm可以参照下表选择合适的字体。一般情况下，公式默认为意大利体。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;\rm&lt;/code&gt;　　罗马体&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;\it&lt;/code&gt;　　意大利体&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;\bf&lt;/code&gt;　　黑体　&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;\sf&lt;/code&gt;　　等线体&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;\mit&lt;/code&gt; 　数学斜体　&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;\tt&lt;/code&gt;　打字机字体&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;\sc&lt;/code&gt;　　小体大写字母&lt;/p&gt;
-&lt;h2 id=&quot;表格&quot;&gt;&lt;a href=&quot;#表格&quot; class=&quot;headerlink&quot; title=&quot;表格&quot;&gt;&lt;/a&gt;表格&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;begin&amp;#123;array&amp;#125;&amp;#123;c|lcr&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;n &amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;Left&amp;#125;&lt;/span&gt;&lt;/span&gt; &amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;Center&amp;#125;&lt;/span&gt;&lt;/span&gt; &amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;Right&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;hline&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1 &amp;amp; 0.24 &amp;amp; 1 &amp;amp; 125 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2 &amp;amp; -1 &amp;amp; 189 &amp;amp; -8 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3 &amp;amp; -20 &amp;amp; 2000 &amp;amp; 1+10i &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;end&amp;#123;array&amp;#125; $$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;$$\begin{array}{c|lcr}
-n &amp;amp; \text{Left} &amp;amp; \text{Center} &amp;amp; \text{Right} \\
-\hline
-1 &amp;amp; 0.24 &amp;amp; 1 &amp;amp; 125 \\
-2 &amp;amp; -1 &amp;amp; 189 &amp;amp; -8 \\
-3 &amp;amp; -20 &amp;amp; 2000 &amp;amp; 1+10i \\
-\end{array} $$&lt;/p&gt;
-&lt;h2 id=&quot;花括号用法&quot;&gt;&lt;a href=&quot;#花括号用法&quot; class=&quot;headerlink&quot; title=&quot;花括号用法&quot;&gt;&lt;/a&gt;花括号用法&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$f(x)=&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;cases&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;0&amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;x=0&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1&amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;x!=0&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;cases&amp;#125;&lt;/span&gt;&lt;/span&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;$$
-f(x)=
-\begin{cases}
-0&amp;amp; \text{x=0}\\
-1&amp;amp; \text{x!=0}
-\end{cases}
-$$&lt;/p&gt;
-&lt;h2 id=&quot;多行数学式对齐&quot;&gt;&lt;a href=&quot;#多行数学式对齐&quot; class=&quot;headerlink&quot; title=&quot;多行数学式对齐&quot;&gt;&lt;/a&gt;多行数学式对齐&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;利用&amp;amp;符号来对齐，在每个等号前添加&amp;amp;符号即可&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;/span&gt; &amp;#123;lcl&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;cos&lt;/span&gt;&lt;/span&gt; 2&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;theta&lt;/span&gt;&lt;/span&gt; &amp;amp; = &amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;cos&lt;/span&gt;&lt;/span&gt;^2 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;theta&lt;/span&gt;&lt;/span&gt; - &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;sin&lt;/span&gt;&lt;/span&gt;^2 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;theta&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;             &amp;amp; = &amp;amp; 2 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;cos&lt;/span&gt;&lt;/span&gt;^2 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;theta&lt;/span&gt;&lt;/span&gt; - 1.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;/span&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;/span&gt; &amp;#123;lcl&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;f(x) &amp;amp; = &amp;amp; (a+b)^2 &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &amp;amp; = &amp;amp; a^2+2ab+b^2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;/span&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;$$\begin{array} {lcl}
-\cos 2\theta &amp;amp; = &amp;amp; \cos^2 \theta - \sin^2 \theta \\
-             &amp;amp; = &amp;amp; 2 \cos^2 \theta - 1.
-\end{array}$$&lt;/p&gt;
-&lt;p&gt;$$\begin{array} {lcl}
-f(x) &amp;amp; = &amp;amp; (a+b)^2 \\
-     &amp;amp; = &amp;amp; a^2+2ab+b^2
-\end{array}$$&lt;/p&gt;
-&lt;h2 id=&quot;矩阵与行列式&quot;&gt;&lt;a href=&quot;#矩阵与行列式&quot; class=&quot;headerlink&quot; title=&quot;矩阵与行列式&quot;&gt;&lt;/a&gt;矩阵与行列式&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;matrix&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[ ( &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;ccc&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;a &amp;amp; b &amp;amp; c &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;d &amp;amp; e &amp;amp; f &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;g &amp;amp; h &amp;amp; i &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;/span&gt; )]$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[ &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;chi&lt;/span&gt;&lt;/span&gt;(&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;lambda&lt;/span&gt;&lt;/span&gt;) = &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;/span&gt;| &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;ccc&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;lambda&lt;/span&gt;&lt;/span&gt; - a &amp;amp; -b &amp;amp; -c &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-d &amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;lambda&lt;/span&gt;&lt;/span&gt; - e &amp;amp; -f &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;\&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-g &amp;amp; -h &amp;amp; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;lambda&lt;/span&gt;&lt;/span&gt; - i &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;array&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;right&lt;/span&gt;&lt;/span&gt;|.]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;formula&quot;&gt;$$ &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      \begin&amp;#123;array&amp;#125;&amp;#123;cc|c&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        1&amp;amp;2&amp;amp;3 \\\\&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        4&amp;amp;5&amp;amp;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      \end&amp;#123;array&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    \right]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$$&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;$$
-matrix
-[ ( \begin{array}{ccc}
-a &amp;amp; b &amp;amp; c \\
-d &amp;amp; e &amp;amp; f \\
-g &amp;amp; h &amp;amp; i \end{array} )]$$&lt;/p&gt;
-&lt;p&gt;$$
-[ \chi(\lambda) = \left| \begin{array}{ccc}
-\lambda - a &amp;amp; -b &amp;amp; -c \\
--d &amp;amp; \lambda - e &amp;amp; -f \\
--g &amp;amp; -h &amp;amp; \lambda - i \end{array} \right|.]
-$$&lt;/p&gt;
-&lt;p&gt;$$ \left[
-      \begin{array}{cc|c}
-        1&amp;amp;2&amp;amp;3 \\
-        4&amp;amp;5&amp;amp;6
-      \end{array}
-    \right]
-$$&lt;/p&gt;
-&lt;h2 id=&quot;括号的其他用法&quot;&gt;&lt;a href=&quot;#括号的其他用法&quot; class=&quot;headerlink&quot; title=&quot;括号的其他用法&quot;&gt;&lt;/a&gt;括号的其他用法&lt;/h2&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;功能&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;语法&lt;/th&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;显示&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;圆括号，小括号&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\left( \frac{a}{b} \right)&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\left( \frac{a}{b} \right)$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;方括号，中括号&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\left[ \frac{a}{b} \right]&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$$\left[ \frac{a}{b} \right]$$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;花括号，大括号&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\left{ \frac{a}{b}\right}&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$$\left\{ \frac{a}{b} \right\}$$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;角括号&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\left \langle \frac{a}{b} \right \rangle&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\left \langle \frac{a}{b} \right \rangle$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;单竖线，绝对值&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\left\mid \frac{a}{b} \right\mid ,或\vert&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\mid \frac{a}{b} \mid$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;双竖线，范式&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\Vert \frac{a}{b} \Vert&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$$\Vert \frac{a}{b} \Vert$$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;取整函数&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\left \lfloor \frac{a}{b} \right \rfloor&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\left \lfloor \frac{a}{b} \right \rfloor$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;取顶函数&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\left \lceil \frac{c}{d} \right \rceil&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\left \lceil \frac{c}{d} \right \rceil   $&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;斜线与反斜线&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\left / \frac{a}{b} \right \backslash&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\left / \frac{a}{b} \right \backslash$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;上下箭头&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\left \uparrow \frac{a}{b} \right \downarrow&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\left \uparrow \frac{a}{b} \right \downarrow$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;混合括号1&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\left [ 0,1 \right )&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\left [ 0,1 \right )$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;混合括号2&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\langle \psi  \mid&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$\langle \psi  \mid $&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;单左括号&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\left { \frac{a}{b} \right .&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$$\left \{ \frac{a}{b} \right .$$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;单右括号&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;\left . \frac{a}{b} \right }&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;$$\left . \frac{a}{b} \right \}$$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;目前hexo中写博客使用Markdown语言，而写博客经常要用到一些数学公式，在Markdown中写LaTeX数学公式则显得非常重要，本节将一些常用的数学公式的写法记录下来，以备日后查询。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="Tools" scheme="http://keyunluo.github.io/categories/Tools/"/>
-    
-    
-      <category term="Markdown" scheme="http://keyunluo.github.io/tags/Markdown/"/>
-    
-      <category term="Latex" scheme="http://keyunluo.github.io/tags/Latex/"/>
     
   </entry>
   
