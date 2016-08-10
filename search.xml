@@ -4,6 +4,262 @@
   
     
     <entry>
+      <title><![CDATA[Hadoop源码学习(8)——Hadoop-Common-IO(4)]]></title>
+      <url>http://keyunluo.github.io/2016/08/10/2016-08-10-hadoop-io-4.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>序列化是指将结构化对象转换成字节流以便在网络上传输或写到磁盘进行永久存储的过程。序列化在分布式数据处理的两大领域经常出现：进程间通信和永久存储。本节学习Hadoop序列化的实现机制。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Java内建序列化机制"><a href="#Java内建序列化机制" class="headerlink" title="Java内建序列化机制"></a>Java内建序列化机制</h2><p>序列化用途：</p>
+<ul>
+<li>作为一种持久化格式：一个对象被序列化后，它的编码可以被存储在磁盘上，供以后反序列化使用。</li>
+<li>作为一种数据通信格式：序列化结果可以从一个正在运行的虚拟机，通过网络传输到另一个虚拟机上。</li>
+<li>作为一种拷贝机制：将对象序列化到内存的缓冲区中，然后通过反序列化，可以得到一个对已存在对象进行深拷贝的新对象。</li>
+</ul>
+<p>Java序列化机制将对象转换成连续的byte数据，使用时只需要在类声明中加入implements Serializable即可。序列化的结果中包含了大量与类相关的信息，父类的信息也会递归的保存下来，导致序列化结果膨胀，对于需要保存和处理大规模数据的Hadoop来说，需要一个新的序列化机制。</p>
+<h2 id="Hadoop序列化机制"><a href="#Hadoop序列化机制" class="headerlink" title="Hadoop序列化机制"></a>Hadoop序列化机制</h2><p>和Java序列化机制不同(在对象流ObjectOutputStream对象上调用writeObject()方法)，Hadoop的序列化机制通过调用对象的write()方法(它带有一个类型为DataOutput的参数)，将对象序列化到流中，反序列化则通过readFields()方法从流中读取数据，并且用户可以复用同一个对象得到多个反序列化的结果。</p>
+<h2 id="Hadoop序列化机制的特征"><a href="#Hadoop序列化机制的特征" class="headerlink" title="Hadoop序列化机制的特征"></a>Hadoop序列化机制的特征</h2><ul>
+<li>紧凑：充分利用数据中心的带宽</li>
+<li>快速：在进程间通信时会大量使用到序列化机制，因此必须减少序列化和反序列化的开销</li>
+<li>可扩展：序列化机制要支持系统间通信协议的升级后和类的定义变化</li>
+<li>互操作：可以支持不同开发语言间的通信，如C++和Java，这样的通信可以通过文件或IPC机制实现</li>
+</ul>
+<p>Java的序列化机制虽然强大，却不符合上面这些要求，Java Serialization将每个对象的类名写入输出流中，导致要占用比原来对象更多的空间，同时，为了减少数据量，同一个类的对象的序列化结果只输出一份元数据，并通过某种形式的引用来共享元数据。引用导致对序列化后的流进行处理时需要保持一些状态。在一些场景中，有一个上百G的文件中，反序列化某个对象，需要访问文件中前面的某一个元数据，这将导致这个文件不能被切割，并通过MapReduce处理。</p>
+<h2 id="Hadoop序列化框架"><a href="#Hadoop序列化框架" class="headerlink" title="Hadoop序列化框架"></a>Hadoop序列化框架</h2><h3 id="相关项目"><a href="#相关项目" class="headerlink" title="相关项目"></a>相关项目</h3><p>大部分的MapReduce程序都使用Writable键-值对作为输入输出，但这并不是Hadoop API指定的，其他的序列化机制也能和Hadoop配合，并应用于MapReduce中。如：Hadoop Avro,Apache Thrift和Google Protocol Buffer。</p>
+<ul>
+<li>Avro:数据序列化系统，用于支持大批量数据交换的应用，它的主要特点是：支持二进制序列化方式，可以便捷、快速的处理大批量数据，动态语言支持良好，Avro提供的机制时动态语言可以很方便地处理Avro数据。</li>
+<li>Thrift:是一个可伸缩的、跨语言的服务开发框架，由FaceBook贡献给开源社区。基于Thrift的跨平台能力封装的Hadoop文件系统Thrift API提供了不同开发语言开发的系统访问HDFS的能力。</li>
+<li>Protocol Buffer：是Google内部的混合语言数据标准，提供了一种轻便高效的结构化数据存储方式，目前提供了C++/Java/Python三种语言的API，广泛应用于Google内部的通信协议、数据存储等领域。</li>
+</ul>
+<h3 id="Serialization序列化框架"><a href="#Serialization序列化框架" class="headerlink" title="Serialization序列化框架"></a>Serialization序列化框架</h3><p>Hadoop提供了一个简单的序列化框架API，用于集成各种序列化实现，该框架由Serialization实现(在org.apache.hadoop.io.serializer包中)。</p>
+<p>Serialization是一个接口，使用抽象工厂的设计模式，提供了一系列和序列化相关并相互依赖对象的接口。通过Serialization应用可以获得类型的Serializer实例，即将一个对象转换为一个字节流的实现实例，Deserializer实例和Serializer实例相反，它用于将一个字节流转换成一个对象。很明显，Serializer和Deserializer相互依赖，所以必须通过抽象工厂Serialization，才能获得对应的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Serialization</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 客户端用于判断序列化实现是否支持该类对象</span></span><br><span class="line">  <span class="function"><span class="keyword">boolean</span> <span class="title">accept</span><span class="params">(Class&lt;?&gt; c)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获得用于序列化对象的Serialization实现</span></span><br><span class="line">  <span class="function">Serializer&lt;T&gt; <span class="title">getSerializer</span><span class="params">(Class&lt;T&gt; c)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获得用于反序列化对象的Deserializer实现</span></span><br><span class="line">  <span class="function">Deserializer&lt;T&gt; <span class="title">getDeserializer</span><span class="params">(Class&lt;T&gt; c)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果需要使用Serializer来执行序列化，一般需要通过open()方法打开Serializer，open()方法传入一个底层的流对象，然后就可以使用serialize()方法序列化对象到底层的流中。最后序列化结束时，通过close()方法关闭Serializer，Serializer接口的相关代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Serializer</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="comment">// 为输出(序列化)对象做准备</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">open</span><span class="params">(OutputStream out)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将对象序列化到底层的流中</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">serialize</span><span class="params">(T t)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 序列化结束，清理</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Hadoop目前支持两个Serialization实现：支持Writable的WritableSerialization和支持Java序列化的JavaSerialization。通过JavaSerialization可以在MapReduce程序中方便地使用标准的Java类型，如int，String等，但Java的ObjectSerialization不如Hadoop序列化机制有效，不推荐使用。</p>
+<h3 id="使用序列化框架"><a href="#使用序列化框架" class="headerlink" title="使用序列化框架"></a>使用序列化框架</h3><p>将io.serializations属性设置为一个由逗号分隔的类名列表，即可以注册Serialization实现。它的默认值包括org.apache.hadoop.io.serializer.WritableSerialization和Avro指定序列化和反序列化类，这意味着只有Writable对象和Avro对象才可以在外部序列化和反序列化。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hadoop源码学习(7)——Hadoop-Common-IO(3)]]></title>
+      <url>http://keyunluo.github.io/2016/08/10/2016-08-10-hadoop-io-3.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>Writable是Hadoop的核心，Hadoop通过它定义了Hadoop中基本的数据类型及其操作，它是实现序列化的基础，本节学习其中的几个重要的工具类的实现。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="WritableUtils"><a href="#WritableUtils" class="headerlink" title="WritableUtils"></a>WritableUtils</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">返回值</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">readCompressedByteArray</td>
+<td style="text-align:left">DataInput in</td>
+<td style="text-align:left">byte []</td>
+<td style="text-align:left">读取压缩的GZIP字节数组</td>
+</tr>
+<tr>
+<td style="text-align:left">skipCompressedByteArray</td>
+<td style="text-align:left">DataInput in</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">跳过压缩的字节数组</td>
+</tr>
+<tr>
+<td style="text-align:left">writeCompressedByteArray</td>
+<td style="text-align:left">DataOutput out , byte[] bytes</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">写入压缩的字节数组</td>
+</tr>
+<tr>
+<td style="text-align:left">readCompressedString</td>
+<td style="text-align:left">DataInput in</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">读取压缩的字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">writeCompressedString</td>
+<td style="text-align:left">DataOutput out , String s</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">写入压缩的字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">writeString</td>
+<td style="text-align:left">DataOutput out ,String s</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">写字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">readString</td>
+<td style="text-align:left">DataInput in</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">读字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">writeStringArray</td>
+<td style="text-align:left">DataOutput out ,String[] s</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">写字符串数组</td>
+</tr>
+<tr>
+<td style="text-align:left">writeCompressedStringArray</td>
+<td style="text-align:left">DataOutput out ,String[] s</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">写压缩字符串数组</td>
+</tr>
+<tr>
+<td style="text-align:left">readStringArray</td>
+<td style="text-align:left">DataInput in</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">读字符串数组</td>
+</tr>
+<tr>
+<td style="text-align:left">readCompressedStringArray</td>
+<td style="text-align:left">DataInput in</td>
+<td style="text-align:left">String []</td>
+<td style="text-align:left">读压缩字符串数组</td>
+</tr>
+<tr>
+<td style="text-align:left">displayByteArray</td>
+<td style="text-align:left">byte[] record</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">显示ByteArray</td>
+</tr>
+<tr>
+<td style="text-align:left">clone</td>
+<td style="text-align:left">T orig,Configuration conf</td>
+<td style="text-align:left">&lt; T extends Writable> T</td>
+<td style="text-align:left">使用序列化拷贝一个writable object到buffer中</td>
+</tr>
+<tr>
+<td style="text-align:left">cloneInto</td>
+<td style="text-align:left">Writable dst , Writable src</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">已经弃用的方法，功能同上面拷贝一样</td>
+</tr>
+<tr>
+<td style="text-align:left">writeVInt</td>
+<td style="text-align:left">DataOutput stream, int i</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">写VInt型数据</td>
+</tr>
+<tr>
+<td style="text-align:left">writeVLong</td>
+<td style="text-align:left">DataOutput stream, long i</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">写VLong型数据</td>
+</tr>
+<tr>
+<td style="text-align:left">readLong</td>
+<td style="text-align:left">DataInput stream</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">读Long型数据</td>
+</tr>
+<tr>
+<td style="text-align:left">readVInt</td>
+<td style="text-align:left">DataInput stream</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">读VInt型数据</td>
+</tr>
+<tr>
+<td style="text-align:left">readVIntInRange</td>
+<td style="text-align:left">DataInput stream,int lower,int upper</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">读VInt型数据,验证其处于[lower,upper]之间</td>
+</tr>
+<tr>
+<td style="text-align:left">isNegativeVInt</td>
+<td style="text-align:left">byte value</td>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">判断byte第一位是否为负</td>
+</tr>
+<tr>
+<td style="text-align:left">decodeVIntSize</td>
+<td style="text-align:left">byte value</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">通过第一位返回bytes大小</td>
+</tr>
+<tr>
+<td style="text-align:left">getVIntSize</td>
+<td style="text-align:left">long i</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">获得变长存储的整数编码长度</td>
+</tr>
+<tr>
+<td style="text-align:left">readEnum</td>
+<td style="text-align:left">DataInput in,Class<t> enumType</t></td>
+<td style="text-align:left">&lt; T extends Enum &lt; T &gt;&gt; T</td>
+<td style="text-align:left">从DataInput中读取枚举值</td>
+</tr>
+<tr>
+<td style="text-align:left">writeEnum</td>
+<td style="text-align:left">DataOutput out,Enum &lt; ?&gt; enumVal</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">把字符串类型的枚举值写入DataOutput</td>
+</tr>
+<tr>
+<td style="text-align:left">skipFully</td>
+<td style="text-align:left">DataInput in, int len</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">在输入流中跳过len长度的字节</td>
+</tr>
+<tr>
+<td style="text-align:left">toByteArray</td>
+<td style="text-align:left">Wriatble… writables</td>
+<td style="text-align:left">byte[]</td>
+<td style="text-align:left">把Writable转换成byte array</td>
+</tr>
+<tr>
+<td style="text-align:left">readStringSafely</td>
+<td style="text-align:left">DataInput in,int maxLength</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">读取字符串，但是检查正确性</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h2><ul>
+<li>encode：将String使用UTF-8编码成字节bytes,如果replace参数为true，那么难看的输入将会被替换的字母U+FFFD代替，否则抛出一个MalformedInputException</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title">encode</span><span class="params">(String string, <span class="keyword">boolean</span> replace)</span></span><br><span class="line">    <span class="keyword">throws</span> CharacterCodingException </span>&#123;</span><br><span class="line">    CharsetEncoder encoder = ENCODER_FACTORY.get();</span><br><span class="line">    <span class="keyword">if</span> (replace) &#123;</span><br><span class="line">      encoder.onMalformedInput(CodingErrorAction.REPLACE);</span><br><span class="line">      encoder.onUnmappableCharacter(CodingErrorAction.REPLACE);</span><br><span class="line">    &#125;</span><br><span class="line">    ByteBuffer bytes =</span><br><span class="line">      encoder.encode(CharBuffer.wrap(string.toCharArray()));</span><br><span class="line">    <span class="keyword">if</span> (replace) &#123;</span><br><span class="line">      encoder.onMalformedInput(CodingErrorAction.REPORT);</span><br><span class="line">      encoder.onUnmappableCharacter(CodingErrorAction.REPORT);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> bytes;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>decode：将byte array使用UTF-8编码成字符串String,如果replace参数为true，那么难看的输入将会被替换的字母U+FFFD代替，否则抛出一个MalformedInputException</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">decode</span><span class="params">(ByteBuffer utf8, <span class="keyword">boolean</span> replace)</span></span><br><span class="line">  <span class="keyword">throws</span> CharacterCodingException </span>&#123;</span><br><span class="line">  CharsetDecoder decoder = DECODER_FACTORY.get();</span><br><span class="line">  <span class="keyword">if</span> (replace) &#123;</span><br><span class="line">    decoder.onMalformedInput(</span><br><span class="line">        java.nio.charset.CodingErrorAction.REPLACE);</span><br><span class="line">    decoder.onUnmappableCharacter(CodingErrorAction.REPLACE);</span><br><span class="line">  &#125;</span><br><span class="line">  String str = decoder.decode(utf8).toString();</span><br><span class="line">  <span class="comment">// set decoder back to its default value: REPORT</span></span><br><span class="line">  <span class="keyword">if</span> (replace) &#123;</span><br><span class="line">    decoder.onMalformedInput(CodingErrorAction.REPORT);</span><br><span class="line">    decoder.onUnmappableCharacter(CodingErrorAction.REPORT);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> str;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>readString：从输入流中读取UTF8 编码的String，附加最大尺寸</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">readString</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> readString(in, Integer.MAX_VALUE);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">readString</span><span class="params">(DataInput in, <span class="keyword">int</span> maxLength)</span></span><br><span class="line">    <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> length = WritableUtils.readVIntInRange(in, <span class="number">0</span>, maxLength);</span><br><span class="line">  <span class="keyword">byte</span> [] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[length];</span><br><span class="line">  in.readFully(bytes, <span class="number">0</span>, length);</span><br><span class="line">  <span class="keyword">return</span> decode(bytes);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="ObjectWritable"><a href="#ObjectWritable" class="headerlink" title="ObjectWritable"></a>ObjectWritable</h2><p>针对Java基本类型、字符串、枚举、Writable、空值、Writable的其他子类，ObjectWritable提供了一个封装，适用于字段需要使用多种类型。ObjectWritable可用于Hadoop的远程调用中参数的序列化和反序列化。ObjectWritable的另一个典型应用是在需要序列化不同类型的对象到某一个字段，如在一个SequenceFile的值保存不同类型的对象时，可以将该值声明为ObjectWritable。</p>
+<p>ObjectWritable包含三个成员变量：被封装的对象实例instance、该对象运行时类的class对象declaredClass、Configuration对象conf。</p>
+<p>ObjectWritable的write方法调用的是静态方法ObjectWritable.writeObject(),该方法可以向DataOutput接口中写入各种Java对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFields</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    readObject(in, <span class="keyword">this</span>, <span class="keyword">this</span>.conf);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(DataOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    writeObject(out, instance, declaredClass, conf);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(DataOutput out, Object instance,</span><br><span class="line">                                 Class declaredClass,</span><br><span class="line">                                 Configuration conf)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    writeObject(out, instance, declaredClass, conf, <span class="keyword">false</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(DataOutput out, Object instance,</span><br><span class="line">        Class declaredClass, Configuration conf, <span class="keyword">boolean</span> allowCompactArrays)</span></span><br><span class="line">    <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;                       <span class="comment">// null</span></span><br><span class="line">      instance = <span class="keyword">new</span> NullInstance(declaredClass, conf);</span><br><span class="line">      declaredClass = Writable.class;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Special case: must come before writing out the declaredClass.</span></span><br><span class="line">    <span class="comment">// If this is an eligible array of primitives,</span></span><br><span class="line">    <span class="comment">// wrap it in an ArrayPrimitiveWritable$Internal wrapper class.</span></span><br><span class="line">    <span class="keyword">if</span> (allowCompactArrays &amp;&amp; declaredClass.isArray()</span><br><span class="line">        &amp;&amp; instance.getClass().getName().equals(declaredClass.getName())</span><br><span class="line">        &amp;&amp; instance.getClass().getComponentType().isPrimitive()) &#123;</span><br><span class="line">      instance = <span class="keyword">new</span> ArrayPrimitiveWritable.Internal(instance);</span><br><span class="line">      declaredClass = ArrayPrimitiveWritable.Internal.class;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 写出declaredClass的规范名</span></span><br><span class="line">    UTF8.writeString(out, declaredClass.getName()); <span class="comment">// always write declared</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (declaredClass.isArray()) &#123;     <span class="comment">// non-primitive or non-compact array</span></span><br><span class="line">      <span class="keyword">int</span> length = Array.getLength(instance);</span><br><span class="line">      out.writeInt(length);</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">        writeObject(out, Array.get(instance, i),</span><br><span class="line">            declaredClass.getComponentType(), conf, allowCompactArrays);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == ArrayPrimitiveWritable.Internal.class) &#123;</span><br><span class="line">      ((ArrayPrimitiveWritable.Internal) instance).write(out);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == String.class) &#123;   <span class="comment">// String</span></span><br><span class="line">      UTF8.writeString(out, (String)instance);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass.isPrimitive()) &#123;     <span class="comment">// primitive type</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (declaredClass == Boolean.TYPE) &#123;        <span class="comment">// boolean</span></span><br><span class="line">        out.writeBoolean(((Boolean)instance).booleanValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Character.TYPE) &#123; <span class="comment">// char</span></span><br><span class="line">        out.writeChar(((Character)instance).charValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Byte.TYPE) &#123;    <span class="comment">// byte</span></span><br><span class="line">        out.writeByte(((Byte)instance).byteValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Short.TYPE) &#123;   <span class="comment">// short</span></span><br><span class="line">        out.writeShort(((Short)instance).shortValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Integer.TYPE) &#123; <span class="comment">// int</span></span><br><span class="line">        out.writeInt(((Integer)instance).intValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Long.TYPE) &#123;    <span class="comment">// long</span></span><br><span class="line">        out.writeLong(((Long)instance).longValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Float.TYPE) &#123;   <span class="comment">// float</span></span><br><span class="line">        out.writeFloat(((Float)instance).floatValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Double.TYPE) &#123;  <span class="comment">// double</span></span><br><span class="line">        out.writeDouble(((Double)instance).doubleValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Void.TYPE) &#123;    <span class="comment">// void</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Not a primitive: "</span>+declaredClass);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass.isEnum()) &#123;         <span class="comment">// enum</span></span><br><span class="line">      UTF8.writeString(out, ((Enum)instance).name());</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Writable.class.isAssignableFrom(declaredClass)) &#123; <span class="comment">// Writable</span></span><br><span class="line">      UTF8.writeString(out, instance.getClass().getName());</span><br><span class="line">      ((Writable)instance).write(out);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Message.class.isAssignableFrom(declaredClass)) &#123;</span><br><span class="line">      ((Message)instance).writeDelimitedTo(</span><br><span class="line">          DataOutputOutputStream.constructOutputStream(out));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Can't write: "</span>+instance+<span class="string">" as "</span>+declaredClass);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">readObject</span><span class="params">(DataInput in, Configuration conf)</span></span><br><span class="line">    <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> readObject(in, <span class="keyword">null</span>, conf);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">readObject</span><span class="params">(DataInput in, ObjectWritable objectWritable, Configuration conf)</span></span><br><span class="line">    <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    String className = UTF8.readString(in);</span><br><span class="line">    Class&lt;?&gt; declaredClass = PRIMITIVE_NAMES.get(className);</span><br><span class="line">    <span class="keyword">if</span> (declaredClass == <span class="keyword">null</span>) &#123;</span><br><span class="line">      declaredClass = loadClass(conf, className);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Object instance;</span><br><span class="line"></span><br><span class="line">    Writable writable = WritableFactories.newInstance(instanceClass, conf);</span><br><span class="line">    writable.readFields(in);</span><br><span class="line">    instance = writable;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>writeObject()方法首先输出对象的类名(通过对象对应的Class对象的getName()方法获得)，然后根据传入对象的模型，分情况序列化对象到输出流中。在ObjectWritable.writeObject()的逻辑中，需要分别处理null、Java数组、字符串、Java基本类型、枚举和Writable的子类6种情况，由于类的继承，处理Writable时，序列化的结果包含对象类名，对象实际类名和对象序列化结果三部分。</p>
+<p>需要对象实际类名：根据Java的单根继承规则，ObjectWritable中传入的declaredClass，可以是传入instance对象对应的类的对象，也可以是instance对象的父类的类对象。但是在序列化和反序列化时，往往不能使用父类的序列化方法(如write方法)来序列化子类对象，所以在序列化结果重必须记住对象的实际类名。</p>
+<p>和输出对应，ObjectWritable的readFields()方法调用的是静态方法ObjectWritable.readObject(),该方法的实现和writeObject()类似，但其依赖于WritableFactories类。WritableFactories类允许非公有的Writable子类定义一个对象工厂，有该工厂创建Writable对象，如在上面的readObject()代码中，通过WritableFactories的静态方法newInstance()，可以创建类型为instanceClass的Writable子对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 保存了类型和WritableFactory工厂的对应关系</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;Class, WritableFactory&gt; CLASS_TO_FACTORY =</span><br><span class="line">    <span class="keyword">new</span> ConcurrentHashMap&lt;Class, WritableFactory&gt;();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setFactory</span><span class="params">(Class c, WritableFactory factory)</span> </span>&#123;</span><br><span class="line">    CLASS_TO_FACTORY.put(c, factory);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> WritableFactory <span class="title">getFactory</span><span class="params">(Class c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> CLASS_TO_FACTORY.get(c);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Writable <span class="title">newInstance</span><span class="params">(Class&lt;? extends Writable&gt; c, Configuration conf)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 根据输入类型查找对应的工厂对象</span></span><br><span class="line">    WritableFactory factory = WritableFactories.getFactory(c);</span><br><span class="line">    <span class="keyword">if</span> (factory != <span class="keyword">null</span>) &#123;</span><br><span class="line">      Writable result = factory.newInstance();</span><br><span class="line">      <span class="comment">// 如果该对象是可配置的，newInstance会通过对象的setConf()方法配置对象</span></span><br><span class="line">      <span class="keyword">if</span> (result <span class="keyword">instanceof</span> Configurable) &#123;</span><br><span class="line">        ((Configurable) result).setConf(conf);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 采用传统的反射工具ReflectionUtils创建对象</span></span><br><span class="line">      <span class="keyword">return</span> ReflectionUtils.newInstance(c, conf);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用一个定义的工厂创建一个类的新实例</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Writable <span class="title">newInstance</span><span class="params">(Class&lt;? extends Writable&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> newInstance(c, <span class="keyword">null</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>WritableFactories提供注册机制，使得这些Writable的子类可以将该工厂登记到WritableFactories的静态成员变量CLASS_TO_FACTORY中。</p>
+<h2 id="GenericWritable"><a href="#GenericWritable" class="headerlink" title="GenericWritable"></a>GenericWritable</h2><p>ObjectWritable作为一种通用机制，相当浪费资源，它需要为每一个输出写入封装类型的名字，如果类型的数量不是很多，而且可以事先知道，则可以使用一个静态类型数组来提高效率，并使用数组索引作为类型的序列化引用。为此，引入了GenericWritable。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericWritable</span> <span class="keyword">implements</span> <span class="title">Writable</span>, <span class="title">Configurable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> NOT_SET = -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">byte</span> type = NOT_SET;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> Writable instance;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> Configuration conf = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span><br><span class="line">   * Set the instance that is wrapped.</span><br><span class="line">   *</span><br><span class="line">   * <span class="doctag">@param</span> obj</span><br><span class="line">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(Writable obj)</span> </span>&#123;</span><br><span class="line">    instance = obj;</span><br><span class="line">    Class&lt;? extends Writable&gt; instanceClazz = instance.getClass();</span><br><span class="line">    Class&lt;? extends Writable&gt;[] clazzes = getTypes();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; clazzes.length; i++) &#123;</span><br><span class="line">      Class&lt;? extends Writable&gt; clazz = clazzes[i];</span><br><span class="line">      <span class="keyword">if</span> (clazz.equals(instanceClazz)) &#123;</span><br><span class="line">        type = (<span class="keyword">byte</span>) i;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"The type of instance is: "</span></span><br><span class="line">                               + instance.getClass() + <span class="string">", which is NOT registered."</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span><br><span class="line">   * Return the wrapped instance.</span><br><span class="line">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Writable <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"GW["</span> + (instance != <span class="keyword">null</span> ? (<span class="string">"class="</span> + instance.getClass().getName() +</span><br><span class="line">        <span class="string">",value="</span> + instance.toString()) : <span class="string">"(null)"</span>) + <span class="string">"]"</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFields</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    type = in.readByte();</span><br><span class="line">    Class&lt;? extends Writable&gt; clazz = getTypes()[type &amp; <span class="number">0xff</span>];</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      instance = ReflectionUtils.newInstance(clazz, conf);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Cannot initialize the class: "</span> + clazz);</span><br><span class="line">    &#125;</span><br><span class="line">    instance.readFields(in);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(DataOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (type == NOT_SET || instance == <span class="keyword">null</span>)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"The GenericWritable has NOT been set correctly. type="</span></span><br><span class="line">                            + type + <span class="string">", instance="</span> + instance);</span><br><span class="line">    out.writeByte(type);</span><br><span class="line">    instance.write(out);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span><br><span class="line">   * Return all classes that may be wrapped.  Subclasses should implement this</span><br><span class="line">   * to return a constant array of classes.</span><br><span class="line">   */</span></span><br><span class="line">  <span class="keyword">abstract</span> <span class="keyword">protected</span> Class&lt;? extends Writable&gt;[] getTypes();</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Configuration <span class="title">getConf</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> conf;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setConf</span><span class="params">(Configuration conf)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.conf = conf;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当两个具有相同类型的key但是值类型不同的sequence file在map阶段结束到reduce阶段时，多种类型的值类型是不被允许的。在这种情况下，这个类能够帮助你包装不同类型的实例。</p>
+<p>和ObjectWritable相比，这个类效率更加高，因为ObjectWritable会在每一个Key-Value键值对中追加类声明到输出文件中。</p>
+<ul>
+<li><p>使用GenericWritable类的一般方法</p>
+<ul>
+<li>写自定义的class，例如GenericObject，它继承自GenericWritable</li>
+<li>实现抽象方法 getTypes(),定义在应用中在GenericObject里将要包装的类。注意：在getTypes()方法里定义的类必须实现Writable接口。</li>
+</ul>
+</li>
+</ul>
+<p>一个简单示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericObject</span> <span class="keyword">extends</span> <span class="title">GenericWritable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> Class[] CLASSES = &#123;</span><br><span class="line">               ClassType1.class,</span><br><span class="line">               ClassType2.class,</span><br><span class="line">               ClassType3.class,</span><br><span class="line">               &#125;;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">protected</span> Class[] getTypes() &#123;</span><br><span class="line">       <span class="keyword">return</span> CLASSES;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Hadoop源码学习(6)——Hadoop-Common-IO(2)]]></title>
       <url>http://keyunluo.github.io/2016/08/09/2016-08-09-hadoop-io-2.html</url>
       <content type="html"><![CDATA[<blockquote>
