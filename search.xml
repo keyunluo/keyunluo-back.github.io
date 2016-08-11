@@ -4,6 +4,238 @@
   
     
     <entry>
+      <title><![CDATA[Hadoop源码学习(9)——Hadoop-Common-IO(5)]]></title>
+      <url>http://keyunluo.github.io/2016/08/11/2016-08-11-hadoop-io-5.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>Avro是一个独立于编程语言的数据序列化系统，该项目由Hadoop之父Doug Cutting创建，旨在解决Hadoop中Writable类型的不足：缺乏语言的可移植性。拥有一个可被多种语言(C/C++/C#/Java/PHP/Python/Ruby)处理的数据格式与绑定到单一语言的数据格式相比，前者更容易与公众共享数据。本节学习Avro数据序列化系统。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Avro特点"><a href="#Avro特点" class="headerlink" title="Avro特点"></a>Avro特点</h2><ul>
+<li>Avro数据使用语言无关的模式定义的，代码生成是可选的</li>
+<li>Avro模式通常用JSON来写，数据通常采用二进制格式来编码</li>
+<li>Avro规范精确定义所有实现都必须支持的二进制格式</li>
+<li>Avro有丰富的模式解析能力，支持模式演化，即新模式能够读取旧模式定义的数据，旧模式也能读取新模式的数据同时忽略新模式中新加入的字段</li>
+<li>Avro为一系列对象指定了一个对象容器格式——类似于Hadoop的顺序文件，Avro数据文件包含元数据项，使此文件可以自我声明，并且Avro数据支持压缩和可切分</li>
+<li>Avro还可以用于RPC</li>
+</ul>
+<h2 id="Avro数据类型和模式"><a href="#Avro数据类型和模式" class="headerlink" title="Avro数据类型和模式"></a>Avro数据类型和模式</h2><p>Avro定义了少量数据基本类型，它们可用于以写模式的方式来构建应用特定的数据结构，考虑到互操作性，其实现必须支持所有的Avro类型。</p>
+<p>Avro的基本类型如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">"type"</span>:<span class="string">"null"</span>&#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">模式示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">null</td>
+<td style="text-align:left">空值</td>
+<td style="text-align:left">“null”</td>
+</tr>
+<tr>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">布尔类型</td>
+<td style="text-align:left">“boolean”</td>
+</tr>
+<tr>
+<td style="text-align:left">int</td>
+<td style="text-align:left">32位带符号整数</td>
+<td style="text-align:left">“int”</td>
+</tr>
+<tr>
+<td style="text-align:left">long</td>
+<td style="text-align:left">64位带符号整数</td>
+<td style="text-align:left">“long”</td>
+</tr>
+<tr>
+<td style="text-align:left">float</td>
+<td style="text-align:left">单精度(32-bit) IEEE 754 浮点数</td>
+<td style="text-align:left">“float”</td>
+</tr>
+<tr>
+<td style="text-align:left">double</td>
+<td style="text-align:left">双精度 (64-bit) IEEE 754 浮点数</td>
+<td style="text-align:left">“double”</td>
+</tr>
+<tr>
+<td style="text-align:left">bytes</td>
+<td style="text-align:left">8位无符号字节序列</td>
+<td style="text-align:left">“bytes”</td>
+</tr>
+<tr>
+<td style="text-align:left">string</td>
+<td style="text-align:left">Unicode字符序列</td>
+<td style="text-align:left">“string”</td>
+</tr>
+</tbody>
+</table>
+<p>Avro复杂类型如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">模式示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">array</td>
+<td style="text-align:left">一个排过序的对象集合。特定数组中的所有对象必须模式相同</td>
+<td style="text-align:left">{ “type”: “array”,”items”: “long”}</td>
+</tr>
+<tr>
+<td style="text-align:left">map</td>
+<td style="text-align:left">未排过序的键值对。键必须是字符串，值可以是任何类型，但一个特定map中所有值必须模式相同</td>
+<td style="text-align:left">{“type”: “map”,”values”:”string”}</td>
+</tr>
+<tr>
+<td style="text-align:left">record</td>
+<td style="text-align:left">一个任意类型的命名字段集合</td>
+<td style="text-align:left">{“type”: “record”,”name”:”WeatherRecord”,”doc”: “A weather reading.”,”fields”: [{“name”:”year”, “type”:”int”},{“name”:”temperature”,”type”: “int”},{“name”:”stationId”,”type”: “string”}]}</td>
+</tr>
+<tr>
+<td style="text-align:left">enum</td>
+<td style="text-align:left">一个命名的值集合</td>
+<td style="text-align:left">{“type”: “enum”,”name”:”Cutlery”,”doc”: “An eating utensil.”,”symbols”:[“KNIFE”, “FORK”,”SPOON”]}</td>
+</tr>
+<tr>
+<td style="text-align:left">fixed</td>
+<td style="text-align:left">一组固定数量的8位无符号字节</td>
+<td style="text-align:left">{“type”: “fixed”,”name”:”Md5Hash”,”size”: 16}</td>
+</tr>
+<tr>
+<td style="text-align:left">union</td>
+<td style="text-align:left">模式的并集，并集可用JSON数组表示，其中每个元素为一个模式。并集表示的数据必须与其中一个模式相匹配</td>
+<td style="text-align:left">[“null”,”string”,{“type”: “map”,”values”: “string”}]</td>
+</tr>
+</tbody>
+</table>
+<p>一种语言可能有多种表示或映射。所有的语言都支持动态映射，即使运行前并不知道具体模式，也可以使用动态映射。对此，Java称为通用映射。</p>
+<p>另外，Java和C++实现可以自动生成代码来表示符合某种Avro模式的数据。代码生成(code generation，Java中称为“特殊映射”)能优化数据处理，如果读写数据之前就有一个模式备份。那么，为用户代码生成的类和通用代码生成的类相比，前者提供的API更贴近问题域。</p>
+<p>Java拥有第三类映射，即自反映射(reflect mapping,将Avro类型映射到已有的Java类型)，它的速度比通用映射和特殊映射都慢，所以不推荐在新应用中使用。</p>
+<p>特殊映射与通用映射仅在record，enum，fixed是那个类型方面有区别，其他所有类型均有自动生成的类(类名由name属性和可选的namespace属性决定)。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Avro类型</th>
+<th style="text-align:left">通用Java映射</th>
+<th style="text-align:left">特殊Java映射</th>
+<th style="text-align:left">Java自反映射</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">null</td>
+<td style="text-align:left">null type</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">int</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">byte, short, int</td>
+</tr>
+<tr>
+<td style="text-align:left">long</td>
+<td style="text-align:left">long</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">float</td>
+<td style="text-align:left">float</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">double</td>
+<td style="text-align:left">double</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">bytes</td>
+<td style="text-align:left">java.nio.ByteBuffer</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">字节数组</td>
+</tr>
+<tr>
+<td style="text-align:left">string</td>
+<td style="text-align:left">org.apache.avro.util.Utf8(高效，优先使用) or java.lang.String</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">java.lang.String</td>
+</tr>
+<tr>
+<td style="text-align:left">array</td>
+<td style="text-align:left">org.apache.avro.generic.GenericArray</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">数组或 java.util.Collection</td>
+</tr>
+<tr>
+<td style="text-align:left">map</td>
+<td style="text-align:left">java.util.Map</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">record</td>
+<td style="text-align:left">org.apache.avro.generic.GenericRecord</td>
+<td style="text-align:left">生成实现org.apache.avro.specific.SpecificRecord 类的实现</td>
+<td style="text-align:left">具有零参数构造函数的任意用户类，继承了所有不传递的实例字段</td>
+</tr>
+<tr>
+<td style="text-align:left">enum</td>
+<td style="text-align:left">java.lang.String</td>
+<td style="text-align:left">生成Java enum类型</td>
+<td style="text-align:left">任意Java enum类型</td>
+</tr>
+<tr>
+<td style="text-align:left">fixed</td>
+<td style="text-align:left">org.apache.avro. generic.GenericFixed</td>
+<td style="text-align:left">生成实现org.apache.avro.specific.SpecificFixed</td>
+<td style="text-align:left">org.apache.avro.generic.genericFixed</td>
+</tr>
+<tr>
+<td style="text-align:left">union</td>
+<td style="text-align:left">java.lang.Object</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="内存中的序列化和反序列化"><a href="#内存中的序列化和反序列化" class="headerlink" title="内存中的序列化和反序列化"></a>内存中的序列化和反序列化</h2><p>Avro为序列化和反序列化提供了API，如果想把Avro集成到现有系统(比如已定义帧格式的消息系统)，这些API函数就很有用。其他情况，请考虑使用Avro的数据文件格式。</p>
+<h3 id="通用API"><a href="#通用API" class="headerlink" title="通用API"></a>通用API</h3><p>让我们写一个Java程序从数据流读写Avro数据。首先以一个简单的Avro模式为例，它用于表示以记录形式出现的一对字符串：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">"type"</span>: <span class="string">"record"</span>,</span><br><span class="line"><span class="attr">"name"</span>: <span class="string">"StringPair"</span>,</span><br><span class="line"><span class="attr">"doc"</span>: <span class="string">"A pair of strings."</span>,</span><br><span class="line"><span class="attr">"fields"</span>: [</span><br><span class="line">&#123;<span class="attr">"name"</span>: <span class="string">"left"</span>, <span class="attr">"type"</span>: <span class="string">"string"</span>&#125;,</span><br><span class="line">&#123;<span class="attr">"name"</span>: <span class="string">"right"</span>, <span class="attr">"type"</span>: <span class="string">"string"</span>&#125;</span><br><span class="line">]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果这一模式存储在类路径下一个名为StringPair.avsc的文件中吗，我们可以通过下面两行代码进行加载：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Schema.Parser parser = <span class="keyword">new</span> Schema.Parser();</span><br><span class="line">Schema schema = parser.parse(getClass().getResourceAsStream(<span class="string">"StringPair.avsc"</span>));</span><br></pre></td></tr></table></figure>
+<p>我们可以使用以下通用API新建一个Avro记录的实例：
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GenericRecord datum = <span class="keyword">new</span> GenericData.Record(schema);</span><br><span class="line">datum.put(<span class="string">"left"</span>,<span class="keyword">new</span> Utf8(<span class="string">"L"</span>));</span><br><span class="line">datum.put(<span class="string">"right"</span>,<span class="keyword">new</span> Utf8(<span class="string">"R"</span>));</span><br></pre></td></tr></table></figure></p>
+<p>接下来，将记录序列化到输出流中：
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ByteArrayOutputStream out = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">DatumWriter&lt;GenericRecord&gt; writer =</span><br><span class="line"><span class="keyword">new</span> GenericDatumWriter&lt;GenericRecord&gt;(schema);</span><br><span class="line">Encoder encoder = EncoderFactory.get().binaryEncoder(out, <span class="keyword">null</span>);</span><br><span class="line">writer.write(datum, encoder);</span><br><span class="line">encoder.flush();</span><br><span class="line">out.close();</span><br></pre></td></tr></table></figure></p>
+<p>这里有两个重要的对象：DatumWriter和Encoder。DatumWriter对象将数据对象翻译成Encoder对象可以理解的模型，然后由后者写入到输出流。这里，我们使用GenericDatumWriter对象，它将GenericRecord字段的值传递给Encoder对象。我们将null传给encoder工厂，因为我们这里没有重用先前构建的encoder。</p>
+<p>我们可以使用反向的处理过程从字节缓冲区中读回对象：
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DatumReader&lt;GenericRecord&gt; reader =</span><br><span class="line"><span class="keyword">new</span> GenericDatumReader&lt;GenericRecord&gt;(schema);</span><br><span class="line">Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(),</span><br><span class="line"><span class="keyword">null</span>);</span><br><span class="line">GenericRecord result = reader.read(<span class="keyword">null</span>, decoder);</span><br><span class="line">assertThat(result.get(<span class="string">"left"</span>).toString(), is(<span class="string">"L"</span>));</span><br><span class="line">assertThat(result.get(<span class="string">"right"</span>).toString(), is(<span class="string">"R"</span>));</span><br></pre></td></tr></table></figure></p>
+<p>我们需要传递空值(null)并调用binaryDecoder()和read()方法，因为这里没有重用对象(分别是decoder或记录)。</p>
+<p>由result.get(“left”)和result.get(“right”)的输出对象是Utf8类型，因此我们需要通过调用toString()方法将他们转型为Java String类型。</p>
+<h3 id="特定API"><a href="#特定API" class="headerlink" title="特定API"></a>特定API</h3><p>通过使用Avro的Maven插件编译模式，我们可以根据模式文件生成StringPair类，以下是与Maven Project Object Model(POM)相关的部分：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span>&gt;</span></span><br><span class="line">...</span><br><span class="line">  <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.avro<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>avro-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;avro.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>schemas<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>generate-sources<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">goal</span>&gt;</span>schema<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">include</span>&gt;</span>StringPair.avsc<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">stringType</span>&gt;</span>String<span class="tag">&lt;/<span class="name">stringType</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">sourceDirectory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">sourceDirectory</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>$&#123;project.build.directory&#125;/generated-sources/java</span><br><span class="line">              <span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在序列化和反序列化的代码中，我们构建一个StringPair实例来替代GenericRecord对象(使用SpecificDatumWriter类将该对象写入数据流),并使用SpecificDatumRecorder类读回数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">StringPair datum = <span class="keyword">new</span> StringPair();</span><br><span class="line">datum.setLeft(<span class="string">"L"</span>);</span><br><span class="line">datum.setRight(<span class="string">"R"</span>);</span><br><span class="line">ByteArrayOutputStream out = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">DatumWriter&lt;StringPair&gt; writer =</span><br><span class="line"><span class="keyword">new</span> SpecificDatumWriter&lt;StringPair&gt;(StringPair.class);</span><br><span class="line">Encoder encoder = EncoderFactory.get().binaryEncoder(out, <span class="keyword">null</span>);</span><br><span class="line">writer.write(datum, encoder);</span><br><span class="line">encoder.flush();</span><br><span class="line">out.close();</span><br><span class="line">DatumReader&lt;StringPair&gt; reader =</span><br><span class="line"><span class="keyword">new</span> SpecificDatumReader&lt;StringPair&gt;(StringPair.class);</span><br><span class="line">Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(),</span><br><span class="line"><span class="keyword">null</span>);</span><br><span class="line">StringPair result = reader.read(<span class="keyword">null</span>, decoder);</span><br><span class="line">assertThat(result.getLeft(), is(<span class="string">"L"</span>));</span><br><span class="line">assertThat(result.getRight(), is(<span class="string">"R"</span>));</span><br></pre></td></tr></table></figure>
+<p>从Avro1.6.0版本开始，生成的Java代码中包含有get()和set()方法，因此不用再写datum.setLeft(“L”)和result.getLeft()方法。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Hadoop源码学习(8)——Hadoop-Common-IO(4)]]></title>
       <url>http://keyunluo.github.io/2016/08/10/2016-08-10-hadoop-io-4.html</url>
       <content type="html"><![CDATA[<blockquote>

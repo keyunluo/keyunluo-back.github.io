@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-08-10T17:43:45.557Z</updated>
+  <updated>2016-08-11T19:09:07.946Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -14,6 +14,256 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hadoop源码学习(9)——Hadoop-Common-IO(5)</title>
+    <link href="http://keyunluo.github.io/2016/08/11/2016-08-11-hadoop-io-5.html"/>
+    <id>http://keyunluo.github.io/2016/08/11/2016-08-11-hadoop-io-5.html</id>
+    <published>2016-08-11T14:25:02.000Z</published>
+    <updated>2016-08-11T19:09:07.946Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Avro是一个独立于编程语言的数据序列化系统，该项目由Hadoop之父Doug Cutting创建，旨在解决Hadoop中Writable类型的不足：缺乏语言的可移植性。拥有一个可被多种语言(C/C++/C#/Java/PHP/Python/Ruby)处理的数据格式与绑定到单一语言的数据格式相比，前者更容易与公众共享数据。本节学习Avro数据序列化系统。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;Avro特点&quot;&gt;&lt;a href=&quot;#Avro特点&quot; class=&quot;headerlink&quot; title=&quot;Avro特点&quot;&gt;&lt;/a&gt;Avro特点&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Avro数据使用语言无关的模式定义的，代码生成是可选的&lt;/li&gt;
+&lt;li&gt;Avro模式通常用JSON来写，数据通常采用二进制格式来编码&lt;/li&gt;
+&lt;li&gt;Avro规范精确定义所有实现都必须支持的二进制格式&lt;/li&gt;
+&lt;li&gt;Avro有丰富的模式解析能力，支持模式演化，即新模式能够读取旧模式定义的数据，旧模式也能读取新模式的数据同时忽略新模式中新加入的字段&lt;/li&gt;
+&lt;li&gt;Avro为一系列对象指定了一个对象容器格式——类似于Hadoop的顺序文件，Avro数据文件包含元数据项，使此文件可以自我声明，并且Avro数据支持压缩和可切分&lt;/li&gt;
+&lt;li&gt;Avro还可以用于RPC&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;Avro数据类型和模式&quot;&gt;&lt;a href=&quot;#Avro数据类型和模式&quot; class=&quot;headerlink&quot; title=&quot;Avro数据类型和模式&quot;&gt;&lt;/a&gt;Avro数据类型和模式&lt;/h2&gt;&lt;p&gt;Avro定义了少量数据基本类型，它们可用于以写模式的方式来构建应用特定的数据结构，考虑到互操作性，其实现必须支持所有的Avro类型。&lt;/p&gt;
+&lt;p&gt;Avro的基本类型如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight json&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123; &lt;span class=&quot;attr&quot;&gt;&quot;type&quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&quot;null&quot;&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;类型&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;描述&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;模式示例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;null&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;空值&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;“null”&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;boolean&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;布尔类型&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;“boolean”&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;int&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;32位带符号整数&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;“int”&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;long&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;64位带符号整数&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;“long”&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;float&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;单精度(32-bit) IEEE 754 浮点数&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;“float”&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;double&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;双精度 (64-bit) IEEE 754 浮点数&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;“double”&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;bytes&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;8位无符号字节序列&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;“bytes”&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;string&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Unicode字符序列&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;“string”&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Avro复杂类型如下：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;类型&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;描述&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;模式示例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;array&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;一个排过序的对象集合。特定数组中的所有对象必须模式相同&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;{ “type”: “array”,”items”: “long”}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;map&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;未排过序的键值对。键必须是字符串，值可以是任何类型，但一个特定map中所有值必须模式相同&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;{“type”: “map”,”values”:”string”}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;record&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;一个任意类型的命名字段集合&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;{“type”: “record”,”name”:”WeatherRecord”,”doc”: “A weather reading.”,”fields”: [{“name”:”year”, “type”:”int”},{“name”:”temperature”,”type”: “int”},{“name”:”stationId”,”type”: “string”}]}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;enum&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;一个命名的值集合&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;{“type”: “enum”,”name”:”Cutlery”,”doc”: “An eating utensil.”,”symbols”:[“KNIFE”, “FORK”,”SPOON”]}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;fixed&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;一组固定数量的8位无符号字节&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;{“type”: “fixed”,”name”:”Md5Hash”,”size”: 16}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;union&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;模式的并集，并集可用JSON数组表示，其中每个元素为一个模式。并集表示的数据必须与其中一个模式相匹配&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;[“null”,”string”,{“type”: “map”,”values”: “string”}]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;一种语言可能有多种表示或映射。所有的语言都支持动态映射，即使运行前并不知道具体模式，也可以使用动态映射。对此，Java称为通用映射。&lt;/p&gt;
+&lt;p&gt;另外，Java和C++实现可以自动生成代码来表示符合某种Avro模式的数据。代码生成(code generation，Java中称为“特殊映射”)能优化数据处理，如果读写数据之前就有一个模式备份。那么，为用户代码生成的类和通用代码生成的类相比，前者提供的API更贴近问题域。&lt;/p&gt;
+&lt;p&gt;Java拥有第三类映射，即自反映射(reflect mapping,将Avro类型映射到已有的Java类型)，它的速度比通用映射和特殊映射都慢，所以不推荐在新应用中使用。&lt;/p&gt;
+&lt;p&gt;特殊映射与通用映射仅在record，enum，fixed是那个类型方面有区别，其他所有类型均有自动生成的类(类名由name属性和可选的namespace属性决定)。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;Avro类型&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;通用Java映射&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;特殊Java映射&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;Java自反映射&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;null&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;null type&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;boolean&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;boolean&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;int&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;int&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;byte, short, int&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;long&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;long&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;float&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;float&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;double&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;double&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;bytes&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;java.nio.ByteBuffer&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;字节数组&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;string&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;org.apache.avro.util.Utf8(高效，优先使用) or java.lang.String&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;java.lang.String&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;array&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;org.apache.avro.generic.GenericArray&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;数组或 java.util.Collection&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;map&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;java.util.Map&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;record&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;org.apache.avro.generic.GenericRecord&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;生成实现org.apache.avro.specific.SpecificRecord 类的实现&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;具有零参数构造函数的任意用户类，继承了所有不传递的实例字段&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;enum&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;java.lang.String&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;生成Java enum类型&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;任意Java enum类型&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;fixed&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;org.apache.avro. generic.GenericFixed&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;生成实现org.apache.avro.specific.SpecificFixed&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;org.apache.avro.generic.genericFixed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;union&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;java.lang.Object&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;内存中的序列化和反序列化&quot;&gt;&lt;a href=&quot;#内存中的序列化和反序列化&quot; class=&quot;headerlink&quot; title=&quot;内存中的序列化和反序列化&quot;&gt;&lt;/a&gt;内存中的序列化和反序列化&lt;/h2&gt;&lt;p&gt;Avro为序列化和反序列化提供了API，如果想把Avro集成到现有系统(比如已定义帧格式的消息系统)，这些API函数就很有用。其他情况，请考虑使用Avro的数据文件格式。&lt;/p&gt;
+&lt;h3 id=&quot;通用API&quot;&gt;&lt;a href=&quot;#通用API&quot; class=&quot;headerlink&quot; title=&quot;通用API&quot;&gt;&lt;/a&gt;通用API&lt;/h3&gt;&lt;p&gt;让我们写一个Java程序从数据流读写Avro数据。首先以一个简单的Avro模式为例，它用于表示以记录形式出现的一对字符串：&lt;/p&gt;
+&lt;figure class=&quot;highlight json&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;&quot;type&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;record&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;&quot;name&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;StringPair&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;&quot;doc&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;A pair of strings.&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;&quot;fields&quot;&lt;/span&gt;: [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;span class=&quot;attr&quot;&gt;&quot;name&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;left&quot;&lt;/span&gt;, &lt;span class=&quot;attr&quot;&gt;&quot;type&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;string&quot;&lt;/span&gt;&amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;span class=&quot;attr&quot;&gt;&quot;name&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;right&quot;&lt;/span&gt;, &lt;span class=&quot;attr&quot;&gt;&quot;type&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;string&quot;&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果这一模式存储在类路径下一个名为StringPair.avsc的文件中吗，我们可以通过下面两行代码进行加载：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Schema.Parser parser = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Schema.Parser();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Schema schema = parser.parse(getClass().getResourceAsStream(&lt;span class=&quot;string&quot;&gt;&quot;StringPair.avsc&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;我们可以使用以下通用API新建一个Avro记录的实例：
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;GenericRecord datum = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; GenericData.Record(schema);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;datum.put(&lt;span class=&quot;string&quot;&gt;&quot;left&quot;&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Utf8(&lt;span class=&quot;string&quot;&gt;&quot;L&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;datum.put(&lt;span class=&quot;string&quot;&gt;&quot;right&quot;&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Utf8(&lt;span class=&quot;string&quot;&gt;&quot;R&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;接下来，将记录序列化到输出流中：
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ByteArrayOutputStream out = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ByteArrayOutputStream();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;DatumWriter&amp;lt;GenericRecord&amp;gt; writer =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; GenericDatumWriter&amp;lt;GenericRecord&amp;gt;(schema);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Encoder encoder = EncoderFactory.get().binaryEncoder(out, &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;writer.write(datum, encoder);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;encoder.flush();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;out.close();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这里有两个重要的对象：DatumWriter和Encoder。DatumWriter对象将数据对象翻译成Encoder对象可以理解的模型，然后由后者写入到输出流。这里，我们使用GenericDatumWriter对象，它将GenericRecord字段的值传递给Encoder对象。我们将null传给encoder工厂，因为我们这里没有重用先前构建的encoder。&lt;/p&gt;
+&lt;p&gt;我们可以使用反向的处理过程从字节缓冲区中读回对象：
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;DatumReader&amp;lt;GenericRecord&amp;gt; reader =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; GenericDatumReader&amp;lt;GenericRecord&amp;gt;(schema);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;GenericRecord result = reader.read(&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;, decoder);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assertThat(result.get(&lt;span class=&quot;string&quot;&gt;&quot;left&quot;&lt;/span&gt;).toString(), is(&lt;span class=&quot;string&quot;&gt;&quot;L&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assertThat(result.get(&lt;span class=&quot;string&quot;&gt;&quot;right&quot;&lt;/span&gt;).toString(), is(&lt;span class=&quot;string&quot;&gt;&quot;R&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;我们需要传递空值(null)并调用binaryDecoder()和read()方法，因为这里没有重用对象(分别是decoder或记录)。&lt;/p&gt;
+&lt;p&gt;由result.get(“left”)和result.get(“right”)的输出对象是Utf8类型，因此我们需要通过调用toString()方法将他们转型为Java String类型。&lt;/p&gt;
+&lt;h3 id=&quot;特定API&quot;&gt;&lt;a href=&quot;#特定API&quot; class=&quot;headerlink&quot; title=&quot;特定API&quot;&gt;&lt;/a&gt;特定API&lt;/h3&gt;&lt;p&gt;通过使用Avro的Maven插件编译模式，我们可以根据模式文件生成StringPair类，以下是与Maven Project Object Model(POM)相关的部分：&lt;/p&gt;
+&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;project&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;build&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;plugins&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;plugin&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;org.apache.avro&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;avro-maven-plugin&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;$&amp;#123;avro.version&amp;#125;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;executions&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;execution&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;id&lt;/span&gt;&amp;gt;&lt;/span&gt;schemas&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;id&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;phase&lt;/span&gt;&amp;gt;&lt;/span&gt;generate-sources&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;phase&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;goals&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;goal&lt;/span&gt;&amp;gt;&lt;/span&gt;schema&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;goal&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;goals&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;configuration&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;includes&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;include&lt;/span&gt;&amp;gt;&lt;/span&gt;StringPair.avsc&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;include&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;includes&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;stringType&lt;/span&gt;&amp;gt;&lt;/span&gt;String&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;stringType&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;sourceDirectory&lt;/span&gt;&amp;gt;&lt;/span&gt;src/main/resources&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;sourceDirectory&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;outputDirectory&lt;/span&gt;&amp;gt;&lt;/span&gt;$&amp;#123;project.build.directory&amp;#125;/generated-sources/java&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;outputDirectory&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;configuration&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;execution&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;executions&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;plugin&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;plugins&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;build&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;project&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在序列化和反序列化的代码中，我们构建一个StringPair实例来替代GenericRecord对象(使用SpecificDatumWriter类将该对象写入数据流),并使用SpecificDatumRecorder类读回数据：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;StringPair datum = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; StringPair();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;datum.setLeft(&lt;span class=&quot;string&quot;&gt;&quot;L&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;datum.setRight(&lt;span class=&quot;string&quot;&gt;&quot;R&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ByteArrayOutputStream out = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ByteArrayOutputStream();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;DatumWriter&amp;lt;StringPair&amp;gt; writer =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; SpecificDatumWriter&amp;lt;StringPair&amp;gt;(StringPair.class);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Encoder encoder = EncoderFactory.get().binaryEncoder(out, &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;writer.write(datum, encoder);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;encoder.flush();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;out.close();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;DatumReader&amp;lt;StringPair&amp;gt; reader =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; SpecificDatumReader&amp;lt;StringPair&amp;gt;(StringPair.class);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;StringPair result = reader.read(&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;, decoder);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assertThat(result.getLeft(), is(&lt;span class=&quot;string&quot;&gt;&quot;L&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assertThat(result.getRight(), is(&lt;span class=&quot;string&quot;&gt;&quot;R&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;从Avro1.6.0版本开始，生成的Java代码中包含有get()和set()方法，因此不用再写datum.setLeft(“L”)和result.getLeft()方法。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Avro是一个独立于编程语言的数据序列化系统，该项目由Hadoop之父Doug Cutting创建，旨在解决Hadoop中Writable类型的不足：缺乏语言的可移植性。拥有一个可被多种语言(C/C++/C#/Java/PHP/Python/Ruby)处理的数据格式与绑定到单一语言的数据格式相比，前者更容易与公众共享数据。本节学习Avro数据序列化系统。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="SourceCodeLearning" scheme="http://keyunluo.github.io/categories/SourceCodeLearning/"/>
+    
+    
+      <category term="Hadoop" scheme="http://keyunluo.github.io/tags/Hadoop/"/>
+    
+  </entry>
   
   <entry>
     <title>Hadoop源码学习(8)——Hadoop-Common-IO(4)</title>
@@ -1805,170 +2055,6 @@
     
     
       <category term="CentOS" scheme="http://keyunluo.github.io/tags/CentOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>统计学习方法——概论</title>
-    <link href="http://keyunluo.github.io/2016/07/26/2016-07-26-statical-learning-1.html"/>
-    <id>http://keyunluo.github.io/2016/07/26/2016-07-26-statical-learning-1.html</id>
-    <published>2016-07-26T19:25:02.000Z</published>
-    <updated>2016-07-29T12:38:24.895Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;统计学习(statistical learning)做的事情是：基于数据建立概率统计模型，然后用模型对数据进行预测和分析。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h2 id=&quot;统计学习三要素&quot;&gt;&lt;a href=&quot;#统计学习三要素&quot; class=&quot;headerlink&quot; title=&quot;统计学习三要素&quot;&gt;&lt;/a&gt;统计学习三要素&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;模型&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;模型&lt;/strong&gt; 就是所要学习的条件概率分布或决策函数。    $Y=f(X)$ 或 $P(Y|X)$&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;模型的假设空间&lt;/strong&gt; 包括所有可能的条件概率分布或决策函数。&lt;/p&gt;
-&lt;p&gt;$\mathcal{F} = \{f | Y=f_\theta(X), \theta\in R^n \}$&lt;/p&gt;
-&lt;p&gt;或 $ \mathcal{F} = \{P | P_\theta(Y|X), \theta\in R_n \}$。 其中 $ \theta$的取值空间$R^n$称为&lt;strong&gt;参数空间&lt;/strong&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;策略
- &lt;strong&gt;策略&lt;/strong&gt;也即学习的准则。一般来说监督学习的策略即指经验风险或结构风险函数最优化。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;经验风险&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;损失函数 ：$ L(Y, f(X))$&lt;ol&gt;
-&lt;li&gt;0-1损失函数&lt;/li&gt;
-&lt;li&gt;平方损失函数&lt;/li&gt;
-&lt;li&gt;绝对损失函数&lt;/li&gt;
-&lt;li&gt;对数损失函数&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;风险函数
-  &lt;strong&gt;风险函数(risk function)又叫期望损失(expected loss)&lt;/strong&gt;，是理论模型$f(X)$关于联合分布$P(X,Y)$的平均意义下的损失。损失函数的期望是：&lt;/p&gt;
-&lt;p&gt;$$ R_{exp}(f) = E_p[L(Y,f(X))]=\int_{\mathcal{X}\times \mathcal{Y}}L(y,f(x))P(x,y)dxdy $$&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;经验风险
-  风险函数和联合分布$P(X, Y)$，用作为模型的后者求作为策略的前者，显然是病态的。故取训练数据集上的平均损失称为&lt;strong&gt;经验风险(empirical risk)&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;$$ R_{emp}(f) = \frac1N\sum_{i=1}^N L(y_i, f(x_i)) $$&lt;/p&gt;
-&lt;p&gt; 当训练样本数量$N$趋于无穷时，$R_{emp}$趋于$R_{exp}$。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;结构风险&lt;/p&gt;
-&lt;p&gt;  &lt;strong&gt;结构风险(structural risk)&lt;/strong&gt;在经验风险的基础上添加正则化项(regularization，也叫罚项(penalty term))。&lt;/p&gt;
-&lt;p&gt;  $$ R_{srm}(f)=\frac1N\sum_{i=1}^N L(y_i,f(x_i))+ \lambda J(f), \lambda \geq 0 $$&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;经验风险最小化&lt;/p&gt;
-&lt;p&gt;  在$\mathcal{F}$找到一个$f$使得$R_{emp}$最小。
-  p.s. 当模型是条件概率分布，损失函数是对数损失函数时，经验风险最小化等价于&lt;strong&gt;极大似然估计&lt;/strong&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;结构风险最小化&lt;/p&gt;
-&lt;p&gt;  为防止经验风险最小化有可能带来的过拟合，添加&lt;strong&gt;代表模型复杂度&lt;/strong&gt;的罚项$J(f)$。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;算法
- 最优化算法&lt;/li&gt;
-&lt;/ol&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;模型评估与模型选择&quot;&gt;&lt;a href=&quot;#模型评估与模型选择&quot; class=&quot;headerlink&quot; title=&quot;模型评估与模型选择&quot;&gt;&lt;/a&gt;模型评估与模型选择&lt;/h2&gt;&lt;h3 id=&quot;误差&quot;&gt;&lt;a href=&quot;#误差&quot; class=&quot;headerlink&quot; title=&quot;误差&quot;&gt;&lt;/a&gt;误差&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;训练误差&lt;/p&gt;
-&lt;p&gt; &lt;strong&gt;训练误差(training error)&lt;/strong&gt;是学习到的模型$Y=\hat{f}(X)$关于训练数据集的平均损失。&lt;/p&gt;
-&lt;p&gt; $$R_{emp}(\hat{f}) = \frac1N\sum_{i=1}^N L(y_i, \hat{f}(x_i))$$&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;测试误差&lt;/p&gt;
-&lt;p&gt; &lt;strong&gt;测试误差(test error)&lt;/strong&gt;是学习到的模型$Y=\hat{f}(X)$关于测试数据集的平均损失。&lt;/p&gt;
-&lt;p&gt; $$e_{test}(\hat{f}) = \frac1{N’}\sum_{i=1}^{N’} L(y_i, \hat{f}(x_i))$$
-当损失函数是0-1损失时，测试误差即为测试数据集上的误差率。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;正则化&quot;&gt;&lt;a href=&quot;#正则化&quot; class=&quot;headerlink&quot; title=&quot;正则化&quot;&gt;&lt;/a&gt;正则化&lt;/h3&gt;&lt;p&gt;正则化方法就是在经验风险函数上添加正则化项。&lt;strong&gt;正则化项(regularizer)&lt;/strong&gt;一般是模型复杂度的单调递增函数。如可以是模型参数向量的范数。&lt;/p&gt;
-&lt;p&gt;正则化的一般形式：&lt;/p&gt;
-&lt;p&gt;$$ min_{f \in \mathcal{F} } \frac1N\sum_{i=1}^N L(y_i,f(x_i))+ \lambda J(f)$$&lt;/p&gt;
-&lt;p&gt;其中第一项是经验风险，第二项是正则化项，正则化项可以取不同的形式，例如，在回归问题中，损失函数是平方损失，正则化项可以是参数向量的$L_2$范数：&lt;/p&gt;
-&lt;p&gt;$$L(w)=\frac1N\sum_{i=1}^N L(y_i,f(x_i))+ \frac{\lambda}{2} {\Vert w \Vert}^2$$&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;奥卡姆剃刀(Occam’s razor)原理：在所有可能选择的模型中，能够很好解释已知数据并且十分简单才是最好的模型。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;交叉验证&quot;&gt;&lt;a href=&quot;#交叉验证&quot; class=&quot;headerlink&quot; title=&quot;交叉验证&quot;&gt;&lt;/a&gt;交叉验证&lt;/h3&gt;&lt;p&gt;将数据集随机分为训练集、验证集(validation set)和测试集，分别用于模型的训练、选择和评估。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;简单交叉验证
- 分两部分：训练集和测试集&lt;/li&gt;
-&lt;li&gt;$S$折交叉验证
- 等分$S$部分：$S-1$份做训练集，1份做测试集。重复进行。&lt;/li&gt;
-&lt;li&gt;留一交叉验证
- $S$折交叉验证的特例$S=N$。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;泛化能力&quot;&gt;&lt;a href=&quot;#泛化能力&quot; class=&quot;headerlink&quot; title=&quot;泛化能力&quot;&gt;&lt;/a&gt;泛化能力&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;泛化误差&lt;/p&gt;
-&lt;p&gt; &lt;strong&gt;泛化误差(generalization error)&lt;/strong&gt;学到的模型$\hat{f}$对未知数据预测的误差。&lt;/p&gt;
-&lt;p&gt; $$R_{exp}(\hat{f}) = E_p[L(Y,\hat{f}(X))]=\int _{\mathcal{X}\times \mathcal{Y}}L(y,\hat{f}(x))P(x,y)dxdy$$&lt;/p&gt;
-&lt;p&gt; 泛化误差就是学习到的模型的期望风险。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;泛化误差上界&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;样本容量增加，泛化误差上界趋近于0&lt;/li&gt;
-&lt;li&gt;假设空间容量增加，泛化误差上界增大&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;监督学习分类&quot;&gt;&lt;a href=&quot;#监督学习分类&quot; class=&quot;headerlink&quot; title=&quot;监督学习分类&quot;&gt;&lt;/a&gt;监督学习分类&lt;/h2&gt;&lt;h3 id=&quot;按学习方法分类&quot;&gt;&lt;a href=&quot;#按学习方法分类&quot; class=&quot;headerlink&quot; title=&quot;按学习方法分类&quot;&gt;&lt;/a&gt;按学习方法分类&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;生成方法-&amp;gt;生成模型&lt;ul&gt;
-&lt;li&gt;由数据学习联合概率分布$P(X,Y)$后，求出概率分布$P(Y|X) = P(X,Y)/P(X)$。&lt;/li&gt;
-&lt;li&gt;包括：朴素贝叶斯法、隐马尔科夫模型&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;判别方法-&amp;gt;判别模型&lt;ul&gt;
-&lt;li&gt;由数据直接学习决策函数$f(X)$或者条件概率分布$P(Y|X)$。&lt;/li&gt;
-&lt;li&gt;包括：k近邻法、感知机、逻辑斯蒂回归模型、最大熵模型、支持向量机、提升方法、条件随机场。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;区别：&lt;ul&gt;
-&lt;li&gt;生成方法：&lt;ul&gt;
-&lt;li&gt;可还原出$P(X,Y)$&lt;/li&gt;
-&lt;li&gt;学习收敛速度快，当N增大时，更快收敛于真实模型&lt;/li&gt;
-&lt;li&gt;当存在隐变量时，仍可以使用&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;判别方法&lt;ul&gt;
-&lt;li&gt;直接学习$f(X)$或$P(Y|X)$，往往学习的准确率更高&lt;/li&gt;
-&lt;li&gt;可对数据进行抽象、特征定义以简化学习问题&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;研究议题&quot;&gt;&lt;a href=&quot;#研究议题&quot; class=&quot;headerlink&quot; title=&quot;研究议题&quot;&gt;&lt;/a&gt;研究议题&lt;/h3&gt;&lt;p&gt;输入变量和输出变量均为连续变量的预测问题称为回归问题，如函数拟合；输出变量为有限个离散变量的预测问题称为分类问题，学习出的分类模型或分类决策函数称为分类器（classifier）；输入变量与输出变量均为变量序列的预测问题称为标注问题，如词性标注，输入词序列，输出是（词，词性）的标记序列。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;分类问题&lt;ul&gt;
-&lt;li&gt;评价指标&lt;ul&gt;
-&lt;li&gt;精确率(precision)
-  $$P = \frac{TP}{TP+FP}$$&lt;/li&gt;
-&lt;li&gt;召回率(recall)
-  $$R = \frac{TP}{TP+FN}$$&lt;/li&gt;
-&lt;li&gt;$F_1$
-  $$F_1 = \frac{2}{\frac1P + \frac1R} = \frac{2TP}{2TP+FP+FN}$$&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;标注问题&lt;/li&gt;
-&lt;li&gt;回归问题&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;统计学习(statistical learning)做的事情是：基于数据建立概率统计模型，然后用模型对数据进行预测和分析。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="MachineLearning" scheme="http://keyunluo.github.io/categories/MachineLearning/"/>
-    
-    
-      <category term="机器学习" scheme="http://keyunluo.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
