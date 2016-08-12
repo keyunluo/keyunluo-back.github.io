@@ -1,0 +1,10 @@
+{
+"type": "record",
+"name": "StringPair",
+"doc": "A pair of strings with an added field.",
+"fields": [
+{"name": "left", "type": "string", "order": "ignore"},
+{"name": "right", "type": "string", "order": "descending"},
+{"name": "description", "type": "string", "default": ""}
+]
+}
