@@ -207,8 +207,6 @@ $WGET  http://archive.cloudera.com.sixxs.org/cm5/redhat/7/x86_64/cm/RPM-GPG-KEY-
 $WGET  http://archive.cloudera.com.sixxs.org/cm5/redhat/7/x86_64/cm/cloudera-manager.repo
 $PHP clear_outdated.php http://archive.cloudera.com.sixxs.org/cm5/redhat/7/x86_64/cm/5/RPMS/x86_64/
 
-$WGET http://archive.cloudera.com.sixxs.org/cdh5/cdh/5/
-
 # fix cm yum repo link
 $PHP fixlink.php cm4
 $PHP fixlink.php cm5
