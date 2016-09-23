@@ -2,7 +2,7 @@
 title: 统计学习方法——决策树
 comments: true
 toc: true
-date: 2016-08-18 09:25:02
+date: 2016-09-23 09:25:02
 categories: MachineLearning
 tags : 机器学习
 keywords: 机器学习, 统计学习
@@ -43,7 +43,7 @@ mathjax: true
 ``` python
 def majorityCnt(classList):
     """
-返回出现次数最多的分类名称
+    返回出现次数最多的分类名称
     :param classList: 类列表
     :return: 出现次数最多的类名称
     """
@@ -57,7 +57,7 @@ def majorityCnt(classList):
 
 def createTree(dataSet, labels, chooseBestFeatureToSplitFunc=chooseBestFeatureToSplitByID3):
     """
-创建决策树
+    创建决策树
     :param dataSet:数据集
     :param labels:数据集每一维的名称
     :return:决策树
@@ -96,9 +96,8 @@ def createTree(dataSet, labels, chooseBestFeatureToSplitFunc=chooseBestFeatureTo
 ``` python
 def createDataSet():
     """
-创建数据集
-
-    :return:
+    创建数据集
+    :return:数据集和每个维度的名称
     """
     dataSet = [[u'青年', u'否', u'否', u'一般', u'拒绝'],
                [u'青年', u'否', u'否', u'好', u'拒绝'],
@@ -126,7 +125,7 @@ def createDataSet():
 ``` python
 def splitDataSet(dataSet, axis, value):
     """
-按照给定特征划分数据集
+    按照给定特征划分数据集
     :param dataSet: 待划分的数据集
     :param axis: 划分数据集的特征的维度
     :param value: 特征的值
@@ -143,14 +142,14 @@ def splitDataSet(dataSet, axis, value):
 
 ## 信息增益
 
-对于一个可能有n种取值的随机变量：$P(X=x\_i)=p\_i$,其熵为：$H(X)=-\sum\_{i=1}^np\_i\log p\_i$ ,另外，0log0=0,当对数的底为2时，熵的单位是bit，为自然对数时，单位是nat。
+对于一个可能有n种取值的随机变量：$P(X=x\_i)=p\_i$,其熵为：$H(X)=-\sum\_{i=1}^np\_i\log p\_i$ ,另外定义0log0=0,当对数的底为2时，熵的单位是bit，为自然对数时，单位是nat。
 
 用Python实现信息熵（香农熵）：
 
 ``` python
 def calcShannonEnt(dataSet):
     """
-计算训练数据集中的Y随机变量的香农熵
+    计算训练数据集中的Y随机变量的香农熵
     :param dataSet:
     :return:
     """
@@ -170,7 +169,7 @@ def calcShannonEnt(dataSet):
 
 由定义知，X的熵与X的值无关，只与分布有关，所以也可以将X的熵记作H(p),即：
 
-$$H(p)=-\sum\__{i=1}^np\_i\log p\_i$$
+$$H(p)=-\sum\_{i=1}^np\_i\log p\_i$$
 
 熵其实就是X的不确定性，从定义可以验证$0 \leq H(p) \leq \log n$
 
@@ -206,7 +205,7 @@ def calcConditionalEntropy(dataSet, i, featList, uniqueVals):
 
 有了上述知识，就可以一句话说明什么叫信息增益了：信息增益表示得知特征X的信息而使类Y的信息的熵减少的程度。形式化的定义如下：
 
->特征A对训练数据集D的信息增益g(D,A),定义为集合D的经验熵H(D)与特征A给定条件下D的经验条件熵H(D|A)之差，即g(D|A)=H(D)-H(D|A),这个差又称为互信息，决策树学习中的信息增益等价于训练数据集中类与特征的互信息。
+>特征A对训练数据集D的信息增益g(D,A),定义为集合D的经验熵H(D)与特征A给定条件下D的经验条件熵H(D|A)之差，即$g(D|A)=H(D)-H(D|A)$,这个差又称为互信息，决策树学习中的信息增益等价于训练数据集中类与特征的互信息。
 
 用Python计算信息增益：
 
@@ -240,7 +239,7 @@ $$H(D)=-\sum\_{k=1}^K\frac{\vert C\_k \vert}{\vert D \vert}\log\_2\frac{\vert C\
 
 (2) 计算特征A对数据集D的经验条件熵H(D|A)
 
-$$H(D|A)=\sum\_{i=1}^n\frac{\vert D\_i \vert}{\vert D \vert}H(D\_i)=-\sum\_{i=1]^n\frac{\vert D\_i \vert}{\vert D \vert}\sum\_{k=1}^K\frac{\vert D\_{ik} \vert}{\vert D\_i \vert}\log\_2\frac{\vert D\_{ik} \vert}{\vert D\_i \vert}$$
+$$H(D \vert A)=\sum\_{i=1}^n \frac{\vert D\_i \vert}{\vert D \vert} H(D\_i) = -\sum_{i=1}^n \frac{\vert D\_i \vert}{\vert D \vert} \sum\_{k=1}^K \frac{\vert D\_{ik} \vert}{\vert D\_i \vert} \log\_2 \frac{\vert D\_{ik} \vert}{\vert D\_i \vert}$$
 
 (3) 计算信息增益
 
@@ -416,12 +415,28 @@ def createPlot(inTree):
 
 ### 算法描述
 
+输入： 训练数据集D，特征集A，阈值$\epsilon$
+
+输出：决策树T
+
+(1) 如果D中所有实例属于同一类$C\_k$,则置T为单节点树，并将$C\_k$作为该节点的类，返回T
+
+(2) 如果$A=\emptyset$,则置T为单节点树，并将D中实例数最大的类$C\_k$作为该节点的类，返回T
+
+(3) 否则，计算A中各特征对D的信息增益比，选择信息增益比最大的特征$A\_g$
+
+(4) 如果$A\_g$的信息增益比小于阈值$\epsilon$，则置T为单节点树，并将D中实例数最大的类$C\_k$作为该节点的类，返回T
+
+(5) 否则，对$A\_g$的每一个可能值$a\_i$,依$A\_g=a\_i$将D分割为子集若干非空$D\_i$,将$D\_i$中实例数最大的类作为标记，构建子节点，由节点及其子节点构成树T，返回T
+
+(6) 对节点i，以$D\_i$作为训练集，以$A-\\{A\_g\\}$为特征集，递归调用(1)~(5)步，得到子树$T\_i$,返回$T\_i$
+
 ### python实现
 
 ``` python
 def chooseBestFeatureToSplitByC45(dataSet):
     """
-选择最好的数据集划分方式
+    选择最好的数据集划分方式
     :param dataSet:
     :return:
     """
@@ -449,23 +464,23 @@ myTree = createTree(myDat, labels, chooseBestFeatureToSplitByC45)
 
 决策树的剪枝往往通过极小化决策树整体的损失函数或代价函数来实现。
 
-设决策树T的叶节点有|T|个，t是某个叶节点，t有Nt个样本点，其中归入k类的样本点有Ntk个，Ht(T)为叶节点t上的经验熵，α≥0为参数，则损失函数可以定义为：
+设决策树T的叶节点有|T|个，t是某个叶节点，t有$N\_t$个样本点，其中归入k类的样本点有$N\_{tk}$个，$H\_t(T)$为叶节点t上的经验熵，α≥0为参数，则损失函数可以定义为：
 
-$$$$
+$$C\_{\alpha}(T)=\sum\_{t=1}^{\vert T \vert} N\_tH\_t(T) + \alpha \vert T \vert$$
 
 其中经验熵Ht(T)为：
 
-$$$$
+$$H\_t(T)=- \sum\_k \frac{N\_{ik}}{N\_t} \log \frac{N\_{tk}}{N\_t}$$
 
-表示叶节点t所代表的类别的不确定性。损失函数对它求和表示所有被导向该叶节点的样本点所带来的不确定的和的和。我没有多打一个“的和”，第二个是针对叶节点t说的。
+表示叶节点t所代表的类别的不确定性。损失函数对它求和表示所有被导向该叶节点的样本点所带来的不确定的和的和。
 
 在损失函数中，将右边第一项记作：
 
-$$$$
+$$C(T)=\sum\_{t=1}^{\vert T \vert}N\_tH\_t(T)=-\sum\_{t=1}^{\vert T \vert}\sum\_{k=1}^K N\_{tk} \log \frac{N\_{tk}}{N\_t}$$
 
 则损失函数可以简单记作：
 
-$$$$
+$$C\_{\alpha}(T)=C(T) + \alpha \vert T \vert$$
 
 C(T)表示模型对训练数据的预测误差，即模型与训练数据的拟合程度，|T|表示模型复杂度，参数α≥0控制两者之间的影响，α越大，模型越简单，α=0表示不考虑复杂度。
 
@@ -553,21 +568,21 @@ $$f(x)=\sum\_{m=1}^M \hat c\_m I(x \in R\_m)$$
 
 与回归树算法流程类似，只不过选择的是最优切分特征和最优切分点，并采用基尼指数衡量。基尼指数定义：
 
-$$$$
+$$Gini(p)=\sum\_{k=1}^{K}p\_k(1-p\_k)=1-\sum\_{k=1}^Kp\_k^2$$
 
 对于给定数据集D，其基尼指数是：
 
-$$$$
+$$Gini(D)=1-\sum\_{k=1}^K \left ( \frac{\vert C\_k \vert}{\vert D \vert} \right) ^2$$
 
 Ck是属于第k类的样本子集，K是类的个数。Gini(D)反应的是D的不确定性（与熵类似），分区的目标就是降低不确定性。
 
 D根据特征A是否取某一个可能值a而分为D1和D2两部分：
 
-$$$$
+$$D\_1=\\{(x,y) \in D \vert A(x) = a\\}, D\_2 = D - D\_1$$
 
 则在特征A的条件下，D的基尼指数是：
 
-$$Gini(D,A)=$$
+$$Gini(D,A)=\frac{D\_1}{D}Gini(D\_1) + \frac{D\_2}{D}Gini(D\_2)$$
 
 有了上述知识储备，可以给出CART生成算法的伪码：
 
