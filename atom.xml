@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-10-04T09:10:44.979Z</updated>
+  <updated>2016-10-04T14:38:47.861Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -14,6 +14,168 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>高级算法--作业1</title>
+    <link href="http://keyunluo.github.io/2016/10/13/2016-10-13-advanced-algorithm-assignment1.html"/>
+    <id>http://keyunluo.github.io/2016/10/13/2016-10-13-advanced-algorithm-assignment1.html</id>
+    <published>2016-10-13T12:41:02.000Z</published>
+    <updated>2016-10-04T14:38:47.861Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;高级算法：第一次作业。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;Problem-1&quot;&gt;&lt;a href=&quot;#Problem-1&quot; class=&quot;headerlink&quot; title=&quot;Problem 1&quot;&gt;&lt;/a&gt;Problem 1&lt;/h2&gt;&lt;p&gt;For any $\alpha\ge 1$, a cut $C$ in an undirected (multi)graph $G(V,E) $ is called an &lt;strong&gt;α-min-cut&lt;/strong&gt; if $|C|\le\alpha|C^&lt;em&gt;| $ where $ C^&lt;/em&gt;$ is a min-cut in $G$.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Give a lower bound to the probability that Karger’s Random Contraction algorithm returns an &lt;strong&gt;α-min-cut&lt;/strong&gt; in a graph $G(V,E) $ of n vertices.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Use the above bound to estimate the number of distinct &lt;strong&gt;α-min&lt;/strong&gt; cuts in $G$.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;Problem-2&quot;&gt;&lt;a href=&quot;#Problem-2&quot; class=&quot;headerlink&quot; title=&quot;Problem 2&quot;&gt;&lt;/a&gt;Problem 2&lt;/h2&gt;&lt;p&gt;Let $G(V,E) $ be an undirected graph with positive edge weights $w:E\to\mathbb{Z}^+$. Given a partition of $V$ into $k$ disjoint subsets $S_1,S_2,\ldots,S_k$, we define
+$w(S_1,S_2,\ldots,S_k)=\sum_{uv\in E\atop \exists i\neq j: u\in S_i,v\in S_j}w(uv)$
+as the cost of the k-cut ${S_1,S_2,\ldots,S_k}$. Our goal is to find a &lt;strong&gt;k-cut&lt;/strong&gt; with maximum cost.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Give a poly-time greedy algorithm for finding the weighted max $k-cut$. Prove that the approximation ratio is $(1 − 1 / k)$.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Consider the following local search algorithm for the weighted max cut &lt;strong&gt;(max 2-cut)&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt; Fill in the blank parenthesis. Give an analysis of the running time of the algorithm. And prove that the approximation ratio is &lt;em&gt;0.5&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;start with an arbitrary bipartition of $V$ into disjoint $S_0,S_1$;&lt;/p&gt;
+&lt;p&gt; while (true) do&lt;/p&gt;
+&lt;p&gt;  &amp;emsp;&amp;emsp;if $\exists i\in{0,1}$ and $v\in S_i$ such that (&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;__&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;)&lt;/p&gt;
+&lt;p&gt;  &amp;emsp;&amp;emsp;&amp;emsp;then $v$ leaves $S_i$ and joins $S_{1 − i}$;&lt;/p&gt;
+&lt;p&gt;  &amp;emsp;&amp;emsp;&amp;emsp;continue;&lt;/p&gt;
+&lt;p&gt;  &amp;emsp;&amp;emsp;end if&lt;/p&gt;
+&lt;p&gt;  &amp;emsp;&amp;emsp;break;&lt;/p&gt;
+&lt;p&gt;end&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;Problem-3&quot;&gt;&lt;a href=&quot;#Problem-3&quot; class=&quot;headerlink&quot; title=&quot;Problem 3&quot;&gt;&lt;/a&gt;Problem 3&lt;/h2&gt;&lt;p&gt;Given $m$ subsets $S_1,S_2,\ldots, S_m\subseteq U $of a universe $U$ of size $n$, we want to find a $C\subseteq{1,2,\ldots, n}$ of fixed size $k = | C |$ with the &lt;em&gt;maximum coverage&lt;/em&gt; $\left|\bigcup_{i\in C}S_i\right|$.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Give a poly-time greedy algorithm for the problem. Prove that the approximation ratio is $1 − (1 − 1 / k)k &amp;gt; 1 − 1 / e$.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;Problem-4&quot;&gt;&lt;a href=&quot;#Problem-4&quot; class=&quot;headerlink&quot; title=&quot;Problem 4&quot;&gt;&lt;/a&gt;Problem 4&lt;/h2&gt;&lt;p&gt;We consider minimum makespan scheduling on parallel identical machines when jobs are subject to &lt;strong&gt;precedence constraints&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;We still want to schedule $n$ jobs $j=1,2,\ldots, n$ on $m$ identical machines, where job $j$ has processing time $p_j$. But now a partial order $\preceq$ is defined on jobs, so that if $j\prec k $ then job $j$ must be completely finished before job $k$ begins. The following is a variant of the &lt;em&gt;List algorithm&lt;/em&gt; for this problem: we still assume that the input is a list of $n$ jobs with processing times $p_1,p_2,\ldots, p_n$.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;whenever a machine becomes idle&lt;/p&gt;
+&lt;p&gt; &amp;emsp;&amp;emsp;assign the next &lt;em&gt;available job&lt;/em&gt; on the list to the machine;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Here a job $k$ is available if all jobs $j\prec k$ have already been completely processed.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Prove that the approximation ratio is 2.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;Problem-5&quot;&gt;&lt;a href=&quot;#Problem-5&quot; class=&quot;headerlink&quot; title=&quot;Problem 5&quot;&gt;&lt;/a&gt;Problem 5&lt;/h2&gt;&lt;p&gt;For a &lt;strong&gt;hypergraph&lt;/strong&gt; $H(V,E)$ with vertex set $V$, every &lt;em&gt;hyperedge&lt;/em&gt; $e\in E$ is a subset $e\subset V$ of vertices, not necessarily of size 2. A hypergraph $H(V,E)$ is &lt;strong&gt;k-uniform&lt;/strong&gt; if every hyperedge $e\in V$ is of size $k = | e | $.&lt;/p&gt;
+&lt;p&gt;A &lt;strong&gt;hypergraph&lt;/strong&gt; $H(V,E)$ is said to have &lt;strong&gt;property B&lt;/strong&gt; (named after Bernstein) if $H$ is 2-coloable; that is, if there is a proper 2-coloring $f:V \to \{ {\color{red}{R},\color{blue}{B}} \}$ which assigns each vertex one of the two colors $\color{red}{Red}$ or $\color{blue}{Blue}$, such that none of the hyperedge is monochromatic.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Let $H(V,E)$ be a &lt;strong&gt;k-uniform hypergraph&lt;/strong&gt; in which every hyperedge $e\in E$ shares vertices with at most d other hyperedges.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Prove that if $2\mathrm{e}\cdot (d+1)\le 2^{k}$, then $H$ has &lt;strong&gt;property B&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Describe how to use &lt;strong&gt;Moser’s recursive Fix&lt;/strong&gt; algorithm to find a proper &lt;strong&gt;2-coloring&lt;/strong&gt; of $H$. Give the pseudocode. Prove the condition in in terms of $d$ and $k$ under which the algorithm can find a 2-coloring of $H$ with high probability.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Describe how to use Moser-Tardos random solver to find a proper 2-coloring of H. Give the pseudocode. Prove the condition in in terms of d and k under which the algorithm can find a 2-coloring of $H$ within bounded expected time. Give an upper bound on the expected running time.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Let $H(V,E)$ be a hypergraph (not necessarily uniform) with at least $n\ge 2 $ vertices satisfying that
+$\forall v\in V, \sum_{e\ni v}(1-1/n)^{-|e|}2^{-|e|+1}\le \frac{1}{n}$.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Prove that $H$ has &lt;strong&gt;property B&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Describe how to use Moser-Tardos random solver to find a proper 2-coloring of $H$. Give an upper bound on the expected running time.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;高级算法：第一次作业。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="AdvancedAlgorithms" scheme="http://keyunluo.github.io/categories/AdvancedAlgorithms/"/>
+    
+    
+      <category term="算法" scheme="http://keyunluo.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>高级算法(1)--NP完全性与近似算法</title>
+    <link href="http://keyunluo.github.io/2016/10/04/2016-10-04-advanced-algorithm-1.html"/>
+    <id>http://keyunluo.github.io/2016/10/04/2016-10-04-advanced-algorithm-1.html</id>
+    <published>2016-10-04T12:41:02.000Z</published>
+    <updated>2016-10-04T14:14:14.973Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本学期修读了尹一通老师的高级算法课，感觉略有困难，故将学习过程中的知识点以博客的形式记录下来，温故而知新，本节总结NP完全性问题和近似算法的概念。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;NP完全理论&quot;&gt;&lt;a href=&quot;#NP完全理论&quot; class=&quot;headerlink&quot; title=&quot;NP完全理论&quot;&gt;&lt;/a&gt;NP完全理论&lt;/h2&gt;&lt;p&gt;NP理论如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;多项式时间&lt;/strong&gt;：一个问题的计算时间m(n)不大于问题大小n的多项式倍数。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;判定问题&lt;/strong&gt;：判定某类问题是否具有算法解，或者是否存在能行性的方法使得对该问题类中的每一个特例能在有限步内机械地判定它是否具有某种性质的问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;P类问题&lt;/strong&gt;：在多项式时间内求解的判定问题构成P类问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;非确定性算法&lt;/strong&gt;：非确定性算法将问题分解成猜测和验证两个阶段。算法的猜测阶段是非确定性的，算法的验证阶段是确定性的，它验证猜测阶段给出解的正确性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;NP类问题&lt;/strong&gt;：非确定性多项式时间可解的判定问题构成NP类问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;NPC问题&lt;/strong&gt;：NP中的某些问题的复杂性与整个类的复杂性相关联。这些问题中任何一个如果存在多项式时间的算法,那么所有NP问题都是多项式时间可解的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;NPH问题&lt;/strong&gt;：某个问题被称作NP困难，当所有NP问题可以在多项式时间归约到这个问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;它们之间的关系：&lt;/p&gt;
+&lt;p&gt;$$P \subseteq NP, NPC \subseteq NP, NPC \subseteq NPH$$&lt;/p&gt;
+&lt;h2 id=&quot;近似算法&quot;&gt;&lt;a href=&quot;#近似算法&quot; class=&quot;headerlink&quot; title=&quot;近似算法&quot;&gt;&lt;/a&gt;近似算法&lt;/h2&gt;&lt;p&gt;在计算复杂性理论中的某些假设下，比如最著名的 $ P\neq NP  $假设下，对于一些可已被证明为NP完全的优化问题，无法在多项式时间内精确求到最优解，然而在现实或理论研究中，这类问题都有广泛的应用，在精确解无法得到的情况下，转而依靠高效的近似算法求可以接受的近似解。&lt;/p&gt;
+&lt;h3 id=&quot;近似比&quot;&gt;&lt;a href=&quot;#近似比&quot; class=&quot;headerlink&quot; title=&quot;近似比&quot;&gt;&lt;/a&gt;近似比&lt;/h3&gt;&lt;p&gt;对于一个最大化问题的实例，设其最优解是 $ OPT $，某个近似算法的解是 $x$，若下式成立，&lt;/p&gt;
+&lt;p&gt;$$\alpha \leq \frac{x}{OPT} \leq 1 $$&lt;/p&gt;
+&lt;p&gt;其中 $ 0&amp;lt;\alpha &amp;lt;1 $ 则定义此近似算法的近似比为 $ \alpha $。&lt;/p&gt;
+&lt;p&gt;相应的，对于一个最小化问题的实例，&lt;/p&gt;
+&lt;p&gt;$$\alpha \geq \frac{x}{OPT} \geq 1 $$&lt;/p&gt;
+&lt;p&gt;其中 $\alpha &amp;gt;1$则定义此近似算法的近似比为 $ \alpha $。&lt;/p&gt;
+&lt;h3 id=&quot;分类&quot;&gt;&lt;a href=&quot;#分类&quot; class=&quot;headerlink&quot; title=&quot;分类&quot;&gt;&lt;/a&gt;分类&lt;/h3&gt;&lt;p&gt;按照可以达到近似比的不同，可以将近似算法大致按以下分类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;FPTAS(Fully Polynomial-Time Approximation Scheme):FPTAS要求算法对问题规模n和1/ε都是多项式时间复杂度的，称为完全多项式时间近似模式，如$O((1/ε)^2n^3)$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;PTAS(Polynomial-Time Approximation Scheme):该算法的输入为问题的实例以及一个任意小的值ε &amp;gt; 0，而算法的结果是一个近似度为 1 + ε的可行解；并且对于每一个固定的ε，算法运行时间复杂度对于实例的规模n是多项式时间的,如$O(n^{2/ε})$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;常数近似&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;对数的多项式&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;多项式&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中对数的多项式和多项式都是对应于输入规模的。&lt;/p&gt;
+&lt;h3 id=&quot;设计方法&quot;&gt;&lt;a href=&quot;#设计方法&quot; class=&quot;headerlink&quot; title=&quot;设计方法&quot;&gt;&lt;/a&gt;设计方法&lt;/h3&gt;&lt;p&gt;近似算法的常用设计方法有贪心法，线性规划、半正定规划的松弛和取整，随机算法等。&lt;/p&gt;
+&lt;h2 id=&quot;课程网站&quot;&gt;&lt;a href=&quot;#课程网站&quot; class=&quot;headerlink&quot; title=&quot;课程网站&quot;&gt;&lt;/a&gt;课程网站&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://tcs.nju.edu.cn/wiki/index.php/%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95_%5C_%E9%AB%98%E7%BA%A7%E7%AE%97%E6%B3%95_(Fall_2016%29&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;随机算法/高级算法&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本学期修读了尹一通老师的高级算法课，感觉略有困难，故将学习过程中的知识点以博客的形式记录下来，温故而知新，本节总结NP完全性问题和近似算法的概念。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="AdvancedAlgorithms" scheme="http://keyunluo.github.io/categories/AdvancedAlgorithms/"/>
+    
+    
+      <category term="算法" scheme="http://keyunluo.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Ubuntu16.04上编译OpenCV的Python3包</title>
@@ -2132,278 +2294,6 @@ $$&lt;/p&gt;
     
       &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;对象序列化的目标是将对象保存在磁盘中，或允许网络直接传输对象。对象序列化的机制允许把内存中的java对象转换成平台无关的二进制流，其他程序一旦获取了这种二进制流，则就可以将其恢复成原来的Java对象。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="Programming" scheme="http://keyunluo.github.io/categories/Programming/"/>
-    
-    
-      <category term="Java" scheme="http://keyunluo.github.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java中的IO流(2)</title>
-    <link href="http://keyunluo.github.io/2016/08/07/2016-08-07-java-io-2.html"/>
-    <id>http://keyunluo.github.io/2016/08/07/2016-08-07-java-io-2.html</id>
-    <published>2016-08-07T01:25:02.000Z</published>
-    <updated>2016-09-07T11:49:49.512Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本节学习输入输出重定向，Java虚拟机读取进程数据以及随机访问文件等IO内容。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h2 id=&quot;重定向标准输入-输出&quot;&gt;&lt;a href=&quot;#重定向标准输入-输出&quot; class=&quot;headerlink&quot; title=&quot;重定向标准输入/输出&quot;&gt;&lt;/a&gt;重定向标准输入/输出&lt;/h2&gt;&lt;p&gt;Java的标准输入输出分别通过System.in和System.out代表，在默认情况下它们分表代表键盘和显示器，在System类里提供了如下三个重定向标准输入输出的方法：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;static void setErr(PrintStream err): 重定向”标准”错误输出流&lt;/li&gt;
-&lt;li&gt;static void setIn(InputStream in):重定向”标准”输入流&lt;/li&gt;
-&lt;li&gt;static void setOut(PrintStream out):重定向”标准”输出流&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;简单的输出输入重定向：&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 输出重定向&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;PrintStream ps = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; PrintStream(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileOutputStream(&lt;span class=&quot;string&quot;&gt;&quot;out.txt&quot;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.setOut(ps)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 输入重定向&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;FileInputStream fin = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileInputStream(&lt;span class=&quot;string&quot;&gt;&quot;RedirectIn.java&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.setIn(fin)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;Java虚拟机读取其他进程数据&quot;&gt;&lt;a href=&quot;#Java虚拟机读取其他进程数据&quot; class=&quot;headerlink&quot; title=&quot;Java虚拟机读取其他进程数据&quot;&gt;&lt;/a&gt;Java虚拟机读取其他进程数据&lt;/h2&gt;&lt;p&gt;Java使用Runtime对象的exec()方法可以运行平台上的其他程序，该方法产生一个Process对象，Process对象代表由该Java程序启动的子进程，Process类提供了如下三个方法，用于让程序和其子进程进行通信：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;InputStream getErrorStream（）：获取子进程的错误流&lt;/li&gt;
-&lt;li&gt;InputStream getInputStream():获取子进程的输入流&lt;/li&gt;
-&lt;li&gt;OutputStream getOutputStream():获取子进程的输出流&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;此处的输入流和输出流是相对于Java程序而言的，如果是试图让子进程读取程序中的数据，则是输出流。&lt;/p&gt;
-&lt;h3 id=&quot;输入流例子：&quot;&gt;&lt;a href=&quot;#输入流例子：&quot; class=&quot;headerlink&quot; title=&quot;输入流例子：&quot;&gt;&lt;/a&gt;输入流例子：&lt;/h3&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.IOException;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.BufferedReader;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.InputStreamReader;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ReadFromProcess&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; IOException&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;//运行javac命令，返回运行该命令的子进程&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Process p = Runtime.getRuntime().exec(&lt;span class=&quot;string&quot;&gt;&quot;javac&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;comment&quot;&gt;// 以p进程的错误流创建BufferedReader对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 这个错误流对本程序是输入流，对p进程则是输出流&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            BufferedReader br = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; BufferedReader(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; InputStreamReader(p.getErrorStream())))&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            String buff = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 采用循环方式来读取p进程的错误输出&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; ((buff = br.readLine()) != &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;) System.out.println(buff);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;结果将输出javac命令的提示。&lt;/p&gt;
-&lt;h3 id=&quot;输出流例子&quot;&gt;&lt;a href=&quot;#输出流例子&quot; class=&quot;headerlink&quot; title=&quot;输出流例子&quot;&gt;&lt;/a&gt;输出流例子&lt;/h3&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.PrintStream;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.FileOutputStream;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.Scanner;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.IOException;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;WriteToProcess&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; IOException&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 运行java ReadStandard命令，返回运行该命令的子进程&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Process p = Runtime.getRuntime().exec(&lt;span class=&quot;string&quot;&gt;&quot;java ReadStandard&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 以进程p的输出流创建PrintStream对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 这个输出流对本程序是输出流，对p进程则是输入流&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            PrintStream ps = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; PrintStream(p.getOutputStream()))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;comment&quot;&gt;// 向ReadStandard程序写入内容，这些内容将被ReadStandard读取&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                ps.println(&lt;span class=&quot;string&quot;&gt;&quot;普通字符串&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                ps.println(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; WriteToProcess());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 定义一个ReadStandard类，该类可以接收标准输入&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 并将标准输入写入out.txt&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ReadStandard&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 使用System.in创建Scanner对象，用于获取标准输入&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            Scanner sc = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Scanner(System.in);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            PrintStream ps = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; PrintStream(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileOutputStream(&lt;span class=&quot;string&quot;&gt;&quot;out.txt&quot;&lt;/span&gt;)))&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 增加下面一行只把回车作为分隔符&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;             sc.useDelimiter(&lt;span class=&quot;string&quot;&gt;&quot;\n&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 判断是否还有下一个输入项&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(sc.hasNext()) ps.println(&lt;span class=&quot;string&quot;&gt;&quot;键盘的输入内容是：&quot;&lt;/span&gt;+sc.next());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (IOException ex)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                ex.printStackTrace();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;由WriteToProcess类运行ReadStandard类。&lt;/p&gt;
-&lt;h2 id=&quot;RandomAccessFile&quot;&gt;&lt;a href=&quot;#RandomAccessFile&quot; class=&quot;headerlink&quot; title=&quot;RandomAccessFile&quot;&gt;&lt;/a&gt;RandomAccessFile&lt;/h2&gt;&lt;p&gt;RandomAccessFile提供了众多的方法来访问文件内容，它既可以读取文件内容，也可以向文件中输出内容，并且支持“随机访问”的方式，程序可以直接跳转到任意位置读写数据。如果程序需要向已存在的文件后面追加内容，则应该使用RandomAccessFile。&lt;/p&gt;
-&lt;p&gt;RandomAccessFile包含了如下两个方法来操作文件记录指针：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;long getFilePointer():返回文件记录指针的当前位置&lt;/li&gt;
-&lt;li&gt;void seek(long pos):将文件记录指针定位到pos位置&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;RandomAccessFile的构造器第一个参数是文件名，第二个参数是指定RandomAccessFile的访问模式：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;“r”:以只读的方式打开指定文件，如果尝试写入，则抛出IOException异常。&lt;/li&gt;
-&lt;li&gt;“rw”:以读、写方式打开指定文件，如果文件尚不存在，则尝试创建该文件。&lt;/li&gt;
-&lt;li&gt;“rws”:以读、写方式打开指定文件，相对于”rw”模式，还要求对文件的内容或元数据的每个更新都同步写入到底层存储设备。&lt;/li&gt;
-&lt;li&gt;“rwd”:以读、写方式打开指定文件，相对于”rw”模式，还要求对文件内容的每个更新都同步写入到底层存储设备。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;例子：插入内容&quot;&gt;&lt;a href=&quot;#例子：插入内容&quot; class=&quot;headerlink&quot; title=&quot;例子：插入内容&quot;&gt;&lt;/a&gt;例子：插入内容&lt;/h3&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.*;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;InsertContent&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String fileName, &lt;span class=&quot;keyword&quot;&gt;long&lt;/span&gt; pos , String insertContent)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; IOException&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        File tmp = File.createTempFile(&lt;span class=&quot;string&quot;&gt;&quot;tmp&quot;&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        tmp.deleteOnExit();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            RandomAccessFile raf = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; RandomAccessFile(fileName,&lt;span class=&quot;string&quot;&gt;&quot;rw&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 使用临时文件来保存插入点后的数据&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            FileOutputStream tmpOut = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileOutputStream(tmp);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            FileInputStream tmpIn = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileInputStream(tmp))&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            raf.seek(pos);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 下面的代码将插入点后的内容读入临时文件中保存&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;[] bbuf = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;[&lt;span class=&quot;number&quot;&gt;64&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 用于保存实际读取的字节数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; hasRead =&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;((hasRead = raf.read(bbuf)) &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) tmpOut.write(bbuf,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,hasRead);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 下面代码用于插入内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;//把文件记录指针重新定位到pos位置&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            raf.seek(pos);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 追加需要插入的内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            raf.write(insertContent.getBytes());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;//追加临时文件中的内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; ((hasRead = tmpIn.read(bbuf)) &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) raf.write(bbuf,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,hasRead);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; IOException&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        insert(&lt;span class=&quot;string&quot;&gt;&quot;InsertContent.java&quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;\n/*新插入的内容!*/\n&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;上面程序中使用File的CreateTempFile(String prefix,String suffix)方法创建一个临时文件，用以保存被插入文件的插入点后面的内容。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本节学习输入输出重定向，Java虚拟机读取进程数据以及随机访问文件等IO内容。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="Programming" scheme="http://keyunluo.github.io/categories/Programming/"/>
-    
-    
-      <category term="Java" scheme="http://keyunluo.github.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java中的IO流(1)</title>
-    <link href="http://keyunluo.github.io/2016/08/06/2016-08-06-java-io-1.html"/>
-    <id>http://keyunluo.github.io/2016/08/06/2016-08-06-java-io-1.html</id>
-    <published>2016-08-06T03:25:02.000Z</published>
-    <updated>2016-09-07T11:49:49.511Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Java中的IO流是实现输入输出的基础，在Java中把不同的输入/输出源(键盘、文件、网络连接等)抽象表述为“流(stream)”,通过流的方式Java可以使用相同的方式来访问不同的输入/输出源。stream是从起源(source)到接受(sink)的有序数据。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h2 id=&quot;流的分类&quot;&gt;&lt;a href=&quot;#流的分类&quot; class=&quot;headerlink&quot; title=&quot;流的分类&quot;&gt;&lt;/a&gt;流的分类&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;输入流和输出流 (按流的流向来分)&lt;/p&gt;
-&lt;p&gt; 输入流：InputStream和Reader作为基类&lt;/p&gt;
-&lt;p&gt; 输出流：OutputStream和Writer作为基类&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;字节流和字符流 (操作的数据大小)&lt;/p&gt;
-&lt;p&gt; 字节流：8位字节，由InputStream和OutputStream作为基类&lt;/p&gt;
-&lt;p&gt; 字符流：16位字符，主要由Reader和Writer作为基类&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;节点流和处理流 (流的角色)&lt;/p&gt;
-&lt;p&gt; 节点流：可以从/向一个特定的IO设备(磁盘、网络)读写数据的流，也被称为低级流&lt;/p&gt;
-&lt;p&gt; 处理流：对一个已经存在的流进行连接或封装，通过封装后的流来实现数据的读写功能，也被称为高级流&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;处理流的功能&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;性能的提高：以增加缓冲的方式来提高输入/输出的效率&lt;/li&gt;
-&lt;li&gt;操作的便捷：一次性输入/输出大批量的内容&lt;/li&gt;
-&lt;li&gt;屏蔽了设备无关性：代码书写更加简洁&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;InputStream和Reader&quot;&gt;&lt;a href=&quot;#InputStream和Reader&quot; class=&quot;headerlink&quot; title=&quot;InputStream和Reader&quot;&gt;&lt;/a&gt;InputStream和Reader&lt;/h2&gt;&lt;p&gt;InputStream和Reader是所有输入流的抽象基类,本身不能创建实例，但它们分别有一个用于读取文件的输入流:FileInputStream和FileReader，它们都是节点流——会和指定文件关联。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;InputStream
-主要包含下面三个方法：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;int read()&lt;/strong&gt;:从输入流中读取单个字节，返回所读取的字节数据(字节数据可以直接转换成int类型)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;int read(byte[] b)&lt;/strong&gt;:从输入流中最多读取b.length个字节的数据，并将其存储在字节数组b中，返回实际读取的字节数&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;int read(byte[] b,int off ,int len)&lt;/strong&gt;:从输入流中最多读取len个字节的数据，并将其存储在数组b中，放入数组b中时，并不是从数组起点开始，而是从off位置开始，返回实际读取的字节数&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Reader
-主要包含下面三个方法：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;int read()&lt;/strong&gt;:从输入流中读取单个字符，返回所读取的字符数据(字符数据可以直接转换成int类型)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;int read(char[] cbuf)&lt;/strong&gt;:从输入流中最多读取cbuf.length个字符的数据，并将其存储在字符数组cbuf中，返回实际读取的字符数&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;int read(char[] cbuf,int off ,int len)&lt;/strong&gt;:从输入流中最多读取len个字符的数据，并将其存储在字符数组cbuf中，放入数组cbuf中时，并不是从数组起点开始，而是从off位置开始，返回实际读取的字符数&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;一个简单的例子-FileInputStream：读取源文件本身&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.*;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;FileInput&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; IOException&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 创建字节输入流&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        FileInputStream fin = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileInputStream(&lt;span class=&quot;string&quot;&gt;&quot;FileInput.java&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 创建一个长度为1024的缓冲&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;[] buf = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;[&lt;span class=&quot;number&quot;&gt;1024&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 用于保存实际读取的字节数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; hasRead = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 使用循环来重复读取&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; ((hasRead = fin.read(buf)) &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 读取字节，将字节数组转换成字符串输入&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            System.out.print(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; String(buf,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,hasRead));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 关闭文件输入流，放在finally块里面更加安全&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        fin.close();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;上面程序最后使用了fin.close()来关闭该文件输入流，与JDBC编程一样，程序打开的文件IO资源不属于内存里的资源，垃圾回收机制无法回收该资源。Java7改写了所有的IO资源类，它们都实现了AutoCloseable接口，因此都可以通过自动关闭资源的try语句来关闭这些IO流。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;一个简单的例子-FileReader：读取源文件本身&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.*;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;FileReaderInput&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; IOException&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 创建字符输入流&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        FileReader fre = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileReader(&lt;span class=&quot;string&quot;&gt;&quot;FileReaderInput.java&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 创建一个长度为32的缓冲&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;[] buf = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;[&lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 用于保存实际读取的字符数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; hasRead = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 使用循环来重复读取&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; ((hasRead = fre.read(buf)) &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 读取字符，将字符数组转换成字符串输入&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            System.out.print(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; String(buf,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,hasRead));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (IOException ex)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ex.printStackTrace();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;输入流移动记录指针&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;void mark(int readAheadLimit):在记录指针当前位置记录一个标记(mark)&lt;/li&gt;
-&lt;li&gt;boolean markSupported():判断此输入流是否支持mark()操作&lt;/li&gt;
-&lt;li&gt;void reset():将此流的记录指针重新定位到上一次记录标记(mark)的位置&lt;/li&gt;
-&lt;li&gt;long skip(long n):记录指针向前移动n个字节/字符&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;OutputStream和Writer&quot;&gt;&lt;a href=&quot;#OutputStream和Writer&quot; class=&quot;headerlink&quot; title=&quot;OutputStream和Writer&quot;&gt;&lt;/a&gt;OutputStream和Writer&lt;/h2&gt;&lt;h3 id=&quot;主要方法&quot;&gt;&lt;a href=&quot;#主要方法&quot; class=&quot;headerlink&quot; title=&quot;主要方法&quot;&gt;&lt;/a&gt;主要方法&lt;/h3&gt;&lt;p&gt;OutputStream和Writer也非常类似，两个流都提供了如下三个方法：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;void write(int c):将指定的字节/字符输出到输出流中，其中c既可以表示字节，也可以表示字符&lt;/li&gt;
-&lt;li&gt;void write(byte[]/char[] buf):将字节数组/字符数组中的数据输出到指定输出流中&lt;/li&gt;
-&lt;li&gt;void write(byte[]/char[] buf,int off,int len):将字节数组/字符数组从off位置开始，长度为len的字节/字符输出到输出流中&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;因为字符流直接以字符作为操作单位，所以Writer可以用字符串来代替字符数组，即以String对象作为参数，Writer里还包含如下两个方法：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;void write(String str):将str字符串里包含的字符输出到指定输出流中&lt;/li&gt;
-&lt;li&gt;void write(String str,int off,int len):将str字符串里从off位置开始，长度为len的字符输出到指定输出流中&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;例子&quot;&gt;&lt;a href=&quot;#例子&quot; class=&quot;headerlink&quot; title=&quot;例子&quot;&gt;&lt;/a&gt;例子&lt;/h3&gt;&lt;p&gt;从FileInputStream输入，使用FileOutputStream输出：&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.*;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;FileInputOutput&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; IOException&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 创建字节输入流&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        FileInputStream fin = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileInputStream(&lt;span class=&quot;string&quot;&gt;&quot;FileInputOutput.java&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 创建字符输出流&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        FileOutputStream fout = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileOutputStream(&lt;span class=&quot;string&quot;&gt;&quot;FileInputOutput-new.txt&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 创建一个长度为32的缓冲&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;[] buf = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;[&lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 用于保存实际读取的字符数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; hasRead = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 使用循环来重复读取&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; ((hasRead = fin.read(buf)) &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 读取字符，将字符数组转换成字符串输入&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            fout.write(buf,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,hasRead);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (IOException ex)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ex.printStackTrace();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;处理流&quot;&gt;&lt;a href=&quot;#处理流&quot; class=&quot;headerlink&quot; title=&quot;处理流&quot;&gt;&lt;/a&gt;处理流&lt;/h2&gt;&lt;p&gt;使用处理流的典型思路是，使用处理流来包装节点流，程序通过处理流来执行输入/输出功能，让节点流与底层的IO设备交互。&lt;/p&gt;
-&lt;p&gt;例如，使用PrintStream处理流来包装OutputStream，使用处理流后在输出时更加方便：&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.*;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;PrintStreamTest&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            FileOutputStream fout = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileOutputStream(&lt;span class=&quot;string&quot;&gt;&quot;test.txt&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            PrintStream ps = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; PrintStream(fout))&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 使用PrintStream执行输出&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            ps.println(&lt;span class=&quot;string&quot;&gt;&quot;普通字符串&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 直接使用PrintStream输出对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            ps.println(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; PrintStreamTest());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (IOException ex)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            ex.printStackTrace();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;输入-输出流体系&quot;&gt;&lt;a href=&quot;#输入-输出流体系&quot; class=&quot;headerlink&quot; title=&quot;输入/输出流体系&quot;&gt;&lt;/a&gt;输入/输出流体系&lt;/h2&gt;&lt;p&gt;Java的输入/输出流体系提供了将近40个类，这些类的常用分类如下：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;分类&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;字节输入流&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;字节输出流&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;字符输入流&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;字符输出流&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;节点流抽象基类&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;InputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;OutputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Reader&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Writer&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;访问文件&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;FileInputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;FileOutputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;FileReader&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;FileWriter&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;访问数组&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ByteArrayInputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ByteArrayOutputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;CharArrayReader&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;CharArrayWriter&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;访问管道&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;PipedInputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;PipedOutputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;PipedReader&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;PipedWriter&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;访问字符串&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;StringReader&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;StringWriter&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;缓冲流&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;BufferedInputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;BufferedOutputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;BufferedReader&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;BufferedWriter&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;转换流&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;InputStreamReader&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;OutputStreamWriter&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;对象流&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ObjectInputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;ObjectOutputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;处理流抽象基类&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;FilterInputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;FilterOutputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;FilterReader&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;FilterWriter&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;打印流&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;PrintStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;PrintWriter&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;推回输入流&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;PushbackInputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;PushbackReader&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;特殊流&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;DataInputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;DataOutputStream&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&quot;转换流&quot;&gt;&lt;a href=&quot;#转换流&quot; class=&quot;headerlink&quot; title=&quot;转换流&quot;&gt;&lt;/a&gt;转换流&lt;/h2&gt;&lt;p&gt;转换流实现将字节流转换为字符流，其中InputStreamReader将字节输入流转换成字符输入流，OutputStreamWriter将字节输出流转换成字符输出流。&lt;/p&gt;
-&lt;p&gt;例子：Java使用System.in代表标准输入，即键盘输入，但这个标准输入流是InputStream类的实例，考虑到键盘输入内容都是文本内容，所以可以使用InputStreamReader将其转换为字符输入流，将普通的Reader包装成BufferedReader，利用BufferedReader的readLine()方法可以一次读取一行内容。&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.*;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;KeyIn&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 将System.in对象转换为Reader对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            InputStreamReader reader = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; InputStreamReader(System.in);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 将普通的Reader包装成BufferedReader&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            BufferedReader br = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; BufferedReader(reader))&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            String line = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 采用循环的方式逐行读取&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; ((line = br.readLine()) !=&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;comment&quot;&gt;// 如果读取的是“exit”，则程序退出&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (line.equals(&lt;span class=&quot;string&quot;&gt;&quot;exit&quot;&lt;/span&gt;))&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    System.exit(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;comment&quot;&gt;// 打印读取的内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;输入内容为：&quot;&lt;/span&gt;+line);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (IOException ex)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            ex.printStackTrace();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;推回输入流&quot;&gt;&lt;a href=&quot;#推回输入流&quot; class=&quot;headerlink&quot; title=&quot;推回输入流&quot;&gt;&lt;/a&gt;推回输入流&lt;/h2&gt;&lt;p&gt;在输入/输出流体系中，有两个流与众不同，就是PushbackInputStream和PushbackReader，它们都提供了如下三个方法：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;void unread(byte[]/char[] buf)：将一个字节/字符数组内容推回到推回缓冲区里面，从而允许重复读取刚刚读取的内容。&lt;/li&gt;
-&lt;li&gt;void unread(byte[]/char[] buf , int off ,int len):将一个字节/字符数组里从off开始，长度为len字节/字符的内容推回到推回缓冲区里，从而允许重复读取刚刚读取的内容。&lt;/li&gt;
-&lt;li&gt;void unread(int b):将一个字节/字符内容推回到推回缓冲区里面，从而允许重复读取刚刚读取的内容。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;当程序差创建一个推回输入流时，需要指定推回缓冲区的大小，默认的推回缓冲区大小是1，如果程序中的退回到退回缓冲区的内容超过了退回缓冲区的大小，将会引发Pushback buffer overflow的IOException异常。&lt;/p&gt;
-&lt;p&gt;例子：程序试图找出程序中的”new PushbackReader”字符串，当找到该字符串时，程序只打印目标字符串之前的内容：&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.*;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;PushBackStream&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 创键一个PushbackReader对象，指定推回缓冲区的大小为64&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            PushbackReader pr = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; PushbackReader(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileReader(&lt;span class=&quot;string&quot;&gt;&quot;PushBackStream.java&quot;&lt;/span&gt;),&lt;span class=&quot;number&quot;&gt;64&lt;/span&gt;))&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;[] buf = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;[&lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 用以保存上次读取的字符串内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            String lastContent = &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; hasRead = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; ((hasRead = pr.read(buf)) &amp;gt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                String content = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; String(buf,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,hasRead);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; targetIndex = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;comment&quot;&gt;// 将上次读取的字符串和本次读取的字符串拼接起来&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;comment&quot;&gt;// 查看是否包含目标字符串，如果包含目标字符串&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ((targetIndex = (lastContent + content).indexOf(&lt;span class=&quot;string&quot;&gt;&quot;new PushbackReader&quot;&lt;/span&gt;)) &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;comment&quot;&gt;// 将本次内容和上次内容一起推回缓冲区&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    pr.unread((lastContent+content).toCharArray());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;comment&quot;&gt;// 重新定义一个长度为targetIndex的char数组&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (targetIndex &amp;gt; &lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;) buf = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;[targetIndex];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;comment&quot;&gt;//再次读取指定长度的内容(就是目标字符串之前的内容)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    pr.read(buf, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; ,targetIndex);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;comment&quot;&gt;//打印读取的内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    System.out.println(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; String(buf , &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; ,targetIndex));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    System.exit(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;comment&quot;&gt;// 打印上次读取的内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    System.out.println(lastContent);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;comment&quot;&gt;// 将本次内容设置为上次内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    lastContent = content;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (IOException ex)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            ex.printStackTrace();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;Java中的IO流是实现输入输出的基础，在Java中把不同的输入/输出源(键盘、文件、网络连接等)抽象表述为“流(stream)”,通过流的方式Java可以使用相同的方式来访问不同的输入/输出源。stream是从起源(source)到接受(sink)的有序数据。&lt;/p&gt;
 &lt;/blockquote&gt;
     
     </summary>

@@ -4,6 +4,132 @@
   
     
     <entry>
+      <title><![CDATA[高级算法--作业1]]></title>
+      <url>http://keyunluo.github.io/2016/10/13/2016-10-13-advanced-algorithm-assignment1.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>高级算法：第一次作业。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem 1"></a>Problem 1</h2><p>For any $\alpha\ge 1$, a cut $C$ in an undirected (multi)graph $G(V,E) $ is called an <strong>α-min-cut</strong> if $|C|\le\alpha|C^<em>| $ where $ C^</em>$ is a min-cut in $G$.</p>
+<ol>
+<li><p>Give a lower bound to the probability that Karger’s Random Contraction algorithm returns an <strong>α-min-cut</strong> in a graph $G(V,E) $ of n vertices.</p>
+</li>
+<li><p>Use the above bound to estimate the number of distinct <strong>α-min</strong> cuts in $G$.</p>
+</li>
+</ol>
+<h2 id="Problem-2"><a href="#Problem-2" class="headerlink" title="Problem 2"></a>Problem 2</h2><p>Let $G(V,E) $ be an undirected graph with positive edge weights $w:E\to\mathbb{Z}^+$. Given a partition of $V$ into $k$ disjoint subsets $S_1,S_2,\ldots,S_k$, we define
+$w(S_1,S_2,\ldots,S_k)=\sum_{uv\in E\atop \exists i\neq j: u\in S_i,v\in S_j}w(uv)$
+as the cost of the k-cut ${S_1,S_2,\ldots,S_k}$. Our goal is to find a <strong>k-cut</strong> with maximum cost.</p>
+<ol>
+<li><p>Give a poly-time greedy algorithm for finding the weighted max $k-cut$. Prove that the approximation ratio is $(1 − 1 / k)$.</p>
+</li>
+<li><p>Consider the following local search algorithm for the weighted max cut <strong>(max 2-cut)</strong>.</p>
+<p> Fill in the blank parenthesis. Give an analysis of the running time of the algorithm. And prove that the approximation ratio is <em>0.5</em>.</p>
+</li>
+</ol>
+<blockquote>
+<p>start with an arbitrary bipartition of $V$ into disjoint $S_0,S_1$;</p>
+<p> while (true) do</p>
+<p>  &emsp;&emsp;if $\exists i\in{0,1}$ and $v\in S_i$ such that (<strong><strong><strong>__</strong></strong></strong>)</p>
+<p>  &emsp;&emsp;&emsp;then $v$ leaves $S_i$ and joins $S_{1 − i}$;</p>
+<p>  &emsp;&emsp;&emsp;continue;</p>
+<p>  &emsp;&emsp;end if</p>
+<p>  &emsp;&emsp;break;</p>
+<p>end</p>
+</blockquote>
+<h2 id="Problem-3"><a href="#Problem-3" class="headerlink" title="Problem 3"></a>Problem 3</h2><p>Given $m$ subsets $S_1,S_2,\ldots, S_m\subseteq U $of a universe $U$ of size $n$, we want to find a $C\subseteq{1,2,\ldots, n}$ of fixed size $k = | C |$ with the <em>maximum coverage</em> $\left|\bigcup_{i\in C}S_i\right|$.</p>
+<ul>
+<li>Give a poly-time greedy algorithm for the problem. Prove that the approximation ratio is $1 − (1 − 1 / k)k &gt; 1 − 1 / e$.</li>
+</ul>
+<h2 id="Problem-4"><a href="#Problem-4" class="headerlink" title="Problem 4"></a>Problem 4</h2><p>We consider minimum makespan scheduling on parallel identical machines when jobs are subject to <strong>precedence constraints</strong>.</p>
+<p>We still want to schedule $n$ jobs $j=1,2,\ldots, n$ on $m$ identical machines, where job $j$ has processing time $p_j$. But now a partial order $\preceq$ is defined on jobs, so that if $j\prec k $ then job $j$ must be completely finished before job $k$ begins. The following is a variant of the <em>List algorithm</em> for this problem: we still assume that the input is a list of $n$ jobs with processing times $p_1,p_2,\ldots, p_n$.</p>
+<blockquote>
+<p>whenever a machine becomes idle</p>
+<p> &emsp;&emsp;assign the next <em>available job</em> on the list to the machine;</p>
+</blockquote>
+<p>Here a job $k$ is available if all jobs $j\prec k$ have already been completely processed.</p>
+<ul>
+<li>Prove that the approximation ratio is 2.</li>
+</ul>
+<h2 id="Problem-5"><a href="#Problem-5" class="headerlink" title="Problem 5"></a>Problem 5</h2><p>For a <strong>hypergraph</strong> $H(V,E)$ with vertex set $V$, every <em>hyperedge</em> $e\in E$ is a subset $e\subset V$ of vertices, not necessarily of size 2. A hypergraph $H(V,E)$ is <strong>k-uniform</strong> if every hyperedge $e\in V$ is of size $k = | e | $.</p>
+<p>A <strong>hypergraph</strong> $H(V,E)$ is said to have <strong>property B</strong> (named after Bernstein) if $H$ is 2-coloable; that is, if there is a proper 2-coloring $f:V \to \{ {\color{red}{R},\color{blue}{B}} \}$ which assigns each vertex one of the two colors $\color{red}{Red}$ or $\color{blue}{Blue}$, such that none of the hyperedge is monochromatic.</p>
+<ol>
+<li><p>Let $H(V,E)$ be a <strong>k-uniform hypergraph</strong> in which every hyperedge $e\in E$ shares vertices with at most d other hyperedges.</p>
+<ul>
+<li><p>Prove that if $2\mathrm{e}\cdot (d+1)\le 2^{k}$, then $H$ has <strong>property B</strong>.</p>
+</li>
+<li><p>Describe how to use <strong>Moser’s recursive Fix</strong> algorithm to find a proper <strong>2-coloring</strong> of $H$. Give the pseudocode. Prove the condition in in terms of $d$ and $k$ under which the algorithm can find a 2-coloring of $H$ with high probability.</p>
+</li>
+<li><p>Describe how to use Moser-Tardos random solver to find a proper 2-coloring of H. Give the pseudocode. Prove the condition in in terms of d and k under which the algorithm can find a 2-coloring of $H$ within bounded expected time. Give an upper bound on the expected running time.</p>
+</li>
+</ul>
+</li>
+<li><p>Let $H(V,E)$ be a hypergraph (not necessarily uniform) with at least $n\ge 2 $ vertices satisfying that
+$\forall v\in V, \sum_{e\ni v}(1-1/n)^{-|e|}2^{-|e|+1}\le \frac{1}{n}$.</p>
+</li>
+</ol>
+<ul>
+<li><p>Prove that $H$ has <strong>property B</strong>.</p>
+</li>
+<li><p>Describe how to use Moser-Tardos random solver to find a proper 2-coloring of $H$. Give an upper bound on the expected running time.</p>
+</li>
+</ul>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[高级算法(1)--NP完全性与近似算法]]></title>
+      <url>http://keyunluo.github.io/2016/10/04/2016-10-04-advanced-algorithm-1.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>本学期修读了尹一通老师的高级算法课，感觉略有困难，故将学习过程中的知识点以博客的形式记录下来，温故而知新，本节总结NP完全性问题和近似算法的概念。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="NP完全理论"><a href="#NP完全理论" class="headerlink" title="NP完全理论"></a>NP完全理论</h2><p>NP理论如下：</p>
+<ul>
+<li><p><strong>多项式时间</strong>：一个问题的计算时间m(n)不大于问题大小n的多项式倍数。</p>
+</li>
+<li><p><strong>判定问题</strong>：判定某类问题是否具有算法解，或者是否存在能行性的方法使得对该问题类中的每一个特例能在有限步内机械地判定它是否具有某种性质的问题。</p>
+</li>
+<li><p><strong>P类问题</strong>：在多项式时间内求解的判定问题构成P类问题。</p>
+</li>
+<li><p><strong>非确定性算法</strong>：非确定性算法将问题分解成猜测和验证两个阶段。算法的猜测阶段是非确定性的，算法的验证阶段是确定性的，它验证猜测阶段给出解的正确性。</p>
+</li>
+<li><p><strong>NP类问题</strong>：非确定性多项式时间可解的判定问题构成NP类问题。</p>
+</li>
+<li><p><strong>NPC问题</strong>：NP中的某些问题的复杂性与整个类的复杂性相关联。这些问题中任何一个如果存在多项式时间的算法,那么所有NP问题都是多项式时间可解的。</p>
+</li>
+<li><p><strong>NPH问题</strong>：某个问题被称作NP困难，当所有NP问题可以在多项式时间归约到这个问题。</p>
+</li>
+</ul>
+<p>它们之间的关系：</p>
+<p>$$P \subseteq NP, NPC \subseteq NP, NPC \subseteq NPH$$</p>
+<h2 id="近似算法"><a href="#近似算法" class="headerlink" title="近似算法"></a>近似算法</h2><p>在计算复杂性理论中的某些假设下，比如最著名的 $ P\neq NP  $假设下，对于一些可已被证明为NP完全的优化问题，无法在多项式时间内精确求到最优解，然而在现实或理论研究中，这类问题都有广泛的应用，在精确解无法得到的情况下，转而依靠高效的近似算法求可以接受的近似解。</p>
+<h3 id="近似比"><a href="#近似比" class="headerlink" title="近似比"></a>近似比</h3><p>对于一个最大化问题的实例，设其最优解是 $ OPT $，某个近似算法的解是 $x$，若下式成立，</p>
+<p>$$\alpha \leq \frac{x}{OPT} \leq 1 $$</p>
+<p>其中 $ 0&lt;\alpha &lt;1 $ 则定义此近似算法的近似比为 $ \alpha $。</p>
+<p>相应的，对于一个最小化问题的实例，</p>
+<p>$$\alpha \geq \frac{x}{OPT} \geq 1 $$</p>
+<p>其中 $\alpha &gt;1$则定义此近似算法的近似比为 $ \alpha $。</p>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>按照可以达到近似比的不同，可以将近似算法大致按以下分类：</p>
+<ul>
+<li><p>FPTAS(Fully Polynomial-Time Approximation Scheme):FPTAS要求算法对问题规模n和1/ε都是多项式时间复杂度的，称为完全多项式时间近似模式，如$O((1/ε)^2n^3)$。</p>
+</li>
+<li><p>PTAS(Polynomial-Time Approximation Scheme):该算法的输入为问题的实例以及一个任意小的值ε &gt; 0，而算法的结果是一个近似度为 1 + ε的可行解；并且对于每一个固定的ε，算法运行时间复杂度对于实例的规模n是多项式时间的,如$O(n^{2/ε})$。</p>
+</li>
+<li><p>常数近似</p>
+</li>
+<li><p>对数的多项式</p>
+</li>
+<li><p>多项式</p>
+</li>
+</ul>
+<p>其中对数的多项式和多项式都是对应于输入规模的。</p>
+<h3 id="设计方法"><a href="#设计方法" class="headerlink" title="设计方法"></a>设计方法</h3><p>近似算法的常用设计方法有贪心法，线性规划、半正定规划的松弛和取整，随机算法等。</p>
+<h2 id="课程网站"><a href="#课程网站" class="headerlink" title="课程网站"></a>课程网站</h2><p><a href="http://tcs.nju.edu.cn/wiki/index.php/%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95_%5C_%E9%AB%98%E7%BA%A7%E7%AE%97%E6%B3%95_(Fall_2016%29" target="_blank" rel="external">随机算法/高级算法</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Ubuntu16.04上编译OpenCV的Python3包]]></title>
       <url>http://keyunluo.github.io/2016/10/04/2016-10-04-ubuntu16.04-opencv3-python3.html</url>
       <content type="html"><![CDATA[<blockquote>
