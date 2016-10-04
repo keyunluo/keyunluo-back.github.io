@@ -15,7 +15,7 @@ mathjax : true
 
 ## Problem 1
 
-For any $\alpha\ge 1$, a cut $C$ in an undirected (multi)graph $G(V,E) $ is called an **α-min-cut** if $|C|\le\alpha|C^*| $ where $ C^*$ is a min-cut in $G$.
+For any $\alpha\ge 1$, a cut $C$ in an undirected (multi)graph $G(V,E)$ is called an **α-min-cut** if $|C|\le\alpha|C^\*|$ where $C^\*$ is a min-cut in $G$.
 
 1. Give a lower bound to the probability that Karger's Random Contraction algorithm returns an **α-min-cut** in a graph $G(V,E) $ of n vertices.
 
