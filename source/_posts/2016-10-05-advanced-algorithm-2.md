@@ -1,5 +1,5 @@
 ---
-title: 高级算法(2)--Min-Cut-Max-Flow(1)
+title: 高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法
 comments: true
 toc: true
 date: 2016-10-05 13:41:02
@@ -45,7 +45,7 @@ $$C = E(S,T), 其中 E(S,T) = \\{ uv \in E \vert u \in S , v \in T \\}$$
 
 设$C\_{uv}$代表边u到v最大允许流量(Capacity), $f\_{uv}$代表u到v的当前流量, 那么有一下两个性质:
 
-- $(u, v)$为有向图边, $0<=f\_{uv}<=C\_{uv}$, 即对于所有的边, 当前流量不允许超过其Capacity
+- $(u, v)$为有向图边, $0 \leq f\_{uv} \leq C\_{uv}$, 即对于所有的边, 当前流量不允许超过其Capacity
 
 - 除了$s, t$之外, 对所有节点有 $\sum\limits\_{(v, u)}f\_{wu} = \sum\limits\_{(u, v)}f\_{uv}$, 即对于任何一点, 流入该点的流量等于留出该点的流量, 流量守恒原则(类似与能量守恒的概念)。
 
@@ -58,7 +58,7 @@ $$C = E(S,T), 其中 E(S,T) = \\{ uv \in E \vert u \in S , v \in T \\}$$
 
 ### 最大流
 
-流的值定义为：$|f| =Σv∈Vf(s, v)$，即从源点 s 出发的总流。
+流的值定义为：$|f| =Σ\_{v∈V}f(s, v)$，即从源点 s 出发的总流。
 
 最大流问题（Maximum-flow problem）中，给出源点 s 和汇点 t 的流网络 G，希望找出从 s 到 t 的最大值流。
 
@@ -128,6 +128,8 @@ prim本身复杂度是$O(n^2)$，合并n-1次，算法复杂度即为$O(n^3)$
 
 6. 若|V|!=1则继续1.
 
+一个很详细的博客[朝花夕拾：无向图全局最小割](http://blog.coolstack.cc/2016/01/08/%E6%9C%9D%E8%8A%B1%E5%A4%95%E6%8B%BE%EF%BC%9A%E6%97%A0%E5%90%91%E5%9B%BE%E5%85%A8%E5%B1%80%E6%9C%80%E5%B0%8F%E5%89%B2/)
+
 
 ### 基本步骤：
 
@@ -158,49 +160,84 @@ prim本身复杂度是$O(n^2)$，合并n-1次，算法复杂度即为$O(n^3)$
 步骤: ![寻找 s, t 两点，然后合并于 s 点](/resource/blog/2016-10/mincut.jpg)
 
 ``` cpp
-const int maxn = 550;
-const int inf = 1000000000;
-int n, r;
-int edge[maxn][maxn], dist[maxn];
-bool vis[maxn], bin[maxn];
-void init()
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#define MAXN 500+10
+#define INF 0x3f3f3f3f
+using namespace std;
+int Map[MAXN][MAXN];
+bool vis[MAXN];//是否已并入集合
+int wage[MAXN];//记录每个点的连通度
+bool In[MAXN];//该点是否已经合并到其它点
+int N, M;
+void getMap()
 {
-    memset(edge, 0, sizeof(edge));
-    memset(bin, false, sizeof(bin));
+    memset(Map, 0, sizeof(Map));
+    int a, b, c;
+    for(int i = 0; i < M; i++)
+    {
+        scanf("%d%d%d", &a, &b, &c);
+        a++, b++;
+        Map[a][b] += c;
+        Map[b][a] += c;
+    }
 }
-int contract( int &s, int &t )			// 寻找 s,t
+int S, T;//记录每次找s-t割  所遍历的最后两个点
+int work()
 {
-    memset(dist, 0, sizeof(dist));
+    int Mincut;//每一步找到的s-t割
+    memset(wage, 0, sizeof(wage));
     memset(vis, false, sizeof(vis));
-    int i, j, k, mincut, maxc;
-    for(i = 1; i <= n; i++)
+    int Next;
+    for(int i = 1; i <= N; i++)
     {
-        k = -1; maxc = -1;
-        for(j = 1; j <= n; j++)if(!bin[j] && !vis[j] && dist[j] > maxc)
+        int Max = -INF;
+        for(int j = 1; j <= N; j++)
         {
-            k = j;  maxc = dist[j];
+            if(!In[j] && !vis[j] && Max < wage[j])//找最大的wage值
+            {
+                Next = j;
+                Max = wage[j];
+            }
         }
-        if(k == -1)return mincut;
-        s = t;  t = k;
-		mincut = maxc;
-        vis[k] = true;
-        for(j = 1; j <= n; j++)if(!bin[j] && !vis[j])
-            dist[j] += edge[k][j];
+        if(Next == T) break;//找不到点 图本身不连通
+        vis[Next] = true;//标记 已经并入集合
+        Mincut = Max;//每次更新
+        S = T, T = Next;// 记录前、后点
+        for(int j = 1; j <= N; j++)//继续找不在集合 且 没有被合并过的点
+        {
+            if(In[j] || vis[j]) continue;
+            wage[j] += Map[Next][j];//累加 连通度
+        }
     }
-    return mincut;
+    return Mincut;
 }
-int Stoer_Wagner()
+int Stoer_wagner()
 {
-    int mincut, i, j, s, t, ans;
-    for(mincut = inf, i = 1; i < n; i++)
+    memset(In, false, sizeof(In));
+    int ans = INF;
+    for(int i = 0; i < N-1; i++)
     {
-        ans = contract( s, t );
-		bin[t] = true;
-        if(mincut > ans)mincut = ans;
-        if(mincut == 0)return 0;
-        for(j = 1; j <= n; j++)if(!bin[j])
-            edge[s][j] = (edge[j][s] += edge[j][t]);
+        ans = min(ans, work());
+        if(ans == 0) return 0;//本身不连通
+        In[T] = true;
+        for(int j = 1; j <= N; j++)//把T点合并到S点
+        {
+            if(In[j]) continue;//已经合并
+            Map[S][j] += Map[T][j];
+            Map[j][S] += Map[j][T];
+        }
     }
-    return mincut;
+    return ans;
+}
+int main()
+{
+    while(scanf("%d%d", &N, &M) != EOF)
+    {
+        getMap();
+        printf("%d\n", Stoer_wagner());
+    }
+    return 0;
 }
 ```
