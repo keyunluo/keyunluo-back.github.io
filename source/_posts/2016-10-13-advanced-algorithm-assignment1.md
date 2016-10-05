@@ -1,7 +1,7 @@
 ---
 title: 高级算法--作业1
 comments: true
-toc: true
+toc: false
 date: 2016-10-13 20:41:02
 categories: AdvancedAlgorithms
 tags : 算法
@@ -90,4 +90,4 @@ $\forall v\in V, \sum\_{e\ni v}(1-1/n)^{-|e|}2^{-|e|+1}\le \frac{1}{n}$.
 
 - Prove that $H$ has **property B**.
 
-- Describe how to use Moser-Tardos random solver to find a proper 2-coloring of $H$. Give an upper bound on the expected running time.
+- Describe how to use Moser-Tardos random solver to find a proper 2-coloring of $H$. Give an <u> upper bound </u> on the expected running time.
