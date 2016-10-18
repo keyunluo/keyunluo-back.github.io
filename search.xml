@@ -17,6 +17,37 @@
 <li><p>Use the above bound to estimate the number of distinct <strong>α-min</strong> cuts in $G$.</p>
 </li>
 </ol>
+<hr>
+<h3 id="My-Solution"><a href="#My-Solution" class="headerlink" title="My Solution"></a>My Solution</h3><p>1.From Karger’s algorithm we know that the maximum size of α-min-cut <strong>C</strong> is <strong>α|C*|</strong>, the degree of multi-graph $G_i:degree(G_i) = 2|E_i| \geq |V_i| |C^*| \ge |V_i|\cdot|C|/ \alpha $ ,so
+the probability $p_i =\Pr[e_i \notin C \vert \forall j &lt; i,e_i \notin C]$ can be computed as:</p>
+<p>$$\begin{array} {lcl}
+p_i  &amp; = &amp; 1 - \frac{\vert C \vert}{\vert E_i \vert} \\
+&amp; \geq &amp; 1 - \frac{2\alpha}{|V_i|} \\
+&amp; = &amp; 1- \frac{2\alpha}{n-i+1}
+\end{array}$$</p>
+<p>and further, apply the Karger’s algorithm until <strong>2α</strong> vertices remain:</p>
+<p>$$\begin{array} {lcl}
+p_{\text{survives until 2α vertices remain}} &amp; \geq &amp; \Pr[\,C_{2α}\mbox{ is returned by }{RandomContract}\,]\\
+&amp; = &amp; \Pr[\,e_i\not\in C\mbox{ for all }i=1,2,\ldots,n-2α\,]\\
+&amp; = &amp; \prod_{i=1}^{n-2α}\Pr[e_i\not\in C\mid \forall j&lt;i, e_j\not\in C]\\
+&amp; \geq &amp; \prod_{i=1}^{n-2α}\left(1-\frac{2α}{n-i+1}\right)\\
+&amp; = &amp; \frac{(n-2α)!}{n!/(2α)!} \\
+&amp; = &amp; \frac{(n-2α)!(2α)!}{n!} \\
+&amp; = &amp; \frac{1}{n \choose 2α}
+\end{array}$$</p>
+<p>then, choose a random cut in the remaining multi-graph:G</p>
+<p>$$\begin{array} {lcl}
+p_{\text{correct}} &amp; = &amp; \Pr[\text{C survives until 2α vertices remain}] \times \Pr[\text{C survives random cut}]\\
+&amp; \geq &amp; \frac{1}{n \choose 2α} \times \frac{2}{2^{2α}}\\
+&amp; = &amp; \frac{(2α)!}{2^{2α-1}} \times \frac{(n-2α)!}{n!}\\
+&amp; \geq &amp; \frac{(2α)!}{2^{2α-1}} \times \frac{1}{n^{2α}}\\
+&amp; \geq &amp; \frac{1}{n^{2α}}
+\end{array}$$</p>
+<p>So, a lower bound to the probability that Karger’s Random Contraction algorithm returns an α-min-cut in a graph G(V,E) of n vertices can be $n^{-2α}$.</p>
+<p>2.By the analysis of Karger’s algorithm, we know $p_C\ge\frac{1}{n^{2α}}$. And since $p_{correct}$ is a well defined probability, due to the unitarity of probability, it must hold that $p_{\text{correct}}\le 1$. Therefore:</p>
+<p>$$1 \ge p_{correct} = \sum_{C \in \sf{C}}p_C \ge |\sf{C}| \frac{1}{n^{2α}}$$</p>
+<p>and this means that $ |\sf{C}| \le n^{2α}$, So  the up bound of the number of distinct α-min cuts in G is $ n^{2α}$.</p>
+<hr>
 <h2 id="Problem-2"><a href="#Problem-2" class="headerlink" title="Problem 2"></a>Problem 2</h2><p>Let $G(V,E) $ be an undirected graph with positive edge weights $w:E\to\mathbb{Z}^+$. Given a partition of $V$ into $k$ disjoint subsets $S_1,S_2,\ldots,S_k$, we define
 $w(S_1,S_2,\ldots,S_k)=\sum_{uv\in E\atop \exists i\neq j: u\in S_i,v\in S_j}w(uv)$
 as the cost of the k-cut ${S_1,S_2,\ldots,S_k}$. Our goal is to find a <strong>k-cut</strong> with maximum cost.</p>
@@ -37,10 +68,70 @@ as the cost of the k-cut ${S_1,S_2,\ldots,S_k}$. Our goal is to find a <strong>k
 <p>  &emsp;&emsp;break;</p>
 <p>end</p>
 </blockquote>
+<hr>
+<h3 id="My-Solution-1"><a href="#My-Solution-1" class="headerlink" title="My Solution"></a>My Solution</h3><p>1.(1) <strong>algorithm</strong></p>
+<blockquote>
+<p>$S_1={v_1},S_2={v_2},\ldots,S_k={v_k}$,$V =V - {v_1,v_2,\ldots,v_k} $  ;</p>
+<p>while ( V is not empty) do:</p>
+<p>&emsp;&emsp; Randomly select  a vertic $v$ in V;</p>
+<p>&emsp;&emsp; $V = V- v$</p>
+<p>&emsp;&emsp; put $v$ to $S_j$ for the biggest increased value</p>
+</blockquote>
+<p>(2) <strong>proof</strong>:</p>
+<p>$$\begin{array} {lcl}
+E(w) &amp; = &amp; \sum_{(i,j) \in E} w_{i,j} \Pr[i \in V_m,j\in V_n, \forall m \neq n] \\
+        &amp; = &amp; \sum_{(i,j) \in E} w_{i,j}  (1 - \Pr[i \in V_m,j\in V_m, \forall m ]) \\
+        &amp; = &amp; \sum_{(i,j) \in E} w_{i,j}  (1 - \sum_{m=1}^k\Pr[i \in V_m,j\in V_m]) \\
+        &amp; = &amp; \sum_{(i,j) \in E} w_{i,j}  (1 - \sum_{m=1}^k\frac{1}{k^2}) \\
+        &amp; = &amp; (1-\frac{1}{k})\sum_{(i,j) \in E} w_{i,j}  \\
+        &amp; \ge &amp; (1-\frac{1}{k})OPT
+\end{array}$$</p>
+<p>2.(1) the <strong>blank</strong>: $\underline{v \in S_{1-i} \ has\ bigger\ cut \ result}$</p>
+<p>(2) <strong>analysis</strong>: calculate the cut  between $S_0,S_1$ is $O(n^2)$, and in each loop the value is increaed at least 1, thus the maximum possible cut value is $\sum_{e \in E}w_e$,then the loop size is $\sum_{e \in E}w_e$ at most. finally the total running time is $O(n^2 \cdot \sum_{e \in E}w_e)$.</p>
+<p>(3) <strong>proof</strong>:</p>
+<ul>
+<li><p>the <em>OPT</em> can’t be larger than the sum of all egde weights, then : $\sum_{e \in E} w_e\geq OPT $</p>
+</li>
+<li><p>if we move $v$ from $S_i \  to \ S_{1-i}$, then $\sum_{v \in S_{1-i}, (u,v) \in E}w(u,v) \geq \sum_{v \in S_{i}, (u,v) \in E}w(u,v) $,
+according to the mean value theorem, we have $\sum_{v \in S_{1-i}, (u,v) \in E}w(u,v) \geq \frac{1}{2}\sum_{v :(u,v) \in E}w(u,v)$, and  for any $u’ \in S_{1-i}$ , we can get $\sum_{v \in S_i, (u’,v) \in E}w(u’,v) \geq \frac{1}{2}\sum_{v :(u’,v) \in E}w(u’,v)$ similarly.</p>
+</li>
+</ul>
+<p>Finally, for all vertices in V, the max-cut is :</p>
+<p>$$\begin{array} {lcl}
+V(S) &amp;= &amp; \sum_{u \in S_i,v \in S_{1-i},(u,v) \in E } \\
+        &amp; = &amp; \sum_{v \in S_i, (u,v) \in E}w(u,v) + \sum_{v \in S_{1-i}, (u,v) \in E}w(u,v)  \\
+        &amp; \ge &amp; \frac{1}{2}\sum_{v :(u’,v) \in E}w(u,v) + \frac{1}{2}\sum_{v :(u,v) \in E}w(u,v) \\
+        &amp; = &amp; \frac{1}{2} \sum_{e \in E}w_e \\
+        &amp; \ge &amp;\frac{1}{2}OPT
+ \end{array}$$</p>
+<hr>
 <h2 id="Problem-3"><a href="#Problem-3" class="headerlink" title="Problem 3"></a>Problem 3</h2><p>Given $m$ subsets $S_1,S_2,\ldots, S_m\subseteq U $of a universe $U$ of size $n$, we want to find a $C\subseteq{1,2,\ldots, n}$ of fixed size $k = | C |$ with the <em>maximum coverage</em> $\left|\bigcup_{i\in C}S_i\right|$.</p>
 <ul>
 <li>Give a poly-time greedy algorithm for the problem. Prove that the approximation ratio is $1 − (1 − 1 / k)k &gt; 1 − 1 / e$.</li>
 </ul>
+<hr>
+<h3 id="My-Solution-2"><a href="#My-Solution-2" class="headerlink" title="My Solution"></a>My Solution</h3><p><strong>algorithm</strong>:</p>
+<blockquote>
+<p><strong>GreedyCover</strong></p>
+<p>Input: sets $S_1,S_2,\ldots,S_m$;</p>
+<p>initially, $U=\bigcup_{i=1}^mS_i$, and $C=\emptyset$, count = 0;</p>
+<p>while $U\neq\emptyset$ and count &lt; k do</p>
+<p>&emsp;&emsp;find $i\in{1,2,\ldots, m}$ with the largest $|S_i\cap U|$;</p>
+<p>&emsp;&emsp;let $C=C\cup{i}$and $U=U-  S_i$;</p>
+<p>&emsp;&emsp;count = count + 1</p>
+<p>return C;</p>
+</blockquote>
+<p><strong>proof</strong>:
+let $c_i$ denote the elements of selected $S_j$ in the i-th round , and $C_i=\sum_{i=1}^ic_i$, the optimum solution is $OPT$, the remaining elements in $OPT$ is $R_i$, we have: $R_i = OPT - C_i,R_0 = OPT, C_0 =0$.</p>
+<p>At each round , the Greedy algorithm selects the subset $S_j$ with maximum size of uncoverd elements yet,  there exists one set that cover at least $\frac{1}{k}$ fraction of the remaning uncovered elements $R_i$, so we have $c_{i+1} \ge \frac{R_i}{k}$.</p>
+<p>On the other hand, consider  the  conclusion that we want to prove:$C_k  = OPT - R_k \ge (1- (1-\frac{1}{k})^k)\cdot OPT$, that equals to: $R_k \leq (1- \frac{1}{k})^k \cdot OPT$,it is hard to prove it directly, we use  the technique of mathematical induction: $R_i \leq (1- \frac{1}{k})^i \cdot OPT$</p>
+<ul>
+<li>for i =0, $R_0 \le OPT$, it is true</li>
+<li>suppose  i, it is true: $R_i \le (1 - \frac{1}{k})^i\cdot OPT$</li>
+<li>when it comes to i+1: $R_{i+1} \leq R_{i} - c_{i+1} \leq R_i - \frac{R_i}{k} = R_i(1- \frac{1}{k}) \le (1- \frac{1}{k})^{i+1}\cdot OPT$</li>
+<li>we have proved it!</li>
+</ul>
+<hr>
 <h2 id="Problem-4"><a href="#Problem-4" class="headerlink" title="Problem 4"></a>Problem 4</h2><p>We consider minimum makespan scheduling on parallel identical machines when jobs are subject to <strong>precedence constraints</strong>.</p>
 <p>We still want to schedule $n$ jobs $j=1,2,\ldots, n$ on $m$ identical machines, where job $j$ has processing time $p_j$. But now a partial order $\preceq$ is defined on jobs, so that if $j\prec k $ then job $j$ must be completely finished before job $k$ begins. The following is a variant of the <em>List algorithm</em> for this problem: we still assume that the input is a list of $n$ jobs with processing times $p_1,p_2,\ldots, p_n$.</p>
 <blockquote>
@@ -51,6 +142,17 @@ as the cost of the k-cut ${S_1,S_2,\ldots,S_k}$. Our goal is to find a <strong>k
 <ul>
 <li>Prove that the approximation ratio is 2.</li>
 </ul>
+<hr>
+<h3 id="My-Solution-3"><a href="#My-Solution-3" class="headerlink" title="My Solution"></a>My Solution</h3><p><strong>proof</strong>:</p>
+<ul>
+<li><p>with <strong>precedence constraints</strong>,it is known that:
+ $$OPT \ge \max_{\mathcal{A}:i \preceq j}p_{\mathcal{A}}, OPT\ge\frac{1}{m}\sum_{j=1}^np_j$$</p>
+</li>
+<li><p>with <strong>greedy stratege</strong>,it is known that the max  completion time is less than the sum of the max processing time $p_{max}$ in  precedence constraints and the average processing time $p_{mean}$ among m identical machines, which is:
+$$C_{max} \le \max_{\mathcal{A}:i \preceq j}p(\mathcal{A}) + \frac{1}{m}\sum_{j=1}^np_j = 2\cdot OPT$$</p>
+</li>
+</ul>
+<hr>
 <h2 id="Problem-5"><a href="#Problem-5" class="headerlink" title="Problem 5"></a>Problem 5</h2><p>For a <strong>hypergraph</strong> $H(V,E)$ with vertex set $V$, every <em>hyperedge</em> $e\in E$ is a subset $e\subset V$ of vertices, not necessarily of size 2. A hypergraph $H(V,E)$ is <strong>k-uniform</strong> if every hyperedge $e\in V$ is of size $k = | e | $.</p>
 <p>A <strong>hypergraph</strong> $H(V,E)$ is said to have <strong>property B</strong> (named after Bernstein) if $H$ is 2-coloable; that is, if there is a proper 2-coloring $f:V \to \{ {\color{red}{R},\color{blue}{B}} \}$ which assigns each vertex one of the two colors $\color{red}{Red}$ or $\color{blue}{Blue}$, such that none of the hyperedge is monochromatic.</p>
 <ol>
@@ -74,6 +176,82 @@ $\forall v\in V, \sum_{e\ni v}(1-1/n)^{-|e|}2^{-|e|+1}\le \frac{1}{n}$.</p>
 <li><p>Describe how to use Moser-Tardos random solver to find a proper 2-coloring of $H$. Give an <u> upper bound </u> on the expected running time.</p>
 </li>
 </ul>
+<hr>
+<h3 id="My-Solution-4"><a href="#My-Solution-4" class="headerlink" title="My Solution"></a>My Solution</h3><p>1.<strong>(1)proof</strong>:</p>
+<ul>
+<li>if $2\mathrm{e}\cdot (d+1)\le 2^{k}$, it equal to $\mathrm{e}\cdot \frac{1}{2^{k-1}} (d+1)\le 1 \qquad(1)$, on the other hand,  the size of each edge $|e| = k$,  let the probability of one edge cannot be  2-coloable in edge $e_i$ is $Pr[e_i]= 2 / 2^k = 1/2^{k-1} \qquad (2)$, it is a bad thing. From the two formulas above, we know that it  meets <code>Lovász Local Lemma</code>  condition . So the probability that not all bad things happen is greater than 0. In our problem, it means H has property B.</li>
+</ul>
+<p><strong>(2)algorithm</strong>:</p>
+<blockquote>
+<ul>
+<li><p>$\phi$: k-CNF of max degree d with m clauses on n variables, $|e| = m$, for clause $C_i$, bad event $A_i: C_i$ is not satisfied, which is the vertices in edge is colored the same color.</p>
+</li>
+<li><p>$n$ variables: $x_1,x_2,\ldots,x_n, \ n$ is the total number of vertices, $x_i=\{0,1\}$</p>
+</li>
+<li><p>For each clause C in φ, we denote by $\mathsf{vbl}(C)\subseteq\mathcal{X}$ the set of variables on which C is defined.</p>
+</li>
+<li><p>We also abuse the notation and denote by $\Gamma(C)=\{\text{clause }D\text{ in }\phi\mid D\neq C, \mathsf{vbl}(C)\cap\mathsf{vbl}(D)\neq\phi\} $ the neighborhood of <strong>C</strong>, i.e. the set of other clauses in φ that shares variables with C, and $\Gamma^+(C)=\Gamma(C)\cup\{C\}$ the inclusive neighborhood of <strong>C</strong>,</p>
+</li>
+</ul>
+<p><strong>Solve($\phi$)</strong></p>
+<ol>
+<li><p>Pick values of $x_1,x_2\ldots,x_n$ uniformly and independently at random;</p>
+</li>
+<li><p>while ∃ unsatisfied clause C  in φ :</p>
+</li>
+</ol>
+<p>&emsp;&emsp;Fix ($C$);</p>
+<p><strong>Fix(C):</strong></p>
+<ol>
+<li><p>Replace the values of variables in $\mathsf{vbl}(C)$ with uniform and independent random values;</p>
+</li>
+<li><p>while ∃ unsatisfied clause D overlapping with C:</p>
+</li>
+</ol>
+<p>&emsp;&emsp;Fix(D);</p>
+</blockquote>
+<ul>
+<li><strong>proof</strong>:<ul>
+<li>first, for the edges number m, we have $m \le 2^{k-1}$, that is $k \ge \log_2^m +1$, the proof is as follows:
+the probability of one edge cannot be  2-coloable in edge $e_i$ is $Pr[e_i]= 2 / 2^k = 1/2^{k-1} $, therefore the probability of the bad 2-coloring is:$Pr(\bigwedge_{i=1}^m e_i)\le \sum_{i=1}^mPr(e_i)=\frac{m}{2^{k-1}} \le 1$, so $k \ge \log_2^m +1 \qquad(1)$.</li>
+<li>second,  using Moser’s recursive Fix algorithm, there are <strong>m</strong> recursion trees, <strong>t</strong> total nodes, total of random bits is: $n+tk$, the sequence of random bits can be recoverd from <u>final assignment+ reciursion trees, for each recursion tree, the root uses $\left \lceil \log_2m\right \rceil$ bits, each internal node uses at most : $\log_2d + c $ bits</u>,  which is $m\left \lceil \log_2m\right \rceil + t(\log_2d + c)$, with the <strong>Incompressibility Theorem</strong>(N uniform random bits cannot be encoded to substantially less than N bits.), we have $n+tk \le m\left \lceil \log_2m\right \rceil + t(\log_2d + c)$,  and it is equal to $t(k-c-\log_2d \le m\left \lceil \log_2m\right \rceil + \log_2n)$, and $k-c-\log_2d &gt;0$, we get : $d\le 2^{k-c} \qquad(2)$,  with <code>Lovász Local Lemma</code>, we know that $ep(d+1) \leq 1$, and  here is $p = 1/2^{k-1}$, so $d \le \frac{2^{k-1}}{e} - 1\qquad(3)$  ,and the probability the algorithm can find a 2-coloring of H is $n+tk=O(n+km\log_2m)$ .</li>
+<li>using (1) ,(2) and (3), we can get the conditions of d and k: $k \ge \log_2^m +1$,$d \le \frac{2^{k-1}}{e} - 1$</li>
+</ul>
+</li>
+</ul>
+<p><strong>(3)algorithm</strong>:</p>
+<blockquote>
+<ul>
+<li>$\mathcal{X}$ is a set of mutually independent random variables.</li>
+</ul>
+<p><strong>RandomSolver:</strong></p>
+<ol>
+<li><p>sample all $X \in \mathcal{X}$;</p>
+</li>
+<li><p>while there is non-violated bad event $A \in \mathcal{A}$:</p>
+</li>
+</ol>
+<p>&emsp;&emsp;resample all $X \in vbl(A)$;</p>
+</blockquote>
+<ul>
+<li><strong>proof</strong>:<ul>
+<li>from above problem, we know that  $k \ge \log_2^m +1 \qquad(1)$.</li>
+<li>with <code>Lovász Local Lemma</code>, we know that $d \le \frac{2^{k-1}}{e} - 1\qquad(2)$</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><strong>(1) proof(unsolved)</strong>:</li>
+</ol>
+<ul>
+<li><p>let $k= |e|$, <strong>m</strong> edges, <strong>n</strong> vertices, $n \ge 2$, max degree of dependency graph: <strong>d</strong>, then we have $2(1-1/n) \ge 1$</p>
+</li>
+<li><p>$\forall v\in V, \frac{1}{n} \geq \sum_{e \ni v}(1-\frac{1}{n})^{-|e|}2^{-|e|+1} = \sum_{e \ni v}2(2(1-1/n))^{-|e|}= 2 \sum_{i=1}^n \frac{k_i}{2(2-1/n)^{k_i}}$</p>
+</li>
+<li><p>$\forall i, p = \Pr[A_i] \le \frac{2}{2^{\min(k)}} \le \frac{1}{2}, d \le \max(k_i)$</p>
+</li>
+</ul>
+<p><strong>(2) algorithm(unsolved)</strong></p>
 ]]></content>
     </entry>
     
