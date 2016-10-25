@@ -18,7 +18,7 @@ h2 {
 
 .body_container {
   padding: 0 20px;
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 0 auto; }
 
 .content_container {
@@ -43,7 +43,7 @@ a:focus {
   clear: both; }
 
 #header {
-  padding: 24px 0 0;
+  padding: 30px 0 0;
   text-align: left;
   border-bottom: 1px solid #ddd;
   position: relative; }
