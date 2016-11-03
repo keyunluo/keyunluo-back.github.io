@@ -8,8 +8,8 @@
 
 body {
     background-color: #fff;
-    color: #555;
-    font-family: Lato, "PingFang SC", "WenQuanYi Micro Hei", "Microsoft YaHei", sans-serif;
+    color: #222;
+    font-family: "Microsoft YaHei", Lato, "PingFang SC", "WenQuanYi Micro Hei",  sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 14px;
@@ -19,15 +19,15 @@ h2 {
 }
 .body_container {
     padding: 0 20px;
-    max-width: 1150px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 .content_container {
-    padding-right: 50px;
+    padding-right: 20px;
     padding-top: 10px;
 }
 a, button.submit {
-    color: #5D8CB5;
+    color: #3e72d8;
     text-decoration: none;
     -webkit-transition: all .1s ease-in;
     -moz-transition: all .1s ease-in;
@@ -45,7 +45,7 @@ a:focus {
 }
 
 #header {
-    padding: 58px 0 0;
+    padding: 30px 0 0;
     text-align: left;
     border-bottom: 1px solid #ddd;
     position: relative;
@@ -58,7 +58,7 @@ a:focus {
             overflow: hidden;
         }
         #logo {
-            font: bold 38px/1.12 "WenQuanYi Micro Hei", "Microsoft YaHei", SimSun, sans-serif;
+            font:  42px/1.12 "WenQuanYi Micro Hei", "Microsoft YaHei", SimSun, sans-serif;
             color: #333;
             span, &:hover {
                 color: #777;
@@ -66,7 +66,7 @@ a:focus {
         }
         .description {
             margin: .2em 0 0;
-            color: #999;
+            color: #666;
             font: 18px/1.12  YouYuan ,"STLiti", Georgia, Times, sans-serif;
             font-family:  YouYuan ,"STLiti", "Classic Grotesque W01", "Helvetica Neue", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif
         }
@@ -97,7 +97,7 @@ a:focus {
 
 #sidebar {
     border-left: 1px solid #ddd;
-    padding-left: 35px;
+    padding-left: 40px;
     margin-top: 40px;
     padding-bottom: 20px;
     word-wrap: break-word;
@@ -171,9 +171,9 @@ a:focus {
     padding: 25px 0 15px;
     .post-title {
         margin: 0;
-        color: #555;
+        color: #111;
         text-align: left;
-        font: bold 28px/1.1 "WenQuanYi Micro Hei", "Microsoft YaHei", "TIBch", "Classic Grotesque W01", "Helvetica Neue", Arial;
+        font:  28px/1.1 "Sans-Serif", "WenQuanYi Micro Hei", "Microsoft YaHei", "TIBch", "Classic Grotesque W01", "Helvetica Neue", Arial;
         a {
             color: #555;
         }
@@ -241,7 +241,7 @@ a:focus {
         clear: left;
         font-size: 15px;
         line-height: 1.77;
-        color: #444;
+        color: #333538;
         padding-top: 1px;
         //text-align: justify;
         text-justify: distribute;
@@ -264,7 +264,7 @@ a:focus {
             margin: 0 0 0.8em;
             code {
                 color: #E74C3C;
-                background: #fff;
+                background: #eee;
                 font-size: 75%;
                 overflow-x: auto;
                 white-space: nowrap;
@@ -850,7 +850,7 @@ figure.highlight,
         width:   100%;
 
         pre {
-            max-width:  700px;
+            max-width:  1000px;
             overflow-x: auto;
             overflow-y: hidden;
         }
@@ -1680,7 +1680,7 @@ blockquote {
   margin: 0;
     margin-bottom: .85em;
     padding: 0 15px;
-    color: #858585;
+    color: #505d66;
     border-left: 4px solid #e5e5e5;
 }
 

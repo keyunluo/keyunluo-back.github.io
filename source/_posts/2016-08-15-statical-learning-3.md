@@ -22,7 +22,7 @@ mathjax: true
 
 ### 算法流程
 
-输入： 训练数据集 $T=\\{(x_1,y_1),(x_2,y_2),\cdots ,(x_N,y_N)\\}, 其中，x_i \in \mathcal{X} \subseteq R^n 为实例的特征向量，y_i \in \mathcal{Y} = \\{c_1,c_2,\cdots ,c_K \\}为实例的类别，i = 1,2,\cdots ,N;实例特征向量x;$
+输入： 训练数据集 $T=\\{(x_1,y_1),(x_2,y_2),\cdots ,(x_N,y_N)\\}$, 其中，$x_i \in \mathcal{X} \subseteq R^n$ 为实例的特征向量，$y_i \in \mathcal{Y} = \\{c_1,c_2,\cdots ,c_K \\}$为实例的类别，$i = 1,2,\cdots ,N;$实例特征向量$x;$
 
 输出：实例x所属的类别y
 
