@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-11-03T08:33:24.315Z</updated>
+  <updated>2016-11-16T04:53:02.257Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -20,20 +20,212 @@
     <link href="http://keyunluo.github.io/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html"/>
     <id>http://keyunluo.github.io/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html</id>
     <published>2016-11-03T07:41:02.000Z</published>
-    <updated>2016-11-03T08:33:24.315Z</updated>
+    <updated>2016-11-16T04:53:02.257Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;高级算法：第二次作业。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;Problem-1&quot;&gt;&lt;a href=&quot;#Problem-1&quot; class=&quot;headerlink&quot; title=&quot;Problem 1&quot;&gt;&lt;/a&gt;Problem 1&lt;/h2&gt;&lt;p&gt;Consider the following optimization problem.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Instance&lt;/em&gt;: &lt;strong&gt;n&lt;/strong&gt; positive integers $x_1&amp;lt;x_2&amp;lt;\cdots &amp;lt;x_n$.
+Find two &lt;em&gt;disjoint&lt;/em&gt; nonempty subsets $A,B\subset{1,2,\ldots,n}$ with $\sum_{i\in A}x_i\ge \sum_{i\in B}x_i$, such that the ratio $\frac{\sum_{i\in A}x_i}{\sum_{i\in B}x_i}$ is minimized.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Give a pseudo-polynomial time algorithm for the problem, and then give an FPTAS for the problem based on the pseudo-polynomial time algorithm.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;My-Solution&quot;&gt;&lt;a href=&quot;#My-Solution&quot; class=&quot;headerlink&quot; title=&quot;My Solution&quot;&gt;&lt;/a&gt;My Solution&lt;/h3&gt;&lt;p&gt;1&amp;gt;. &lt;strong&gt;PTAS Algorithm&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt; Let $X =\sum_{i=1}^{n}x_i$ , and table $T = [1, \ldots,X][ 1, \ldots,X]$, each value in $T_i[a][b]$ is a boolean value which indicates if there are disjoint subset &lt;strong&gt;A&lt;/strong&gt; and &lt;strong&gt;B&lt;/strong&gt; that the sum of element in $X_A$ is &lt;strong&gt;a&lt;/strong&gt; and the sum of element in $X_B$ is &lt;strong&gt;b&lt;/strong&gt; . For any $x_i$ can be in $X_A$ or $X_B$ or neither of them.&lt;/p&gt;
+&lt;p&gt; The table can be computed as follows:&lt;/p&gt;
+&lt;p&gt;$$T_i[a][b]=
+\begin{cases}
+1 &amp;amp; \text{if} \  T_{i-1}[a][b]=1  \\
+1 &amp;amp; \text{if} \  T_{i-1}[a-x_i][b]=1  \\
+1 &amp;amp; \text{if} \  T_{i-1}[a][b-x_i]=1  \\
+0 &amp;amp; otherwise
+\end{cases}$$&lt;/p&gt;
+&lt;p&gt;  After filling the table,  it takes overall $O(nX^2)$ time, the optimal result can be found by choosing the minimum ratio $a/b$ with the constraint that $T[a][b]=1\  \text{and} \  a \ge b$.  This can be done in $O(X^2)$ time, after get the optimal value, we can re-construct the set $A,B$ by the following algorithm:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Algorithm: &lt;strong&gt;Re-Construct-Set&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Init&lt;/strong&gt;: A,B = $\emptyset$&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Input&lt;/strong&gt;: a, b, i&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Output&lt;/strong&gt;: set A, B&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Steps:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp; if i == 1:&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; if a == $x_1$:&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; &amp;emsp;&amp;emsp;  return ({a}, $\emptyset$)&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; if b == $x_1$:&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; &amp;emsp;&amp;emsp;  return ($\emptyset$,{b})&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp; if $T_{i-1}[a][b]$ == 1:&lt;/p&gt;
+&lt;p&gt; &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; return Re-Construct-Set(a,b,i-1):&lt;/p&gt;
+&lt;p&gt; &amp;emsp;&amp;emsp; if $T_{i-1}[a-x_i][b]$ == 1:&lt;/p&gt;
+&lt;p&gt; &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; (A,B)$\Leftarrow$ Re-Construct-Set(a,b,i-1):&lt;/p&gt;
+&lt;p&gt; &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; return ($A \bigcup {x_i}$, B) :&lt;/p&gt;
+&lt;p&gt; &amp;emsp;&amp;emsp; if $T_{i-1}[a][b-x_i]$ == 1:&lt;/p&gt;
+&lt;p&gt; &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; (A,B)$\Leftarrow$ Re-Construct-Set(a,b,i-1):&lt;/p&gt;
+&lt;p&gt; &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; return (A, $B \bigcup {x_i}$) :&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This recursive algorithm takes $O(n)$ time,  so all in all, the running time is $O(nX^2)$, it is a  pseudo-polynomial time algorithm.&lt;/p&gt;
+&lt;p&gt;2&amp;gt;. &lt;strong&gt;FPTAS Algorithm&lt;/strong&gt; (unsolved)
+ According to the algorithm above, we know that the  input  of $x_1, x_2, \ldots, x_n$ is  ascending.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;
 
 
-	&lt;div class=&quot;row&quot;&gt;
-	  &lt;iframe src=&quot;http://nagland.github.io/viewer/web/viewer.html?val=http://keyun.ml/resource/blog/2016-11/Advanced_Algorithms_Assignment2.pdf&quot; style=&quot;width:100%; height:550px&quot;&gt;&lt;/iframe&gt;
-	&lt;/div&gt;
-
-
-
+&lt;hr&gt;
+&lt;/p&gt;&lt;h2 id=&quot;Problem-2&quot;&gt;&lt;a href=&quot;#Problem-2&quot; class=&quot;headerlink&quot; title=&quot;Problem 2&quot;&gt;&lt;/a&gt;Problem 2&lt;/h2&gt;&lt;p&gt;In the &lt;em&gt;maximum directed cut&lt;/em&gt; (MAX-DICUT) problem, we are given as input a directed graph &lt;em&gt;G(V,E)&lt;/em&gt;. The goal is to partition &lt;em&gt;V&lt;/em&gt; into disjoint &lt;em&gt;S&lt;/em&gt; and &lt;em&gt;T&lt;/em&gt; so that the number of edges in $E(S,T)={(u,v)\in E\mid u\in S, v\in T}$ is maximized. The following is the integer program for MAX-DICUT:&lt;/p&gt;
+&lt;p&gt;\begin{align}
+\text{maximize} &amp;amp;&amp;amp;&amp;amp; \sum_{(u,v)\in E}y_{u,v}\\
+\text{subject to} &amp;amp;&amp;amp; y_{u,v} &amp;amp;\le x_u, &amp;amp; \forall (u,v)&amp;amp;\in E,\\
+&amp;amp;&amp;amp; y_{u,v} &amp;amp;\le 1-x_v, &amp;amp; \forall (u,v)&amp;amp;\in E,\\
+&amp;amp;&amp;amp; x_v &amp;amp;\in{0,1}, &amp;amp; \forall v&amp;amp;\in V,\\
+&amp;amp;&amp;amp;  y_{u,v} &amp;amp;\in{0,1}, &amp;amp; \forall (u,v)&amp;amp;\in E.
+\end{align}&lt;/p&gt;
+&lt;p&gt;Let $x_v^&lt;em&gt;,y_{u,v}^&lt;/em&gt;$ denote the optimal solution to the &lt;strong&gt;LP-relaxation&lt;/strong&gt; of the above integer program.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Apply the randomized rounding such that for every $v\in V, \hat{x}_v=1$ independently with probability $x_v^*$. Analyze the approximation ratio (between the expected size of the random cut and OPT).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Apply another randomized rounding such that for every $v\in V, \hat{x}_v=1$ independently with probability $1/4+x_v^*/2$. Analyze the approximation ratio for this algorithm.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;My-Solution-1&quot;&gt;&lt;a href=&quot;#My-Solution-1&quot; class=&quot;headerlink&quot; title=&quot;My Solution&quot;&gt;&lt;/a&gt;My Solution&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;let &lt;strong&gt;OPT&lt;/strong&gt; be the maximum weight of &lt;em&gt;MAX-DICUT&lt;/em&gt;, and it equals the value of given &lt;em&gt;ILP&lt;/em&gt; algorithm,  and the result of the optimal  LP-relaxation is $OPT_{LP}$, the probability of points(u,v) in cut is:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;$$\begin{array} {lcl}
+\Pr((u,v)\ in\ cut) &amp;amp; = &amp;amp; \Pr(u \in S \ and \ v \in T) \\
+        &amp;amp; = &amp;amp; \Pr(u \in S) \cdot \Pr(v \in T)\\
+        &amp;amp; = &amp;amp; x_u(1 -x_v) \\
+        &amp;amp; = &amp;amp;\frac{1}{2}x_u+x_u(\frac{1}{2}-x_v)\\
+        &amp;amp; \ge &amp;amp; \frac{1}{2}y_{u,v} + x_u(\frac{1}{2}-x_v)
+\end{array}$$&lt;/p&gt;
+&lt;p&gt;since that $\sum_{(u,v \in E)}x_u(\frac{1}{2}-x_v) \ge 0 $, so the total number of cuts W is as follows:&lt;/p&gt;
+&lt;p&gt;  $$E(W)= \sum_{(u,v \in E)} \Pr((u,v)\ in\ cut) \ge \sum_{(u,v \in E)}\frac{y_{u,v}}{2} \ge \frac{OPT_{LP}}{2} \ge \frac{OPT}{2}$$&lt;/p&gt;
+&lt;p&gt;   The approximation ratio for this algorithm is 0.5.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;let &lt;strong&gt;OPT&lt;/strong&gt; be the maximum weight of &lt;em&gt;MAX-DICUT&lt;/em&gt;, and it equals the value of given &lt;em&gt;ILP&lt;/em&gt; algorithm,  and the result of the optimal  LP-relaxation is $OPT_{LP}$, the probability of points(u,v) in cut is:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;$$\begin{array} {lcl}
+\Pr((u,v)\ in\ cut) &amp;amp; = &amp;amp; \Pr(u \in S \ and \ v \in T) \\
+        &amp;amp; = &amp;amp; \Pr(u \in S) \cdot \Pr(v \in T)\\
+        &amp;amp; = &amp;amp; (\frac{1}{4}+\frac{x_u}{2})(1 - (\frac{1}{4}+\frac{x_v}{2})) \\
+        &amp;amp; = &amp;amp; (\frac{1}{4}+\frac{x_u}{2})(\frac{1}{4}+\frac{1-x_v}{2})\\
+        &amp;amp; \ge &amp;amp; (\frac{1}{4}+\frac{y_{u,v}}{2})(\frac{1}{4}+\frac{y_{u,v}}{2})  \\
+        &amp;amp; = &amp;amp; (\frac{1}{4}-\frac{y_{u,v}}{2})^2 + \frac{y_{u,v}}{2}  \\
+        &amp;amp; \ge &amp;amp; \frac{y_{u,v}}{2}
+\end{array}$$&lt;/p&gt;
+&lt;p&gt;So, the total number of cuts W is as follows:&lt;/p&gt;
+&lt;p&gt;$$E(W)= \sum_{(u,v \in E)} \Pr((u,v)\ in\ cut) \ge \sum_{(u,v \in E)}\frac{y_{u,v}}{2} \ge \frac{OPT_{LP}}{2} \ge \frac{OPT}{2}$$&lt;/p&gt;
+&lt;p&gt; The approximation ratio for this algorithm is 0.5.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;Problem-3&quot;&gt;&lt;a href=&quot;#Problem-3&quot; class=&quot;headerlink&quot; title=&quot;Problem 3&quot;&gt;&lt;/a&gt;Problem 3&lt;/h2&gt;&lt;p&gt;Recall the MAX-SAT problem and its integer program:&lt;/p&gt;
+&lt;p&gt;\begin{align}
+\text{maximize} &amp;amp;&amp;amp;&amp;amp; \sum_{j=1}^my_j\\
+\text{subject to} &amp;amp;&amp;amp;&amp;amp; \sum_{i\in S_j^+}x_i+\sum_{i\in S_j^-}(1-x_i)\ge y_j, &amp;amp;&amp;amp; 1\le j\le m,\\
+&amp;amp;&amp;amp;&amp;amp; x_i\in{0,1}, &amp;amp;&amp;amp; 1\le i\le n,\\
+&amp;amp;&amp;amp;&amp;amp; y_j\in{0,1}, &amp;amp;&amp;amp; 1\le j\le m.
+\end{align}&lt;/p&gt;
+&lt;p&gt;Recall that $S_j^+,S_j^-\subseteq{1,2,\ldots,n}$ are the respective sets of variables appearing positively and negatively in clause $j$.&lt;/p&gt;
+&lt;p&gt;Let $x_i^*,y_j^*$ denote the optimal solution to the &lt;strong&gt;LP-relaxation&lt;/strong&gt; of the above integer program. In our class we learnt that if $\hat{x}_i$ is round to 1 independently with probability $x_i^*$, we have approximation ratio $1 − 1 / e$.&lt;/p&gt;
+&lt;p&gt;We consider a generalized rounding scheme such that every $\hat{x}_i$ is round to 1 independently with probability $f(x_i^*)$ for some function $f:[0,1]\to[0,1]$ to be specified.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Suppose $f(x)$ is an arbitrary function satisfying that $1-4^{-x}\le f(x)\le 4^{x-1}$ for any $x\in[0,1]$. Show that with this rounding scheme, the approximation ratio (between the expected number of satisfied clauses and OPT is at least $3 / 4$.&lt;/li&gt;
+&lt;li&gt;Is it possible that for some more clever $f$ we can do better than this? Try to justify your argument.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;My-Solution-2&quot;&gt;&lt;a href=&quot;#My-Solution-2&quot; class=&quot;headerlink&quot; title=&quot;My Solution&quot;&gt;&lt;/a&gt;My Solution&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;let $g(x) = 1 -4^{-x}, x \in[0,1], g(x) \le f(x) \le 1 - g(1-x), g\prime\prime(x)&lt;0$, then=&quot;&quot; *g(x)*=&quot;&quot; is=&quot;&quot; &lt;u=&quot;&quot;&gt;monotonically increasing and concavity, $0 \le g(x) \le \frac{3}{4}, g(x) \ge  \frac{3}{4}x$, let $X= \sum_{i=1}^k x_i\prime, x_i\prime= x_i\ for\ i \in [0,l],\  x_i\prime= 1 -  x_i\ for\ i \in (l,k]$, then $g(X) \ge \frac{3}{4}X, X \in [0,1], g(X) \ge \frac{3}{4}, X \in [1,\infty]$&lt;/0$,&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;$$\begin{array} {lcl}
+\Pr(S_j\ is \ satisfied) &amp;amp; = &amp;amp; 1 - \prod_{i \in S_j^+}(1 - f(x_i))\prod_{i \in S_j^-}f(x_i)\\
+        &amp;amp; \ge &amp;amp;1 - \prod_{i =1}^l(1 - g(x_i))\prod_{i =l+1}^k(1 - g(1 - x_i))\\
+        &amp;amp; = &amp;amp; 1 - \prod_{i=1}^k(1- g(x_i^\prime)) = 1 - \prod_{i=1}^k(4^{-x_i\prime}) =  1 - \prod_{i=1}^k(4^{-X}) \\
+        &amp;amp; = &amp;amp; g(X) \\
+        &amp;amp; \ge &amp;amp; \frac{3}{4} min(1, \sum_{i=1}^k x_i^\prime) =  \frac{3}{4} min(1, \sum_{i=1}^l x_i + \sum_{i = l+1}^k(1-x_i))\\
+        &amp;amp; \ge &amp;amp; \frac{3}{4} min(1, y_i) \ge \frac{3}{4} y_i
+\end{array}$$&lt;/p&gt;
+&lt;p&gt;   So,  $OPT \ge OPT_{LP} = \sum_{j=1}^my_j^*$, the approximation ratio  = $\frac{3}{4}$&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;It is impossible that for some more clever f we can do better than this.&lt;/p&gt;
+&lt;p&gt;Considering the symmetric property of $1- f(x_i)$ and $f(x_i)$, the best result is that they are equal, and the expectation of $S_j$ is not satisfied is $\frac{1}{4^{y_j^\ast} }$, so $\Pr(S_j\ is \ satisfied) \ge 1 - \frac{1}{4^{y_j^\ast} } \ge \frac{3}{4}{y_j^\ast}$&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;Problem-4&quot;&gt;&lt;a href=&quot;#Problem-4&quot; class=&quot;headerlink&quot; title=&quot;Problem 4&quot;&gt;&lt;/a&gt;Problem 4&lt;/h2&gt;&lt;p&gt;Recall that the instance of &lt;strong&gt;set cover&lt;/strong&gt; problem is a collection of &lt;em&gt;m&lt;/em&gt; subsets $S_1,S_2,\ldots,S_m\subseteq U$, where $U$ is a universe of size $n = | U | $. The goal is to find the smallest $C\subseteq{1,2,\ldots,m}$ such that $U=\bigcup_{i\in C}S_i$. The frequency &lt;em&gt;f&lt;/em&gt; is defined to be $\max_{x\in U}|{i\mid x\in S_i}|$.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Give the primal integer program for set cover, its LP-relaxation and the dual LP.&lt;/li&gt;
+&lt;li&gt;Describe the complementary slackness conditions for the problem.&lt;/li&gt;
+&lt;li&gt;Give a primal-dual algorithm for the problem. Present the algorithm in the language of primal-dual scheme (alternatively raising variables for the LPs). Analyze the approximation ratio in terms of the frequency &lt;em&gt;f&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;My-Solution-3&quot;&gt;&lt;a href=&quot;#My-Solution-3&quot; class=&quot;headerlink&quot; title=&quot;My Solution&quot;&gt;&lt;/a&gt;My Solution&lt;/h3&gt;&lt;p&gt;1.
+(1)&lt;strong&gt;Primal Integer Program&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Minimize:  $\sum_{j=1}^m c_j x_j$&lt;/p&gt;
+&lt;p&gt;Subject to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$\sum_{j:e_i \in S_j}x_j \ge 1, i = 1,2,\ldots, n$, &lt;em&gt;or&lt;/em&gt; :$\sum_{j=1}^ma_{i,j}x_j \ge 1, i = 1,2,\ldots, n$&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;$x_j={0,1}, j = 1,2,\ldots, m$&lt;/p&gt;
+&lt;p&gt;  (2)&lt;strong&gt;LP-relaxation&lt;/strong&gt;
+  Minimize:  $\sum_{j =1}^mc_jx_j$
+  Subject to:&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;$\sum_{j:e_i \in S_j}x_j \ge 1, i = 1,2,\ldots, n$, &lt;em&gt;or&lt;/em&gt; :$\sum_{j=1}^ma_{i,j}x_j \ge 1, i = 1,2,\ldots, n$&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;$x_j \ge 0, j = 1,2,\ldots, m$&lt;/p&gt;
+&lt;p&gt;  (3) &lt;strong&gt;Dual LP&lt;/strong&gt;
+  Maximize: $\sum_{i=1}^n y_i$
+  Subject to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;$\sum_{j:e_i \in S_j}y_j \le c_j, j=1, 2,\ldots, m$, &lt;em&gt;or&lt;/em&gt; :$\sum_{i=1}^na_{i,j}y_j \le c_j, j = 1,2,\ldots, m$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;$y_i \ge 0, i =1,2,\ldots,n$&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;Complementary Slackness Conditions&lt;blockquote&gt;
+&lt;p&gt;$\forall$ feasible primal solution x and dual solution y, x and y are both optimal if:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;For each $1 \le i \le n\ ,either\ \sum_{j=1}^m a_{i,j}x_j =1\ or\ y_i\ =\ 0\ $&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For each $1 \le j \le m\ ,either \ \sum_{i=1}^na_{i,j}y_j=c_j\ or\ x_j=\ 0 $&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;$\forall$ feasible primal solution x and dual solution y, for $\alpha,\beta \ge 1$:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;For each $1 \le i \le n\ ,either\ 1 \le \sum_{j=1}^m a_{i,j}x_j \le \beta \ or\ y_i\ =\ 0\ $&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For each $1 \le j \le m\ ,either \ c_j \ge  \sum_{i=1}^na_{i,j}y_j \ge \frac{c_j}{\alpha}\ or\ x_j=\ 0 $&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;3.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Initially $x=0,y=0$;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;While $E \neq \emptyset:$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&amp;emsp;&amp;emsp;Pick an $e$ uncovered and raise $y_e$ until some set goes tight&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&amp;emsp;&amp;emsp;Pick all tight sets in the cover and update $x$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&amp;emsp;&amp;emsp;Delete these sets from $E$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Output the set cover $x$&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;here, $cx \le \alpha\beta y \le \alpha\beta OPT$, in primal conditions, the variables will be incremented integrally, $x_j \neq 0 \Rightarrow \sum_{j:e_i \in S_j}y_j  = c_j, \alpha =1$, in the dual conditions, each element having a nonzero dual value can be covered at most f times, $y_i \neq 0 \Rightarrow \sum_{j:e_i \in S_j}x_j  \le f, \beta =f$.
+So, the approximation ratio is $f$.&lt;/p&gt;
+&lt;hr&gt;
 </content>
     
     <summary type="html">

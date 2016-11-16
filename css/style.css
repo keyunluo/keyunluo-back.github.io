@@ -22,7 +22,7 @@ h2 {
   margin: 0 auto; }
 
 .content_container {
-  padding-right: 20px;
+  padding-right: 30px;
   padding-top: 10px; }
 
 a, button.submit {
@@ -149,7 +149,7 @@ a:focus {
     margin: 0;
     color: #111;
     text-align: left;
-    font: 28px/1.1 "Sans-Serif", "WenQuanYi Micro Hei", "Microsoft YaHei", "TIBch", "Classic Grotesque W01", "Helvetica Neue", Arial; }
+    font: 24px/1.1 "Sans-Serif", "WenQuanYi Micro Hei", "Microsoft YaHei", "TIBch", "Classic Grotesque W01", "Helvetica Neue", Arial; }
     .post .post-title a {
       color: #555; }
   .post .post-meta {

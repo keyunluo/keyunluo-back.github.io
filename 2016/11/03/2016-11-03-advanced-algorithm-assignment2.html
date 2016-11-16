@@ -2,15 +2,207 @@
 <p><strong>本节内容：</strong>高级算法：第二次作业。</p>
 </blockquote>
 <a id="more"></a>
+<h2 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem 1"></a>Problem 1</h2><p>Consider the following optimization problem.</p>
+<blockquote>
+<p><em>Instance</em>: <strong>n</strong> positive integers $x_1&lt;x_2&lt;\cdots &lt;x_n$.
+Find two <em>disjoint</em> nonempty subsets $A,B\subset{1,2,\ldots,n}$ with $\sum_{i\in A}x_i\ge \sum_{i\in B}x_i$, such that the ratio $\frac{\sum_{i\in A}x_i}{\sum_{i\in B}x_i}$ is minimized.</p>
+</blockquote>
+<p>Give a pseudo-polynomial time algorithm for the problem, and then give an FPTAS for the problem based on the pseudo-polynomial time algorithm.</p>
+<hr>
+<h3 id="My-Solution"><a href="#My-Solution" class="headerlink" title="My Solution"></a>My Solution</h3><p>1&gt;. <strong>PTAS Algorithm</strong></p>
+<p> Let $X =\sum_{i=1}^{n}x_i$ , and table $T = [1, \ldots,X][ 1, \ldots,X]$, each value in $T_i[a][b]$ is a boolean value which indicates if there are disjoint subset <strong>A</strong> and <strong>B</strong> that the sum of element in $X_A$ is <strong>a</strong> and the sum of element in $X_B$ is <strong>b</strong> . For any $x_i$ can be in $X_A$ or $X_B$ or neither of them.</p>
+<p> The table can be computed as follows:</p>
+<p>$$T_i[a][b]=
+\begin{cases}
+1 &amp; \text{if} \  T_{i-1}[a][b]=1  \\
+1 &amp; \text{if} \  T_{i-1}[a-x_i][b]=1  \\
+1 &amp; \text{if} \  T_{i-1}[a][b-x_i]=1  \\
+0 &amp; otherwise
+\end{cases}$$</p>
+<p>  After filling the table,  it takes overall $O(nX^2)$ time, the optimal result can be found by choosing the minimum ratio $a/b$ with the constraint that $T[a][b]=1\  \text{and} \  a \ge b$.  This can be done in $O(X^2)$ time, after get the optimal value, we can re-construct the set $A,B$ by the following algorithm:</p>
+<blockquote>
+<p>Algorithm: <strong>Re-Construct-Set</strong></p>
+<p><strong>Init</strong>: A,B = $\emptyset$</p>
+<p><strong>Input</strong>: a, b, i</p>
+<p><strong>Output</strong>: set A, B</p>
+<p><strong>Steps:</strong></p>
+<p>&emsp;&emsp; if i == 1:</p>
+<p>&emsp;&emsp;&emsp;&emsp; if a == $x_1$:</p>
+<p>&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;  return ({a}, $\emptyset$)</p>
+<p>&emsp;&emsp;&emsp;&emsp; if b == $x_1$:</p>
+<p>&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;  return ($\emptyset$,{b})</p>
+<p>&emsp;&emsp; if $T_{i-1}[a][b]$ == 1:</p>
+<p> &emsp;&emsp;&emsp;&emsp; return Re-Construct-Set(a,b,i-1):</p>
+<p> &emsp;&emsp; if $T_{i-1}[a-x_i][b]$ == 1:</p>
+<p> &emsp;&emsp;&emsp;&emsp; (A,B)$\Leftarrow$ Re-Construct-Set(a,b,i-1):</p>
+<p> &emsp;&emsp;&emsp;&emsp; return ($A \bigcup {x_i}$, B) :</p>
+<p> &emsp;&emsp; if $T_{i-1}[a][b-x_i]$ == 1:</p>
+<p> &emsp;&emsp;&emsp;&emsp; (A,B)$\Leftarrow$ Re-Construct-Set(a,b,i-1):</p>
+<p> &emsp;&emsp;&emsp;&emsp; return (A, $B \bigcup {x_i}$) :</p>
+</blockquote>
+<p>This recursive algorithm takes $O(n)$ time,  so all in all, the running time is $O(nX^2)$, it is a  pseudo-polynomial time algorithm.</p>
+<p>2&gt;. <strong>FPTAS Algorithm</strong> (unsolved)
+ According to the algorithm above, we know that the  input  of $x_1, x_2, \ldots, x_n$ is  ascending.</p>
+<p></p><p></p>
+<p></p><p></p>
+<p></p><p></p>
+<p></p><p></p>
+<p></p><p></p>
+<p></p><p></p>
+<p></p><p></p>
+<p>
 
 
-	<div class="row">
-	  <iframe src="http://nagland.github.io/viewer/web/viewer.html?val=http://keyun.ml/resource/blog/2016-11/Advanced_Algorithms_Assignment2.pdf" style="width:100%; height:550px"></iframe>
-	</div>
-
-
-
-</div><script type="text/javascript" src="/js/share.js?v=1.0.0" async></script><a data-url="http://keyunluo.github.io/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html" data-id="civ23hubk004sxrglbn3mq6c5" class="article-share-link">分享到</a><div class="tags"><a href="/tags/算法/">算法</a></div><div class="post-nav"><a href="/2016/10/13/2016-10-13-advanced-algorithm-assignment1.html" class="next">高级算法--作业1</a></div><div data-thread-key="2016/11/03/2016-11-03-advanced-algorithm-assignment2.html" data-title="高级算法--作业2" data-url="http://keyunluo.github.io/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2016/11/03/2016-11-03-advanced-algorithm-assignment2.html" data-title="高级算法--作业2" data-url="http://keyunluo.github.io/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-5"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AdvancedAlgorithms/">AdvancedAlgorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AlgorithmApplication/">AlgorithmApplication</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataBase/">DataBase</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MachineLearning/">MachineLearning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SourceCodeLearning/">SourceCodeLearning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Markdown/" style="font-size: 15px;">Markdown</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/二次排序/" style="font-size: 15px;">二次排序</a> <a href="/tags/VPN/" style="font-size: 15px;">VPN</a> <a href="/tags/Oracle/" style="font-size: 15px;">Oracle</a> <a href="/tags/DataBase/" style="font-size: 15px;">DataBase</a> <a href="/tags/sqoop/" style="font-size: 15px;">sqoop</a> <a href="/tags/elasticsearch/" style="font-size: 15px;">elasticsearch</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/生活/" style="font-size: 15px;">生活</a> <a href="/tags/毕业/" style="font-size: 15px;">毕业</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/hadoop/" style="font-size: 15px;">hadoop</a> <a href="/tags/Latex/" style="font-size: 15px;">Latex</a> <a href="/tags/UML/" style="font-size: 15px;">UML</a> <a href="/tags/PlantUML/" style="font-size: 15px;">PlantUML</a> <a href="/tags/机器学习/" style="font-size: 15px;">机器学习</a> <a href="/tags/CentOS/" style="font-size: 15px;">CentOS</a> <a href="/tags/Cloudera/" style="font-size: 15px;">Cloudera</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/数据压缩/" style="font-size: 15px;">数据压缩</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/OpenCV/" style="font-size: 15px;">OpenCV</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html">高级算法--作业2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/13/2016-10-13-advanced-algorithm-assignment1.html">高级算法--作业1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/06/2016-10-06-advanced-algorithm-3.html">高级算法(3)--Min-Cut-Max-Flow(2)-近似算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/05/2016-10-05-advanced-algorithm-2.html">高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/04/2016-10-04-advanced-algorithm-1.html">高级算法(1)--NP完全性与近似算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/04/2016-10-04-ubuntu16.04-opencv3-python3.html">Ubuntu16.04上编译OpenCV的Python3包</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/2016-09-24-compress-1.html">数据压缩(1) —— 概述</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/23/2016-09-23-statical-learning-5.html">统计学习方法——决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/22/2016-09-22-hadoop-filesystem-1.html">Hadoop源码学习(15)——文件系统(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/16/2016-08-16-statical-learning-4.html">统计学习方法——朴素贝叶斯法</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 外部链接</i></div><ul></ul><a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a></div><div class="widget"><div class="widget-title"><i class="fa fa-bar-chart"> 访客</i></div><a href="http://info.flagcounter.com/uNxw"><img src="http://s07.flagcounter.com/count2/uNxw/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_3/labels_0/pageviews_0/flags_0/percent_0/" alt="" border="0"></a></div></div></div><div class="pure-u-1 pure-u-md-4-5"><div id="footer">© <a href="/." rel="nofollow">流光.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=1.0.0"><script>var duoshuoQuery = {short_name:'streamers'};
+<hr>
+</p><h2 id="Problem-2"><a href="#Problem-2" class="headerlink" title="Problem 2"></a>Problem 2</h2><p>In the <em>maximum directed cut</em> (MAX-DICUT) problem, we are given as input a directed graph <em>G(V,E)</em>. The goal is to partition <em>V</em> into disjoint <em>S</em> and <em>T</em> so that the number of edges in $E(S,T)={(u,v)\in E\mid u\in S, v\in T}$ is maximized. The following is the integer program for MAX-DICUT:</p>
+<p>\begin{align}
+\text{maximize} &amp;&amp;&amp; \sum_{(u,v)\in E}y_{u,v}\\
+\text{subject to} &amp;&amp; y_{u,v} &amp;\le x_u, &amp; \forall (u,v)&amp;\in E,\\
+&amp;&amp; y_{u,v} &amp;\le 1-x_v, &amp; \forall (u,v)&amp;\in E,\\
+&amp;&amp; x_v &amp;\in{0,1}, &amp; \forall v&amp;\in V,\\
+&amp;&amp;  y_{u,v} &amp;\in{0,1}, &amp; \forall (u,v)&amp;\in E.
+\end{align}</p>
+<p>Let $x_v^<em>,y_{u,v}^</em>$ denote the optimal solution to the <strong>LP-relaxation</strong> of the above integer program.</p>
+<ul>
+<li><p>Apply the randomized rounding such that for every $v\in V, \hat{x}_v=1$ independently with probability $x_v^*$. Analyze the approximation ratio (between the expected size of the random cut and OPT).</p>
+</li>
+<li><p>Apply another randomized rounding such that for every $v\in V, \hat{x}_v=1$ independently with probability $1/4+x_v^*/2$. Analyze the approximation ratio for this algorithm.</p>
+</li>
+</ul>
+<hr>
+<h3 id="My-Solution-1"><a href="#My-Solution-1" class="headerlink" title="My Solution"></a>My Solution</h3><ol>
+<li>let <strong>OPT</strong> be the maximum weight of <em>MAX-DICUT</em>, and it equals the value of given <em>ILP</em> algorithm,  and the result of the optimal  LP-relaxation is $OPT_{LP}$, the probability of points(u,v) in cut is:</li>
+</ol>
+<p>$$\begin{array} {lcl}
+\Pr((u,v)\ in\ cut) &amp; = &amp; \Pr(u \in S \ and \ v \in T) \\
+        &amp; = &amp; \Pr(u \in S) \cdot \Pr(v \in T)\\
+        &amp; = &amp; x_u(1 -x_v) \\
+        &amp; = &amp;\frac{1}{2}x_u+x_u(\frac{1}{2}-x_v)\\
+        &amp; \ge &amp; \frac{1}{2}y_{u,v} + x_u(\frac{1}{2}-x_v)
+\end{array}$$</p>
+<p>since that $\sum_{(u,v \in E)}x_u(\frac{1}{2}-x_v) \ge 0 $, so the total number of cuts W is as follows:</p>
+<p>  $$E(W)= \sum_{(u,v \in E)} \Pr((u,v)\ in\ cut) \ge \sum_{(u,v \in E)}\frac{y_{u,v}}{2} \ge \frac{OPT_{LP}}{2} \ge \frac{OPT}{2}$$</p>
+<p>   The approximation ratio for this algorithm is 0.5.</p>
+<ol>
+<li>let <strong>OPT</strong> be the maximum weight of <em>MAX-DICUT</em>, and it equals the value of given <em>ILP</em> algorithm,  and the result of the optimal  LP-relaxation is $OPT_{LP}$, the probability of points(u,v) in cut is:</li>
+</ol>
+<p>$$\begin{array} {lcl}
+\Pr((u,v)\ in\ cut) &amp; = &amp; \Pr(u \in S \ and \ v \in T) \\
+        &amp; = &amp; \Pr(u \in S) \cdot \Pr(v \in T)\\
+        &amp; = &amp; (\frac{1}{4}+\frac{x_u}{2})(1 - (\frac{1}{4}+\frac{x_v}{2})) \\
+        &amp; = &amp; (\frac{1}{4}+\frac{x_u}{2})(\frac{1}{4}+\frac{1-x_v}{2})\\
+        &amp; \ge &amp; (\frac{1}{4}+\frac{y_{u,v}}{2})(\frac{1}{4}+\frac{y_{u,v}}{2})  \\
+        &amp; = &amp; (\frac{1}{4}-\frac{y_{u,v}}{2})^2 + \frac{y_{u,v}}{2}  \\
+        &amp; \ge &amp; \frac{y_{u,v}}{2}
+\end{array}$$</p>
+<p>So, the total number of cuts W is as follows:</p>
+<p>$$E(W)= \sum_{(u,v \in E)} \Pr((u,v)\ in\ cut) \ge \sum_{(u,v \in E)}\frac{y_{u,v}}{2} \ge \frac{OPT_{LP}}{2} \ge \frac{OPT}{2}$$</p>
+<p> The approximation ratio for this algorithm is 0.5.</p>
+<hr>
+<h2 id="Problem-3"><a href="#Problem-3" class="headerlink" title="Problem 3"></a>Problem 3</h2><p>Recall the MAX-SAT problem and its integer program:</p>
+<p>\begin{align}
+\text{maximize} &amp;&amp;&amp; \sum_{j=1}^my_j\\
+\text{subject to} &amp;&amp;&amp; \sum_{i\in S_j^+}x_i+\sum_{i\in S_j^-}(1-x_i)\ge y_j, &amp;&amp; 1\le j\le m,\\
+&amp;&amp;&amp; x_i\in{0,1}, &amp;&amp; 1\le i\le n,\\
+&amp;&amp;&amp; y_j\in{0,1}, &amp;&amp; 1\le j\le m.
+\end{align}</p>
+<p>Recall that $S_j^+,S_j^-\subseteq{1,2,\ldots,n}$ are the respective sets of variables appearing positively and negatively in clause $j$.</p>
+<p>Let $x_i^*,y_j^*$ denote the optimal solution to the <strong>LP-relaxation</strong> of the above integer program. In our class we learnt that if $\hat{x}_i$ is round to 1 independently with probability $x_i^*$, we have approximation ratio $1 − 1 / e$.</p>
+<p>We consider a generalized rounding scheme such that every $\hat{x}_i$ is round to 1 independently with probability $f(x_i^*)$ for some function $f:[0,1]\to[0,1]$ to be specified.</p>
+<ul>
+<li>Suppose $f(x)$ is an arbitrary function satisfying that $1-4^{-x}\le f(x)\le 4^{x-1}$ for any $x\in[0,1]$. Show that with this rounding scheme, the approximation ratio (between the expected number of satisfied clauses and OPT is at least $3 / 4$.</li>
+<li>Is it possible that for some more clever $f$ we can do better than this? Try to justify your argument.</li>
+</ul>
+<hr>
+<h3 id="My-Solution-2"><a href="#My-Solution-2" class="headerlink" title="My Solution"></a>My Solution</h3><ol>
+<li>let $g(x) = 1 -4^{-x}, x \in[0,1], g(x) \le f(x) \le 1 - g(1-x), g\prime\prime(x)<0$, then="" *g(x)*="" is="" <u="">monotonically increasing and concavity, $0 \le g(x) \le \frac{3}{4}, g(x) \ge  \frac{3}{4}x$, let $X= \sum_{i=1}^k x_i\prime, x_i\prime= x_i\ for\ i \in [0,l],\  x_i\prime= 1 -  x_i\ for\ i \in (l,k]$, then $g(X) \ge \frac{3}{4}X, X \in [0,1], g(X) \ge \frac{3}{4}, X \in [1,\infty]$</0$,></li>
+</ol>
+<p>$$\begin{array} {lcl}
+\Pr(S_j\ is \ satisfied) &amp; = &amp; 1 - \prod_{i \in S_j^+}(1 - f(x_i))\prod_{i \in S_j^-}f(x_i)\\
+        &amp; \ge &amp;1 - \prod_{i =1}^l(1 - g(x_i))\prod_{i =l+1}^k(1 - g(1 - x_i))\\
+        &amp; = &amp; 1 - \prod_{i=1}^k(1- g(x_i^\prime)) = 1 - \prod_{i=1}^k(4^{-x_i\prime}) =  1 - \prod_{i=1}^k(4^{-X}) \\
+        &amp; = &amp; g(X) \\
+        &amp; \ge &amp; \frac{3}{4} min(1, \sum_{i=1}^k x_i^\prime) =  \frac{3}{4} min(1, \sum_{i=1}^l x_i + \sum_{i = l+1}^k(1-x_i))\\
+        &amp; \ge &amp; \frac{3}{4} min(1, y_i) \ge \frac{3}{4} y_i
+\end{array}$$</p>
+<p>   So,  $OPT \ge OPT_{LP} = \sum_{j=1}^my_j^*$, the approximation ratio  = $\frac{3}{4}$</p>
+<ol>
+<li><p>It is impossible that for some more clever f we can do better than this.</p>
+<p>Considering the symmetric property of $1- f(x_i)$ and $f(x_i)$, the best result is that they are equal, and the expectation of $S_j$ is not satisfied is $\frac{1}{4^{y_j^\ast} }$, so $\Pr(S_j\ is \ satisfied) \ge 1 - \frac{1}{4^{y_j^\ast} } \ge \frac{3}{4}{y_j^\ast}$</p>
+</li>
+</ol>
+<hr>
+<h2 id="Problem-4"><a href="#Problem-4" class="headerlink" title="Problem 4"></a>Problem 4</h2><p>Recall that the instance of <strong>set cover</strong> problem is a collection of <em>m</em> subsets $S_1,S_2,\ldots,S_m\subseteq U$, where $U$ is a universe of size $n = | U | $. The goal is to find the smallest $C\subseteq{1,2,\ldots,m}$ such that $U=\bigcup_{i\in C}S_i$. The frequency <em>f</em> is defined to be $\max_{x\in U}|{i\mid x\in S_i}|$.</p>
+<ul>
+<li>Give the primal integer program for set cover, its LP-relaxation and the dual LP.</li>
+<li>Describe the complementary slackness conditions for the problem.</li>
+<li>Give a primal-dual algorithm for the problem. Present the algorithm in the language of primal-dual scheme (alternatively raising variables for the LPs). Analyze the approximation ratio in terms of the frequency <em>f</em>.</li>
+</ul>
+<hr>
+<h3 id="My-Solution-3"><a href="#My-Solution-3" class="headerlink" title="My Solution"></a>My Solution</h3><p>1.
+(1)<strong>Primal Integer Program</strong></p>
+<p>Minimize:  $\sum_{j=1}^m c_j x_j$</p>
+<p>Subject to:</p>
+<ul>
+<li>$\sum_{j:e_i \in S_j}x_j \ge 1, i = 1,2,\ldots, n$, <em>or</em> :$\sum_{j=1}^ma_{i,j}x_j \ge 1, i = 1,2,\ldots, n$</li>
+<li><p>$x_j={0,1}, j = 1,2,\ldots, m$</p>
+<p>  (2)<strong>LP-relaxation</strong>
+  Minimize:  $\sum_{j =1}^mc_jx_j$
+  Subject to:</p>
+</li>
+<li>$\sum_{j:e_i \in S_j}x_j \ge 1, i = 1,2,\ldots, n$, <em>or</em> :$\sum_{j=1}^ma_{i,j}x_j \ge 1, i = 1,2,\ldots, n$</li>
+<li><p>$x_j \ge 0, j = 1,2,\ldots, m$</p>
+<p>  (3) <strong>Dual LP</strong>
+  Maximize: $\sum_{i=1}^n y_i$
+  Subject to:</p>
+<ul>
+<li><p>$\sum_{j:e_i \in S_j}y_j \le c_j, j=1, 2,\ldots, m$, <em>or</em> :$\sum_{i=1}^na_{i,j}y_j \le c_j, j = 1,2,\ldots, m$</p>
+</li>
+<li><p>$y_i \ge 0, i =1,2,\ldots,n$</p>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>Complementary Slackness Conditions<blockquote>
+<p>$\forall$ feasible primal solution x and dual solution y, x and y are both optimal if:</p>
+<ul>
+<li><p>For each $1 \le i \le n\ ,either\ \sum_{j=1}^m a_{i,j}x_j =1\ or\ y_i\ =\ 0\ $</p>
+</li>
+<li><p>For each $1 \le j \le m\ ,either \ \sum_{i=1}^na_{i,j}y_j=c_j\ or\ x_j=\ 0 $</p>
+</li>
+</ul>
+<p>$\forall$ feasible primal solution x and dual solution y, for $\alpha,\beta \ge 1$:</p>
+<ul>
+<li><p>For each $1 \le i \le n\ ,either\ 1 \le \sum_{j=1}^m a_{i,j}x_j \le \beta \ or\ y_i\ =\ 0\ $</p>
+</li>
+<li><p>For each $1 \le j \le m\ ,either \ c_j \ge  \sum_{i=1}^na_{i,j}y_j \ge \frac{c_j}{\alpha}\ or\ x_j=\ 0 $</p>
+</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<p>3.</p>
+<blockquote>
+<ol>
+<li><p>Initially $x=0,y=0$;</p>
+</li>
+<li><p>While $E \neq \emptyset:$</p>
+</li>
+<li><p>&emsp;&emsp;Pick an $e$ uncovered and raise $y_e$ until some set goes tight</p>
+</li>
+<li><p>&emsp;&emsp;Pick all tight sets in the cover and update $x$</p>
+</li>
+<li><p>&emsp;&emsp;Delete these sets from $E$</p>
+</li>
+<li><p>Output the set cover $x$</p>
+</li>
+</ol>
+</blockquote>
+<p>here, $cx \le \alpha\beta y \le \alpha\beta OPT$, in primal conditions, the variables will be incremented integrally, $x_j \neq 0 \Rightarrow \sum_{j:e_i \in S_j}y_j  = c_j, \alpha =1$, in the dual conditions, each element having a nonzero dual value can be covered at most f times, $y_i \neq 0 \Rightarrow \sum_{j:e_i \in S_j}x_j  \le f, \beta =f$.
+So, the approximation ratio is $f$.</p>
+<hr>
+</div><script type="text/javascript" src="/js/share.js?v=1.0.0" async></script><a data-url="http://keyunluo.github.io/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html" data-id="civkfpq3s004l3lgl8t4tz8i7" class="article-share-link">分享到</a><div class="tags"><a href="/tags/算法/">算法</a></div><div class="post-nav"><a href="/2016/10/13/2016-10-13-advanced-algorithm-assignment1.html" class="next">高级算法--作业1</a></div><div data-thread-key="2016/11/03/2016-11-03-advanced-algorithm-assignment2.html" data-title="高级算法--作业2" data-url="http://keyunluo.github.io/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2016/11/03/2016-11-03-advanced-algorithm-assignment2.html" data-title="高级算法--作业2" data-url="http://keyunluo.github.io/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-5"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AdvancedAlgorithms/">AdvancedAlgorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AlgorithmApplication/">AlgorithmApplication</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataBase/">DataBase</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MachineLearning/">MachineLearning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SourceCodeLearning/">SourceCodeLearning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Markdown/" style="font-size: 15px;">Markdown</a> <a href="/tags/VPN/" style="font-size: 15px;">VPN</a> <a href="/tags/二次排序/" style="font-size: 15px;">二次排序</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/elasticsearch/" style="font-size: 15px;">elasticsearch</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/Oracle/" style="font-size: 15px;">Oracle</a> <a href="/tags/DataBase/" style="font-size: 15px;">DataBase</a> <a href="/tags/sqoop/" style="font-size: 15px;">sqoop</a> <a href="/tags/生活/" style="font-size: 15px;">生活</a> <a href="/tags/毕业/" style="font-size: 15px;">毕业</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/hadoop/" style="font-size: 15px;">hadoop</a> <a href="/tags/Latex/" style="font-size: 15px;">Latex</a> <a href="/tags/机器学习/" style="font-size: 15px;">机器学习</a> <a href="/tags/UML/" style="font-size: 15px;">UML</a> <a href="/tags/PlantUML/" style="font-size: 15px;">PlantUML</a> <a href="/tags/Cloudera/" style="font-size: 15px;">Cloudera</a> <a href="/tags/CentOS/" style="font-size: 15px;">CentOS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/OpenCV/" style="font-size: 15px;">OpenCV</a> <a href="/tags/数据压缩/" style="font-size: 15px;">数据压缩</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html">高级算法--作业2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/13/2016-10-13-advanced-algorithm-assignment1.html">高级算法--作业1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/06/2016-10-06-advanced-algorithm-3.html">高级算法(3)--Min-Cut-Max-Flow(2)-近似算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/05/2016-10-05-advanced-algorithm-2.html">高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/04/2016-10-04-advanced-algorithm-1.html">高级算法(1)--NP完全性与近似算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/04/2016-10-04-ubuntu16.04-opencv3-python3.html">Ubuntu16.04上编译OpenCV的Python3包</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/2016-09-24-compress-1.html">数据压缩(1) —— 概述</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/23/2016-09-23-statical-learning-5.html">统计学习方法——决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/22/2016-09-22-hadoop-filesystem-1.html">Hadoop源码学习(15)——文件系统(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/16/2016-08-16-statical-learning-4.html">统计学习方法——朴素贝叶斯法</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 外部链接</i></div><ul></ul><a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a></div><div class="widget"><div class="widget-title"><i class="fa fa-bar-chart"> 访客</i></div><a href="http://info.flagcounter.com/uNxw"><img src="http://s07.flagcounter.com/count2/uNxw/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_3/labels_0/pageviews_0/flags_0/percent_0/" alt="" border="0"></a></div></div></div><div class="pure-u-1 pure-u-md-4-5"><div id="footer">© <a href="/." rel="nofollow">流光.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=1.0.0"><script>var duoshuoQuery = {short_name:'streamers'};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;
