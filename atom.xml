@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-12-23T13:45:24.480Z</updated>
+  <updated>2016-12-23T14:28:16.833Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -20,13 +20,117 @@
     <link href="http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html"/>
     <id>http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html</id>
     <published>2016-12-23T06:25:02.000Z</published>
-    <updated>2016-12-23T13:45:24.480Z</updated>
+    <updated>2016-12-23T14:28:16.833Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2016年秋南京大学计算机系分布式系统课程总结。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h2 id=&quot;分布式系统模型&quot;&gt;&lt;a href=&quot;#分布式系统模型&quot; class=&quot;headerlink&quot; title=&quot;分布式系统模型&quot;&gt;&lt;/a&gt;分布式系统模型&lt;/h2&gt;&lt;h2 id=&quot;分布式系统架构&quot;&gt;&lt;a href=&quot;#分布式系统架构&quot; class=&quot;headerlink&quot; title=&quot;分布式系统架构&quot;&gt;&lt;/a&gt;分布式系统架构&lt;/h2&gt;&lt;h2 id=&quot;进程与线程&quot;&gt;&lt;a href=&quot;#进程与线程&quot; class=&quot;headerlink&quot; title=&quot;进程与线程&quot;&gt;&lt;/a&gt;进程与线程&lt;/h2&gt;&lt;h2 id=&quot;通信&quot;&gt;&lt;a href=&quot;#通信&quot; class=&quot;headerlink&quot; title=&quot;通信&quot;&gt;&lt;/a&gt;通信&lt;/h2&gt;&lt;h2 id=&quot;命名&quot;&gt;&lt;a href=&quot;#命名&quot; class=&quot;headerlink&quot; title=&quot;命名&quot;&gt;&lt;/a&gt;命名&lt;/h2&gt;&lt;h2 id=&quot;同步与资源管理&quot;&gt;&lt;a href=&quot;#同步与资源管理&quot; class=&quot;headerlink&quot; title=&quot;同步与资源管理&quot;&gt;&lt;/a&gt;同步与资源管理&lt;/h2&gt;&lt;h2 id=&quot;复制与一致性&quot;&gt;&lt;a href=&quot;#复制与一致性&quot; class=&quot;headerlink&quot; title=&quot;复制与一致性&quot;&gt;&lt;/a&gt;复制与一致性&lt;/h2&gt;&lt;h2 id=&quot;容错&quot;&gt;&lt;a href=&quot;#容错&quot; class=&quot;headerlink&quot; title=&quot;容错&quot;&gt;&lt;/a&gt;容错&lt;/h2&gt;&lt;h2 id=&quot;云计算&quot;&gt;&lt;a href=&quot;#云计算&quot; class=&quot;headerlink&quot; title=&quot;云计算&quot;&gt;&lt;/a&gt;云计算&lt;/h2&gt;&lt;h2 id=&quot;OpenStack&quot;&gt;&lt;a href=&quot;#OpenStack&quot; class=&quot;headerlink&quot; title=&quot;OpenStack&quot;&gt;&lt;/a&gt;OpenStack&lt;/h2&gt;</content>
+&lt;h2 id=&quot;分布式系统模型&quot;&gt;&lt;a href=&quot;#分布式系统模型&quot; class=&quot;headerlink&quot; title=&quot;分布式系统模型&quot;&gt;&lt;/a&gt;分布式系统模型&lt;/h2&gt;&lt;p&gt;1 分布式系统定义：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一个分布式系统是一些独立的计算机集合，但是对这个系统的用户来说，系统就像一台计算机一样&lt;/strong&gt;。 这个定义有两方面的含义：第一，从硬件角度来讲，每台计算机都是自主的；第二，从软件角度来讲，用户将整个系统看做是一台计算机。这两者都是必需的，缺一不可。&lt;/p&gt;
+&lt;p&gt;2 涉及到的技术：网络、处理器、内存、存储、协议。&lt;/p&gt;
+&lt;p&gt;3 需要分布式的原因&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;相对于集中系统，分布式系统的优点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;优点&lt;/th&gt;
+&lt;th&gt;解释&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Economics（经济性）&lt;/td&gt;
+&lt;td&gt;微处理器能提供比大型机更好的性价比&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Speed（速度）&lt;/td&gt;
+&lt;td&gt;分布式系统能提供比大型机更强的计算能力&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Inherent distribution（固有的分布性）&lt;/td&gt;
+&lt;td&gt;有一些应用包含物理上分布的机器&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Reliability（可靠性）&lt;/td&gt;
+&lt;td&gt;当某台机器崩溃时，整个系统仍能正常工作&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Incremental growth（可扩展性）&lt;/td&gt;
+&lt;td&gt;计算能力逐步增加&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;相对于独立的PC，分布式系统的优点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;优点&lt;/th&gt;
+&lt;th&gt;解释&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;数据共享&lt;/td&gt;
+&lt;td&gt;允许用户共享一个数据库&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;外设共享&lt;/td&gt;
+&lt;td&gt;允许用户共享昂贵的外设，如彩色打印机&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;通信&lt;/td&gt;
+&lt;td&gt;使得个人与个人之间的通信更为方便，如Email&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;灵活性&lt;/td&gt;
+&lt;td&gt;将工作负载更有效的分派到合适的机器上&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;缺点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;缺点&lt;/th&gt;
+&lt;th&gt;解释&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;软件&lt;/td&gt;
+&lt;td&gt;分布式系统的软件开发困难&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;通信网络&lt;/td&gt;
+&lt;td&gt;网络可能饱和或有损传输&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;安全&lt;/td&gt;
+&lt;td&gt;数据共享造成机密数据容易被窃取&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;4 分布式系统的目标&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;资源可用性：系统资源被所有计算机共享&lt;/li&gt;
+&lt;li&gt;分布透明:Access,Location,Migration,Relocation,Replication,Concurrency,Failure&lt;/li&gt;
+&lt;li&gt;开放性：能够与其他开放系统进行服务交互，能够使分布式系统独立于底层环境的异构性&lt;/li&gt;
+&lt;li&gt;可扩展：用户、处理可扩展（大小扩展性），节点之间最大距离（地理可扩展性），管理主机的数目（管理可扩展性）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;5 分布式系统中类别&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;分布式计算系统：集群计算、网格计算&lt;/li&gt;
+&lt;li&gt;分布式信息系统：事务处理系统（ACID:原子性、一致性、隔离性、持久性）&lt;/li&gt;
+&lt;li&gt;分布式普适系统：普适计算、移动计算、传感器网络&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;分布式系统架构&quot;&gt;&lt;a href=&quot;#分布式系统架构&quot; class=&quot;headerlink&quot; title=&quot;分布式系统架构&quot;&gt;&lt;/a&gt;分布式系统架构&lt;/h2&gt;&lt;h2 id=&quot;进程与线程&quot;&gt;&lt;a href=&quot;#进程与线程&quot; class=&quot;headerlink&quot; title=&quot;进程与线程&quot;&gt;&lt;/a&gt;进程与线程&lt;/h2&gt;&lt;h2 id=&quot;通信&quot;&gt;&lt;a href=&quot;#通信&quot; class=&quot;headerlink&quot; title=&quot;通信&quot;&gt;&lt;/a&gt;通信&lt;/h2&gt;&lt;h2 id=&quot;命名&quot;&gt;&lt;a href=&quot;#命名&quot; class=&quot;headerlink&quot; title=&quot;命名&quot;&gt;&lt;/a&gt;命名&lt;/h2&gt;&lt;h2 id=&quot;同步与资源管理&quot;&gt;&lt;a href=&quot;#同步与资源管理&quot; class=&quot;headerlink&quot; title=&quot;同步与资源管理&quot;&gt;&lt;/a&gt;同步与资源管理&lt;/h2&gt;&lt;h2 id=&quot;复制与一致性&quot;&gt;&lt;a href=&quot;#复制与一致性&quot; class=&quot;headerlink&quot; title=&quot;复制与一致性&quot;&gt;&lt;/a&gt;复制与一致性&lt;/h2&gt;&lt;h2 id=&quot;容错&quot;&gt;&lt;a href=&quot;#容错&quot; class=&quot;headerlink&quot; title=&quot;容错&quot;&gt;&lt;/a&gt;容错&lt;/h2&gt;&lt;h2 id=&quot;云计算&quot;&gt;&lt;a href=&quot;#云计算&quot; class=&quot;headerlink&quot; title=&quot;云计算&quot;&gt;&lt;/a&gt;云计算&lt;/h2&gt;&lt;h2 id=&quot;OpenStack&quot;&gt;&lt;a href=&quot;#OpenStack&quot; class=&quot;headerlink&quot; title=&quot;OpenStack&quot;&gt;&lt;/a&gt;OpenStack&lt;/h2&gt;</content>
     
     <summary type="html">
     
@@ -45,10 +149,10 @@
   
   <entry>
     <title>数据挖掘——课程总结</title>
-    <link href="http://keyunluo.github.io/2016/12/23/2016-12-22-data-mining.html"/>
-    <id>http://keyunluo.github.io/2016/12/23/2016-12-22-data-mining.html</id>
-    <published>2016-12-23T06:25:02.000Z</published>
-    <updated>2016-12-23T13:39:04.060Z</updated>
+    <link href="http://keyunluo.github.io/2016/12/22/2016-12-22-data-mining.html"/>
+    <id>http://keyunluo.github.io/2016/12/22/2016-12-22-data-mining.html</id>
+    <published>2016-12-22T06:25:02.000Z</published>
+    <updated>2016-12-23T13:54:45.657Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2016年秋南京大学计算机系数据挖掘课程学期总结。&lt;/p&gt;

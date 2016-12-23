@@ -10,12 +10,116 @@
 <p><strong>本节内容：</strong>2016年秋南京大学计算机系分布式系统课程总结。</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="分布式系统模型"><a href="#分布式系统模型" class="headerlink" title="分布式系统模型"></a>分布式系统模型</h2><h2 id="分布式系统架构"><a href="#分布式系统架构" class="headerlink" title="分布式系统架构"></a>分布式系统架构</h2><h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><h2 id="同步与资源管理"><a href="#同步与资源管理" class="headerlink" title="同步与资源管理"></a>同步与资源管理</h2><h2 id="复制与一致性"><a href="#复制与一致性" class="headerlink" title="复制与一致性"></a>复制与一致性</h2><h2 id="容错"><a href="#容错" class="headerlink" title="容错"></a>容错</h2><h2 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h2><h2 id="OpenStack"><a href="#OpenStack" class="headerlink" title="OpenStack"></a>OpenStack</h2>]]></content>
+<h2 id="分布式系统模型"><a href="#分布式系统模型" class="headerlink" title="分布式系统模型"></a>分布式系统模型</h2><p>1 分布式系统定义：</p>
+<p><strong>一个分布式系统是一些独立的计算机集合，但是对这个系统的用户来说，系统就像一台计算机一样</strong>。 这个定义有两方面的含义：第一，从硬件角度来讲，每台计算机都是自主的；第二，从软件角度来讲，用户将整个系统看做是一台计算机。这两者都是必需的，缺一不可。</p>
+<p>2 涉及到的技术：网络、处理器、内存、存储、协议。</p>
+<p>3 需要分布式的原因</p>
+<ul>
+<li>相对于集中系统，分布式系统的优点</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>优点</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Economics（经济性）</td>
+<td>微处理器能提供比大型机更好的性价比</td>
+</tr>
+<tr>
+<td>Speed（速度）</td>
+<td>分布式系统能提供比大型机更强的计算能力</td>
+</tr>
+<tr>
+<td>Inherent distribution（固有的分布性）</td>
+<td>有一些应用包含物理上分布的机器</td>
+</tr>
+<tr>
+<td>Reliability（可靠性）</td>
+<td>当某台机器崩溃时，整个系统仍能正常工作</td>
+</tr>
+<tr>
+<td>Incremental growth（可扩展性）</td>
+<td>计算能力逐步增加</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>相对于独立的PC，分布式系统的优点</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>优点</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据共享</td>
+<td>允许用户共享一个数据库</td>
+</tr>
+<tr>
+<td>外设共享</td>
+<td>允许用户共享昂贵的外设，如彩色打印机</td>
+</tr>
+<tr>
+<td>通信</td>
+<td>使得个人与个人之间的通信更为方便，如Email</td>
+</tr>
+<tr>
+<td>灵活性</td>
+<td>将工作负载更有效的分派到合适的机器上</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>缺点</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>缺点</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>软件</td>
+<td>分布式系统的软件开发困难</td>
+</tr>
+<tr>
+<td>通信网络</td>
+<td>网络可能饱和或有损传输</td>
+</tr>
+<tr>
+<td>安全</td>
+<td>数据共享造成机密数据容易被窃取</td>
+</tr>
+</tbody>
+</table>
+<p>4 分布式系统的目标</p>
+<ul>
+<li>资源可用性：系统资源被所有计算机共享</li>
+<li>分布透明:Access,Location,Migration,Relocation,Replication,Concurrency,Failure</li>
+<li>开放性：能够与其他开放系统进行服务交互，能够使分布式系统独立于底层环境的异构性</li>
+<li>可扩展：用户、处理可扩展（大小扩展性），节点之间最大距离（地理可扩展性），管理主机的数目（管理可扩展性）</li>
+</ul>
+<p>5 分布式系统中类别</p>
+<ul>
+<li>分布式计算系统：集群计算、网格计算</li>
+<li>分布式信息系统：事务处理系统（ACID:原子性、一致性、隔离性、持久性）</li>
+<li>分布式普适系统：普适计算、移动计算、传感器网络</li>
+</ul>
+<h2 id="分布式系统架构"><a href="#分布式系统架构" class="headerlink" title="分布式系统架构"></a>分布式系统架构</h2><h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><h2 id="同步与资源管理"><a href="#同步与资源管理" class="headerlink" title="同步与资源管理"></a>同步与资源管理</h2><h2 id="复制与一致性"><a href="#复制与一致性" class="headerlink" title="复制与一致性"></a>复制与一致性</h2><h2 id="容错"><a href="#容错" class="headerlink" title="容错"></a>容错</h2><h2 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h2><h2 id="OpenStack"><a href="#OpenStack" class="headerlink" title="OpenStack"></a>OpenStack</h2>]]></content>
     </entry>
     
     <entry>
       <title><![CDATA[数据挖掘——课程总结]]></title>
-      <url>http://keyunluo.github.io/2016/12/23/2016-12-22-data-mining.html</url>
+      <url>http://keyunluo.github.io/2016/12/22/2016-12-22-data-mining.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>2016年秋南京大学计算机系数据挖掘课程学期总结。</p>
 </blockquote>
