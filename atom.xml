@@ -49,7 +49,7 @@
     <link href="http://keyunluo.github.io/2016/12/23/2016-12-22-data-mining.html"/>
     <id>http://keyunluo.github.io/2016/12/23/2016-12-22-data-mining.html</id>
     <published>2016-12-23T06:25:02.000Z</published>
-    <updated>2016-12-22T11:13:34.476Z</updated>
+    <updated>2016-12-23T13:30:13.492Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2016年秋南京大学计算机系数据挖掘课程学期总结。&lt;/p&gt;
@@ -106,7 +106,149 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&quot;PCA&quot;&gt;&lt;a href=&quot;#PCA&quot; class=&quot;headerlink&quot; title=&quot;PCA&quot;&gt;&lt;/a&gt;PCA&lt;/h3&gt;&lt;h3 id=&quot;SVD&quot;&gt;&lt;a href=&quot;#SVD&quot; class=&quot;headerlink&quot; title=&quot;SVD&quot;&gt;&lt;/a&gt;SVD&lt;/h3&gt;&lt;h2 id=&quot;关联规则挖掘&quot;&gt;&lt;a href=&quot;#关联规则挖掘&quot; class=&quot;headerlink&quot; title=&quot;关联规则挖掘&quot;&gt;&lt;/a&gt;关联规则挖掘&lt;/h2&gt;&lt;h3 id=&quot;Support-Monotonicity-Property&quot;&gt;&lt;a href=&quot;#Support-Monotonicity-Property&quot; class=&quot;headerlink&quot; title=&quot;Support Monotonicity Property&quot;&gt;&lt;/a&gt;Support Monotonicity Property&lt;/h3&gt;&lt;h3 id=&quot;Downward-Closure-Property&quot;&gt;&lt;a href=&quot;#Downward-Closure-Property&quot; class=&quot;headerlink&quot; title=&quot;Downward Closure Property&quot;&gt;&lt;/a&gt;Downward Closure Property&lt;/h3&gt;&lt;h3 id=&quot;Apriori&quot;&gt;&lt;a href=&quot;#Apriori&quot; class=&quot;headerlink&quot; title=&quot;Apriori&quot;&gt;&lt;/a&gt;Apriori&lt;/h3&gt;&lt;h2 id=&quot;聚类&quot;&gt;&lt;a href=&quot;#聚类&quot; class=&quot;headerlink&quot; title=&quot;聚类&quot;&gt;&lt;/a&gt;聚类&lt;/h2&gt;&lt;h3 id=&quot;k-means&quot;&gt;&lt;a href=&quot;#k-means&quot; class=&quot;headerlink&quot; title=&quot;k-means&quot;&gt;&lt;/a&gt;k-means&lt;/h3&gt;&lt;h3 id=&quot;Spectral-Clustering&quot;&gt;&lt;a href=&quot;#Spectral-Clustering&quot; class=&quot;headerlink&quot; title=&quot;Spectral Clustering&quot;&gt;&lt;/a&gt;Spectral Clustering&lt;/h3&gt;&lt;h2 id=&quot;分类&quot;&gt;&lt;a href=&quot;#分类&quot; class=&quot;headerlink&quot; title=&quot;分类&quot;&gt;&lt;/a&gt;分类&lt;/h2&gt;&lt;h3 id=&quot;Naive-Bayes&quot;&gt;&lt;a href=&quot;#Naive-Bayes&quot; class=&quot;headerlink&quot; title=&quot;Naive Bayes&quot;&gt;&lt;/a&gt;Naive Bayes&lt;/h3&gt;&lt;h3 id=&quot;SVM&quot;&gt;&lt;a href=&quot;#SVM&quot; class=&quot;headerlink&quot; title=&quot;SVM&quot;&gt;&lt;/a&gt;SVM&lt;/h3&gt;&lt;h3 id=&quot;Logistic-Regression&quot;&gt;&lt;a href=&quot;#Logistic-Regression&quot; class=&quot;headerlink&quot; title=&quot;Logistic Regression&quot;&gt;&lt;/a&gt;Logistic Regression&lt;/h3&gt;&lt;h2 id=&quot;凸优化&quot;&gt;&lt;a href=&quot;#凸优化&quot; class=&quot;headerlink&quot; title=&quot;凸优化&quot;&gt;&lt;/a&gt;凸优化&lt;/h2&gt;&lt;h3 id=&quot;The-Dual-Problem&quot;&gt;&lt;a href=&quot;#The-Dual-Problem&quot; class=&quot;headerlink&quot; title=&quot;The Dual Problem&quot;&gt;&lt;/a&gt;The Dual Problem&lt;/h3&gt;&lt;h2 id=&quot;高级分类方法&quot;&gt;&lt;a href=&quot;#高级分类方法&quot; class=&quot;headerlink&quot; title=&quot;高级分类方法&quot;&gt;&lt;/a&gt;高级分类方法&lt;/h2&gt;&lt;h3 id=&quot;Semisupervised-Learning&quot;&gt;&lt;a href=&quot;#Semisupervised-Learning&quot; class=&quot;headerlink&quot; title=&quot;Semisupervised Learning&quot;&gt;&lt;/a&gt;Semisupervised Learning&lt;/h3&gt;&lt;h3 id=&quot;Active-Learning&quot;&gt;&lt;a href=&quot;#Active-Learning&quot; class=&quot;headerlink&quot; title=&quot;Active Learning&quot;&gt;&lt;/a&gt;Active Learning&lt;/h3&gt;&lt;h3 id=&quot;Ensemble-Methods&quot;&gt;&lt;a href=&quot;#Ensemble-Methods&quot; class=&quot;headerlink&quot; title=&quot;Ensemble Methods&quot;&gt;&lt;/a&gt;Ensemble Methods&lt;/h3&gt;&lt;h2 id=&quot;线性回归&quot;&gt;&lt;a href=&quot;#线性回归&quot; class=&quot;headerlink&quot; title=&quot;线性回归&quot;&gt;&lt;/a&gt;线性回归&lt;/h2&gt;&lt;h3 id=&quot;Least-Square&quot;&gt;&lt;a href=&quot;#Least-Square&quot; class=&quot;headerlink&quot; title=&quot;Least Square&quot;&gt;&lt;/a&gt;Least Square&lt;/h3&gt;&lt;h3 id=&quot;Ridge-Regression&quot;&gt;&lt;a href=&quot;#Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;Ridge Regression&quot;&gt;&lt;/a&gt;Ridge Regression&lt;/h3&gt;&lt;h2 id=&quot;Web挖掘&quot;&gt;&lt;a href=&quot;#Web挖掘&quot; class=&quot;headerlink&quot; title=&quot;Web挖掘&quot;&gt;&lt;/a&gt;Web挖掘&lt;/h2&gt;&lt;h3 id=&quot;Page-Ranking&quot;&gt;&lt;a href=&quot;#Page-Ranking&quot; class=&quot;headerlink&quot; title=&quot;Page Ranking&quot;&gt;&lt;/a&gt;Page Ranking&lt;/h3&gt;&lt;h3 id=&quot;Collaborative-Filtering&quot;&gt;&lt;a href=&quot;#Collaborative-Filtering&quot; class=&quot;headerlink&quot; title=&quot;Collaborative Filtering&quot;&gt;&lt;/a&gt;Collaborative Filtering&lt;/h3&gt;</content>
+&lt;h3 id=&quot;PCA&quot;&gt;&lt;a href=&quot;#PCA&quot; class=&quot;headerlink&quot; title=&quot;PCA&quot;&gt;&lt;/a&gt;PCA&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;轴旋转： $x = [x^1, x^2, \ldots, x^d]^T \in \mathcal{R}^d \Leftrightarrow x = x^1e_1 + x^2e_2 + \ldots + x^de_d$，W:正交矩阵，$W = [w_1, w_2, \ldots, w_d]$, 则$x = WW^Tx = (\sum_{i=1}^dw_iw_i^T)x = \sum_{i=1}^dw_i(w_i^Tx) = (w_1^Tx)w_1 + \ldots + (w_d^Tx)w_d$, 因而，在坐标W的投影下，新坐标是$y = [w_1^Tx, w_2^Tx, \ldots, w_d^Tx]^T \in \mathcal{R}^d$. $w_i^T = &lt;w\_i, x=&quot;&quot;&gt;$表示新的坐标，含义是将$x$沿着$w_i$的方向投影。&lt;/w\_i,&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;降维目标：给定数据点集合${x_1,x_2, \ldots, x_n}, x_i \in \mathcal{R}^d$，寻找一个投影方向${w_1,w_2,\ldots,w_k}$，使得方差$y_1 = [w_1^Tx_1, w_2^Tx_1,\ldots, w_k^Tx_1]^T, y_2 = [w_1^Tx_2, w_2^Tx_2,\ldots, w_k^Tx_2]^T, \ldots, y_n = [w_1^Tx_n, w_2^Tx_n,\ldots, w_k^Tx_n]^T$ 最大，即最大化类间方差。&lt;/p&gt;
+&lt;p&gt;考虑一维的情况，形式化为：新坐标：$w_1^Tx_1,w_1^Tx_2, \ldots, w_1^Tx_n$,方差：$\frac{1}{n} \sum_{i=1}^n(w_1^Tx_i - \mu )^2, \mu = \frac{1}{n} \sum_{i=1}^nw_1^Tx_i$.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;问题推导过程&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;令$\bar{x} = \frac{1}{n} \sum_{i=1}^nx_i$为均值向量&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;那么，$\mu = w_1^T\bar{x}$,&lt;/p&gt;
+&lt;p&gt;  $$\begin{array} {lcl}
+  \frac{1}{n} \sum_{i=1}^n(w_1^Tx_i - \mu)^2 &amp;amp; = &amp;amp; \frac{1}{n} \sum_{i=1}^n(w_1^Tx_i - w_1^T\bar{x})^2 \\
+  &amp;amp; = &amp;amp; \frac{1}{n} \sum_{i=1}^n(w_1^T(x_i - \bar{x}))^2 \\
+  &amp;amp; = &amp;amp; \frac{1}{n} \sum_{i=1}^nw_1^T(x_i - \bar{x})(x_i - \bar{x})^Tw_1 \\
+  &amp;amp; = &amp;amp; w_1^T(\frac{1}{n} \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)w_1
+  \end{array}$$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;于是， PCA转变成一个优化问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;$\max_{w \in \mathcal{R}^d}\ w^TCw$&lt;/p&gt;
+&lt;p&gt;$s.t. \Vert w \Vert_2^2 = 1$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这里， $C = \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$为协方差矩阵。该协方差矩阵具有如下特征：对称性，半正定，矩阵的秩最大为n-1。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;解决方法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;拉格朗日法：$-w^TCw + \lambda(\Vert w \Vert_2^2 -1)$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;对$w$求导，令导数为0：$-2Cw + 2\lambda w  = 0$, 得出$Cw = \lambda w$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;$(w, \lambda)$ 是协方差矩阵C的特征向量和特征值&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;目标函数变成：$w^TCw = \lambda w^T w = \lambda$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;因此， 我们选择C中最大的特征值和特征向量&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;PCA算法(1维)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算均值向量：$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$&lt;/li&gt;
+&lt;li&gt;计算协方差矩阵：$C = \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$&lt;/li&gt;
+&lt;li&gt;计算C中最大的特征值对应的特征向量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;PCA算法(k维)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;优化目标&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;$\max_{w \in \mathcal{R}^{d*k}}\ trace(W^TCW)$&lt;/p&gt;
+&lt;p&gt;$s.t. W^TW = I$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;其中， $W=[w_1, \ldots, w_k]$ 是C的k个大的特征向量。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;算法流程&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算均值向量：$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$&lt;/li&gt;
+&lt;li&gt;计算协方差矩阵：$C = \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$&lt;/li&gt;
+&lt;li&gt;计算C中最大的k个特征值对应的特征向量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;特征值含义&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$\lambda_i$是第i个特征坐标间的方差&lt;/li&gt;
+&lt;li&gt;度量PCA质量的好坏：所取的前k个特征值之和与所有的特征值和之比。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;另一个思考视角&lt;/strong&gt;：最小化投影误差&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;PCA算法是线性的，无监督的&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;SVD&quot;&gt;&lt;a href=&quot;#SVD&quot; class=&quot;headerlink&quot; title=&quot;SVD&quot;&gt;&lt;/a&gt;SVD&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;奇异值分解: $X=U\Sigma V^T = \sum_{i=1}^d \sigma_iu_iv_i^T$:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$U = [u_1, u_2,\ldots, u_d] \in \mathcal{R}^{d*d}, U^TU=UU^T = I$&lt;/li&gt;
+&lt;li&gt;$V = [v_1,v_2, \ldots,v_d] \in \mathcal{R}^{n*d}, V^TV=I$&lt;/li&gt;
+&lt;li&gt;$\Sigma = diag(\sigma_1, \sigma_2,\ldots, \sigma_d),\in \mathcal{R}^{d*d}, \sigma_1 \ge \sigma_2 \ge \ldots \ge \sigma_d \ge 0$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;紧凑SVD：$X=U_r\Sigma_r V_r^T = \sum_{i=1}^r \sigma_iu_iv_i^T$， &lt;strong&gt;rank(r) &amp;lt; min(d,n)&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$U_r = [u_1, u_2,\ldots, u_r] \in \mathcal{R}^{d*r}, U_r^TU_r=I$&lt;/li&gt;
+&lt;li&gt;$V_r = [v_1,v_2, \ldots,v_r] \in \mathcal{R}^{n*r}, V_r^TV_r=I$&lt;/li&gt;
+&lt;li&gt;$\Sigma_r = diag(\sigma_1, \sigma_2,\ldots, \sigma_r),\in \mathcal{R}^{r*r}, \sigma_1 \ge \sigma_2 \ge \ldots \ge \sigma_r \ge 0$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;使用SVD降维&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算X的k个最大的左奇异向量$u_1,u_2,\ldots,u_k$&lt;/li&gt;
+&lt;li&gt;x的新坐标：$U_k^Tx = [u_1^Tx, u_2^Tx, \ldots, u_k^Tx] \in \mathcal{R}^k, U_k = [u_1, u_2,\ldots,u_k] \in \mathcal{R}^{d*k}$&lt;/li&gt;
+&lt;li&gt;X的新坐标：$U_k^TX=U_k^TU_r\Sigma_rV_r^T = \Sigma_kV_k^T$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;SVD的优化问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一维：&lt;blockquote&gt;
+&lt;p&gt;$\max_{w \in \mathcal{R}^d}\ w^T(XX^T)w$&lt;/p&gt;
+&lt;p&gt;$s.t. \Vert w \Vert_2^2 = 1$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;k维：&lt;blockquote&gt;
+&lt;p&gt;$\max_{w \in \mathcal{R}^{d*k}}\ trace(W^T(XX^T)W)$&lt;/p&gt;
+&lt;p&gt;$s.t. W^TW = I$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;PCA by SVD&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算均值向量$\bar{x}$:$ \frac{1}{n} \sum_{i=1}^n x_i$&lt;/li&gt;
+&lt;li&gt;计算$\bar{X}=[x_1 - \bar{x},\ldots, x_n - \bar{x}]$最大的k个左奇异值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;MDS&quot;&gt;&lt;a href=&quot;#MDS&quot; class=&quot;headerlink&quot; title=&quot;MDS&quot;&gt;&lt;/a&gt;MDS&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;输入&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;图G：n个结点&lt;/li&gt;
+&lt;li&gt;距离:$\delta_{ij} = \delta_{ji}$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;输出&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;适配于距离的坐标集&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;优化问题&lt;/p&gt;
+&lt;p&gt; $\min_{x_1,x_2,\ldots, x_n \in \mathcal{R}^k} \sum_{i,j:i&amp;lt;j}(\Vert x_i - x_j \Vert_2 - \delta_{ij})^2$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;MDS算法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算点积：$S= -\frac{1}{2}(I - \frac{np.eye^T}{n})G^2(\frac{np.eye^T}{n})$&lt;/li&gt;
+&lt;li&gt;对S进行奇异值分解：$S=U \Lambda U^T = \sum_{i=1}^n\lambda_iu_iu_i^T$&lt;/li&gt;
+&lt;li&gt;新坐标：$U_k\Lambda_k^{1/2} \in \mathcal{R}^{n*k}$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;关联规则挖掘&quot;&gt;&lt;a href=&quot;#关联规则挖掘&quot; class=&quot;headerlink&quot; title=&quot;关联规则挖掘&quot;&gt;&lt;/a&gt;关联规则挖掘&lt;/h2&gt;&lt;h3 id=&quot;Support-Monotonicity-Property&quot;&gt;&lt;a href=&quot;#Support-Monotonicity-Property&quot; class=&quot;headerlink&quot; title=&quot;Support Monotonicity Property&quot;&gt;&lt;/a&gt;Support Monotonicity Property&lt;/h3&gt;&lt;h3 id=&quot;Downward-Closure-Property&quot;&gt;&lt;a href=&quot;#Downward-Closure-Property&quot; class=&quot;headerlink&quot; title=&quot;Downward Closure Property&quot;&gt;&lt;/a&gt;Downward Closure Property&lt;/h3&gt;&lt;h3 id=&quot;Apriori&quot;&gt;&lt;a href=&quot;#Apriori&quot; class=&quot;headerlink&quot; title=&quot;Apriori&quot;&gt;&lt;/a&gt;Apriori&lt;/h3&gt;&lt;h2 id=&quot;聚类&quot;&gt;&lt;a href=&quot;#聚类&quot; class=&quot;headerlink&quot; title=&quot;聚类&quot;&gt;&lt;/a&gt;聚类&lt;/h2&gt;&lt;h3 id=&quot;k-means&quot;&gt;&lt;a href=&quot;#k-means&quot; class=&quot;headerlink&quot; title=&quot;k-means&quot;&gt;&lt;/a&gt;k-means&lt;/h3&gt;&lt;h3 id=&quot;Spectral-Clustering&quot;&gt;&lt;a href=&quot;#Spectral-Clustering&quot; class=&quot;headerlink&quot; title=&quot;Spectral Clustering&quot;&gt;&lt;/a&gt;Spectral Clustering&lt;/h3&gt;&lt;h2 id=&quot;分类&quot;&gt;&lt;a href=&quot;#分类&quot; class=&quot;headerlink&quot; title=&quot;分类&quot;&gt;&lt;/a&gt;分类&lt;/h2&gt;&lt;h3 id=&quot;Naive-Bayes&quot;&gt;&lt;a href=&quot;#Naive-Bayes&quot; class=&quot;headerlink&quot; title=&quot;Naive Bayes&quot;&gt;&lt;/a&gt;Naive Bayes&lt;/h3&gt;&lt;h3 id=&quot;SVM&quot;&gt;&lt;a href=&quot;#SVM&quot; class=&quot;headerlink&quot; title=&quot;SVM&quot;&gt;&lt;/a&gt;SVM&lt;/h3&gt;&lt;h3 id=&quot;Logistic-Regression&quot;&gt;&lt;a href=&quot;#Logistic-Regression&quot; class=&quot;headerlink&quot; title=&quot;Logistic Regression&quot;&gt;&lt;/a&gt;Logistic Regression&lt;/h3&gt;&lt;h2 id=&quot;凸优化&quot;&gt;&lt;a href=&quot;#凸优化&quot; class=&quot;headerlink&quot; title=&quot;凸优化&quot;&gt;&lt;/a&gt;凸优化&lt;/h2&gt;&lt;h3 id=&quot;The-Dual-Problem&quot;&gt;&lt;a href=&quot;#The-Dual-Problem&quot; class=&quot;headerlink&quot; title=&quot;The Dual Problem&quot;&gt;&lt;/a&gt;The Dual Problem&lt;/h3&gt;&lt;h2 id=&quot;高级分类方法&quot;&gt;&lt;a href=&quot;#高级分类方法&quot; class=&quot;headerlink&quot; title=&quot;高级分类方法&quot;&gt;&lt;/a&gt;高级分类方法&lt;/h2&gt;&lt;h3 id=&quot;Semisupervised-Learning&quot;&gt;&lt;a href=&quot;#Semisupervised-Learning&quot; class=&quot;headerlink&quot; title=&quot;Semisupervised Learning&quot;&gt;&lt;/a&gt;Semisupervised Learning&lt;/h3&gt;&lt;h3 id=&quot;Active-Learning&quot;&gt;&lt;a href=&quot;#Active-Learning&quot; class=&quot;headerlink&quot; title=&quot;Active Learning&quot;&gt;&lt;/a&gt;Active Learning&lt;/h3&gt;&lt;h3 id=&quot;Ensemble-Methods&quot;&gt;&lt;a href=&quot;#Ensemble-Methods&quot; class=&quot;headerlink&quot; title=&quot;Ensemble Methods&quot;&gt;&lt;/a&gt;Ensemble Methods&lt;/h3&gt;&lt;h2 id=&quot;线性回归&quot;&gt;&lt;a href=&quot;#线性回归&quot; class=&quot;headerlink&quot; title=&quot;线性回归&quot;&gt;&lt;/a&gt;线性回归&lt;/h2&gt;&lt;h3 id=&quot;Least-Square&quot;&gt;&lt;a href=&quot;#Least-Square&quot; class=&quot;headerlink&quot; title=&quot;Least Square&quot;&gt;&lt;/a&gt;Least Square&lt;/h3&gt;&lt;h3 id=&quot;Ridge-Regression&quot;&gt;&lt;a href=&quot;#Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;Ridge Regression&quot;&gt;&lt;/a&gt;Ridge Regression&lt;/h3&gt;&lt;h2 id=&quot;Web挖掘&quot;&gt;&lt;a href=&quot;#Web挖掘&quot; class=&quot;headerlink&quot; title=&quot;Web挖掘&quot;&gt;&lt;/a&gt;Web挖掘&lt;/h2&gt;&lt;h3 id=&quot;Page-Ranking&quot;&gt;&lt;a href=&quot;#Page-Ranking&quot; class=&quot;headerlink&quot; title=&quot;Page Ranking&quot;&gt;&lt;/a&gt;Page Ranking&lt;/h3&gt;&lt;h3 id=&quot;Collaborative-Filtering&quot;&gt;&lt;a href=&quot;#Collaborative-Filtering&quot; class=&quot;headerlink&quot; title=&quot;Collaborative Filtering&quot;&gt;&lt;/a&gt;Collaborative Filtering&lt;/h3&gt;</content>
     
     <summary type="html">
     

@@ -72,7 +72,149 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 </ul>
 </li>
 </ul>
-<h3 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h3><h3 id="SVD"><a href="#SVD" class="headerlink" title="SVD"></a>SVD</h3><h2 id="关联规则挖掘"><a href="#关联规则挖掘" class="headerlink" title="关联规则挖掘"></a>关联规则挖掘</h2><h3 id="Support-Monotonicity-Property"><a href="#Support-Monotonicity-Property" class="headerlink" title="Support Monotonicity Property"></a>Support Monotonicity Property</h3><h3 id="Downward-Closure-Property"><a href="#Downward-Closure-Property" class="headerlink" title="Downward Closure Property"></a>Downward Closure Property</h3><h3 id="Apriori"><a href="#Apriori" class="headerlink" title="Apriori"></a>Apriori</h3><h2 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h2><h3 id="k-means"><a href="#k-means" class="headerlink" title="k-means"></a>k-means</h3><h3 id="Spectral-Clustering"><a href="#Spectral-Clustering" class="headerlink" title="Spectral Clustering"></a>Spectral Clustering</h3><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="Naive-Bayes"><a href="#Naive-Bayes" class="headerlink" title="Naive Bayes"></a>Naive Bayes</h3><h3 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h3><h3 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h3><h2 id="凸优化"><a href="#凸优化" class="headerlink" title="凸优化"></a>凸优化</h2><h3 id="The-Dual-Problem"><a href="#The-Dual-Problem" class="headerlink" title="The Dual Problem"></a>The Dual Problem</h3><h2 id="高级分类方法"><a href="#高级分类方法" class="headerlink" title="高级分类方法"></a>高级分类方法</h2><h3 id="Semisupervised-Learning"><a href="#Semisupervised-Learning" class="headerlink" title="Semisupervised Learning"></a>Semisupervised Learning</h3><h3 id="Active-Learning"><a href="#Active-Learning" class="headerlink" title="Active Learning"></a>Active Learning</h3><h3 id="Ensemble-Methods"><a href="#Ensemble-Methods" class="headerlink" title="Ensemble Methods"></a>Ensemble Methods</h3><h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><h3 id="Least-Square"><a href="#Least-Square" class="headerlink" title="Least Square"></a>Least Square</h3><h3 id="Ridge-Regression"><a href="#Ridge-Regression" class="headerlink" title="Ridge Regression"></a>Ridge Regression</h3><h2 id="Web挖掘"><a href="#Web挖掘" class="headerlink" title="Web挖掘"></a>Web挖掘</h2><h3 id="Page-Ranking"><a href="#Page-Ranking" class="headerlink" title="Page Ranking"></a>Page Ranking</h3><h3 id="Collaborative-Filtering"><a href="#Collaborative-Filtering" class="headerlink" title="Collaborative Filtering"></a>Collaborative Filtering</h3>]]></content>
+<h3 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h3><ol>
+<li><p>轴旋转： $x = [x^1, x^2, \ldots, x^d]^T \in \mathcal{R}^d \Leftrightarrow x = x^1e_1 + x^2e_2 + \ldots + x^de_d$，W:正交矩阵，$W = [w_1, w_2, \ldots, w_d]$, 则$x = WW^Tx = (\sum_{i=1}^dw_iw_i^T)x = \sum_{i=1}^dw_i(w_i^Tx) = (w_1^Tx)w_1 + \ldots + (w_d^Tx)w_d$, 因而，在坐标W的投影下，新坐标是$y = [w_1^Tx, w_2^Tx, \ldots, w_d^Tx]^T \in \mathcal{R}^d$. $w_i^T = <w\_i, x="">$表示新的坐标，含义是将$x$沿着$w_i$的方向投影。</w\_i,></p>
+</li>
+<li><p>降维目标：给定数据点集合${x_1,x_2, \ldots, x_n}, x_i \in \mathcal{R}^d$，寻找一个投影方向${w_1,w_2,\ldots,w_k}$，使得方差$y_1 = [w_1^Tx_1, w_2^Tx_1,\ldots, w_k^Tx_1]^T, y_2 = [w_1^Tx_2, w_2^Tx_2,\ldots, w_k^Tx_2]^T, \ldots, y_n = [w_1^Tx_n, w_2^Tx_n,\ldots, w_k^Tx_n]^T$ 最大，即最大化类间方差。</p>
+<p>考虑一维的情况，形式化为：新坐标：$w_1^Tx_1,w_1^Tx_2, \ldots, w_1^Tx_n$,方差：$\frac{1}{n} \sum_{i=1}^n(w_1^Tx_i - \mu )^2, \mu = \frac{1}{n} \sum_{i=1}^nw_1^Tx_i$.</p>
+</li>
+<li><p>问题推导过程</p>
+<ul>
+<li>令$\bar{x} = \frac{1}{n} \sum_{i=1}^nx_i$为均值向量</li>
+<li><p>那么，$\mu = w_1^T\bar{x}$,</p>
+<p>  $$\begin{array} {lcl}
+  \frac{1}{n} \sum_{i=1}^n(w_1^Tx_i - \mu)^2 &amp; = &amp; \frac{1}{n} \sum_{i=1}^n(w_1^Tx_i - w_1^T\bar{x})^2 \\
+  &amp; = &amp; \frac{1}{n} \sum_{i=1}^n(w_1^T(x_i - \bar{x}))^2 \\
+  &amp; = &amp; \frac{1}{n} \sum_{i=1}^nw_1^T(x_i - \bar{x})(x_i - \bar{x})^Tw_1 \\
+  &amp; = &amp; w_1^T(\frac{1}{n} \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)w_1
+  \end{array}$$</p>
+</li>
+<li><p>于是， PCA转变成一个优化问题：</p>
+<blockquote>
+<p>$\max_{w \in \mathcal{R}^d}\ w^TCw$</p>
+<p>$s.t. \Vert w \Vert_2^2 = 1$</p>
+</blockquote>
+<p>这里， $C = \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$为协方差矩阵。该协方差矩阵具有如下特征：对称性，半正定，矩阵的秩最大为n-1。</p>
+</li>
+</ul>
+</li>
+<li><p>解决方法</p>
+<ul>
+<li><p>拉格朗日法：$-w^TCw + \lambda(\Vert w \Vert_2^2 -1)$</p>
+</li>
+<li><p>对$w$求导，令导数为0：$-2Cw + 2\lambda w  = 0$, 得出$Cw = \lambda w$</p>
+</li>
+<li><p>$(w, \lambda)$ 是协方差矩阵C的特征向量和特征值</p>
+</li>
+<li><p>目标函数变成：$w^TCw = \lambda w^T w = \lambda$</p>
+</li>
+<li><p>因此， 我们选择C中最大的特征值和特征向量</p>
+</li>
+</ul>
+</li>
+<li><p><strong>PCA算法(1维)</strong></p>
+<ul>
+<li>计算均值向量：$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$</li>
+<li>计算协方差矩阵：$C = \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$</li>
+<li>计算C中最大的特征值对应的特征向量</li>
+</ul>
+</li>
+<li><p><strong>PCA算法(k维)</strong></p>
+<ul>
+<li><p><strong>优化目标</strong>:</p>
+<blockquote>
+<p>$\max_{w \in \mathcal{R}^{d*k}}\ trace(W^TCW)$</p>
+<p>$s.t. W^TW = I$</p>
+</blockquote>
+<p>其中， $W=[w_1, \ldots, w_k]$ 是C的k个大的特征向量。</p>
+</li>
+<li><p><strong>算法流程</strong></p>
+<ul>
+<li>计算均值向量：$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$</li>
+<li>计算协方差矩阵：$C = \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$</li>
+<li>计算C中最大的k个特征值对应的特征向量</li>
+</ul>
+</li>
+<li><p><strong>特征值含义</strong></p>
+<ul>
+<li>$\lambda_i$是第i个特征坐标间的方差</li>
+<li>度量PCA质量的好坏：所取的前k个特征值之和与所有的特征值和之比。</li>
+</ul>
+</li>
+<li><p><strong>另一个思考视角</strong>：最小化投影误差</p>
+</li>
+<li><p>PCA算法是线性的，无监督的</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="SVD"><a href="#SVD" class="headerlink" title="SVD"></a>SVD</h3><ol>
+<li><p>奇异值分解: $X=U\Sigma V^T = \sum_{i=1}^d \sigma_iu_iv_i^T$:</p>
+<ul>
+<li>$U = [u_1, u_2,\ldots, u_d] \in \mathcal{R}^{d*d}, U^TU=UU^T = I$</li>
+<li>$V = [v_1,v_2, \ldots,v_d] \in \mathcal{R}^{n*d}, V^TV=I$</li>
+<li>$\Sigma = diag(\sigma_1, \sigma_2,\ldots, \sigma_d),\in \mathcal{R}^{d*d}, \sigma_1 \ge \sigma_2 \ge \ldots \ge \sigma_d \ge 0$</li>
+</ul>
+</li>
+<li><p>紧凑SVD：$X=U_r\Sigma_r V_r^T = \sum_{i=1}^r \sigma_iu_iv_i^T$， <strong>rank(r) &lt; min(d,n)</strong>:</p>
+<ul>
+<li>$U_r = [u_1, u_2,\ldots, u_r] \in \mathcal{R}^{d*r}, U_r^TU_r=I$</li>
+<li>$V_r = [v_1,v_2, \ldots,v_r] \in \mathcal{R}^{n*r}, V_r^TV_r=I$</li>
+<li>$\Sigma_r = diag(\sigma_1, \sigma_2,\ldots, \sigma_r),\in \mathcal{R}^{r*r}, \sigma_1 \ge \sigma_2 \ge \ldots \ge \sigma_r \ge 0$</li>
+</ul>
+</li>
+<li><p>使用SVD降维</p>
+<ul>
+<li>计算X的k个最大的左奇异向量$u_1,u_2,\ldots,u_k$</li>
+<li>x的新坐标：$U_k^Tx = [u_1^Tx, u_2^Tx, \ldots, u_k^Tx] \in \mathcal{R}^k, U_k = [u_1, u_2,\ldots,u_k] \in \mathcal{R}^{d*k}$</li>
+<li>X的新坐标：$U_k^TX=U_k^TU_r\Sigma_rV_r^T = \Sigma_kV_k^T$</li>
+</ul>
+</li>
+<li><p>SVD的优化问题：</p>
+<ul>
+<li>一维：<blockquote>
+<p>$\max_{w \in \mathcal{R}^d}\ w^T(XX^T)w$</p>
+<p>$s.t. \Vert w \Vert_2^2 = 1$</p>
+</blockquote>
+</li>
+<li>k维：<blockquote>
+<p>$\max_{w \in \mathcal{R}^{d*k}}\ trace(W^T(XX^T)W)$</p>
+<p>$s.t. W^TW = I$</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>PCA by SVD</p>
+<ul>
+<li>计算均值向量$\bar{x}$:$ \frac{1}{n} \sum_{i=1}^n x_i$</li>
+<li>计算$\bar{X}=[x_1 - \bar{x},\ldots, x_n - \bar{x}]$最大的k个左奇异值</li>
+</ul>
+</li>
+</ol>
+<h3 id="MDS"><a href="#MDS" class="headerlink" title="MDS"></a>MDS</h3><ol>
+<li><p>输入</p>
+<ul>
+<li>图G：n个结点</li>
+<li>距离:$\delta_{ij} = \delta_{ji}$</li>
+</ul>
+</li>
+<li><p>输出</p>
+<ul>
+<li>适配于距离的坐标集</li>
+</ul>
+</li>
+<li><p>优化问题</p>
+<p> $\min_{x_1,x_2,\ldots, x_n \in \mathcal{R}^k} \sum_{i,j:i&lt;j}(\Vert x_i - x_j \Vert_2 - \delta_{ij})^2$</p>
+</li>
+<li><p>MDS算法</p>
+<ul>
+<li>计算点积：$S= -\frac{1}{2}(I - \frac{np.eye^T}{n})G^2(\frac{np.eye^T}{n})$</li>
+<li>对S进行奇异值分解：$S=U \Lambda U^T = \sum_{i=1}^n\lambda_iu_iu_i^T$</li>
+<li>新坐标：$U_k\Lambda_k^{1/2} \in \mathcal{R}^{n*k}$</li>
+</ul>
+</li>
+</ol>
+<h2 id="关联规则挖掘"><a href="#关联规则挖掘" class="headerlink" title="关联规则挖掘"></a>关联规则挖掘</h2><h3 id="Support-Monotonicity-Property"><a href="#Support-Monotonicity-Property" class="headerlink" title="Support Monotonicity Property"></a>Support Monotonicity Property</h3><h3 id="Downward-Closure-Property"><a href="#Downward-Closure-Property" class="headerlink" title="Downward Closure Property"></a>Downward Closure Property</h3><h3 id="Apriori"><a href="#Apriori" class="headerlink" title="Apriori"></a>Apriori</h3><h2 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h2><h3 id="k-means"><a href="#k-means" class="headerlink" title="k-means"></a>k-means</h3><h3 id="Spectral-Clustering"><a href="#Spectral-Clustering" class="headerlink" title="Spectral Clustering"></a>Spectral Clustering</h3><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="Naive-Bayes"><a href="#Naive-Bayes" class="headerlink" title="Naive Bayes"></a>Naive Bayes</h3><h3 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h3><h3 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h3><h2 id="凸优化"><a href="#凸优化" class="headerlink" title="凸优化"></a>凸优化</h2><h3 id="The-Dual-Problem"><a href="#The-Dual-Problem" class="headerlink" title="The Dual Problem"></a>The Dual Problem</h3><h2 id="高级分类方法"><a href="#高级分类方法" class="headerlink" title="高级分类方法"></a>高级分类方法</h2><h3 id="Semisupervised-Learning"><a href="#Semisupervised-Learning" class="headerlink" title="Semisupervised Learning"></a>Semisupervised Learning</h3><h3 id="Active-Learning"><a href="#Active-Learning" class="headerlink" title="Active Learning"></a>Active Learning</h3><h3 id="Ensemble-Methods"><a href="#Ensemble-Methods" class="headerlink" title="Ensemble Methods"></a>Ensemble Methods</h3><h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><h3 id="Least-Square"><a href="#Least-Square" class="headerlink" title="Least Square"></a>Least Square</h3><h3 id="Ridge-Regression"><a href="#Ridge-Regression" class="headerlink" title="Ridge Regression"></a>Ridge Regression</h3><h2 id="Web挖掘"><a href="#Web挖掘" class="headerlink" title="Web挖掘"></a>Web挖掘</h2><h3 id="Page-Ranking"><a href="#Page-Ranking" class="headerlink" title="Page Ranking"></a>Page Ranking</h3><h3 id="Collaborative-Filtering"><a href="#Collaborative-Filtering" class="headerlink" title="Collaborative Filtering"></a>Collaborative Filtering</h3>]]></content>
     </entry>
     
     <entry>
