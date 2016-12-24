@@ -259,7 +259,7 @@ type(仅需要一种类型的资源是可用的，如彩色显示器)
     <link href="http://keyunluo.github.io/2016/12/22/2016-12-22-data-mining.html"/>
     <id>http://keyunluo.github.io/2016/12/22/2016-12-22-data-mining.html</id>
     <published>2016-12-22T06:25:02.000Z</published>
-    <updated>2016-12-24T14:11:01.561Z</updated>
+    <updated>2016-12-24T14:21:51.879Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2016年秋南京大学计算机系数据挖掘课程学期总结。&lt;/p&gt;
@@ -501,6 +501,16 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 &lt;li&gt;对余下的(k+1)-candidates计算支持度&lt;/li&gt;
 &lt;li&gt;当(k+1)-candidates中没有频繁项时停止，否则循环
 &lt;img src=&quot;/resource/blog/2016-12/apriori.png&quot; alt=&quot;Apriori算法&quot;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;优化&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;思路：U中的Item使用字典序排列，Itemsets能按字符串排序&lt;/li&gt;
+&lt;li&gt;方法：&lt;ul&gt;
+&lt;li&gt;对k-itemsets频繁项排序&lt;/li&gt;
+&lt;li&gt;如果前k-1 items相同则合并两个itemset&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;

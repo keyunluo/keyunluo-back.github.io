@@ -469,16 +469,6 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 <img src="/resource/blog/2016-12/apriori.png" alt="Apriori算法"></li>
 </ul>
 </li>
-<li><p>优化</p>
-<ul>
-<li>思路：U中的Item使用字典序排列，Itemsets能按字符串排序</li>
-<li>方法：<ul>
-<li>对k-itemsets频繁项排序</li>
-<li>如果前k-1 items相同则合并两个itemset</li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 <h2 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h2><h3 id="k-means"><a href="#k-means" class="headerlink" title="k-means"></a>k-means</h3><h3 id="Spectral-Clustering"><a href="#Spectral-Clustering" class="headerlink" title="Spectral Clustering"></a>Spectral Clustering</h3><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="Naive-Bayes"><a href="#Naive-Bayes" class="headerlink" title="Naive Bayes"></a>Naive Bayes</h3><h3 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h3><h3 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h3><h2 id="凸优化"><a href="#凸优化" class="headerlink" title="凸优化"></a>凸优化</h2><h3 id="The-Dual-Problem"><a href="#The-Dual-Problem" class="headerlink" title="The Dual Problem"></a>The Dual Problem</h3><h2 id="高级分类方法"><a href="#高级分类方法" class="headerlink" title="高级分类方法"></a>高级分类方法</h2><h3 id="Semisupervised-Learning"><a href="#Semisupervised-Learning" class="headerlink" title="Semisupervised Learning"></a>Semisupervised Learning</h3><h3 id="Active-Learning"><a href="#Active-Learning" class="headerlink" title="Active Learning"></a>Active Learning</h3><h3 id="Ensemble-Methods"><a href="#Ensemble-Methods" class="headerlink" title="Ensemble Methods"></a>Ensemble Methods</h3><h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><h3 id="Least-Square"><a href="#Least-Square" class="headerlink" title="Least Square"></a>Least Square</h3><h3 id="Ridge-Regression"><a href="#Ridge-Regression" class="headerlink" title="Ridge Regression"></a>Ridge Regression</h3><h2 id="Web挖掘"><a href="#Web挖掘" class="headerlink" title="Web挖掘"></a>Web挖掘</h2><h3 id="Page-Ranking"><a href="#Page-Ranking" class="headerlink" title="Page Ranking"></a>Page Ranking</h3><h3 id="Collaborative-Filtering"><a href="#Collaborative-Filtering" class="headerlink" title="Collaborative Filtering"></a>Collaborative Filtering</h3>]]></content>
     </entry>
