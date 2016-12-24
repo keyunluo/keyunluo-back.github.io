@@ -100,13 +100,120 @@
 <li>开放性：能够与其他开放系统进行服务交互，能够使分布式系统独立于底层环境的异构性</li>
 <li>可扩展：用户、处理可扩展（大小扩展性），节点之间最大距离（地理可扩展性），管理主机的数目（管理可扩展性）</li>
 </ul>
-<p>5 分布式系统中类别</p>
+<p>5 分布式系统透明性和开放性</p>
+<ul>
+<li><p>透明性：将它的进程和资源实际上在多台计算机上分布这样一个事实隐藏起来，如果一个分布式系统能够在用户和应用程序面前呈现为单个计算机系统，这样的分布式系统就称为是透明的。</p>
+<ul>
+<li>访问透明性：对不同数据表示形式以及资源访问方式的隐藏。
+　　  - 位置透明性：用户无法判别资源在系统中的物理位置。
+　　  - 迁移透明性：如果一个分布式系统中的资源移动不会影响该资源的访问方式，就可以说这种分布式系统能够提供迁移透明性。
+　　  - 重定位透明性：如果资源可以在接受访问的同时进行重新定位，而不引起用户和应用程序的注意，拥有这种资源的系统无疑会更加强壮。
+　　  - 复制透明性：对同一个资源存在多个副本这样一个事实的隐藏。
+　　  - 并发透明性：让任何一个用户都不会感觉到他人也在使用自己所使用的资源。
+　　  - 故障透明性：意味着用户不会注意到某个资源无法正常工作，以及系统随后从故障中恢复的过程。</li>
+</ul>
+</li>
+<li><p>开放性：一个开放的分布式系统，它根据一系列准则来提供服务，这些准则描述了所提供服务的语法和语义。</p>
+<ul>
+<li>互操作性：刻画了来自不同厂商的系统或组件的两种实现能够在何种程度上共存并且协同工作，这种共存和协同工作只能依赖与通过双方在公共标准中规定的各自所提供的服务来完成。</li>
+<li>可移植性：如果为分布式系统A开发了某个应用程序，并且另一个分布式系统B与A具有相同的接口，该应用程序在不做任何修改的情况下在B上执行的可行度。</li>
+</ul>
+</li>
+</ul>
+<p>6 分布式系统类型</p>
 <ul>
 <li>分布式计算系统：集群计算、网格计算</li>
 <li>分布式信息系统：事务处理系统（ACID:原子性、一致性、隔离性、持久性）</li>
 <li>分布式普适系统：普适计算、移动计算、传感器网络</li>
 </ul>
-<h2 id="分布式系统架构"><a href="#分布式系统架构" class="headerlink" title="分布式系统架构"></a>分布式系统架构</h2><h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><h2 id="同步与资源管理"><a href="#同步与资源管理" class="headerlink" title="同步与资源管理"></a>同步与资源管理</h2><h2 id="复制与一致性"><a href="#复制与一致性" class="headerlink" title="复制与一致性"></a>复制与一致性</h2><h2 id="容错"><a href="#容错" class="headerlink" title="容错"></a>容错</h2><h2 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h2><h2 id="OpenStack"><a href="#OpenStack" class="headerlink" title="OpenStack"></a>OpenStack</h2></div><script type="text/javascript" src="/js/share.js?v=1.0.0" async></script><a data-url="http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html" data-id="cix1vfrqt004zo1gl4uyarsgg" class="article-share-link">分享到</a><div class="tags"><a href="/tags/分布式系统/">分布式系统</a></div><div class="post-nav"><a href="/2016/12/22/2016-12-22-data-mining.html" class="next">数据挖掘——课程总结</a></div><div data-thread-key="2016/12/23/2016-12-23-distributed-system-1.html" data-title="分布式系统——课程总结" data-url="http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2016/12/23/2016-12-23-distributed-system-1.html" data-title="分布式系统——课程总结" data-url="http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-5"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AdvancedAlgorithms/">AdvancedAlgorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AlgorithmApplication/">AlgorithmApplication</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataBase/">DataBase</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DistributedSystem/">DistributedSystem</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/FileAndStorage/">FileAndStorage</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MachineLearning/">MachineLearning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SourceCodeLearning/">SourceCodeLearning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Latex/" style="font-size: 15px;">Latex</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/二次排序/" style="font-size: 15px;">二次排序</a> <a href="/tags/Oracle/" style="font-size: 15px;">Oracle</a> <a href="/tags/DataBase/" style="font-size: 15px;">DataBase</a> <a href="/tags/elasticsearch/" style="font-size: 15px;">elasticsearch</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/VPN/" style="font-size: 15px;">VPN</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/sqoop/" style="font-size: 15px;">sqoop</a> <a href="/tags/生活/" style="font-size: 15px;">生活</a> <a href="/tags/毕业/" style="font-size: 15px;">毕业</a> <a href="/tags/Markdown/" style="font-size: 15px;">Markdown</a> <a href="/tags/hadoop/" style="font-size: 15px;">hadoop</a> <a href="/tags/UML/" style="font-size: 15px;">UML</a> <a href="/tags/PlantUML/" style="font-size: 15px;">PlantUML</a> <a href="/tags/Cloudera/" style="font-size: 15px;">Cloudera</a> <a href="/tags/CentOS/" style="font-size: 15px;">CentOS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/机器学习/" style="font-size: 15px;">机器学习</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/数据压缩/" style="font-size: 15px;">数据压缩</a> <a href="/tags/OpenCV/" style="font-size: 15px;">OpenCV</a> <a href="/tags/LSM树/" style="font-size: 15px;">LSM树</a> <a href="/tags/分布式系统/" style="font-size: 15px;">分布式系统</a> <a href="/tags/存储引擎/" style="font-size: 15px;">存储引擎</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/12/23/2016-12-23-distributed-system-1.html">分布式系统——课程总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/22/2016-12-22-data-mining.html">数据挖掘——课程总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/2016-11-16-skiplist1.html">SkipList 跳跃表(1) ——基本介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/2016-11-16-lsm1.html">LSM Tree (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/15/2016-11-15-hash.html">Hash存储引擎</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html">高级算法--作业2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/13/2016-10-13-advanced-algorithm-assignment1.html">高级算法--作业1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/06/2016-10-06-advanced-algorithm-3.html">高级算法(3)--Min-Cut-Max-Flow(2)-近似算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/05/2016-10-05-advanced-algorithm-2.html">高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/04/2016-10-04-advanced-algorithm-1.html">高级算法(1)--NP完全性与近似算法</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 外部链接</i></div><ul></ul><a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a></div><div class="widget"><div class="widget-title"><i class="fa fa-bar-chart"> 访客</i></div><a href="http://info.flagcounter.com/uNxw"><img src="http://s07.flagcounter.com/count2/uNxw/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_3/labels_0/pageviews_0/flags_0/percent_0/" alt="" border="0"></a></div></div></div><div class="pure-u-1 pure-u-md-4-5"><div id="footer">© <a href="/." rel="nofollow">流光.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=1.0.0"><script>var duoshuoQuery = {short_name:'streamers'};
+<h2 id="分布式系统架构"><a href="#分布式系统架构" class="headerlink" title="分布式系统架构"></a>分布式系统架构</h2><p>1 分布式系统架构风格</p>
+<ul>
+<li><p>组织成逻辑上的不同组件，并分发这些组件到各个机器上：分层样式用于客户端-服务器系统、基于对象样式的分布式对象系统</p>
+</li>
+<li><p>空间(匿名)和时间(异步)的解耦过程导致多种风格：发布/订阅模式(空间解耦)、共享空间(时间和空间解耦)</p>
+</li>
+</ul>
+<p>2 分布式系统组织形式</p>
+<ul>
+<li>中心化：<ul>
+<li>基本的客户端-服务器模式：服务器提供服务，客户端使用服务，客户端和服务器端可以位于不同的机器上，客户端遵从请求/响应模式来使用服务。</li>
+<li>多客户端-服务器模式：服务器形成瓶颈，容易产生单点故障，系统调用困难。</li>
+<li>多客户端-多服务器：Web代理，Web Applets</li>
+<li>应用分层(应用于传统分布式信息系统)：传统三层视图：用户接口层，处理层，数据层</li>
+<li>多层架构(User interface, Application, DataBase)：单层(哑终端/主机配置)、两层(客户端-单服务器配置)、三层(每一层都在一个独立的机器上)</li>
+</ul>
+</li>
+<li>去中心化：<ul>
+<li>结构化的P2P系统：将节点组织成一个结构化覆盖网络，例如一个逻辑环或超立方体，并创建负责仅基于其ID的服务的特定节点。</li>
+<li>非结构化的P2P系统：组织成一个随机的覆盖层，两个节点连接的概率是p,因而不能够确定性地查找信息，而不不得不求助于搜索：洪泛发送信息到周围节点；以及随机游走：随机选择一个邻居。</li>
+<li>混合P2P：有时选择一些特殊节点来做一些特殊事务(保存索引，监控网络状态，建立连接)有助于系统性能。</li>
+</ul>
+</li>
+<li>混合模式：客户端-服务器端结合P2P；边缘服务器架构，通常用来实现内容分发网络。</li>
+</ul>
+<p>3 分布式系统组织为中间件</p>
+<p>在通常情况下，分布式系统/应用依照具体的架构风格开发，所选择的分布式系统架构风格在所有的案例下可能不是最佳的，因而需要动态地适应中间件的行为。</p>
+<p>拦截器：当激发一个远程调用对象时拦截普通的控制流。</p>
+<p><img src="/resource/blog/2016-12/middleware.png" alt="分布式中间件"></p>
+<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><p>1 进程</p>
+<ul>
+<li>进程： 进程状态上下文中的执行流</li>
+<li>执行流：执行指令流、运行的一块代码、顺序指令序列、控制的线程</li>
+<li>进程状态：运行的代码能够影响或被影响的一切</li>
+<li>进程与程序：程序是静态的代码和静态的数据，进程是代码和数据的动态实例，进程和代码间不存在一对一的映设，同一份程序能对应多个进程实例，一个程序能调用多个进程。</li>
+<li>进程运行过程中的三种状态：运行态(仅在CPU里的一个核里)、准备状态(等待CPU)、阻塞状态(睡眠状态，等待IO或同步来完成)</li>
+<li>进程的性能低下：资源管理(创建进程需要分配空间，拷贝数据)、调度(上下文切换：CPU和存储上下文)、协作(IPC,内部通信，共享内存)</li>
+</ul>
+<p>2 线程</p>
+<ul>
+<li>线程：是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。</li>
+<li>上下文切换：处理器上下文(寄存器：栈指针，地址寄存器，程序计数器)、线程上下文(寄存器和内存中：处理器上下文，状态)、进程上下文(寄存器和内存中：线程上下文，MMU寄存器值)</li>
+<li>上下文切换：线程共享地址空间，线程上传下文切换能够独立于操作系统完成；进程切换上下文的代价更高，涉及到在循环中获取系统信息，陷入到系统内核；创建和销毁线程的代价比进程要便宜。</li>
+<li>用户级线程：所有的线程在用户地址空间创建，优点是所有的操作能在单个进程中完全处理，实现起来效率高，缺点是很难获取系统以及块的支持。</li>
+<li>系统级线程：系统内核包含线程包的实现，所有的操作都返回一个系统调用：阻塞一个线程的操作将不再是问题，处理外部事件变得简单，缺点是损失一些效率，因为每一个线程操作都陷入到内核里面了。</li>
+<li>总结：尽量融合用户级和内核级线程到一个概念中，然而然而性能的增加并没有抵消复杂度的增加。</li>
+</ul>
+<p>3 线程和分布式系统</p>
+<ul>
+<li>隐藏了网络延时：多个线程预取文件同时响应一个HTTP请求</li>
+<li>对其他机器的多个请求-响应调用(RPC):客户端同时做多个调用，每个调用由一个不同的线程完成</li>
+<li>提高性能：启动线程比启动进程代价低，单个线程服务器禁止简单扩容到一个多处理器系统，客户端：当前一个请求应用后通过响应下一个请求隐藏了网络延时</li>
+<li>更好的结构：IO请求多时能有效简化整个结构，由于简化的控制流多线程程序会更小和更容易理解</li>
+</ul>
+<p>4 多线程下的分布式C/S架构：</p>
+<ul>
+<li>客户端软件：完全透明:获取透明性、位置/迁移透明性、错误透明性、复制透明性</li>
+<li>服务端软件：端口和服务间一对一映设，组织成dispatcher/worker模型</li>
+<li>服务器类型：超级server：监听多个端口，提供多个独立的服务</li>
+<li>有状态：保持跟踪客户端状态：记录文件打开情况以及缓存情况，性能好，客户端能保存本地缓存</li>
+<li>无状态：服务器不保存客户端的处理请求状态，客户端和服务器端完全独立，它们之间的状态不一致性以及冲突避免了，可能丢失一些性能</li>
+</ul>
+<p><img src="/resource/blog/2016-12/multithreadedserver.png" alt="多线程服务器"></p>
+<p>5 代码迁移：代码段、数据段、执行状态</p>
+<ul>
+<li>强弱移动性：<ul>
+<li>仅移动代码段和数据段：相对简单，区分代码推送和拉取</li>
+<li>移动所有组件，包括执行状态：迁移：将整个对象从一台机器迁移到另一台机器；拷贝：开始拷贝，并设置成相同的执行状态</li>
+</ul>
+</li>
+<li><p>管理本地资源</p>
+<ul>
+<li>使用本地资源的对象的资源在目标点可能不可用</li>
+<li>资源类型：固定资源(资源不能迁移，如本地硬件)，紧固资源(理论上能够迁移，但代价高昂)，未附加的(能轻易地移动资源，例如缓存)</li>
+<li>对象和资源间的绑定：identifier(对象需要一个具体资源的实例，如特定的数据库)、value(对象需要资源的内容，如缓存的入口)、
+type(仅需要一种类型的资源是可用的，如彩色显示器)
+<img src="/resource/blog/2016-12/localresources.png" alt="管理本地资源"></li>
+</ul>
+</li>
+<li><p>异构系统中的迁移问题</p>
+<ul>
+<li>目标机器可能不适合执行迁移的代码</li>
+<li>进程/线程/处理器上下文强烈依赖于本地硬件，操作系统和运行系统</li>
+<li>解决方案：充分利用在不同平台上的抽象机器的实现</li>
+</ul>
+</li>
+</ul>
+<h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><h2 id="同步与资源管理"><a href="#同步与资源管理" class="headerlink" title="同步与资源管理"></a>同步与资源管理</h2><h2 id="复制与一致性"><a href="#复制与一致性" class="headerlink" title="复制与一致性"></a>复制与一致性</h2><h2 id="容错"><a href="#容错" class="headerlink" title="容错"></a>容错</h2><h2 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h2><h2 id="OpenStack"><a href="#OpenStack" class="headerlink" title="OpenStack"></a>OpenStack</h2></div><script type="text/javascript" src="/js/share.js?v=1.0.0" async></script><a data-url="http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html" data-id="cix2tmd7s005cw4glvywfh142" class="article-share-link">分享到</a><div class="tags"><a href="/tags/分布式系统/">分布式系统</a></div><div class="post-nav"><a href="/2016/12/22/2016-12-22-data-mining.html" class="next">数据挖掘——课程总结</a></div><div data-thread-key="2016/12/23/2016-12-23-distributed-system-1.html" data-title="分布式系统——课程总结" data-url="http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2016/12/23/2016-12-23-distributed-system-1.html" data-title="分布式系统——课程总结" data-url="http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-5"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AdvancedAlgorithms/">AdvancedAlgorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AlgorithmApplication/">AlgorithmApplication</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/BigData/">BigData</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataBase/">DataBase</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DistributedSystem/">DistributedSystem</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/FileAndStorage/">FileAndStorage</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MachineLearning/">MachineLearning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SourceCodeLearning/">SourceCodeLearning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Latex/" style="font-size: 15px;">Latex</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/hadoop/" style="font-size: 15px;">hadoop</a> <a href="/tags/二次排序/" style="font-size: 15px;">二次排序</a> <a href="/tags/Oracle/" style="font-size: 15px;">Oracle</a> <a href="/tags/DataBase/" style="font-size: 15px;">DataBase</a> <a href="/tags/sqoop/" style="font-size: 15px;">sqoop</a> <a href="/tags/elasticsearch/" style="font-size: 15px;">elasticsearch</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/生活/" style="font-size: 15px;">生活</a> <a href="/tags/毕业/" style="font-size: 15px;">毕业</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Markdown/" style="font-size: 15px;">Markdown</a> <a href="/tags/VPN/" style="font-size: 15px;">VPN</a> <a href="/tags/PlantUML/" style="font-size: 15px;">PlantUML</a> <a href="/tags/机器学习/" style="font-size: 15px;">机器学习</a> <a href="/tags/UML/" style="font-size: 15px;">UML</a> <a href="/tags/Cloudera/" style="font-size: 15px;">Cloudera</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/CentOS/" style="font-size: 15px;">CentOS</a> <a href="/tags/OpenCV/" style="font-size: 15px;">OpenCV</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/存储引擎/" style="font-size: 15px;">存储引擎</a> <a href="/tags/数据压缩/" style="font-size: 15px;">数据压缩</a> <a href="/tags/LSM树/" style="font-size: 15px;">LSM树</a> <a href="/tags/分布式系统/" style="font-size: 15px;">分布式系统</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/12/23/2016-12-23-distributed-system-1.html">分布式系统——课程总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/22/2016-12-22-data-mining.html">数据挖掘——课程总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/2016-11-16-skiplist1.html">SkipList 跳跃表(1) ——基本介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/2016-11-16-lsm1.html">LSM Tree (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/15/2016-11-15-hash.html">Hash存储引擎</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html">高级算法--作业2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/13/2016-10-13-advanced-algorithm-assignment1.html">高级算法--作业1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/06/2016-10-06-advanced-algorithm-3.html">高级算法(3)--Min-Cut-Max-Flow(2)-近似算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/05/2016-10-05-advanced-algorithm-2.html">高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/04/2016-10-04-advanced-algorithm-1.html">高级算法(1)--NP完全性与近似算法</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 外部链接</i></div><ul></ul><a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a></div><div class="widget"><div class="widget-title"><i class="fa fa-bar-chart"> 访客</i></div><a href="http://info.flagcounter.com/uNxw"><img src="http://s07.flagcounter.com/count2/uNxw/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_3/labels_0/pageviews_0/flags_0/percent_0/" alt="" border="0"></a></div></div></div><div class="pure-u-1 pure-u-md-4-5"><div id="footer">© <a href="/." rel="nofollow">流光.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=1.0.0"><script>var duoshuoQuery = {short_name:'streamers'};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;
