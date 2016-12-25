@@ -257,7 +257,7 @@ type(仅需要一种类型的资源是可用的，如彩色显示器)
     <link href="http://keyunluo.github.io/2016/12/22/2016-12-22-data-mining.html"/>
     <id>http://keyunluo.github.io/2016/12/22/2016-12-22-data-mining.html</id>
     <published>2016-12-22T06:25:02.000Z</published>
-    <updated>2016-12-25T04:10:28.861Z</updated>
+    <updated>2016-12-25T14:11:36.737Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2016年秋南京大学计算机系数据挖掘课程学期总结。&lt;/p&gt;
@@ -493,7 +493,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 &lt;li&gt;&lt;p&gt;置信度单调性：$X_1 \subset X_2 \subset I, conf(X_2 \Rightarrow I - X_2) \ge conf(X_1 \Rightarrow I - X_1)$&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;Apriori-Algorithm&quot;&gt;&lt;a href=&quot;#Apriori-Algorithm&quot; class=&quot;headerlink&quot; title=&quot;Apriori Algorithm&quot;&gt;&lt;/a&gt;Apriori Algorithm&lt;/h3&gt;&lt;ul&gt;
+&lt;h3 id=&quot;Apriori-Algorithm&quot;&gt;&lt;a href=&quot;#Apriori-Algorithm&quot; class=&quot;headerlink&quot; title=&quot;Apriori Algorithm&quot;&gt;&lt;/a&gt;&lt;a href=&quot;http://blog.csdn.net/golden1314521/article/details/41457019&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Apriori Algorithm&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;基本思想：为了减少频繁项集的生成时间，我们应该尽早的消除一些完全不可能是频繁项集的集合，Apriori的两条定律如下：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;如果一个集合是频繁项集，则它的所有子集都是频繁项集。举例：假设一个集合{A,B}是频繁项集，即A、B同时出现在一条记录的次数大于等于最小支持度minsup，则它的子集{A},{B}出现次数必定大于等于minsup，即它的子集都是频繁项集。&lt;/li&gt;
@@ -511,7 +511,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;优化1： Candidates Generation&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;思路：U中的Item使用字典序排列，Itemsets能按字符串排序&lt;/li&gt;
+&lt;li&gt;思路：U中的Item使用字典序排列，Itemsets按字符串排序&lt;/li&gt;
 &lt;li&gt;方法：&lt;ul&gt;
 &lt;li&gt;对k-itemsets频繁项排序&lt;/li&gt;
 &lt;li&gt;如果两个itemset的前k-1 items相同则合并&lt;/li&gt;
@@ -519,7 +519,8 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;优化2：Level-wise Pruning Trick&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;优化2：Level-wise Pruning Trick&lt;/p&gt;
+&lt;ul&gt;
 &lt;li&gt;令$F_k$为k-itemsets频繁项，$C_{k+1}$为(k+1)-candidates 集&lt;/li&gt;
 &lt;li&gt;对于一个集合I:$I \in C_{k+1}$为频繁集当且仅当I中的所有的k-subsets都是频繁项&lt;/li&gt;
 &lt;li&gt;剪枝：&lt;ul&gt;
@@ -529,10 +530,19 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;上述优化后的算法&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;将数据库中的事务的数据排序，首先将每条事务记录中多个元素排序，然后将事务整体排序。&lt;/li&gt;
+&lt;li&gt;令k=1，扫描数据库，得到候选的1-项集并统计其出现次数，由此得到各个1-项集的支持度，然后根据最小支持度来提出掉非频繁的1-项集进而得到频繁的1-项集。&lt;/li&gt;
+&lt;li&gt;令k=k+1.通过频繁（k-1）-项集产生k-项集候选集的方法（也称“连接步”）：如果两个（k-1）-项集，如果只有最后一个元素不同，其他都相同，那么这两个(k-1)-项集项集可以“连接”为一个k-项集。不能连接的就不用考虑了，不会频繁的。&lt;/li&gt;
+&lt;li&gt;从候选集中剔除非频繁项集的方法（也称“剪枝步”）：对任一候选集，看其所有子项集(其实只需要对k-2个子项集进行判别即可)是否存在于频繁的(k-1)-项集中，如果不在，直接剔除；扫描数据库，计数，最终确认得到的频繁的k-项集。&lt;/li&gt;
+&lt;li&gt;如果得到的频繁的k-项集的数目&amp;lt;=1，则搜索频繁项集的过程结束；否则转到第3步。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;优化3：Support Counting&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;朴素的方法：对于每一个候选集:$I_i \in C_{k+1}$,对于每一个交易$T_j$,检查$T_i$是否在$T_j$出现。&lt;/li&gt;
-&lt;li&gt;优化方法：将$C_{k+1}$中的候选集模式组织成一个Hash tree，使用Hash tree加速计数&lt;/li&gt;
+&lt;li&gt;优化方法：将$C_{k+1}$中的候选集模式组织成一个Hash tree，使用Hash tree加速计数:先将所有的k-阶候选集存储在哈希树的结构的叶节点上，然后对每个transaction记录找到其包含的所有k-阶候选集，所以这个过程只需要浏览一遍数据库。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Hash Tree&lt;/p&gt;
@@ -556,7 +566,85 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&quot;聚类&quot;&gt;&lt;a href=&quot;#聚类&quot; class=&quot;headerlink&quot; title=&quot;聚类&quot;&gt;&lt;/a&gt;聚类&lt;/h2&gt;&lt;h3 id=&quot;k-means&quot;&gt;&lt;a href=&quot;#k-means&quot; class=&quot;headerlink&quot; title=&quot;k-means&quot;&gt;&lt;/a&gt;k-means&lt;/h3&gt;&lt;h3 id=&quot;Spectral-Clustering&quot;&gt;&lt;a href=&quot;#Spectral-Clustering&quot; class=&quot;headerlink&quot; title=&quot;Spectral Clustering&quot;&gt;&lt;/a&gt;Spectral Clustering&lt;/h3&gt;&lt;h2 id=&quot;分类&quot;&gt;&lt;a href=&quot;#分类&quot; class=&quot;headerlink&quot; title=&quot;分类&quot;&gt;&lt;/a&gt;分类&lt;/h2&gt;&lt;h3 id=&quot;Naive-Bayes&quot;&gt;&lt;a href=&quot;#Naive-Bayes&quot; class=&quot;headerlink&quot; title=&quot;Naive Bayes&quot;&gt;&lt;/a&gt;Naive Bayes&lt;/h3&gt;&lt;h3 id=&quot;SVM&quot;&gt;&lt;a href=&quot;#SVM&quot; class=&quot;headerlink&quot; title=&quot;SVM&quot;&gt;&lt;/a&gt;SVM&lt;/h3&gt;&lt;h3 id=&quot;Logistic-Regression&quot;&gt;&lt;a href=&quot;#Logistic-Regression&quot; class=&quot;headerlink&quot; title=&quot;Logistic Regression&quot;&gt;&lt;/a&gt;Logistic Regression&lt;/h3&gt;&lt;h2 id=&quot;凸优化&quot;&gt;&lt;a href=&quot;#凸优化&quot; class=&quot;headerlink&quot; title=&quot;凸优化&quot;&gt;&lt;/a&gt;凸优化&lt;/h2&gt;&lt;h3 id=&quot;The-Dual-Problem&quot;&gt;&lt;a href=&quot;#The-Dual-Problem&quot; class=&quot;headerlink&quot; title=&quot;The Dual Problem&quot;&gt;&lt;/a&gt;The Dual Problem&lt;/h3&gt;&lt;h2 id=&quot;高级分类方法&quot;&gt;&lt;a href=&quot;#高级分类方法&quot; class=&quot;headerlink&quot; title=&quot;高级分类方法&quot;&gt;&lt;/a&gt;高级分类方法&lt;/h2&gt;&lt;h3 id=&quot;Semisupervised-Learning&quot;&gt;&lt;a href=&quot;#Semisupervised-Learning&quot; class=&quot;headerlink&quot; title=&quot;Semisupervised Learning&quot;&gt;&lt;/a&gt;Semisupervised Learning&lt;/h3&gt;&lt;h3 id=&quot;Active-Learning&quot;&gt;&lt;a href=&quot;#Active-Learning&quot; class=&quot;headerlink&quot; title=&quot;Active Learning&quot;&gt;&lt;/a&gt;Active Learning&lt;/h3&gt;&lt;h3 id=&quot;Ensemble-Methods&quot;&gt;&lt;a href=&quot;#Ensemble-Methods&quot; class=&quot;headerlink&quot; title=&quot;Ensemble Methods&quot;&gt;&lt;/a&gt;Ensemble Methods&lt;/h3&gt;&lt;h2 id=&quot;线性回归&quot;&gt;&lt;a href=&quot;#线性回归&quot; class=&quot;headerlink&quot; title=&quot;线性回归&quot;&gt;&lt;/a&gt;线性回归&lt;/h2&gt;&lt;h3 id=&quot;Least-Square&quot;&gt;&lt;a href=&quot;#Least-Square&quot; class=&quot;headerlink&quot; title=&quot;Least Square&quot;&gt;&lt;/a&gt;Least Square&lt;/h3&gt;&lt;h3 id=&quot;Ridge-Regression&quot;&gt;&lt;a href=&quot;#Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;Ridge Regression&quot;&gt;&lt;/a&gt;Ridge Regression&lt;/h3&gt;&lt;h2 id=&quot;Web挖掘&quot;&gt;&lt;a href=&quot;#Web挖掘&quot; class=&quot;headerlink&quot; title=&quot;Web挖掘&quot;&gt;&lt;/a&gt;Web挖掘&lt;/h2&gt;&lt;h3 id=&quot;Page-Ranking&quot;&gt;&lt;a href=&quot;#Page-Ranking&quot; class=&quot;headerlink&quot; title=&quot;Page Ranking&quot;&gt;&lt;/a&gt;Page Ranking&lt;/h3&gt;&lt;h3 id=&quot;Collaborative-Filtering&quot;&gt;&lt;a href=&quot;#Collaborative-Filtering&quot; class=&quot;headerlink&quot; title=&quot;Collaborative Filtering&quot;&gt;&lt;/a&gt;Collaborative Filtering&lt;/h3&gt;</content>
+&lt;h2 id=&quot;聚类&quot;&gt;&lt;a href=&quot;#聚类&quot; class=&quot;headerlink&quot; title=&quot;聚类&quot;&gt;&lt;/a&gt;聚类&lt;/h2&gt;&lt;h3 id=&quot;K-Means&quot;&gt;&lt;a href=&quot;#K-Means&quot; class=&quot;headerlink&quot; title=&quot;K-Means&quot;&gt;&lt;/a&gt;K-Means&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;思想&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;基于代表的算法，错误平方和,即类间平方和最小：$\min_{\bar{Y_1},\ldots, \bar{Y_k}} O = \sum_{i=1}^n[\min_j \ Dist(\bar{X_i},\bar{Y_j})]$&lt;/li&gt;
+&lt;li&gt;距离度量：$Dist(\bar{X_i}, \bar{Y_j}) = \Vert \bar{X_i} - \bar{Y_j} \Vert_2^2$&lt;/li&gt;
+&lt;li&gt;指定聚类：$C_1,\ldots, C_k$&lt;/li&gt;
+&lt;li&gt;优化步骤：$\bar{Y_j} = argmin_{\bar{Y}} \sum_{\bar{X_i} \in C_j} \Vert \bar{X_i} - \bar{Y} \Vert_2^2 = \frac{1}{C_j}\sum_{\bar{X_i} \in C_j} \bar{X_i}$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;算法流程&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;为每个聚类确定一个初始聚类中心，这样就有K 个初始聚类中心。&lt;/li&gt;
+&lt;li&gt;将样本集中的样本按照最小距离原则分配到最邻近聚类。&lt;/li&gt;
+&lt;li&gt;使用每个聚类中的样本均值作为新的聚类中心。&lt;/li&gt;
+&lt;li&gt;重复步骤2.3直到聚类中心不再变化。&lt;/li&gt;
+&lt;li&gt;结束，得到K个聚类。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;本地马氏距离度量：$Dist(\bar{X_i}, \bar{Y_j}) = (\bar{X_i} - \bar{Y_j} ) \Sigma_r^{-1}(\bar{X_i} - \bar{Y_j})^T$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;基于核的方法&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;k-Medians 算法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用曼哈顿距离：$Dist(\bar{X_i}, \bar{Y_j}) = \Vert \bar{X_i} - \bar{Y_j} \Vert_1 = \sum_{p=1}^d \vert X_i^p - Y_j^p \vert$&lt;/li&gt;
+&lt;li&gt;优化步骤：$Y_j^p = argmin_Y \sum_{\bar{X_i} \in C_j} |X_i^p -Y| = median{X_i^p | \bar{X_i} \in C_j}$&lt;/li&gt;
+&lt;li&gt;缺点：$\bar{Y} = [Y_j^1,\ldots,Y_j^d]$可能不在数据集合中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;K-Medoids&quot;&gt;&lt;a href=&quot;#K-Medoids&quot; class=&quot;headerlink&quot; title=&quot;K-Medoids&quot;&gt;&lt;/a&gt;K-Medoids&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;核心：代表点是从数据中选出来的：$\min_{\bar{Y_1},\ldots, \bar{Y_k} \in D} O = \sum_{i=1}^n[\min_j \ Dist(\bar{X_i},\bar{Y_j})]$&lt;/li&gt;
+&lt;li&gt;基于爬山法的优化：代表点S初始化为D中的k个点，S通过不断迭代地与D中的点交换来改善。&lt;/li&gt;
+&lt;li&gt;交换方法：所有点|S||D|交换；随机选择r对$(\bar{X_i},\bar{Y_j}$点然后选择最好的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;Spectral-Clustering&quot;&gt;&lt;a href=&quot;#Spectral-Clustering&quot; class=&quot;headerlink&quot; title=&quot;Spectral Clustering&quot;&gt;&lt;/a&gt;Spectral Clustering&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;思想：把数据映射到一个新空间,该空间里具有约化的维度,使得相似性更加显而易见,然后对新空间的数据进行聚类。&lt;/li&gt;
+&lt;li&gt;优化问题：(k=1)&lt;ul&gt;
+&lt;li&gt;$\min_{y \in \mathcal{R}^n} \ y^TLy$&lt;/li&gt;
+&lt;li&gt;s.t. $y^TDy = 1$&lt;/li&gt;
+&lt;li&gt;解决方案：$Ly = \lambda Dy$, 最小值为$y^1=1$,使用第二最小值$y^2$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;拉普拉斯特征值映设(k&amp;gt;1):&lt;ul&gt;
+&lt;li&gt;向量形式：$O = \sum_{i=1}^n\sum_{j=1}^nw_{ij} \Vert y_i - y_j \Vert_2^2 = 2 trace(Y^TLY)$&lt;/li&gt;
+&lt;li&gt;$Y = [y_1,\ldots,y_n]^T \in \mathcal{R}^{n*k}$&lt;/li&gt;
+&lt;li&gt;$L = D -W \in \mathcal{R}^{n*n}$:图的拉普拉斯表示&lt;/li&gt;
+&lt;li&gt;$W=[w_{ij}] \in \mathcal{R}^{n*n}$:相似度矩阵&lt;/li&gt;
+&lt;li&gt;$D \in \mathcal{R}^{n*n}$是一个对角矩阵，$D_{ii} = \sum_{j=1}^nw_{ij}$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;优化问题：(k&amp;gt;1)&lt;ul&gt;
+&lt;li&gt;$\min_{y \in \mathcal{R}^{n*k}} \ trace(Y^TLY)$&lt;/li&gt;
+&lt;li&gt;s.t. $Y^TDY = I$&lt;/li&gt;
+&lt;li&gt;解决方案：$Ly = \lambda Dy$, 最小值为$y^1=1$,$Y = [y^2,\ldots,y^{k+1}] \in \mathcal{R}^{n*k}$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;步骤：&lt;ul&gt;
+&lt;li&gt;构建带权图相似度矩阵 W:使用 k 近邻算法,对每个点选取前 k 个邻居为 1,其余为 0,并对称化该矩阵;&lt;/li&gt;
+&lt;li&gt;构建拉普拉斯图矩阵 L=D-W,并归一化:构建 W 的对角元素矩阵 D($d_i = \sum_iW_{ij}$), $L = D^{-0.5}LD^{0.5} = I - D^{-0.5}WD^{-0.5}$；&lt;/li&gt;
+&lt;li&gt;特征值分解,得到新的数据:eig_values, eig_vectors = np.linalg.eigh(L),将特征值排序,选取特征值最小的 k 个对应的特征向量列组成显得数据;&lt;/li&gt;
+&lt;li&gt;调用 KMedoids 算法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;Non-negative-Matrix-Factorization&quot;&gt;&lt;a href=&quot;#Non-negative-Matrix-Factorization&quot; class=&quot;headerlink&quot; title=&quot;Non-negative Matrix Factorization&quot;&gt;&lt;/a&gt;Non-negative Matrix Factorization&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;优化问题：&lt;ul&gt;
+&lt;li&gt;$\min_{U \in \mathcal{R}^{d&lt;em&gt;k}, V \in \mathcal{R}^{v&lt;/em&gt;k}}$ \ \Vert X - UV^T \Vert_F^2&lt;/li&gt;
+&lt;li&gt;$s.t. \ U \ge 0, V \ge 0$&lt;/li&gt;
+&lt;li&gt;非负矩阵分解是非凸的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;解释&lt;ul&gt;
+&lt;li&gt;矩阵近似：$X  \approx UV^T， x_i \approx Uv_i = \sum_{j=1}^ku_jv_{ij}$&lt;/li&gt;
+&lt;li&gt;向量近似：$x_i \approx Uv_i = \sum_{j=1}^ku_jv_{ij}, u_1,\ldots,u_k \in \mathcal{R}^d$可视为基向量。$v_i = [v_{i1},\ldots,v_{ik}]^T$可视为原始$x_i$的新的k维表示。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;分类&quot;&gt;&lt;a href=&quot;#分类&quot; class=&quot;headerlink&quot; title=&quot;分类&quot;&gt;&lt;/a&gt;分类&lt;/h2&gt;&lt;h3 id=&quot;Naive-Bayes&quot;&gt;&lt;a href=&quot;#Naive-Bayes&quot; class=&quot;headerlink&quot; title=&quot;Naive Bayes&quot;&gt;&lt;/a&gt;Naive Bayes&lt;/h3&gt;&lt;h3 id=&quot;SVM&quot;&gt;&lt;a href=&quot;#SVM&quot; class=&quot;headerlink&quot; title=&quot;SVM&quot;&gt;&lt;/a&gt;SVM&lt;/h3&gt;&lt;h3 id=&quot;Logistic-Regression&quot;&gt;&lt;a href=&quot;#Logistic-Regression&quot; class=&quot;headerlink&quot; title=&quot;Logistic Regression&quot;&gt;&lt;/a&gt;Logistic Regression&lt;/h3&gt;&lt;h2 id=&quot;凸优化&quot;&gt;&lt;a href=&quot;#凸优化&quot; class=&quot;headerlink&quot; title=&quot;凸优化&quot;&gt;&lt;/a&gt;凸优化&lt;/h2&gt;&lt;h3 id=&quot;The-Dual-Problem&quot;&gt;&lt;a href=&quot;#The-Dual-Problem&quot; class=&quot;headerlink&quot; title=&quot;The Dual Problem&quot;&gt;&lt;/a&gt;The Dual Problem&lt;/h3&gt;&lt;h2 id=&quot;高级分类方法&quot;&gt;&lt;a href=&quot;#高级分类方法&quot; class=&quot;headerlink&quot; title=&quot;高级分类方法&quot;&gt;&lt;/a&gt;高级分类方法&lt;/h2&gt;&lt;h3 id=&quot;Semisupervised-Learning&quot;&gt;&lt;a href=&quot;#Semisupervised-Learning&quot; class=&quot;headerlink&quot; title=&quot;Semisupervised Learning&quot;&gt;&lt;/a&gt;Semisupervised Learning&lt;/h3&gt;&lt;h3 id=&quot;Active-Learning&quot;&gt;&lt;a href=&quot;#Active-Learning&quot; class=&quot;headerlink&quot; title=&quot;Active Learning&quot;&gt;&lt;/a&gt;Active Learning&lt;/h3&gt;&lt;h3 id=&quot;Ensemble-Methods&quot;&gt;&lt;a href=&quot;#Ensemble-Methods&quot; class=&quot;headerlink&quot; title=&quot;Ensemble Methods&quot;&gt;&lt;/a&gt;Ensemble Methods&lt;/h3&gt;&lt;h2 id=&quot;线性回归&quot;&gt;&lt;a href=&quot;#线性回归&quot; class=&quot;headerlink&quot; title=&quot;线性回归&quot;&gt;&lt;/a&gt;线性回归&lt;/h2&gt;&lt;h3 id=&quot;Least-Square&quot;&gt;&lt;a href=&quot;#Least-Square&quot; class=&quot;headerlink&quot; title=&quot;Least Square&quot;&gt;&lt;/a&gt;Least Square&lt;/h3&gt;&lt;h3 id=&quot;Ridge-Regression&quot;&gt;&lt;a href=&quot;#Ridge-Regression&quot; class=&quot;headerlink&quot; title=&quot;Ridge Regression&quot;&gt;&lt;/a&gt;Ridge Regression&lt;/h3&gt;&lt;h2 id=&quot;Web挖掘&quot;&gt;&lt;a href=&quot;#Web挖掘&quot; class=&quot;headerlink&quot; title=&quot;Web挖掘&quot;&gt;&lt;/a&gt;Web挖掘&lt;/h2&gt;&lt;h3 id=&quot;Page-Ranking&quot;&gt;&lt;a href=&quot;#Page-Ranking&quot; class=&quot;headerlink&quot; title=&quot;Page Ranking&quot;&gt;&lt;/a&gt;Page Ranking&lt;/h3&gt;&lt;h3 id=&quot;Collaborative-Filtering&quot;&gt;&lt;a href=&quot;#Collaborative-Filtering&quot; class=&quot;headerlink&quot; title=&quot;Collaborative Filtering&quot;&gt;&lt;/a&gt;Collaborative Filtering&lt;/h3&gt;</content>
     
     <summary type="html">
     
