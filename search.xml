@@ -4,6 +4,50 @@
   
     
     <entry>
+      <title><![CDATA[数据挖掘——试卷分析]]></title>
+      <url>http://keyunluo.github.io/2016/12/27/2016-12-27-data-mining.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>2015年秋南京大学计算机系数据挖掘期末试卷分析。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="PCA-3-points"><a href="#PCA-3-points" class="headerlink" title="PCA(3 points)"></a>PCA(3 points)</h2><blockquote>
+<p>Given n data points $x_1,\ldots,x_n$, where $x_i \in \mathcal{R}^d$. Describe how to find the top <strong>k</strong> principle components by <strong>SVD</strong>.</p>
+</blockquote>
+<h2 id="Association-Pattern-Mining-2-points"><a href="#Association-Pattern-Mining-2-points" class="headerlink" title="Association Pattern Mining(2 points)"></a>Association Pattern Mining(2 points)</h2><blockquote>
+<p>The <strong>downward closure property (i.e.,every subset of frequent itemset is also frequcent)</strong> is leveraged to design efficient algorithms for association pattern mining. Why does this property hold?</p>
+</blockquote>
+<h2 id="NMF-3-points"><a href="#NMF-3-points" class="headerlink" title="NMF(3 points)"></a>NMF(3 points)</h2><blockquote>
+<p>Suppose we want to find a rank-k approximation of matrix $X \in \mathcal{R}^{d*n}$ by nonnegative matrix factorization. What is the optimization problem? Is it convex?</p>
+</blockquote>
+<h2 id="SVM-6-points"><a href="#SVM-6-points" class="headerlink" title="SVM(6 points)"></a>SVM(6 points)</h2><blockquote>
+<p>Given a set of training data $(x_1,y_1),\ldots,(x_n,y_n)$, where $x_i \in \mathcal{R}^d$ and $y_i \in {\pm 1}$. The primal problem of SVM without intercept is given by: $$\min_{w \in \mathcal{R}^d} \sum_{i=1}^m \max(0,1-y_iw^Tx_i) + \frac{\lambda}{2} \Vert w \Vert_2^2$$. Show the derivation of the dual problem of SVM.</p>
+<p>Hints: Let $\mathcal{l}(x) = max(0,1-x)$ be the hinge loss. Then, its conjugate function id given by
+$$ \mathcal{l}^*(y) = sup_x(yx-\mathcal{l}(x)) = \begin{cases} y&amp; -1 \le y \le 0 \\
+ \infty&amp; \ otherwise
+ \end{cases}$$</p>
+</blockquote>
+<h2 id="Ensemble-2-points"><a href="#Ensemble-2-points" class="headerlink" title="Ensemble(2 points)"></a>Ensemble(2 points)</h2><blockquote>
+<p>Ensemble analysis is used to reduce the bisa of variance of the classification process. Which of them is reduced by bagging/boosting?</p>
+</blockquote>
+<p> a) Bagging aims to reduce the:</p>
+<p> b) Boosting aims to reduce the:</p>
+<h2 id="Ridge-Regression-5-points"><a href="#Ridge-Regression-5-points" class="headerlink" title="Ridge Regression(5 points)"></a>Ridge Regression(5 points)</h2><blockquote>
+<p>Given a set of training data $(x_1,y_1),\ldots,(x_n,y_n)$, where $x_i \in \mathcal{R}^d$ and $y_i \in \mathcal{R}$. Our goal is to learn a linear model $f(x) = x^Tw + b$ to predict the label $y \in \mathcal{R}$ of an instance $x \in \mathcal{R}^d$</p>
+</blockquote>
+<p>a) Show the optimization problem of the ridge regression for learning $w \in \mathcal{R}^d$ and $b \in \mathcal{R}$.
+Notations:$X = [x_1,\ldots,x_n] \in \mathcal{R}^{d*n}, y = [y_1, \ldots, y_n]$</p>
+<p>b) Derive the optimal solution $w_*$, and $b_*$ of the above problem.
+Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the centering matrix. Hints:$\frac{\partial \Vert u - A^Tw \Vert_2^2}{\partial w} = 2A(A^Tw-u)$</p>
+<h2 id="Advanced-Classification-4-points"><a href="#Advanced-Classification-4-points" class="headerlink" title="Advanced Classification(4 points)"></a>Advanced Classification(4 points)</h2><blockquote>
+<p>Give a brief introduction of <strong>semi-suppervised learning</strong> and <strong>active learning</strong></p>
+</blockquote>
+<h2 id="Collaborative-Filtering-5-points"><a href="#Collaborative-Filtering-5-points" class="headerlink" title="Collaborative Filtering(5 points)"></a>Collaborative Filtering(5 points)</h2><blockquote>
+<p>A merchant has an n*d ratings matrix D representing the preferences of n customers across d items. It is assumed that the matrix is sparse, and therefore each customer may have bought only a few items. Please provide one approach that the utilizes the rating matrix D to make recommendations to customers.</p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[分布式系统——课程总结]]></title>
       <url>http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html</url>
       <content type="html"><![CDATA[<blockquote>
@@ -591,7 +635,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 </li>
 <li>步骤：<ul>
 <li>构建带权图相似度矩阵 W:使用 k 近邻算法,对每个点选取前 k 个邻居为 1,其余为 0,并对称化该矩阵;</li>
-<li>构建拉普拉斯图矩阵 L=D-W,并归一化:构建 W 的对角元素矩阵 D($d_i = \sum_iW_{ij}$), $L = D^{-0.5}LD^{0.5} = I - D^{-0.5}WD^{-0.5}$；</li>
+<li>构建拉普拉斯图矩阵 L=D-W,并归一化:构建 W 的对角元素矩阵 D($d_i = \sum_iW_{ij}$), $L = D^{-0.5}LD^{-0.5} = I - D^{-0.5}WD^{-0.5}$；</li>
 <li>特征值分解,得到新的数据:eig_values, eig_vectors = np.linalg.eigh(L),将特征值排序,选取特征值最小的 k 个对应的特征向量列组成显得数据;</li>
 <li>调用 KMedoids 算法</li>
 </ul>
@@ -599,7 +643,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 </ul>
 <h3 id="Non-negative-Matrix-Factorization"><a href="#Non-negative-Matrix-Factorization" class="headerlink" title="Non-negative Matrix Factorization"></a>Non-negative Matrix Factorization</h3><ul>
 <li>优化问题：<ul>
-<li>$\min_{U \in \mathcal{R}^{d<em>k}, V \in \mathcal{R}^{v</em>k}}$ \ \Vert X - UV^T \Vert_F^2</li>
+<li>$\min_{U \in \mathcal{R}^{d*k}, V \in \mathcal{R}^{v*k}} \ \Vert X - UV^T \Vert_F^2 $</li>
 <li>$s.t. \ U \ge 0, V \ge 0$</li>
 <li>非负矩阵分解是非凸的</li>
 </ul>
@@ -610,7 +654,10 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 </ul>
 </li>
 </ul>
-<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="Naive-Bayes"><a href="#Naive-Bayes" class="headerlink" title="Naive Bayes"></a>Naive Bayes</h3><h3 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h3><h3 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h3><h2 id="凸优化"><a href="#凸优化" class="headerlink" title="凸优化"></a>凸优化</h2><h3 id="The-Dual-Problem"><a href="#The-Dual-Problem" class="headerlink" title="The Dual Problem"></a>The Dual Problem</h3><h2 id="高级分类方法"><a href="#高级分类方法" class="headerlink" title="高级分类方法"></a>高级分类方法</h2><h3 id="Semisupervised-Learning"><a href="#Semisupervised-Learning" class="headerlink" title="Semisupervised Learning"></a>Semisupervised Learning</h3><h3 id="Active-Learning"><a href="#Active-Learning" class="headerlink" title="Active Learning"></a>Active Learning</h3><h3 id="Ensemble-Methods"><a href="#Ensemble-Methods" class="headerlink" title="Ensemble Methods"></a>Ensemble Methods</h3><h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><h3 id="Least-Square"><a href="#Least-Square" class="headerlink" title="Least Square"></a>Least Square</h3><h3 id="Ridge-Regression"><a href="#Ridge-Regression" class="headerlink" title="Ridge Regression"></a>Ridge Regression</h3><h2 id="Web挖掘"><a href="#Web挖掘" class="headerlink" title="Web挖掘"></a>Web挖掘</h2><h3 id="Page-Ranking"><a href="#Page-Ranking" class="headerlink" title="Page Ranking"></a>Page Ranking</h3><h3 id="Collaborative-Filtering"><a href="#Collaborative-Filtering" class="headerlink" title="Collaborative Filtering"></a>Collaborative Filtering</h3>]]></content>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h3><ul>
+<li>两分类问题</li>
+</ul>
+<h3 id="Naive-Bayes"><a href="#Naive-Bayes" class="headerlink" title="Naive Bayes"></a>Naive Bayes</h3><h3 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h3><h3 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h3><h2 id="凸优化"><a href="#凸优化" class="headerlink" title="凸优化"></a>凸优化</h2><h3 id="The-Dual-Problem"><a href="#The-Dual-Problem" class="headerlink" title="The Dual Problem"></a>The Dual Problem</h3><h2 id="高级分类方法"><a href="#高级分类方法" class="headerlink" title="高级分类方法"></a>高级分类方法</h2><h3 id="Semisupervised-Learning"><a href="#Semisupervised-Learning" class="headerlink" title="Semisupervised Learning"></a>Semisupervised Learning</h3><h3 id="Active-Learning"><a href="#Active-Learning" class="headerlink" title="Active Learning"></a>Active Learning</h3><h3 id="Ensemble-Methods"><a href="#Ensemble-Methods" class="headerlink" title="Ensemble Methods"></a>Ensemble Methods</h3><h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><h3 id="Least-Square"><a href="#Least-Square" class="headerlink" title="Least Square"></a>Least Square</h3><h3 id="Ridge-Regression"><a href="#Ridge-Regression" class="headerlink" title="Ridge Regression"></a>Ridge Regression</h3><h2 id="Web挖掘"><a href="#Web挖掘" class="headerlink" title="Web挖掘"></a>Web挖掘</h2><h3 id="Page-Ranking"><a href="#Page-Ranking" class="headerlink" title="Page Ranking"></a>Page Ranking</h3><h3 id="Collaborative-Filtering"><a href="#Collaborative-Filtering" class="headerlink" title="Collaborative Filtering"></a>Collaborative Filtering</h3>]]></content>
     </entry>
     
     <entry>
