@@ -13,12 +13,25 @@
 <h2 id="PCA-3-points"><a href="#PCA-3-points" class="headerlink" title="PCA(3 points)"></a>PCA(3 points)</h2><blockquote>
 <p>Given n data points $x_1,\ldots,x_n$, where $x_i \in \mathcal{R}^d$. Describe how to find the top <strong>k</strong> principle components by <strong>SVD</strong>.</p>
 </blockquote>
+<p>解答：SVD奇异值分解</p>
+<ul>
+<li>对X进行奇异值分解：$X = U\Sigma V^T = \sum_{i=1}^d \sigma_iu_iv_i^T$</li>
+<li>取X的k个最大的左奇异向量：$u_1,u_2,\ldots,u_k$</li>
+<li>x的新坐标：$U_k^Tx = [u_1^Tx, u_2^Tx, \ldots, u_k^Tx] \in \mathcal{R}^k, U_k = [u_1, u_2,\ldots,u_k] \in \mathcal{R}^{d*k}$</li>
+<li>X的新坐标：$U_k^TX=U_k^TU_r\Sigma_rV_r^T = \Sigma_kV_k^T$</li>
+</ul>
 <h2 id="Association-Pattern-Mining-2-points"><a href="#Association-Pattern-Mining-2-points" class="headerlink" title="Association Pattern Mining(2 points)"></a>Association Pattern Mining(2 points)</h2><blockquote>
 <p>The <strong>downward closure property (i.e.,every subset of frequent itemset is also frequcent)</strong> is leveraged to design efficient algorithms for association pattern mining. Why does this property hold?</p>
 </blockquote>
+<p>解答：由于支持单调性，一个项集I包含在一个交易中，那么它的所有子集也包含在这个交易中，即子集的支持度不小于父集的支持度。</p>
 <h2 id="NMF-3-points"><a href="#NMF-3-points" class="headerlink" title="NMF(3 points)"></a>NMF(3 points)</h2><blockquote>
 <p>Suppose we want to find a rank-k approximation of matrix $X \in \mathcal{R}^{d*n}$ by nonnegative matrix factorization. What is the optimization problem? Is it convex?</p>
 </blockquote>
+<p>解答：</p>
+<ul>
+<li>优化问题：$\min_{U \in \mathcal{R}^{d*k}, V \in \mathcal{R}^{v*k}} \ \Vert X - UV^T \Vert_F^2 $， $s.t. \ U \ge 0, V \ge 0$</li>
+<li>非负矩阵分解是非凸的</li>
+</ul>
 <h2 id="SVM-6-points"><a href="#SVM-6-points" class="headerlink" title="SVM(6 points)"></a>SVM(6 points)</h2><blockquote>
 <p>Given a set of training data $(x_1,y_1),\ldots,(x_n,y_n)$, where $x_i \in \mathcal{R}^d$ and $y_i \in {\pm 1}$. The primal problem of SVM without intercept is given by: $$\min_{w \in \mathcal{R}^d} \sum_{i=1}^m \max(0,1-y_iw^Tx_i) + \frac{\lambda}{2} \Vert w \Vert_2^2$$. Show the derivation of the dual problem of SVM.</p>
 <p>Hints: Let $\mathcal{l}(x) = max(0,1-x)$ be the hinge loss. Then, its conjugate function id given by
@@ -26,11 +39,32 @@ $$ \mathcal{l}^*(y) = sup_x(yx-\mathcal{l}(x)) = \begin{cases} y&amp; -1 \le y \
  \infty&amp; \ otherwise
  \end{cases}$$</p>
 </blockquote>
+<p> 解：SVM对偶问题的推导，无截距$b_0$</p>
+<ul>
+<li>由上述定义的hinge loss及其共轭函数知，原优化问题简化为：$\min_{w \in R^d} \sum_{i=1}^n \mathcal{l}(y_iw^Tx_i) + \frac{\lambda}{2}\Vert w \Vert_2^2$,等价于：
+$$\sum_{i=1}^n \mathcal{l}(u_i) + \frac{\lambda}{2} \Vert w \Vert_2^2, s.t. \ u_i = y_iw^Tx_i, i = 1, \ldots, n$$</li>
+</ul>
+<ul>
+<li>由拉格朗日乘法，得：$L(w,u,v) = \sum_{i=1}^n \mathcal{l}(u_i) + \frac{\lambda}{2} \Vert w \Vert_2^2 + \sum_{i=1}^n v_i(u_i - y_iw^Tx_i)$,其对偶问题：</li>
+</ul>
+<p>$$\begin{array} {lcl}
+    g(v) &amp;=&amp; \inf_{w,u} L(w,u,v) \\
+         &amp;=&amp; \inf_{w,u} \sum_{i=1}^n \mathcal{l}(u_i) + \frac{\lambda}{2} \Vert w \Vert_2^2 + \sum_{i=1}^n v_i(u_i - y_iw^Tx_i) \\
+         &amp;=&amp; \inf_{w,u} \sum_{i=1}^n(\mathcal{l}(u_i) + v_iu_i) + (\frac{\lambda}{2} \Vert w \Vert_2^2 - w^T\sum_{i=1}^nv_iy_ix_i)
+\end{array}$$</p>
+<pre><code>依次最小化w,u:
+</code></pre><ul>
+<li>$\inf_{u_i}(\mathcal{l}(u_i) + v_iu_i) = -\sup_{u_i}(-v_iu_i - l(u_i)) = - \mathcal{l}^* (-v_i) = v_i $, if $0 \le v_i \le 1$</li>
+<li>$\nabla_w L(w,u,v) = \lambda w - \sum_{i=1}^nv_iy_ix_i)$, 得：$w = \frac{1}{\lambda}  \sum_{i=1}^nv_iy_ix_i$</li>
+<li>最后， $g(v) = \sum_{i=1}^n v_i - \frac{1}{2 \lambda}\sum_{i=1}^n\sum_{j=1}^n v_iv_jy_iy_jx_i^Tx_j$，得到对偶问题：
+$$\max_{v \in R^n} \sum_{i=1}^n v_i - \frac{1}{2 \lambda}\sum_{i=1}^n\sum_{j=1}^n v_iv_jy_iy_jx_i^Tx_j, \ s.t.\ 0 \le v_i \le 1, i=1, \ldots,n$$</li>
+</ul>
 <h2 id="Ensemble-2-points"><a href="#Ensemble-2-points" class="headerlink" title="Ensemble(2 points)"></a>Ensemble(2 points)</h2><blockquote>
-<p>Ensemble analysis is used to reduce the bisa of variance of the classification process. Which of them is reduced by bagging/boosting?</p>
+<p>Ensemble analysis is used to reduce the bias or variance of the classification process. Which of them is reduced by bagging/boosting?</p>
 </blockquote>
-<p> a) Bagging aims to reduce the:</p>
-<p> b) Boosting aims to reduce the:</p>
+<p> 解答：</p>
+<p> a) Bagging aims to reduce the: <strong>variance</strong>(代表性算法：随机森林，随机化的决策树模型，每次随机选择一定大小的特征)</p>
+<p> b) Boosting aims to reduce the:<strong>bias</strong>(代表性算法：AdaBoost，每个训练实例都有个权重，分类错误的实例会赋予一个更大的权重)</p>
 <h2 id="Ridge-Regression-5-points"><a href="#Ridge-Regression-5-points" class="headerlink" title="Ridge Regression(5 points)"></a>Ridge Regression(5 points)</h2><blockquote>
 <p>Given a set of training data $(x_1,y_1),\ldots,(x_n,y_n)$, where $x_i \in \mathcal{R}^d$ and $y_i \in \mathcal{R}$. Our goal is to learn a linear model $f(x) = x^Tw + b$ to predict the label $y \in \mathcal{R}$ of an instance $x \in \mathcal{R}^d$</p>
 </blockquote>
@@ -38,12 +72,51 @@ $$ \mathcal{l}^*(y) = sup_x(yx-\mathcal{l}(x)) = \begin{cases} y&amp; -1 \le y \
 Notations:$X = [x_1,\ldots,x_n] \in \mathcal{R}^{d*n}, y = [y_1, \ldots, y_n]$</p>
 <p>b) Derive the optimal solution $w_*$, and $b_*$ of the above problem.
 Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the centering matrix. Hints:$\frac{\partial \Vert u - A^Tw \Vert_2^2}{\partial w} = 2A(A^Tw-u)$</p>
-<h2 id="Advanced-Classification-4-points"><a href="#Advanced-Classification-4-points" class="headerlink" title="Advanced Classification(4 points)"></a>Advanced Classification(4 points)</h2><blockquote>
+<p>解答：</p>
+<ol>
+<li>优化问题：$\min_{b \in R,w \in R^d} \Vert y - Xw - 1_Nb \Vert_2^2 + \lambda \Vert w \Vert_2^2$, 其中：$1_N = [1,\ldots,1]^T \in R^d$</li>
+</ol>
+<h2 id="Advanced-Classification-4-points"><a href="#Advanced-Classification-4-points" class="headerlink" title="Advanced Classification(4 points)"></a>Advanced Classification(4 points)</h2><ol>
+<li><ul>
+<li>对上式$b$进行求导，并令倒数为0：$-2*1_N^T(y-Xw -1_Nb)=0, b  = \frac{1}{N}1_N^T(y-Xw)$</li>
+<li>对上式$w$进行求导，并令倒数为0：$2*X^T(Xw -y + 1_Nb) + 2 \lambda w=0, (X^T(I-\frac{1}{N}1_N1_N^T)X + \lambda I)w=X^T(I-\frac{1}{N}1_N1_N^T)y$</li>
+<li>令$H = I - \frac{1}{N}1_N1_N^T$为中心矩阵，则得到：$w_* = (X^THX + \lambda I)^{-1}X^THy,b_* = \frac{1}{N}1_N^T(y-Xw_*)$</li>
+</ul>
+</li>
+</ol>
+<blockquote>
 <p>Give a brief introduction of <strong>semi-suppervised learning</strong> and <strong>active learning</strong></p>
 </blockquote>
+<p>解答：半监督学习和主动学习</p>
+<ul>
+<li><strong>semi-suppervised learning</strong>：<ul>
+<li>标记数据的代价昂贵并且难于获得；无标签数据通常是大量可得到的；无标签数据是有用的：无标签数据可以用来评估数据的低维流型结构和特征的联合概率分布。</li>
+<li>相关算法：<ul>
+<li>元算法：使用任何现有的算法作为子程序，这类算法主要有Self-training和Co-training。</li>
+<li>具体算法：半监督贝叶斯分类器，转导支持向量机，基于图的半监督学习算法。</li>
+</ul>
+</li>
+<li>数据要求：数据的类别特征应该近似和它的聚类特征匹配；在实际应用中，当有标签的数据非常少时效率很高。</li>
+</ul>
+</li>
+<li><strong>active learning</strong>：<ul>
+<li>主动学习是半监督机器学习的一个特例，在主动学习中，一个学习算法可以主动地提出一些标注请求，将一些经过筛选的数据提交给专家进行标注。</li>
+<li>两种查询系统：选择性取样和基于池的采样。</li>
+<li>种类：基于异构的模型、基于性能的模型、基于代表的模型。</li>
+</ul>
+</li>
+</ul>
 <h2 id="Collaborative-Filtering-5-points"><a href="#Collaborative-Filtering-5-points" class="headerlink" title="Collaborative Filtering(5 points)"></a>Collaborative Filtering(5 points)</h2><blockquote>
 <p>A merchant has an n*d ratings matrix D representing the preferences of n customers across d items. It is assumed that the matrix is sparse, and therefore each customer may have bought only a few items. Please provide one approach that the utilizes the rating matrix D to make recommendations to customers.</p>
 </blockquote>
+<p>解答：总的方法如下：</p>
+<ul>
+<li>基于邻居的方法：基于用户的评级相似性、基于商品的评级相似性</li>
+<li>基于图的方法：</li>
+<li>聚类方法：自适应k-means聚类，自适应协同聚类</li>
+<li>潜伏因子模型：奇异值分解、矩阵分解、矩阵填充</li>
+</ul>
+<p>本题使用Matrix Completion方法：$\min_{X \in R^{n*d}} \Vert X \Vert_*, s.t. \ X_{ij} = D_{ij} \in \Omega$</p>
 ]]></content>
     </entry>
     

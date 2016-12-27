@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-12-27T12:16:51.024Z</updated>
+  <updated>2016-12-27T14:39:52.326Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://keyunluo.github.io/2016/12/27/2016-12-27-data-mining.html"/>
     <id>http://keyunluo.github.io/2016/12/27/2016-12-27-data-mining.html</id>
     <published>2016-12-27T06:25:02.000Z</published>
-    <updated>2016-12-27T12:16:51.024Z</updated>
+    <updated>2016-12-27T14:39:52.326Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2015年秋南京大学计算机系数据挖掘期末试卷分析。&lt;/p&gt;
@@ -29,12 +29,25 @@
 &lt;h2 id=&quot;PCA-3-points&quot;&gt;&lt;a href=&quot;#PCA-3-points&quot; class=&quot;headerlink&quot; title=&quot;PCA(3 points)&quot;&gt;&lt;/a&gt;PCA(3 points)&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;Given n data points $x_1,\ldots,x_n$, where $x_i \in \mathcal{R}^d$. Describe how to find the top &lt;strong&gt;k&lt;/strong&gt; principle components by &lt;strong&gt;SVD&lt;/strong&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;解答：SVD奇异值分解&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对X进行奇异值分解：$X = U\Sigma V^T = \sum_{i=1}^d \sigma_iu_iv_i^T$&lt;/li&gt;
+&lt;li&gt;取X的k个最大的左奇异向量：$u_1,u_2,\ldots,u_k$&lt;/li&gt;
+&lt;li&gt;x的新坐标：$U_k^Tx = [u_1^Tx, u_2^Tx, \ldots, u_k^Tx] \in \mathcal{R}^k, U_k = [u_1, u_2,\ldots,u_k] \in \mathcal{R}^{d*k}$&lt;/li&gt;
+&lt;li&gt;X的新坐标：$U_k^TX=U_k^TU_r\Sigma_rV_r^T = \Sigma_kV_k^T$&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&quot;Association-Pattern-Mining-2-points&quot;&gt;&lt;a href=&quot;#Association-Pattern-Mining-2-points&quot; class=&quot;headerlink&quot; title=&quot;Association Pattern Mining(2 points)&quot;&gt;&lt;/a&gt;Association Pattern Mining(2 points)&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;The &lt;strong&gt;downward closure property (i.e.,every subset of frequent itemset is also frequcent)&lt;/strong&gt; is leveraged to design efficient algorithms for association pattern mining. Why does this property hold?&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;解答：由于支持单调性，一个项集I包含在一个交易中，那么它的所有子集也包含在这个交易中，即子集的支持度不小于父集的支持度。&lt;/p&gt;
 &lt;h2 id=&quot;NMF-3-points&quot;&gt;&lt;a href=&quot;#NMF-3-points&quot; class=&quot;headerlink&quot; title=&quot;NMF(3 points)&quot;&gt;&lt;/a&gt;NMF(3 points)&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;Suppose we want to find a rank-k approximation of matrix $X \in \mathcal{R}^{d*n}$ by nonnegative matrix factorization. What is the optimization problem? Is it convex?&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;解答：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优化问题：$\min_{U \in \mathcal{R}^{d*k}, V \in \mathcal{R}^{v*k}} \ \Vert X - UV^T \Vert_F^2 $， $s.t. \ U \ge 0, V \ge 0$&lt;/li&gt;
+&lt;li&gt;非负矩阵分解是非凸的&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&quot;SVM-6-points&quot;&gt;&lt;a href=&quot;#SVM-6-points&quot; class=&quot;headerlink&quot; title=&quot;SVM(6 points)&quot;&gt;&lt;/a&gt;SVM(6 points)&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;Given a set of training data $(x_1,y_1),\ldots,(x_n,y_n)$, where $x_i \in \mathcal{R}^d$ and $y_i \in {\pm 1}$. The primal problem of SVM without intercept is given by: $$\min_{w \in \mathcal{R}^d} \sum_{i=1}^m \max(0,1-y_iw^Tx_i) + \frac{\lambda}{2} \Vert w \Vert_2^2$$. Show the derivation of the dual problem of SVM.&lt;/p&gt;
 &lt;p&gt;Hints: Let $\mathcal{l}(x) = max(0,1-x)$ be the hinge loss. Then, its conjugate function id given by
@@ -42,11 +55,32 @@ $$ \mathcal{l}^*(y) = sup_x(yx-\mathcal{l}(x)) = \begin{cases} y&amp;amp; -1 \le
  \infty&amp;amp; \ otherwise
  \end{cases}$$&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt; 解：SVM对偶问题的推导，无截距$b_0$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;由上述定义的hinge loss及其共轭函数知，原优化问题简化为：$\min_{w \in R^d} \sum_{i=1}^n \mathcal{l}(y_iw^Tx_i) + \frac{\lambda}{2}\Vert w \Vert_2^2$,等价于：
+$$\sum_{i=1}^n \mathcal{l}(u_i) + \frac{\lambda}{2} \Vert w \Vert_2^2, s.t. \ u_i = y_iw^Tx_i, i = 1, \ldots, n$$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;由拉格朗日乘法，得：$L(w,u,v) = \sum_{i=1}^n \mathcal{l}(u_i) + \frac{\lambda}{2} \Vert w \Vert_2^2 + \sum_{i=1}^n v_i(u_i - y_iw^Tx_i)$,其对偶问题：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;$$\begin{array} {lcl}
+    g(v) &amp;amp;=&amp;amp; \inf_{w,u} L(w,u,v) \\
+         &amp;amp;=&amp;amp; \inf_{w,u} \sum_{i=1}^n \mathcal{l}(u_i) + \frac{\lambda}{2} \Vert w \Vert_2^2 + \sum_{i=1}^n v_i(u_i - y_iw^Tx_i) \\
+         &amp;amp;=&amp;amp; \inf_{w,u} \sum_{i=1}^n(\mathcal{l}(u_i) + v_iu_i) + (\frac{\lambda}{2} \Vert w \Vert_2^2 - w^T\sum_{i=1}^nv_iy_ix_i)
+\end{array}$$&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;依次最小化w,u:
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;$\inf_{u_i}(\mathcal{l}(u_i) + v_iu_i) = -\sup_{u_i}(-v_iu_i - l(u_i)) = - \mathcal{l}^* (-v_i) = v_i $, if $0 \le v_i \le 1$&lt;/li&gt;
+&lt;li&gt;$\nabla_w L(w,u,v) = \lambda w - \sum_{i=1}^nv_iy_ix_i)$, 得：$w = \frac{1}{\lambda}  \sum_{i=1}^nv_iy_ix_i$&lt;/li&gt;
+&lt;li&gt;最后， $g(v) = \sum_{i=1}^n v_i - \frac{1}{2 \lambda}\sum_{i=1}^n\sum_{j=1}^n v_iv_jy_iy_jx_i^Tx_j$，得到对偶问题：
+$$\max_{v \in R^n} \sum_{i=1}^n v_i - \frac{1}{2 \lambda}\sum_{i=1}^n\sum_{j=1}^n v_iv_jy_iy_jx_i^Tx_j, \ s.t.\ 0 \le v_i \le 1, i=1, \ldots,n$$&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&quot;Ensemble-2-points&quot;&gt;&lt;a href=&quot;#Ensemble-2-points&quot; class=&quot;headerlink&quot; title=&quot;Ensemble(2 points)&quot;&gt;&lt;/a&gt;Ensemble(2 points)&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;Ensemble analysis is used to reduce the bisa of variance of the classification process. Which of them is reduced by bagging/boosting?&lt;/p&gt;
+&lt;p&gt;Ensemble analysis is used to reduce the bias or variance of the classification process. Which of them is reduced by bagging/boosting?&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt; a) Bagging aims to reduce the:&lt;/p&gt;
-&lt;p&gt; b) Boosting aims to reduce the:&lt;/p&gt;
+&lt;p&gt; 解答：&lt;/p&gt;
+&lt;p&gt; a) Bagging aims to reduce the: &lt;strong&gt;variance&lt;/strong&gt;(代表性算法：随机森林，随机化的决策树模型，每次随机选择一定大小的特征)&lt;/p&gt;
+&lt;p&gt; b) Boosting aims to reduce the:&lt;strong&gt;bias&lt;/strong&gt;(代表性算法：AdaBoost，每个训练实例都有个权重，分类错误的实例会赋予一个更大的权重)&lt;/p&gt;
 &lt;h2 id=&quot;Ridge-Regression-5-points&quot;&gt;&lt;a href=&quot;#Ridge-Regression-5-points&quot; class=&quot;headerlink&quot; title=&quot;Ridge Regression(5 points)&quot;&gt;&lt;/a&gt;Ridge Regression(5 points)&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;Given a set of training data $(x_1,y_1),\ldots,(x_n,y_n)$, where $x_i \in \mathcal{R}^d$ and $y_i \in \mathcal{R}$. Our goal is to learn a linear model $f(x) = x^Tw + b$ to predict the label $y \in \mathcal{R}$ of an instance $x \in \mathcal{R}^d$&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -54,12 +88,51 @@ $$ \mathcal{l}^*(y) = sup_x(yx-\mathcal{l}(x)) = \begin{cases} y&amp;amp; -1 \le
 Notations:$X = [x_1,\ldots,x_n] \in \mathcal{R}^{d*n}, y = [y_1, \ldots, y_n]$&lt;/p&gt;
 &lt;p&gt;b) Derive the optimal solution $w_*$, and $b_*$ of the above problem.
 Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the centering matrix. Hints:$\frac{\partial \Vert u - A^Tw \Vert_2^2}{\partial w} = 2A(A^Tw-u)$&lt;/p&gt;
-&lt;h2 id=&quot;Advanced-Classification-4-points&quot;&gt;&lt;a href=&quot;#Advanced-Classification-4-points&quot; class=&quot;headerlink&quot; title=&quot;Advanced Classification(4 points)&quot;&gt;&lt;/a&gt;Advanced Classification(4 points)&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;解答：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;优化问题：$\min_{b \in R,w \in R^d} \Vert y - Xw - 1_Nb \Vert_2^2 + \lambda \Vert w \Vert_2^2$, 其中：$1_N = [1,\ldots,1]^T \in R^d$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;Advanced-Classification-4-points&quot;&gt;&lt;a href=&quot;#Advanced-Classification-4-points&quot; class=&quot;headerlink&quot; title=&quot;Advanced Classification(4 points)&quot;&gt;&lt;/a&gt;Advanced Classification(4 points)&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;ul&gt;
+&lt;li&gt;对上式$b$进行求导，并令倒数为0：$-2*1_N^T(y-Xw -1_Nb)=0, b  = \frac{1}{N}1_N^T(y-Xw)$&lt;/li&gt;
+&lt;li&gt;对上式$w$进行求导，并令倒数为0：$2*X^T(Xw -y + 1_Nb) + 2 \lambda w=0, (X^T(I-\frac{1}{N}1_N1_N^T)X + \lambda I)w=X^T(I-\frac{1}{N}1_N1_N^T)y$&lt;/li&gt;
+&lt;li&gt;令$H = I - \frac{1}{N}1_N1_N^T$为中心矩阵，则得到：$w_* = (X^THX + \lambda I)^{-1}X^THy,b_* = \frac{1}{N}1_N^T(y-Xw_*)$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
 &lt;p&gt;Give a brief introduction of &lt;strong&gt;semi-suppervised learning&lt;/strong&gt; and &lt;strong&gt;active learning&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;解答：半监督学习和主动学习&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;semi-suppervised learning&lt;/strong&gt;：&lt;ul&gt;
+&lt;li&gt;标记数据的代价昂贵并且难于获得；无标签数据通常是大量可得到的；无标签数据是有用的：无标签数据可以用来评估数据的低维流型结构和特征的联合概率分布。&lt;/li&gt;
+&lt;li&gt;相关算法：&lt;ul&gt;
+&lt;li&gt;元算法：使用任何现有的算法作为子程序，这类算法主要有Self-training和Co-training。&lt;/li&gt;
+&lt;li&gt;具体算法：半监督贝叶斯分类器，转导支持向量机，基于图的半监督学习算法。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;数据要求：数据的类别特征应该近似和它的聚类特征匹配；在实际应用中，当有标签的数据非常少时效率很高。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;active learning&lt;/strong&gt;：&lt;ul&gt;
+&lt;li&gt;主动学习是半监督机器学习的一个特例，在主动学习中，一个学习算法可以主动地提出一些标注请求，将一些经过筛选的数据提交给专家进行标注。&lt;/li&gt;
+&lt;li&gt;两种查询系统：选择性取样和基于池的采样。&lt;/li&gt;
+&lt;li&gt;种类：基于异构的模型、基于性能的模型、基于代表的模型。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&quot;Collaborative-Filtering-5-points&quot;&gt;&lt;a href=&quot;#Collaborative-Filtering-5-points&quot; class=&quot;headerlink&quot; title=&quot;Collaborative Filtering(5 points)&quot;&gt;&lt;/a&gt;Collaborative Filtering(5 points)&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;A merchant has an n*d ratings matrix D representing the preferences of n customers across d items. It is assumed that the matrix is sparse, and therefore each customer may have bought only a few items. Please provide one approach that the utilizes the rating matrix D to make recommendations to customers.&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;解答：总的方法如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;基于邻居的方法：基于用户的评级相似性、基于商品的评级相似性&lt;/li&gt;
+&lt;li&gt;基于图的方法：&lt;/li&gt;
+&lt;li&gt;聚类方法：自适应k-means聚类，自适应协同聚类&lt;/li&gt;
+&lt;li&gt;潜伏因子模型：奇异值分解、矩阵分解、矩阵填充&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本题使用Matrix Completion方法：$\min_{X \in R^{n*d}} \Vert X \Vert_*, s.t. \ X_{ij} = D_{ij} \in \Omega$&lt;/p&gt;
 </content>
     
     <summary type="html">
