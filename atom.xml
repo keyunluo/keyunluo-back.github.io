@@ -304,7 +304,7 @@ Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the ce
     <link href="http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html"/>
     <id>http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html</id>
     <published>2016-12-23T06:25:02.000Z</published>
-    <updated>2016-12-28T13:52:22.497Z</updated>
+    <updated>2016-12-28T15:07:58.357Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2016年秋南京大学计算机系分布式系统课程总结。&lt;/p&gt;
@@ -420,9 +420,21 @@ Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the ce
 &lt;li&gt;故障透明性：意味着用户不会注意到某个资源无法正常工作，以及系统随后从故障中恢复的过程。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;开放性：一个开放的分布式系统，它根据一系列准则来提供服务，这些准则描述了所提供服务的语法和语义。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;- 互操作性：刻画了来自不同厂商的系统或组件的两种实现能够在何种程度上共存并且协同工作，这种共存和协同工作只能依赖与通过双方在公共标准中规定的各自所提供的服务来完成。
-- 可移植性：如果为分布式系统A开发了某个应用程序，并且另一个分布式系统B与A具有相同的接口，该应用程序在不做任何修改的情况下在B上执行的可行度。
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;6 分布式系统类型&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;能够与其他通过服务交互而不用考虑底层环境：&lt;ul&gt;
+&lt;li&gt;符合明确定义的接口&lt;/li&gt;
+&lt;li&gt;支持应用的可移植性&lt;/li&gt;
+&lt;li&gt;易于互操作&lt;/li&gt;
+&lt;li&gt;屏蔽底层环境的区别&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;开放性要求分布式系统的策略与机制分离：&lt;ul&gt;
+&lt;li&gt;单一系统趋向于封闭&lt;/li&gt;
+&lt;li&gt;为分离提供相对应的开放接口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;6 分布式系统类型&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;分布式计算系统：集群计算、网格计算&lt;/li&gt;
 &lt;li&gt;分布式信息系统：事务处理系统（ACID:原子性、一致性、隔离性、持久性）&lt;/li&gt;
@@ -434,6 +446,13 @@ Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the ce
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;空间(匿名)和时间(异步)的解耦过程导致多种风格：发布/订阅模式(空间解耦)、共享空间(时间和空间解耦)&lt;/p&gt;
 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;或：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;分层体系结构&lt;/li&gt;
+&lt;li&gt;基于对象的体系结构&lt;/li&gt;
+&lt;li&gt;以数据为中心的体系结构&lt;/li&gt;
+&lt;li&gt;基于事件的体系结构&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;2 分布式系统组织形式&lt;/p&gt;
 &lt;ul&gt;
@@ -558,8 +577,15 @@ type(仅需要一种类型的资源是可用的，如彩色显示器)
 &lt;li&gt;非持久性通信：消息的发送者和接收者必须同时存在才能进行，传输服务仅仅提供临时的对消息的存储。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;同步/异步&lt;/li&gt;
-&lt;li&gt;流数据&lt;/li&gt;
+&lt;li&gt;同步/异步&lt;ul&gt;
+&lt;li&gt;同步通信：发信方在到达同步点前保持阻塞&lt;/li&gt;
+&lt;li&gt;异步通信：发信方发信后立即继续，消息存储在发信方主机或者通信服务器的缓冲区中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;流数据&lt;ul&gt;
+&lt;li&gt;流式数据：一组消息按照指定的顺序排序后构成一个有意义的数据流&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&quot;命名&quot;&gt;&lt;a href=&quot;#命名&quot; class=&quot;headerlink&quot; title=&quot;命名&quot;&gt;&lt;/a&gt;命名&lt;/h2&gt;&lt;p&gt;1 命名方式&lt;/p&gt;
 &lt;ul&gt;
