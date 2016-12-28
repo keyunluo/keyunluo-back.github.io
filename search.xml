@@ -23,22 +23,115 @@
 <li>机制：能提供或不能提供什么功能，如允许动态设置缓存策略，支持对移动代码的不同级别的信任</li>
 <li>分布式系统中仅提供机制</li>
 </ul>
-<h2 id="2-进程与线程-10分"><a href="#2-进程与线程-10分" class="headerlink" title="2. 进程与线程(10分)"></a>2. 进程与线程(10分)</h2><h3 id="2-1-简述进程与线程的异同"><a href="#2-1-简述进程与线程的异同" class="headerlink" title="2.1 简述进程与线程的异同"></a>2.1 简述进程与线程的异同</h3><h3 id="2-2-代码迁移与虚拟机迁移相比，有什么优势与劣势"><a href="#2-2-代码迁移与虚拟机迁移相比，有什么优势与劣势" class="headerlink" title="2.2 代码迁移与虚拟机迁移相比，有什么优势与劣势"></a>2.2 代码迁移与虚拟机迁移相比，有什么优势与劣势</h3><h2 id="3-通信机制-15分"><a href="#3-通信机制-15分" class="headerlink" title="3. 通信机制(15分)"></a>3. 通信机制(15分)</h2><h3 id="3-1-在远程过程调用-RPC-过程中，如果客户端出现故障，请给出至少3中可能的解决方式"><a href="#3-1-在远程过程调用-RPC-过程中，如果客户端出现故障，请给出至少3中可能的解决方式" class="headerlink" title="3.1 在远程过程调用(RPC)过程中，如果客户端出现故障，请给出至少3中可能的解决方式"></a>3.1 在远程过程调用(RPC)过程中，如果客户端出现故障，请给出至少3中可能的解决方式</h3><h3 id="3-2-为什么要采用动态绑定机制来实现服务器的定位？动态绑定有什么缺点？"><a href="#3-2-为什么要采用动态绑定机制来实现服务器的定位？动态绑定有什么缺点？" class="headerlink" title="3.2 为什么要采用动态绑定机制来实现服务器的定位？动态绑定有什么缺点？"></a>3.2 为什么要采用动态绑定机制来实现服务器的定位？动态绑定有什么缺点？</h3><h3 id="3-3-分别说明-持久性通信和非持久性通信的含义，电子邮件和QQ留言分别属于什么样的通信模式？"><a href="#3-3-分别说明-持久性通信和非持久性通信的含义，电子邮件和QQ留言分别属于什么样的通信模式？" class="headerlink" title="3.3 分别说明 持久性通信和非持久性通信的含义，电子邮件和QQ留言分别属于什么样的通信模式？"></a>3.3 分别说明 持久性通信和非持久性通信的含义，电子邮件和QQ留言分别属于什么样的通信模式？</h3><h2 id="4-命名与同步-20分"><a href="#4-命名与同步-20分" class="headerlink" title="4. 命名与同步(20分)"></a>4. 命名与同步(20分)</h2><h3 id="4-1-请简述“基于本部的方法”（home-based-approach）是如何解决移动实体定位的"><a href="#4-1-请简述“基于本部的方法”（home-based-approach）是如何解决移动实体定位的" class="headerlink" title="4.1 请简述“基于本部的方法”（home-based approach）是如何解决移动实体定位的"></a>4.1 请简述“基于本部的方法”（home-based approach）是如何解决移动实体定位的</h3><h3 id="4-2-为什么要进行同步？分布式系统的同步与集中式系统有何区别？"><a href="#4-2-为什么要进行同步？分布式系统的同步与集中式系统有何区别？" class="headerlink" title="4.2 为什么要进行同步？分布式系统的同步与集中式系统有何区别？"></a>4.2 为什么要进行同步？分布式系统的同步与集中式系统有何区别？</h3><h3 id="4-3-假设有-3-个机器采用-Lamport-算法进行同步，设左边图给出了机器原始时钟下的交互图。"><a href="#4-3-假设有-3-个机器采用-Lamport-算法进行同步，设左边图给出了机器原始时钟下的交互图。" class="headerlink" title="4.3 假设有 3 个机器采用 Lamport 算法进行同步，设左边图给出了机器原始时钟下的交互图。"></a>4.3 假设有 3 个机器采用 Lamport 算法进行同步，设左边图给出了机器原始时钟下的交互图。</h3><ul>
+<h2 id="2-进程与线程-10分"><a href="#2-进程与线程-10分" class="headerlink" title="2. 进程与线程(10分)"></a>2. 进程与线程(10分)</h2><h3 id="2-1-简述进程与线程的异同"><a href="#2-1-简述进程与线程的异同" class="headerlink" title="2.1 简述进程与线程的异同"></a>2.1 简述进程与线程的异同</h3><ul>
+<li>进程：进程是正在运行的程序的实例，是系统进行资源分配和调度的一个独立单位。</li>
+<li>线程：线程是CPU调度和分派的基本单位。</li>
+<li>相同点：都能进行并发。</li>
+<li>不同点：线程不拥有系统资源，同一个进程内的线程共享资源，进程至少有一个线程，有自己的独立地址空间。</li>
+</ul>
+<h3 id="2-2-代码迁移与虚拟机迁移相比，有什么优势与劣势"><a href="#2-2-代码迁移与虚拟机迁移相比，有什么优势与劣势" class="headerlink" title="2.2 代码迁移与虚拟机迁移相比，有什么优势与劣势"></a>2.2 代码迁移与虚拟机迁移相比，有什么优势与劣势</h3><ul>
+<li>优势：迁移量比较少，能快速完成，有效减少网络带宽</li>
+<li>劣势：机制复杂，迁移后的代码可能在新机器上不能很好地运行，所引用的资源在新机器上不可用</li>
+</ul>
+<h2 id="3-通信机制-15分"><a href="#3-通信机制-15分" class="headerlink" title="3. 通信机制(15分)"></a>3. 通信机制(15分)</h2><h3 id="3-1-在远程过程调用-RPC-过程中，如果客户端出现故障，请给出至少3中可能的解决方式"><a href="#3-1-在远程过程调用-RPC-过程中，如果客户端出现故障，请给出至少3中可能的解决方式" class="headerlink" title="3.1 在远程过程调用(RPC)过程中，如果客户端出现故障，请给出至少3中可能的解决方式"></a>3.1 在远程过程调用(RPC)过程中，如果客户端出现故障，请给出至少3中可能的解决方式</h3><ul>
+<li>客户端故障：<ul>
+<li>客户端无法定位服务器：可能原因：服务器关闭，服务器使用了新版本的存根而客户端使用了较旧版本的存根；解决方法：使用一个特殊码，例如-1作为过程的返回值来指示失败；让错误触发一个异常或信号。</li>
+<li>客户端向服务器端发送的请求消息丢失：当发送一个消息的时候内核开启一个计时器：在响应或ACK到来之前定时器过期，则内核重发；如果消息真的丢失：服务器不会区分原始和重传的消息，一切正常；如果许多请求都丢失，内核放弃并假装服务器已经关闭了。</li>
+<li>客户端发送请求后崩溃：<ul>
+<li>消除 extermination: 在日志文件中纪录 RPC 请求，重启后清除孤儿</li>
+<li>再生 reincarnation: 按时间顺序编号不同的时间段。当客户端重启时，广播一条消息宣布新的时间段开始，当广播到达时终止所有远程计算，无需日志</li>
+<li>温和再生 gentle reincarnation: 与再生相似，但是当广播到达时，每台机器会寻找远程计算的所有者，仅当找不到所有者时，计算才会被终止。</li>
+<li>过期 expiration: 赋予每个 RPC 一个标准时间配额，未完成任务明确申请额外配额。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2-为什么要采用动态绑定机制来实现服务器的定位？动态绑定有什么缺点？"><a href="#3-2-为什么要采用动态绑定机制来实现服务器的定位？动态绑定有什么缺点？" class="headerlink" title="3.2 为什么要采用动态绑定机制来实现服务器的定位？动态绑定有什么缺点？"></a>3.2 为什么要采用动态绑定机制来实现服务器的定位？动态绑定有什么缺点？</h3><ul>
+<li>优点：<ul>
+<li>灵活性</li>
+<li>能支持多个支持同一接口的服务器<ul>
+<li>绑定程序(binder)可以随机地将服务器上的客户端传播到均匀负载</li>
+<li>绑定程序(binder)可以定期轮询服务器，自动取消注册失败的服务器，以达到一定的容错能力</li>
+<li>绑定程序(binder)可以帮助身份验证</li>
+</ul>
+</li>
+<li>绑定程序(binder)可以验证客户端和服务器都使用相同版本的接口</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>导出/导入接口的额外开销花费时间</li>
+<li>绑定程序(binder)可能成为大型分布式系统中的瓶颈</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-3-分别说明持久性通信和非持久性通信的含义，电子邮件和QQ留言分别属于什么样的通信模式？"><a href="#3-3-分别说明持久性通信和非持久性通信的含义，电子邮件和QQ留言分别属于什么样的通信模式？" class="headerlink" title="3.3 分别说明持久性通信和非持久性通信的含义，电子邮件和QQ留言分别属于什么样的通信模式？"></a>3.3 分别说明持久性通信和非持久性通信的含义，电子邮件和QQ留言分别属于什么样的通信模式？</h3><ul>
+<li>持久性通信：通信机制本身会对消息进行持久存储，直到它被传递给目的。</li>
+<li>非持久性通信：消息的发送者和接收者必须同时存在才能进行，传输服务仅仅提供临时的对消息的存储。</li>
+<li>电子邮件：持久通信；QQ留言：持久通信</li>
+</ul>
+<h2 id="4-命名与同步-20分"><a href="#4-命名与同步-20分" class="headerlink" title="4. 命名与同步(20分)"></a>4. 命名与同步(20分)</h2><h3 id="4-1-请简述“基于本部的方法”（home-based-approach）是如何解决移动实体定位的"><a href="#4-1-请简述“基于本部的方法”（home-based-approach）是如何解决移动实体定位的" class="headerlink" title="4.1 请简述“基于本部的方法”（home-based approach）是如何解决移动实体定位的"></a>4.1 请简述“基于本部的方法”（home-based approach）是如何解决移动实体定位的</h3><ul>
+<li>实体的本部位置地址在命名服务中注册；</li>
+<li>本部位置上注册了实体的外部地址(Foreign address)；</li>
+<li>客户端先访问本部位置，随后访问外部地址。</li>
+</ul>
+<h3 id="4-2-为什么要进行同步？分布式系统的同步与集中式系统有何区别？"><a href="#4-2-为什么要进行同步？分布式系统的同步与集中式系统有何区别？" class="headerlink" title="4.2 为什么要进行同步？分布式系统的同步与集中式系统有何区别？"></a>4.2 为什么要进行同步？分布式系统的同步与集中式系统有何区别？</h3><ul>
+<li>同步：<ul>
+<li>与进程间通信紧密相关的问题是进程间如何协作和同步</li>
+<li>多个进程不能同时访问访问一个共享资源，而是相互协作，彼此暂时地独占访问</li>
+<li>多个进程有时可能需要就时间的顺序达成一致</li>
+</ul>
+</li>
+<li>区别：相较于集中式系统的同步，分布式系统没有共享的存储，也难以实现物理时钟的一致性。集中式系统中的同步问题不适合于分布式系统。</li>
+</ul>
+<h3 id="4-3-假设有-3-个机器采用-Lamport-算法进行同步，设左边图给出了机器原始时钟下的交互图。"><a href="#4-3-假设有-3-个机器采用-Lamport-算法进行同步，设左边图给出了机器原始时钟下的交互图。" class="headerlink" title="4.3 假设有 3 个机器采用 Lamport 算法进行同步，设左边图给出了机器原始时钟下的交互图。"></a>4.3 假设有 3 个机器采用 Lamport 算法进行同步，设左边图给出了机器原始时钟下的交互图。</h3><ul>
 <li>在右边方框内画出经过 Lamport 算法调整后的时钟图。</li>
 <li>判定下面 4 组事件中两个消息发送事件的先后顺序：在先发生事件后打钩，如果不能判定，则在“不能判定”后面打钩。</li>
 </ul>
-<p>i.  P1 (send, m3) P3(send, m4) 不能判定</p>
-<p>ii. P2 (send, m4) P1(send, m5) 不能判定</p>
-<p>iii.P3 (send, m4) P2(send, m6) 不能判定</p>
-<p>iv. P3 (send, m7) P2(send, m8) 不能判定</p>
-<p><img src="/resource/blog/2016-12/distributed.png" alt="时钟图"></p>
+<p>i.  P1 (send, m3) P3(send, m4) 不能判定 yes</p>
+<p>ii. P2 (send, m4) P1(send, m5) 不能判定 yes</p>
+<p>iii.P3 (send, m4) yes P2(send, m6) 不能判定</p>
+<p>iv. P3 (send, m7) yes P2(send, m8) 不能判定</p>
+<p><img src="/resource/blog/2016-12/distributed.png" alt="时钟图">
+<img src="/resource/blog/2016-12/lamport.png" alt="Lamport时钟"></p>
 <h2 id="5-一致性与容错-15分"><a href="#5-一致性与容错-15分" class="headerlink" title="5. 一致性与容错(15分)"></a>5. 一致性与容错(15分)</h2><h3 id="5-1-下图所示两组进程读写是否满足因果一致性和顺序一致性？如果不满足，需要说明原因。"><a href="#5-1-下图所示两组进程读写是否满足因果一致性和顺序一致性？如果不满足，需要说明原因。" class="headerlink" title="5.1 下图所示两组进程读写是否满足因果一致性和顺序一致性？如果不满足，需要说明原因。"></a>5.1 下图所示两组进程读写是否满足因果一致性和顺序一致性？如果不满足，需要说明原因。</h3><p><img src="/resource/blog/2016-12/consistency.png" alt="一致性"></p>
+<ul>
+<li>a: 不满足顺序一致性：读到的最终值应该b，不满足因果一致性：p2中a在b之前，不应该先读b再读a</li>
+<li>b: 满足顺序一致性：最终读到b,满足因果一致性：先a后b</li>
+</ul>
 <h3 id="5-2-下面的已编号小竖线表示进程的检查点（check-point），箭头表示消息发送，横轴表示时间，设-P2-在图所示处出现故障，3-个进程从检查点进行恢复，请从这些检查点中构建一个最近的一致全局状态，并说明理由。"><a href="#5-2-下面的已编号小竖线表示进程的检查点（check-point），箭头表示消息发送，横轴表示时间，设-P2-在图所示处出现故障，3-个进程从检查点进行恢复，请从这些检查点中构建一个最近的一致全局状态，并说明理由。" class="headerlink" title="5.2 下面的已编号小竖线表示进程的检查点（check point），箭头表示消息发送，横轴表示时间，设 P2 在图所示处出现故障，3 个进程从检查点进行恢复，请从这些检查点中构建一个最近的一致全局状态，并说明理由。"></a>5.2 下面的已编号小竖线表示进程的检查点（check point），箭头表示消息发送，横轴表示时间，设 P2 在图所示处出现故障，3 个进程从检查点进行恢复，请从这些检查点中构建一个最近的一致全局状态，并说明理由。</h3><p><img src="/resource/blog/2016-12/checkpoint.png" alt="检查点"></p>
-<h2 id="6-社会网络-10分"><a href="#6-社会网络-10分" class="headerlink" title="6. 社会网络(10分)"></a>6. 社会网络(10分)</h2><h3 id="6-1-比较随机图（Random-Graph）、小世界（Small-World）和无标度（Scale-free）三种网络模型。"><a href="#6-1-比较随机图（Random-Graph）、小世界（Small-World）和无标度（Scale-free）三种网络模型。" class="headerlink" title="6.1 比较随机图（Random Graph）、小世界（Small-World）和无标度（Scale-free）三种网络模型。"></a>6.1 比较随机图（Random Graph）、小世界（Small-World）和无标度（Scale-free）三种网络模型。</h3><h3 id="6-2-请描述社会影响力最大化问题，并阐述解决该问题的思路。"><a href="#6-2-请描述社会影响力最大化问题，并阐述解决该问题的思路。" class="headerlink" title="6.2 请描述社会影响力最大化问题，并阐述解决该问题的思路。"></a>6.2 请描述社会影响力最大化问题，并阐述解决该问题的思路。</h3><h2 id="7-云计算"><a href="#7-云计算" class="headerlink" title="7. 云计算"></a>7. 云计算</h2><h3 id="7-1-简要说明虚拟化技术所解决的问题，并说明虚拟化技术与云计算的关系。"><a href="#7-1-简要说明虚拟化技术所解决的问题，并说明虚拟化技术与云计算的关系。" class="headerlink" title="7.1 简要说明虚拟化技术所解决的问题，并说明虚拟化技术与云计算的关系。"></a>7.1 简要说明虚拟化技术所解决的问题，并说明虚拟化技术与云计算的关系。</h3><h3 id="7-2-以-Openstack-为代表的这一类云计算平台的基本功能是什么？"><a href="#7-2-以-Openstack-为代表的这一类云计算平台的基本功能是什么？" class="headerlink" title="7.2 以 Openstack 为代表的这一类云计算平台的基本功能是什么？"></a>7.2 以 Openstack 为代表的这一类云计算平台的基本功能是什么？</h3><h3 id="7-3-应用场景"><a href="#7-3-应用场景" class="headerlink" title="7.3 应用场景"></a>7.3 应用场景</h3><blockquote>
+<p>检查点为258：因为全局一致要求任意两个检查点作恢复点时中间连线与事件没有交点。</p>
+<h2 id="6-社会网络-10分"><a href="#6-社会网络-10分" class="headerlink" title="6. 社会网络(10分)"></a>6. 社会网络(10分)</h2><h3 id="6-1-比较随机图（Random-Graph）、小世界（Small-World）和无标度（Scale-free）三种网络模型。"><a href="#6-1-比较随机图（Random-Graph）、小世界（Small-World）和无标度（Scale-free）三种网络模型。" class="headerlink" title="6.1 比较随机图（Random Graph）、小世界（Small-World）和无标度（Scale-free）三种网络模型。"></a>6.1 比较随机图（Random Graph）、小世界（Small-World）和无标度（Scale-free）三种网络模型。</h3><h3 id="6-2-请描述社会影响力最大化问题，并阐述解决该问题的思路。"><a href="#6-2-请描述社会影响力最大化问题，并阐述解决该问题的思路。" class="headerlink" title="6.2 请描述社会影响力最大化问题，并阐述解决该问题的思路。"></a>6.2 请描述社会影响力最大化问题，并阐述解决该问题的思路。</h3><hr>
+<h2 id="6-本学期未上这一章节"><a href="#6-本学期未上这一章节" class="headerlink" title="6. 本学期未上这一章节"></a>6. 本学期未上这一章节</h2><hr>
+<h2 id="7-云计算-15分"><a href="#7-云计算-15分" class="headerlink" title="7. 云计算(15分)"></a>7. 云计算(15分)</h2><h3 id="7-1-简要说明虚拟化技术所解决的问题，并说明虚拟化技术与云计算的关系。"><a href="#7-1-简要说明虚拟化技术所解决的问题，并说明虚拟化技术与云计算的关系。" class="headerlink" title="7.1 简要说明虚拟化技术所解决的问题，并说明虚拟化技术与云计算的关系。"></a>7.1 简要说明虚拟化技术所解决的问题，并说明虚拟化技术与云计算的关系。</h3><ul>
+<li>虚拟化：细粒度资源分配，动态迁移，增加资源利用率</li>
+<li>关系：<ul>
+<li>封装与隔离：保证每个用户有安全可信的工作环境</li>
+<li>多实例：保证较高的资源利用率，为服务器合并提供基础</li>
+<li>硬件无关性：整合异构硬件资源可实现虚拟机迁移，使资源调度、负载平衡容易实现</li>
+<li>特权功能：入侵检测和病毒检测</li>
+<li>动态调整资源：细粒度的可扩展性</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-2-以-Openstack-为代表的这一类云计算平台的基本功能是什么？"><a href="#7-2-以-Openstack-为代表的这一类云计算平台的基本功能是什么？" class="headerlink" title="7.2 以 Openstack 为代表的这一类云计算平台的基本功能是什么？"></a>7.2 以 Openstack 为代表的这一类云计算平台的基本功能是什么？</h3><ul>
+<li>OpenStack是一个开源的云计算管理平台，主要为了管理：计算、存储、网络三个方面的资源，是IaaS组件，这些资源可以通过OpenStack进行配置分配并提供给上层应用或用户去使用。</li>
+</ul>
+<h3 id="7-3-应用场景"><a href="#7-3-应用场景" class="headerlink" title="7.3 应用场景"></a>7.3 应用场景</h3><blockquote>
 <p>应用场景1：某校计算中心需要不同资源需求的桌面（Linux、Windows 等），应用于不同类型的计算机课程教学；</p>
 <p>应用场景2：某校物理系多个实验室需要三种软件进行模拟实验，这些模拟实验对计算资源消耗极大，但这些实验往往不是同时进行。</p>
 <p>上述两个应用场景分别是否适合采用 Openstack 平台来搭建系统，说明理由。</p>
 </blockquote>
+<ul>
+<li><ol>
+<li>能：教学是一个典型的多用户，每个用户使用资源不是很多，同时性的环境。终端用户对资源需求较少，数据中心资源利用率较低。</li>
+</ol>
+</li>
+<li><ol>
+<li>不能：OpenStack主要用来进行资源分配给多个用户同时使用，但模拟实验对计算资源消耗极大，划分资源后运行软件资源会不够用，并且往往也不是同时运行。</li>
+</ol>
+</li>
+</ul>
 ]]></content>
     </entry>
     
@@ -370,7 +463,96 @@ type(仅需要一种类型的资源是可用的，如彩色显示器)
 </ul>
 </li>
 </ul>
-<h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><h2 id="同步与资源管理"><a href="#同步与资源管理" class="headerlink" title="同步与资源管理"></a>同步与资源管理</h2><h2 id="复制与一致性"><a href="#复制与一致性" class="headerlink" title="复制与一致性"></a>复制与一致性</h2><h2 id="容错"><a href="#容错" class="headerlink" title="容错"></a>容错</h2><h2 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h2><h2 id="OpenStack"><a href="#OpenStack" class="headerlink" title="OpenStack"></a>OpenStack</h2>]]></content>
+<h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><p>1 通信的类型</p>
+<ul>
+<li>瞬间通信(数据无法传送就丢弃)与持久通信(数据被暂存在通行服务器上直到被传送出去)、异步通信与同步通信</li>
+</ul>
+<p>2 远程过程调用</p>
+<ul>
+<li>RPC的工作过程：客户端过程调用客户端stub;Stub 构建消息，调用本地OS；OS发送消息到远程OS；远程OS接收消息至stub；Stub解包参数并调用服务器；服务器生成本地调用并返回结果至stub；Stub构建消息，调用OS；OS发送消息到客户端OS；客户端OS传送消息至stub；客户端Stub解压结果并返回给客户端。</li>
+<li><p>故障处理：</p>
+<ul>
+<li>客户端无法定位服务器：可能原因：服务器关闭，服务器使用了新版本的存根而客户端使用了较旧版本的存根；解决方法：使用一个特殊码，例如-1作为过程的返回值来指示失败；让错误触发一个异常或信号。</li>
+<li>客户端向服务器端发送的请求消息丢失：当发送一个消息的时候内核开启一个计时器：在响应或ACK到来之前定时器过期，则内核重发；如果消息真的丢失：服务器不会区分原始和重传的消息，一切正常；如果许多请求都丢失，内核放弃并假装服务器已经关闭了。</li>
+<li>服务器端向客户端发送的应答消息丢失：当发送一个消息的时候内核开启一个计时器：在回复到来之前定时器过期则重传请求；如果服务器速度很慢，则该过程被执行多次；使用序列数字标志请求号，让服务器内核区分是重传消息还是原始消息。</li>
+<li>服务器端接收到一个消息后崩溃：等待服务器重启后继续重复该操作；立即放弃并报告故障；客户端得不到任何帮助。</li>
+<li>客户端发送请求后崩溃：客户端发送请求后崩溃：客户端stub发送RPC之前先写log，重启后检查log然后杀死孤立进程；把时间划分成连续的时隙，客户端重启后广播一个新的时隙，所有的计算都被杀死；每一个RPC都给定了一个标准的时间T来完成工作，如果不能完成则需要明确地向其他法官申请额外配额。</li>
+</ul>
+</li>
+<li><p>动态绑定</p>
+</li>
+<li><p>优点：</p>
+<ul>
+<li>灵活性</li>
+<li>能支持多个支持同一接口的服务器<ul>
+<li>绑定程序(binder)可以随机地将服务器上的客户端传播到均匀负载</li>
+<li>绑定程序(binder)可以定期轮询服务器，自动取消注册失败的服务器，以达到一定的容错能力</li>
+<li>绑定程序(binder)可以帮助身份验证</li>
+</ul>
+</li>
+<li>绑定程序(binder)可以验证客户端和服务器都使用相同版本的接口</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>导出/导入接口的额外开销花费时间</li>
+<li>绑定程序(binder)可能成为大型分布式系统中的瓶颈</li>
+</ul>
+</li>
+</ul>
+<p>3 基于消息的通信</p>
+<ul>
+<li>持久性/非持久性通信<ul>
+<li>持久性通信：通信机制本身会对消息进行持久存储，直到它被传递给目的。</li>
+<li>非持久性通信：消息的发送者和接收者必须同时存在才能进行，传输服务仅仅提供临时的对消息的存储。</li>
+</ul>
+</li>
+<li>同步/异步</li>
+<li>流数据</li>
+</ul>
+<h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><p>1 命名方式</p>
+<ul>
+<li>Human-friendly name</li>
+<li>Address</li>
+<li>Identifier</li>
+</ul>
+<p>2 移动实体的定位</p>
+<ul>
+<li>广播(Broadcasting)</li>
+<li>转发指针(Forwarding Pointers)</li>
+<li>基于家(Home-based)的方法</li>
+<li>分布式哈希表(Distributed Hash Table)</li>
+</ul>
+<p>3 命名解析</p>
+<ul>
+<li>迭代命名解析：每次解析一个节点以后都会把结果返回给客户名称解析程序，然后将由客户重新向下一级服务器发送请求。</li>
+<li>递归命名解析：直接把解析的中间结果传递给下一级服务器，并且逐级解析直到返回指定文件结果：要求名称服务器都具有较高性能，增加了额外负担，减少通信开销，而且可以更好地使用缓存来提高性能</li>
+</ul>
+<h2 id="同步与资源管理"><a href="#同步与资源管理" class="headerlink" title="同步与资源管理"></a>同步与资源管理</h2><p>1 同步问题</p>
+<p>2 时钟同步机制</p>
+<p>3 逻辑时钟</p>
+<ul>
+<li>Lamport时钟</li>
+<li>向量时戳</li>
+</ul>
+<p>4 分布式系统中的互斥访问</p>
+<p>5 分布式系统中的选举机制</p>
+<h2 id="复制与一致性"><a href="#复制与一致性" class="headerlink" title="复制与一致性"></a>复制与一致性</h2><p>1 复制的优势与不足</p>
+<p><strong>2 数据一致性模型</strong></p>
+<p>3 数据一致性协议</p>
+<ul>
+<li>基于法定数量的一致性</li>
+</ul>
+<h2 id="容错"><a href="#容错" class="headerlink" title="容错"></a>容错</h2><p>1 可信系统的特征</p>
+<p>2 提高系统可信性的途径</p>
+<p>3 K容错系统</p>
+<p>4 拜占庭问题</p>
+<p>5 系统恢复</p>
+<ul>
+<li>回退恢复</li>
+<li>前向恢复</li>
+</ul>
+<p>6 检查点</p>
+<h2 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h2><h2 id="OpenStack"><a href="#OpenStack" class="headerlink" title="OpenStack"></a>OpenStack</h2>]]></content>
     </entry>
     
     <entry>
@@ -2430,40 +2612,6 @@ $$</p>
     </entry>
     
     <entry>
-      <title><![CDATA[Hadoop源码学习(11)——SequenceFile]]></title>
-      <url>http://keyunluo.github.io/2016/08/13/2016-08-13-hadoop-io-7.html</url>
-      <content type="html"><![CDATA[<blockquote>
-<p><strong>本节内容：</strong>SequenceFile为二进制键值对提供了一个持久数据结构，也可以作为小文件的容器，HDFS和MapReduce是针对大文件优化的，所以通过SequenceFile类型将小文件包装起来，可以获得更高效率的存储和处理。</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="SequenceFile类"><a href="#SequenceFile类" class="headerlink" title="SequenceFile类"></a>SequenceFile类</h2><p>SequenceFile类位于org.apache.hadoop.io包内，类结构如下：</p>
-<p><img src="/resource/blog/2016-08/SequenceFile.png" alt="SequenceFile类"></p>
-<h2 id="SequenceFile的格式"><a href="#SequenceFile的格式" class="headerlink" title="SequenceFile的格式"></a>SequenceFile的格式</h2><p>SequenceFile文件由文件头和随后的一条或多条记录组成。顺序文件的前三个字节是SEQ，紧随其后的一个字节表示顺序文件的版本号。文件头还包括其他字段，例如键和值类的名称、数据压缩细节、用户定义的元数据以及同步标识。同步标识用于在读取文件时能够从任意位置开始识别边界记录。</p>
-<p>记录的内部结构取决于是否启用压缩。如果已经启用，则取决于记录压缩还是数据块压缩。</p>
-<p>如果没有启用压缩(默认情况)，那么每条记录则由记录长度(字节数)、键长度、键和值组成。长度字段为4字节长的整数，遵循java.io.DataOutput类中的writeInt()方法的约定，写入顺序文件的类定义Serialization类来实现键和值的序列化。</p>
-<p>记录压缩格式与无压缩情况基本相同，只不过值是用文件头定义的codec压缩的，但是键并没有被压缩。</p>
-<p><img src="/resource/blog/2016-08/sequencefilewithnocompression.jpg" alt="SequenceFile-无压缩和记录压缩"></p>
-<p>块压缩是指一次性压缩多条记录，因为它可以利用记录间的相似性进行压缩，所以相较于单条记录压缩方法，该方法的压缩效率更高，如下图所示。可以不断向数据块中压缩记录，直到块的字节数不小于io.seqfile.compress.blocksize属性中设置的字节数：默认为1MB。每一个新块的开始处都需要插入同步标识。数据块的格式如下：首先是一个指示数据块中字节数的字段；紧接着是4个压缩字段(键长度、键、值长度和值)</p>
-<p><img src="/resource/blog/2016-08/sequencefilewithblockcompression.jpg" alt="SequenceFile-块压缩"></p>
-<h2 id="SequenceFile写操作"><a href="#SequenceFile写操作" class="headerlink" title="SequenceFile写操作"></a>SequenceFile写操作</h2><p>通过createWriter()静态方法可以创建SequenceFile对象，并返回SequenceFile.Writer实例。该静态方法有多个重载版本，但都需要指定待写入的数据流(FSDataOutputStream或FileSystem对象和Path对象)，Configuration对象，以及键和值的类型，写入的参数信息等。另外，可选参数包括压缩类型以及相应的codec,Progressable回调函数用于通知写入的进度，以及在SequenceFile头文件中存储的Metadata实例。</p>
-<p>存储在SequenceFile中的键和值并不一定需要是Writable类型，只要能被Serialization序列化和反序列化，任何类型都可以。</p>
-<p>一旦拥有SequenceFile.Writer实例，就可以通过append()方法在文件末尾附加键值对。写完后，可以调用close()方法(SequenceFile.Writer实现了java.io.Closable接口)。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Text;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceFileWriteDemo</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] DATA = &#123;</span><br><span class="line">    <span class="string">"One, two, buckle my shoe"</span>,</span><br><span class="line">    <span class="string">"Three, four, shut the door"</span>,</span><br><span class="line">    <span class="string">"Five, six, pick up sticks"</span>,</span><br><span class="line">    <span class="string">"Seven, eight, lay them straight"</span>,</span><br><span class="line">    <span class="string">"Nine, ten, a big fat hen"</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line">    Path path = <span class="keyword">new</span> Path(url);</span><br><span class="line"></span><br><span class="line">    IntWritable key = <span class="keyword">new</span> IntWritable();</span><br><span class="line">    Text value = <span class="keyword">new</span> Text();</span><br><span class="line">    SequenceFile.Writer writer = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        writer = SequenceFile.createWriter(fs,conf,path,key.getClass(),value.getClass());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">1024</span>;i++)&#123;</span><br><span class="line">            key.set(<span class="number">1024</span>-i);</span><br><span class="line">            value.set(DATA[i % DATA.length]);</span><br><span class="line">            writer.append(key,value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(writer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>编译与运行：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  project export CLASSPATH=$HADOOP_CLASSPATH:$CLASSPATH</span><br><span class="line">➜  project javac SequenceFileWriteDemo.java</span><br><span class="line">➜  project java SequenceFileWriteDemo numbers.seq</span><br></pre></td></tr></table></figure>
-<h2 id="SequenceFile读操作"><a href="#SequenceFile读操作" class="headerlink" title="SequenceFile读操作"></a>SequenceFile读操作</h2><p>从头到尾读取顺序文件不外乎创建SequenceFile.Reader实例后反复调用next()方法迭代读取记录。读取的是哪条记录与你使用的序列化框架有关。如果使用Writable类型，那么通过键和值作为参数的next()方法可以将数据流中的下一条键值对读入变量中。<code>public boolean next(Writable key,Writable val)</code>。对于其他非Writable类型的序列化框架，例如Apache Thrift，则应该使用下面两个方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">next</span><span class="params">(Object key)</span> <span class="keyword">throws</span> IOException</span><br><span class="line"><span class="keyword">public</span> Object <span class="title">getCurrentValue</span><span class="params">(Object val)</span> <span class="keyword">throws</span> IOException</span></span><br></pre></td></tr></table></figure>
-<p>在这种情况下，需要确保io.serializations属性已经设置了你想要的序列化框架。如果next()方法返回的是非null对象，则可以从数据流中读取键、值对，并且可以通过getCurrentValue()方法读取该值。否则，如果next()返回null值，表示已经读到文件末尾。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Writable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.util.ReflectionUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceFileReadDemo</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line">    Path path = <span class="keyword">new</span> Path(url);</span><br><span class="line"></span><br><span class="line">    SequenceFile.Reader reader = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        reader = <span class="keyword">new</span> SequenceFile.Reader(fs,path,conf);</span><br><span class="line">        Writable key = (Writable) ReflectionUtils.newInstance(reader.getKeyClass(),conf);</span><br><span class="line">        Writable value = (Writable) ReflectionUtils.newInstance(reader.getValueClass(),conf);</span><br><span class="line">        <span class="keyword">long</span> position = reader.getPosition();</span><br><span class="line">        <span class="keyword">while</span> (reader.next(key,value))&#123;</span><br><span class="line">            String syncSeen = reader.syncSeen() ? <span class="string">"*"</span> : <span class="string">" "</span>;</span><br><span class="line">            System.out.printf(<span class="string">"[%s%s]\t%s\t%s\n"</span>,position,syncSeen,key,value);</span><br><span class="line">            position = reader.getPosition();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(reader);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="通过命令行接口显示SequenceFile"><a href="#通过命令行接口显示SequenceFile" class="headerlink" title="通过命令行接口显示SequenceFile"></a>通过命令行接口显示SequenceFile</h2><p>hdfs dfs命令有一个-text选项可以以文本形式显示顺序文件，该选项可以查看文件的代码，由此检测出文件的类型并将其转换成相应的文本。该选项可以识别gzip压缩文件和顺序文件；否则，假设输入为纯文本文件。</p>
-<p>对于顺序文件，如果键和值是由具体含义的字符串表示，那么这个命令就非常有用(通过toString()方法定义)，同样，如果有自己定义的键或值的类，则应该确保它们在Hadoop类路径目录下。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  project hdfs dfs -text numbers.seq | head</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">23</span> INFO zlib.ZlibFactory: Successfully loaded &amp; initialized native-zlib library</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">23</span> INFO compress.CodecPool: Got brand-new decompressor [.deflate]</span><br><span class="line"><span class="number">1024</span>    One, two, buckle my shoe</span><br><span class="line"><span class="number">1023</span>    Three, four, shut the door</span><br><span class="line"><span class="number">1022</span>    Five, six, pick up sticks</span><br><span class="line"><span class="number">1021</span>    Seven, eight, lay them straight</span><br><span class="line"><span class="number">1020</span>    Nine, ten, a big fat hen</span><br><span class="line"><span class="number">1019</span>    One, two, buckle my shoe</span><br><span class="line"><span class="number">1018</span>    Three, four, shut the door</span><br><span class="line"><span class="number">1017</span>    Five, six, pick up sticks</span><br><span class="line"><span class="number">1016</span>    Seven, eight, lay them straight</span><br><span class="line"><span class="number">1015</span>    Nine, ten, a big fat hen</span><br></pre></td></tr></table></figure>
-<h2 id="SequenceFile的排序和合并"><a href="#SequenceFile的排序和合并" class="headerlink" title="SequenceFile的排序和合并"></a>SequenceFile的排序和合并</h2><p>MapReduce是对多个顺序文件进行排序或合并的最有效的方法。MapReduce本身是并行的，并且可由用户指定要使用多少个reducer，该数决定这输出分区数。例如，通过指定一个reducer，可以得到一个输出文件。</p>
-<p>除了MapReduce实现排序/归并，还有一种方法是使用SequenceFile.Sorter类中的sort()方法和merge()方法。它们比MapReduce更早出现，比MapReduce更底层，为了实现并行，需要手动对数据进行分区，因此不建议使用。</p>
-]]></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[Hadoop源码学习(12)——MapFile]]></title>
       <url>http://keyunluo.github.io/2016/08/13/2016-08-13-hadoop-io-8.html</url>
       <content type="html"><![CDATA[<blockquote>
@@ -2498,6 +2646,40 @@ $$</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java MapFileFixer numbers.map</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  project java MapFileFixer numbers.map</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">17</span>:<span class="number">45</span>:<span class="number">39</span> WARN util.NativeCodeLoader: Unable to load native-hadoop library <span class="keyword">for</span> your platform... using builtin-java classes where applicable</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">17</span>:<span class="number">45</span>:<span class="number">40</span> INFO compress.CodecPool: Got brand-new compressor [.deflate]</span><br><span class="line">创建MapFile numbers.map ,入口是 <span class="number">1024</span>%</span><br><span class="line">➜  project hdfs dfs -ls numbers.map</span><br><span class="line">Found <span class="number">2</span> items</span><br><span class="line">-rw-r--r--   <span class="number">1</span> streamer supergroup      <span class="number">40403</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-13</span> <span class="number">17</span>:<span class="number">43</span> numbers.map/data</span><br><span class="line">-rw-r--r--   <span class="number">1</span> streamer supergroup        <span class="number">336</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-13</span> <span class="number">17</span>:<span class="number">45</span> numbers.map/index</span><br></pre></td></tr></table></figure>
 <p>大功告成。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hadoop源码学习(11)——SequenceFile]]></title>
+      <url>http://keyunluo.github.io/2016/08/13/2016-08-13-hadoop-io-7.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>SequenceFile为二进制键值对提供了一个持久数据结构，也可以作为小文件的容器，HDFS和MapReduce是针对大文件优化的，所以通过SequenceFile类型将小文件包装起来，可以获得更高效率的存储和处理。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="SequenceFile类"><a href="#SequenceFile类" class="headerlink" title="SequenceFile类"></a>SequenceFile类</h2><p>SequenceFile类位于org.apache.hadoop.io包内，类结构如下：</p>
+<p><img src="/resource/blog/2016-08/SequenceFile.png" alt="SequenceFile类"></p>
+<h2 id="SequenceFile的格式"><a href="#SequenceFile的格式" class="headerlink" title="SequenceFile的格式"></a>SequenceFile的格式</h2><p>SequenceFile文件由文件头和随后的一条或多条记录组成。顺序文件的前三个字节是SEQ，紧随其后的一个字节表示顺序文件的版本号。文件头还包括其他字段，例如键和值类的名称、数据压缩细节、用户定义的元数据以及同步标识。同步标识用于在读取文件时能够从任意位置开始识别边界记录。</p>
+<p>记录的内部结构取决于是否启用压缩。如果已经启用，则取决于记录压缩还是数据块压缩。</p>
+<p>如果没有启用压缩(默认情况)，那么每条记录则由记录长度(字节数)、键长度、键和值组成。长度字段为4字节长的整数，遵循java.io.DataOutput类中的writeInt()方法的约定，写入顺序文件的类定义Serialization类来实现键和值的序列化。</p>
+<p>记录压缩格式与无压缩情况基本相同，只不过值是用文件头定义的codec压缩的，但是键并没有被压缩。</p>
+<p><img src="/resource/blog/2016-08/sequencefilewithnocompression.jpg" alt="SequenceFile-无压缩和记录压缩"></p>
+<p>块压缩是指一次性压缩多条记录，因为它可以利用记录间的相似性进行压缩，所以相较于单条记录压缩方法，该方法的压缩效率更高，如下图所示。可以不断向数据块中压缩记录，直到块的字节数不小于io.seqfile.compress.blocksize属性中设置的字节数：默认为1MB。每一个新块的开始处都需要插入同步标识。数据块的格式如下：首先是一个指示数据块中字节数的字段；紧接着是4个压缩字段(键长度、键、值长度和值)</p>
+<p><img src="/resource/blog/2016-08/sequencefilewithblockcompression.jpg" alt="SequenceFile-块压缩"></p>
+<h2 id="SequenceFile写操作"><a href="#SequenceFile写操作" class="headerlink" title="SequenceFile写操作"></a>SequenceFile写操作</h2><p>通过createWriter()静态方法可以创建SequenceFile对象，并返回SequenceFile.Writer实例。该静态方法有多个重载版本，但都需要指定待写入的数据流(FSDataOutputStream或FileSystem对象和Path对象)，Configuration对象，以及键和值的类型，写入的参数信息等。另外，可选参数包括压缩类型以及相应的codec,Progressable回调函数用于通知写入的进度，以及在SequenceFile头文件中存储的Metadata实例。</p>
+<p>存储在SequenceFile中的键和值并不一定需要是Writable类型，只要能被Serialization序列化和反序列化，任何类型都可以。</p>
+<p>一旦拥有SequenceFile.Writer实例，就可以通过append()方法在文件末尾附加键值对。写完后，可以调用close()方法(SequenceFile.Writer实现了java.io.Closable接口)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Text;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceFileWriteDemo</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] DATA = &#123;</span><br><span class="line">    <span class="string">"One, two, buckle my shoe"</span>,</span><br><span class="line">    <span class="string">"Three, four, shut the door"</span>,</span><br><span class="line">    <span class="string">"Five, six, pick up sticks"</span>,</span><br><span class="line">    <span class="string">"Seven, eight, lay them straight"</span>,</span><br><span class="line">    <span class="string">"Nine, ten, a big fat hen"</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line">    Path path = <span class="keyword">new</span> Path(url);</span><br><span class="line"></span><br><span class="line">    IntWritable key = <span class="keyword">new</span> IntWritable();</span><br><span class="line">    Text value = <span class="keyword">new</span> Text();</span><br><span class="line">    SequenceFile.Writer writer = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        writer = SequenceFile.createWriter(fs,conf,path,key.getClass(),value.getClass());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">1024</span>;i++)&#123;</span><br><span class="line">            key.set(<span class="number">1024</span>-i);</span><br><span class="line">            value.set(DATA[i % DATA.length]);</span><br><span class="line">            writer.append(key,value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(writer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译与运行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  project export CLASSPATH=$HADOOP_CLASSPATH:$CLASSPATH</span><br><span class="line">➜  project javac SequenceFileWriteDemo.java</span><br><span class="line">➜  project java SequenceFileWriteDemo numbers.seq</span><br></pre></td></tr></table></figure>
+<h2 id="SequenceFile读操作"><a href="#SequenceFile读操作" class="headerlink" title="SequenceFile读操作"></a>SequenceFile读操作</h2><p>从头到尾读取顺序文件不外乎创建SequenceFile.Reader实例后反复调用next()方法迭代读取记录。读取的是哪条记录与你使用的序列化框架有关。如果使用Writable类型，那么通过键和值作为参数的next()方法可以将数据流中的下一条键值对读入变量中。<code>public boolean next(Writable key,Writable val)</code>。对于其他非Writable类型的序列化框架，例如Apache Thrift，则应该使用下面两个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">next</span><span class="params">(Object key)</span> <span class="keyword">throws</span> IOException</span><br><span class="line"><span class="keyword">public</span> Object <span class="title">getCurrentValue</span><span class="params">(Object val)</span> <span class="keyword">throws</span> IOException</span></span><br></pre></td></tr></table></figure>
+<p>在这种情况下，需要确保io.serializations属性已经设置了你想要的序列化框架。如果next()方法返回的是非null对象，则可以从数据流中读取键、值对，并且可以通过getCurrentValue()方法读取该值。否则，如果next()返回null值，表示已经读到文件末尾。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Writable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.util.ReflectionUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceFileReadDemo</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line">    Path path = <span class="keyword">new</span> Path(url);</span><br><span class="line"></span><br><span class="line">    SequenceFile.Reader reader = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        reader = <span class="keyword">new</span> SequenceFile.Reader(fs,path,conf);</span><br><span class="line">        Writable key = (Writable) ReflectionUtils.newInstance(reader.getKeyClass(),conf);</span><br><span class="line">        Writable value = (Writable) ReflectionUtils.newInstance(reader.getValueClass(),conf);</span><br><span class="line">        <span class="keyword">long</span> position = reader.getPosition();</span><br><span class="line">        <span class="keyword">while</span> (reader.next(key,value))&#123;</span><br><span class="line">            String syncSeen = reader.syncSeen() ? <span class="string">"*"</span> : <span class="string">" "</span>;</span><br><span class="line">            System.out.printf(<span class="string">"[%s%s]\t%s\t%s\n"</span>,position,syncSeen,key,value);</span><br><span class="line">            position = reader.getPosition();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(reader);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="通过命令行接口显示SequenceFile"><a href="#通过命令行接口显示SequenceFile" class="headerlink" title="通过命令行接口显示SequenceFile"></a>通过命令行接口显示SequenceFile</h2><p>hdfs dfs命令有一个-text选项可以以文本形式显示顺序文件，该选项可以查看文件的代码，由此检测出文件的类型并将其转换成相应的文本。该选项可以识别gzip压缩文件和顺序文件；否则，假设输入为纯文本文件。</p>
+<p>对于顺序文件，如果键和值是由具体含义的字符串表示，那么这个命令就非常有用(通过toString()方法定义)，同样，如果有自己定义的键或值的类，则应该确保它们在Hadoop类路径目录下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  project hdfs dfs -text numbers.seq | head</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">23</span> INFO zlib.ZlibFactory: Successfully loaded &amp; initialized native-zlib library</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">23</span> INFO compress.CodecPool: Got brand-new decompressor [.deflate]</span><br><span class="line"><span class="number">1024</span>    One, two, buckle my shoe</span><br><span class="line"><span class="number">1023</span>    Three, four, shut the door</span><br><span class="line"><span class="number">1022</span>    Five, six, pick up sticks</span><br><span class="line"><span class="number">1021</span>    Seven, eight, lay them straight</span><br><span class="line"><span class="number">1020</span>    Nine, ten, a big fat hen</span><br><span class="line"><span class="number">1019</span>    One, two, buckle my shoe</span><br><span class="line"><span class="number">1018</span>    Three, four, shut the door</span><br><span class="line"><span class="number">1017</span>    Five, six, pick up sticks</span><br><span class="line"><span class="number">1016</span>    Seven, eight, lay them straight</span><br><span class="line"><span class="number">1015</span>    Nine, ten, a big fat hen</span><br></pre></td></tr></table></figure>
+<h2 id="SequenceFile的排序和合并"><a href="#SequenceFile的排序和合并" class="headerlink" title="SequenceFile的排序和合并"></a>SequenceFile的排序和合并</h2><p>MapReduce是对多个顺序文件进行排序或合并的最有效的方法。MapReduce本身是并行的，并且可由用户指定要使用多少个reducer，该数决定这输出分区数。例如，通过指定一个reducer，可以得到一个输出文件。</p>
+<p>除了MapReduce实现排序/归并，还有一种方法是使用SequenceFile.Sorter类中的sort()方法和merge()方法。它们比MapReduce更早出现，比MapReduce更底层，为了实现并行，需要手动对数据进行分区，因此不建议使用。</p>
 ]]></content>
     </entry>
     
