@@ -74,9 +74,8 @@ Notations:$X = [x_1,\ldots,x_n] \in \mathcal{R}^{d*n}, y = [y_1, \ldots, y_n]$</
 Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the centering matrix. Hints:$\frac{\partial \Vert u - A^Tw \Vert_2^2}{\partial w} = 2A(A^Tw-u)$</p>
 <p>解答：</p>
 <ol>
-<li>优化问题：$\min_{b \in R,w \in R^d} \Vert y - Xw - 1_Nb \Vert_2^2 + \lambda \Vert w \Vert_2^2$, 其中：$1_N = [1,\ldots,1]^T \in R^d$</li>
-</ol>
-<h2 id="Advanced-Classification-4-points"><a href="#Advanced-Classification-4-points" class="headerlink" title="Advanced Classification(4 points)"></a>Advanced Classification(4 points)</h2><ol>
+<li><p>优化问题：$\min_{b \in R,w \in R^d} \Vert y - Xw - 1_Nb \Vert_2^2 + \lambda \Vert w \Vert_2^2$, 其中：$1_N = [1,\ldots,1]^T \in R^d$</p>
+</li>
 <li><ul>
 <li>对上式$b$进行求导，并令倒数为0：$-2*1_N^T(y-Xw -1_Nb)=0, b  = \frac{1}{N}1_N^T(y-Xw)$</li>
 <li>对上式$w$进行求导，并令倒数为0：$2*X^T(Xw -y + 1_Nb) + 2 \lambda w=0, (X^T(I-\frac{1}{N}1_N1_N^T)X + \lambda I)w=X^T(I-\frac{1}{N}1_N1_N^T)y$</li>
@@ -84,7 +83,7 @@ Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the ce
 </ul>
 </li>
 </ol>
-<blockquote>
+<h2 id="Advanced-Classification-4-points"><a href="#Advanced-Classification-4-points" class="headerlink" title="Advanced Classification(4 points)"></a>Advanced Classification(4 points)</h2><blockquote>
 <p>Give a brief introduction of <strong>semi-suppervised learning</strong> and <strong>active learning</strong></p>
 </blockquote>
 <p>解答：半监督学习和主动学习</p>
@@ -116,7 +115,7 @@ Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the ce
 <li>聚类方法：自适应k-means聚类，自适应协同聚类</li>
 <li>潜伏因子模型：奇异值分解、矩阵分解、矩阵填充</li>
 </ul>
-<p>本题使用Matrix Completion方法：$\min_{X \in R^{n*d}} \Vert X \Vert_*, s.t. \ X_{ij} = D_{ij} \in \Omega$</p>
+<p>本题使用Matrix Completion方法：$\min_{X \in R^{n*d}} \Vert X \Vert_*, s.t. \ X_{ij} = D_{ij} \in \Omega$。对矩阵D进行低秩分解，用U<em>V来逼近M，用于填充，其中$D \in R^{m\</em>n}, U \in R{m*r}, V \in R^{r*n}$, 即$U*V^T$得到近似矩阵M来填充D上的缺失值。</p>
 ]]></content>
     </entry>
     
@@ -419,7 +418,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 <p>$\max_{w \in \mathcal{R}^d}\ w^TCw$</p>
 <p>$s.t. \Vert w \Vert_2^2 = 1$</p>
 </blockquote>
-<p>这里， $C = \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$为协方差矩阵。该协方差矩阵具有如下特征：对称性，半正定，矩阵的秩最大为n-1。</p>
+<p>这里， $C = \frac{1}{n}\sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$为协方差矩阵。该协方差矩阵具有如下特征：对称性，半正定，矩阵的秩最大为n-1。</p>
 </li>
 </ul>
 </li>
@@ -440,7 +439,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 <li><p><strong>PCA算法(1维)</strong></p>
 <ul>
 <li>计算均值向量：$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$</li>
-<li>计算协方差矩阵：$C = \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$</li>
+<li>计算协方差矩阵：$C = \frac{1}{n} \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$</li>
 <li>计算C中最大的特征值对应的特征向量</li>
 </ul>
 </li>
@@ -456,7 +455,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 <li><p><strong>算法流程</strong></p>
 <ul>
 <li>计算均值向量：$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$</li>
-<li>计算协方差矩阵：$C = \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$</li>
+<li>计算协方差矩阵：$C = \frac{1}{n} \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$</li>
 <li>计算C中最大的k个特征值对应的特征向量</li>
 </ul>
 </li>
@@ -533,7 +532,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 </li>
 <li><p>MDS算法</p>
 <ul>
-<li>计算点积：$S= -\frac{1}{2}(I - \frac{np.ones^T}{n})G^2(\frac{np.ones^T}{n})$</li>
+<li>计算点积：$S= -\frac{1}{2}(I - \frac{np.ones^T}{n})G^2(I - \frac{np.ones^T}{n})$</li>
 <li>对S进行奇异值分解：$S=U \Lambda U^T = \sum_{i=1}^n\lambda_iu_iu_i^T$</li>
 <li>新坐标：$U_k\Lambda_k^{1/2} \in \mathcal{R}^{n*k}$</li>
 </ul>

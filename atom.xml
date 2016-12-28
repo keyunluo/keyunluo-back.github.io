@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-12-27T14:39:52.326Z</updated>
+  <updated>2016-12-28T03:22:15.161Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://keyunluo.github.io/2016/12/27/2016-12-27-data-mining.html"/>
     <id>http://keyunluo.github.io/2016/12/27/2016-12-27-data-mining.html</id>
     <published>2016-12-27T06:25:02.000Z</published>
-    <updated>2016-12-27T14:39:52.326Z</updated>
+    <updated>2016-12-28T03:22:15.161Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2015年秋南京大学计算机系数据挖掘期末试卷分析。&lt;/p&gt;
@@ -90,9 +90,8 @@ Notations:$X = [x_1,\ldots,x_n] \in \mathcal{R}^{d*n}, y = [y_1, \ldots, y_n]$&l
 Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the centering matrix. Hints:$\frac{\partial \Vert u - A^Tw \Vert_2^2}{\partial w} = 2A(A^Tw-u)$&lt;/p&gt;
 &lt;p&gt;解答：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;优化问题：$\min_{b \in R,w \in R^d} \Vert y - Xw - 1_Nb \Vert_2^2 + \lambda \Vert w \Vert_2^2$, 其中：$1_N = [1,\ldots,1]^T \in R^d$&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;Advanced-Classification-4-points&quot;&gt;&lt;a href=&quot;#Advanced-Classification-4-points&quot; class=&quot;headerlink&quot; title=&quot;Advanced Classification(4 points)&quot;&gt;&lt;/a&gt;Advanced Classification(4 points)&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;优化问题：$\min_{b \in R,w \in R^d} \Vert y - Xw - 1_Nb \Vert_2^2 + \lambda \Vert w \Vert_2^2$, 其中：$1_N = [1,\ldots,1]^T \in R^d$&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;ul&gt;
 &lt;li&gt;对上式$b$进行求导，并令倒数为0：$-2*1_N^T(y-Xw -1_Nb)=0, b  = \frac{1}{N}1_N^T(y-Xw)$&lt;/li&gt;
 &lt;li&gt;对上式$w$进行求导，并令倒数为0：$2*X^T(Xw -y + 1_Nb) + 2 \lambda w=0, (X^T(I-\frac{1}{N}1_N1_N^T)X + \lambda I)w=X^T(I-\frac{1}{N}1_N1_N^T)y$&lt;/li&gt;
@@ -100,7 +99,7 @@ Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the ce
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;blockquote&gt;
+&lt;h2 id=&quot;Advanced-Classification-4-points&quot;&gt;&lt;a href=&quot;#Advanced-Classification-4-points&quot; class=&quot;headerlink&quot; title=&quot;Advanced Classification(4 points)&quot;&gt;&lt;/a&gt;Advanced Classification(4 points)&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;Give a brief introduction of &lt;strong&gt;semi-suppervised learning&lt;/strong&gt; and &lt;strong&gt;active learning&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;解答：半监督学习和主动学习&lt;/p&gt;
@@ -132,7 +131,7 @@ Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the ce
 &lt;li&gt;聚类方法：自适应k-means聚类，自适应协同聚类&lt;/li&gt;
 &lt;li&gt;潜伏因子模型：奇异值分解、矩阵分解、矩阵填充&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;本题使用Matrix Completion方法：$\min_{X \in R^{n*d}} \Vert X \Vert_*, s.t. \ X_{ij} = D_{ij} \in \Omega$&lt;/p&gt;
+&lt;p&gt;本题使用Matrix Completion方法：$\min_{X \in R^{n*d}} \Vert X \Vert_*, s.t. \ X_{ij} = D_{ij} \in \Omega$。对矩阵D进行低秩分解，用U&lt;em&gt;V来逼近M，用于填充，其中$D \in R^{m\&lt;/em&gt;n}, U \in R{m*r}, V \in R^{r*n}$, 即$U*V^T$得到近似矩阵M来填充D上的缺失值。&lt;/p&gt;
 </content>
     
     <summary type="html">
@@ -392,7 +391,7 @@ type(仅需要一种类型的资源是可用的，如彩色显示器)
     <link href="http://keyunluo.github.io/2016/12/22/2016-12-22-data-mining.html"/>
     <id>http://keyunluo.github.io/2016/12/22/2016-12-22-data-mining.html</id>
     <published>2016-12-22T06:25:02.000Z</published>
-    <updated>2016-12-27T11:31:45.035Z</updated>
+    <updated>2016-12-28T03:11:59.808Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2016年秋南京大学计算机系数据挖掘课程学期总结。&lt;/p&gt;
@@ -471,7 +470,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 &lt;p&gt;$\max_{w \in \mathcal{R}^d}\ w^TCw$&lt;/p&gt;
 &lt;p&gt;$s.t. \Vert w \Vert_2^2 = 1$&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;这里， $C = \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$为协方差矩阵。该协方差矩阵具有如下特征：对称性，半正定，矩阵的秩最大为n-1。&lt;/p&gt;
+&lt;p&gt;这里， $C = \frac{1}{n}\sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$为协方差矩阵。该协方差矩阵具有如下特征：对称性，半正定，矩阵的秩最大为n-1。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -492,7 +491,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;PCA算法(1维)&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;计算均值向量：$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$&lt;/li&gt;
-&lt;li&gt;计算协方差矩阵：$C = \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$&lt;/li&gt;
+&lt;li&gt;计算协方差矩阵：$C = \frac{1}{n} \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$&lt;/li&gt;
 &lt;li&gt;计算C中最大的特征值对应的特征向量&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -508,7 +507,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;算法流程&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;计算均值向量：$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$&lt;/li&gt;
-&lt;li&gt;计算协方差矩阵：$C = \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$&lt;/li&gt;
+&lt;li&gt;计算协方差矩阵：$C = \frac{1}{n} \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$&lt;/li&gt;
 &lt;li&gt;计算C中最大的k个特征值对应的特征向量&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -585,7 +584,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;MDS算法&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;计算点积：$S= -\frac{1}{2}(I - \frac{np.ones^T}{n})G^2(\frac{np.ones^T}{n})$&lt;/li&gt;
+&lt;li&gt;计算点积：$S= -\frac{1}{2}(I - \frac{np.ones^T}{n})G^2(I - \frac{np.ones^T}{n})$&lt;/li&gt;
 &lt;li&gt;对S进行奇异值分解：$S=U \Lambda U^T = \sum_{i=1}^n\lambda_iu_iu_i^T$&lt;/li&gt;
 &lt;li&gt;新坐标：$U_k\Lambda_k^{1/2} \in \mathcal{R}^{n*k}$&lt;/li&gt;
 &lt;/ul&gt;
