@@ -9,7 +9,7 @@
 body {
     background-color: #fff;
     color: #222;
-    font-family: "Microsoft YaHei", Lato, "PingFang SC", "WenQuanYi Micro Hei",  sans-serif;
+    font-family:  "Microsoft YaHei", Lato, "PingFang SC", "WenQuanYi Micro Hei",  sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 14px;
@@ -23,7 +23,7 @@ h2 {
     margin: 0 auto;
 }
 .content_container {
-    padding-right: 20px;
+    padding-right: 30px;
     padding-top: 10px;
 }
 a, button.submit {
@@ -173,7 +173,7 @@ a:focus {
         margin: 0;
         color: #111;
         text-align: left;
-        font:  28px/1.1 "Sans-Serif", "WenQuanYi Micro Hei", "Microsoft YaHei", "TIBch", "Classic Grotesque W01", "Helvetica Neue", Arial;
+        font:  24px/1.1 "Sans-Serif", "WenQuanYi Micro Hei", "Microsoft YaHei", "TIBch", "Classic Grotesque W01", "Helvetica Neue", Arial;
         a {
             color: #555;
         }
