@@ -7,7 +7,7 @@ title: 流光
 subtitle: 他跑啊跑啊，只为追上那个曾经被寄予厚望的自己
 description: Coder On The Road
 author: 浮舟沧海
-language: zh-CN
+language: zh-Hans
 timezone:
 
 # URL
@@ -83,8 +83,17 @@ feed:
   limit: 20
   hub:
 ## Themes: https://hexo.io/themes/
-#theme:  indigo
-theme: maupassant
+theme:  next
+avatar: /resource/img/profile.jpg
+#theme: maupassant
+
+algolia:
+  applicationID: 'FQBRJAIOP0'
+  apiKey: '62ea038e31dd7941c12b0cd5097e4a8c'
+  adminApiKey: 'c4bce908c36b4902faf02e1ab4e3049e'
+  indexName: 'keyunindex'
+  chunkSize: 5000
+
 stylus:
   compress: true
 
