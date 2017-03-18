@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://keyunluo.github.io/"/>
-  <updated>2016-12-28T14:25:24.853Z</updated>
+  <updated>2017-03-18T07:54:30.733Z</updated>
   <id>http://keyunluo.github.io/</id>
   
   <author>
@@ -17,10 +17,10 @@
   
   <entry>
     <title>分布式系统——试卷分析</title>
-    <link href="http://keyunluo.github.io/2016/12/28/2016-12-28-distributed-system-2.html"/>
-    <id>http://keyunluo.github.io/2016/12/28/2016-12-28-distributed-system-2.html</id>
+    <link href="http://keyunluo.github.io/2016/12/28/Cource/distributed-system-2.html"/>
+    <id>http://keyunluo.github.io/2016/12/28/Cource/distributed-system-2.html</id>
     <published>2016-12-28T06:25:02.000Z</published>
-    <updated>2016-12-28T14:25:24.853Z</updated>
+    <updated>2017-03-18T07:54:30.733Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2015年秋南京大学计算机系分布式系统期末试卷分析。&lt;/p&gt;
@@ -158,7 +158,7 @@
     
     </summary>
     
-      <category term="DistributedSystem" scheme="http://keyunluo.github.io/categories/DistributedSystem/"/>
+      <category term="Cource" scheme="http://keyunluo.github.io/categories/Cource/"/>
     
     
       <category term="分布式系统" scheme="http://keyunluo.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/"/>
@@ -167,10 +167,10 @@
   
   <entry>
     <title>数据挖掘——试卷分析</title>
-    <link href="http://keyunluo.github.io/2016/12/27/2016-12-27-data-mining.html"/>
-    <id>http://keyunluo.github.io/2016/12/27/2016-12-27-data-mining.html</id>
+    <link href="http://keyunluo.github.io/2016/12/27/Cource/data-mining.html"/>
+    <id>http://keyunluo.github.io/2016/12/27/Cource/data-mining.html</id>
     <published>2016-12-27T06:25:02.000Z</published>
-    <updated>2016-12-28T03:57:18.061Z</updated>
+    <updated>2017-03-18T07:53:58.653Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2015年秋南京大学计算机系数据挖掘期末试卷分析。&lt;/p&gt;
@@ -292,19 +292,19 @@ Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the ce
     
     </summary>
     
-      <category term="MachineLearning" scheme="http://keyunluo.github.io/categories/MachineLearning/"/>
+      <category term="Cource" scheme="http://keyunluo.github.io/categories/Cource/"/>
     
     
-      <category term="机器学习" scheme="http://keyunluo.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="数据挖掘" scheme="http://keyunluo.github.io/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/"/>
     
   </entry>
   
   <entry>
     <title>分布式系统——课程总结</title>
-    <link href="http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html"/>
-    <id>http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html</id>
+    <link href="http://keyunluo.github.io/2016/12/23/Cource/distributed-system-1.html"/>
+    <id>http://keyunluo.github.io/2016/12/23/Cource/distributed-system-1.html</id>
     <published>2016-12-23T06:25:02.000Z</published>
-    <updated>2016-12-28T15:07:58.357Z</updated>
+    <updated>2017-03-18T07:54:25.581Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2016年秋南京大学计算机系分布式系统课程总结。&lt;/p&gt;
@@ -640,7 +640,7 @@ type(仅需要一种类型的资源是可用的，如彩色显示器)
     
     </summary>
     
-      <category term="DistributedSystem" scheme="http://keyunluo.github.io/categories/DistributedSystem/"/>
+      <category term="Cource" scheme="http://keyunluo.github.io/categories/Cource/"/>
     
     
       <category term="分布式系统" scheme="http://keyunluo.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/"/>
@@ -649,10 +649,10 @@ type(仅需要一种类型的资源是可用的，如彩色显示器)
   
   <entry>
     <title>数据挖掘——课程总结</title>
-    <link href="http://keyunluo.github.io/2016/12/22/2016-12-22-data-mining.html"/>
-    <id>http://keyunluo.github.io/2016/12/22/2016-12-22-data-mining.html</id>
+    <link href="http://keyunluo.github.io/2016/12/22/Cource/data-mining-summary.html"/>
+    <id>http://keyunluo.github.io/2016/12/22/Cource/data-mining-summary.html</id>
     <published>2016-12-22T06:25:02.000Z</published>
-    <updated>2016-12-28T03:11:59.808Z</updated>
+    <updated>2017-03-18T07:53:54.390Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;2016年秋南京大学计算机系数据挖掘课程学期总结。&lt;/p&gt;
@@ -1052,19 +1052,19 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
     
     </summary>
     
-      <category term="MachineLearning" scheme="http://keyunluo.github.io/categories/MachineLearning/"/>
+      <category term="Cource" scheme="http://keyunluo.github.io/categories/Cource/"/>
     
     
-      <category term="机器学习" scheme="http://keyunluo.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="数据挖掘" scheme="http://keyunluo.github.io/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/"/>
     
   </entry>
   
   <entry>
     <title>SkipList 跳跃表(1) ——基本介绍</title>
-    <link href="http://keyunluo.github.io/2016/11/16/2016-11-16-skiplist1.html"/>
-    <id>http://keyunluo.github.io/2016/11/16/2016-11-16-skiplist1.html</id>
+    <link href="http://keyunluo.github.io/2016/11/16/Storage/skiplist1.html"/>
+    <id>http://keyunluo.github.io/2016/11/16/Storage/skiplist1.html</id>
     <published>2016-11-16T13:25:02.000Z</published>
-    <updated>2016-11-16T11:35:45.915Z</updated>
+    <updated>2017-03-18T07:56:29.996Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;跳跃列表（也称跳表）是一种随机化数据结构，基于并联的链表，其效率可比拟于二叉查找树（对于大多数操作需要$O(log\ n)$平均时间）。
@@ -1104,7 +1104,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
     
     </summary>
     
-      <category term="FileAndStorage" scheme="http://keyunluo.github.io/categories/FileAndStorage/"/>
+      <category term="Storage" scheme="http://keyunluo.github.io/categories/Storage/"/>
     
     
       <category term="存储引擎" scheme="http://keyunluo.github.io/tags/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/"/>
@@ -1113,10 +1113,10 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
   
   <entry>
     <title>LSM Tree (1)</title>
-    <link href="http://keyunluo.github.io/2016/11/16/2016-11-16-lsm1.html"/>
-    <id>http://keyunluo.github.io/2016/11/16/2016-11-16-lsm1.html</id>
+    <link href="http://keyunluo.github.io/2016/11/16/Storage/lsm1.html"/>
+    <id>http://keyunluo.github.io/2016/11/16/Storage/lsm1.html</id>
     <published>2016-11-16T06:25:02.000Z</published>
-    <updated>2016-11-16T11:42:08.647Z</updated>
+    <updated>2017-03-18T07:56:34.141Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;LSM树的基本思想是将修改的数据保存在内存中，达到一定数量后在将修改的数据批量写入磁盘，在写入的过程中与之前已经存在的数据做合并。同B树存储模型一样，LSM存储模型也支持增、删、读、改以及顺序扫描操作。LSM模型利用批量写入解决了随机写入的问题，虽然牺牲了部分读的性能，但是大大提高了写的性能。&lt;/p&gt;
@@ -1156,19 +1156,19 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
     
     </summary>
     
-      <category term="FileAndStorage" scheme="http://keyunluo.github.io/categories/FileAndStorage/"/>
+      <category term="Storage" scheme="http://keyunluo.github.io/categories/Storage/"/>
     
     
-      <category term="LSM树" scheme="http://keyunluo.github.io/tags/LSM%E6%A0%91/"/>
+      <category term="存储引擎" scheme="http://keyunluo.github.io/tags/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/"/>
     
   </entry>
   
   <entry>
     <title>Hash存储引擎</title>
-    <link href="http://keyunluo.github.io/2016/11/15/2016-11-15-hash.html"/>
-    <id>http://keyunluo.github.io/2016/11/15/2016-11-15-hash.html</id>
+    <link href="http://keyunluo.github.io/2016/11/15/Storage/hash.html"/>
+    <id>http://keyunluo.github.io/2016/11/15/Storage/hash.html</id>
     <published>2016-11-15T06:25:02.000Z</published>
-    <updated>2016-11-16T10:47:48.728Z</updated>
+    <updated>2017-03-18T07:56:37.756Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;存储系统的基本功能包括：增删读改，读操作又分为&lt;strong&gt;随机读取&lt;/strong&gt;和&lt;strong&gt;顺序扫描&lt;/strong&gt;, 目前单机系统的存储引擎主要有：哈希存储、B树存储、LSM树存储。Hash存储是基于哈希表结构 ：数组+链表的，支持增删改以及随机读。&lt;/p&gt;
@@ -1205,7 +1205,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
     
     </summary>
     
-      <category term="FileAndStorage" scheme="http://keyunluo.github.io/categories/FileAndStorage/"/>
+      <category term="Storage" scheme="http://keyunluo.github.io/categories/Storage/"/>
     
     
       <category term="存储引擎" scheme="http://keyunluo.github.io/tags/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/"/>
@@ -1214,10 +1214,10 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
   
   <entry>
     <title>高级算法--作业2</title>
-    <link href="http://keyunluo.github.io/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html"/>
-    <id>http://keyunluo.github.io/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html</id>
+    <link href="http://keyunluo.github.io/2016/11/03/Cource/advanced-algorithm-assignment2.html"/>
+    <id>http://keyunluo.github.io/2016/11/03/Cource/advanced-algorithm-assignment2.html</id>
     <published>2016-11-03T07:41:02.000Z</published>
-    <updated>2016-11-16T08:22:12.083Z</updated>
+    <updated>2017-03-18T07:53:35.341Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;高级算法：第二次作业。&lt;/p&gt;
@@ -1431,19 +1431,19 @@ So, the approximation ratio is $f$.&lt;/p&gt;
     
     </summary>
     
-      <category term="AdvancedAlgorithms" scheme="http://keyunluo.github.io/categories/AdvancedAlgorithms/"/>
+      <category term="Cource" scheme="http://keyunluo.github.io/categories/Cource/"/>
     
     
-      <category term="算法" scheme="http://keyunluo.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="高级算法" scheme="http://keyunluo.github.io/tags/%E9%AB%98%E7%BA%A7%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>高级算法--作业1</title>
-    <link href="http://keyunluo.github.io/2016/10/13/2016-10-13-advanced-algorithm-assignment1.html"/>
-    <id>http://keyunluo.github.io/2016/10/13/2016-10-13-advanced-algorithm-assignment1.html</id>
+    <link href="http://keyunluo.github.io/2016/10/13/Cource/advanced-algorithm-assignment1.html"/>
+    <id>http://keyunluo.github.io/2016/10/13/Cource/advanced-algorithm-assignment1.html</id>
     <published>2016-10-13T12:41:02.000Z</published>
-    <updated>2016-10-18T14:18:38.307Z</updated>
+    <updated>2017-03-18T07:53:31.741Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;高级算法：第一次作业。&lt;/p&gt;
@@ -1701,19 +1701,19 @@ the probability of one edge cannot be  2-coloable in edge $e_i$ is $Pr[e_i]= 2 /
     
     </summary>
     
-      <category term="AdvancedAlgorithms" scheme="http://keyunluo.github.io/categories/AdvancedAlgorithms/"/>
+      <category term="Cource" scheme="http://keyunluo.github.io/categories/Cource/"/>
     
     
-      <category term="算法" scheme="http://keyunluo.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="高级算法" scheme="http://keyunluo.github.io/tags/%E9%AB%98%E7%BA%A7%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>高级算法(3)--Min-Cut-Max-Flow(2)-近似算法</title>
-    <link href="http://keyunluo.github.io/2016/10/06/2016-10-06-advanced-algorithm-3.html"/>
-    <id>http://keyunluo.github.io/2016/10/06/2016-10-06-advanced-algorithm-3.html</id>
+    <link href="http://keyunluo.github.io/2016/10/06/Cource/advanced-algorithm-3.html"/>
+    <id>http://keyunluo.github.io/2016/10/06/Cource/advanced-algorithm-3.html</id>
     <published>2016-10-06T06:41:02.000Z</published>
-    <updated>2016-10-06T07:22:32.155Z</updated>
+    <updated>2017-03-18T07:53:26.438Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本节重点讨论Karger’s Contraction algorithm解决最小割问题及其运行复杂度分析。&lt;/p&gt;
@@ -1721,7 +1721,7 @@ the probability of one edge cannot be  2-coloable in edge $e_i$ is $Pr[e_i]= 2 /
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;收缩操作&quot;&gt;&lt;a href=&quot;#收缩操作&quot; class=&quot;headerlink&quot; title=&quot;收缩操作&quot;&gt;&lt;/a&gt;收缩操作&lt;/h2&gt;&lt;p&gt;在上一博客的基础上，讨论收缩操作：&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;The contraction operator Contract(G, e) &lt;/p&gt;
+&lt;p&gt;The contraction operator Contract(G, e)&lt;/p&gt;
 &lt;p&gt; say e = uv:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;replace $\{u,v\}$ by a new vertex x;&lt;/li&gt;
@@ -1850,19 +1850,19 @@ p(n) &amp;amp; = &amp;amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     </summary>
     
-      <category term="AdvancedAlgorithms" scheme="http://keyunluo.github.io/categories/AdvancedAlgorithms/"/>
+      <category term="Cource" scheme="http://keyunluo.github.io/categories/Cource/"/>
     
     
-      <category term="算法" scheme="http://keyunluo.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="高级算法" scheme="http://keyunluo.github.io/tags/%E9%AB%98%E7%BA%A7%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法</title>
-    <link href="http://keyunluo.github.io/2016/10/05/2016-10-05-advanced-algorithm-2.html"/>
-    <id>http://keyunluo.github.io/2016/10/05/2016-10-05-advanced-algorithm-2.html</id>
+    <link href="http://keyunluo.github.io/2016/10/05/Cource/advanced-algorithm-2.html"/>
+    <id>http://keyunluo.github.io/2016/10/05/Cource/advanced-algorithm-2.html</id>
     <published>2016-10-05T05:41:02.000Z</published>
-    <updated>2016-10-05T13:08:28.398Z</updated>
+    <updated>2017-03-18T07:53:18.973Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;对于一个图中的两个节点来说，如果把图中的一些边去掉，刚好让他们之间无法连通的话，这些被去掉的边组成的集合就叫做割了，最小割就是指所有割中权重之和最小的一个割。&lt;/p&gt;
@@ -1982,19 +1982,19 @@ p(n) &amp;amp; = &amp;amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     </summary>
     
-      <category term="AdvancedAlgorithms" scheme="http://keyunluo.github.io/categories/AdvancedAlgorithms/"/>
+      <category term="Cource" scheme="http://keyunluo.github.io/categories/Cource/"/>
     
     
-      <category term="算法" scheme="http://keyunluo.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="高级算法" scheme="http://keyunluo.github.io/tags/%E9%AB%98%E7%BA%A7%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>高级算法(1)--NP完全性与近似算法</title>
-    <link href="http://keyunluo.github.io/2016/10/04/2016-10-04-advanced-algorithm-1.html"/>
-    <id>http://keyunluo.github.io/2016/10/04/2016-10-04-advanced-algorithm-1.html</id>
+    <link href="http://keyunluo.github.io/2016/10/04/Cource/advanced-algorithm-1.html"/>
+    <id>http://keyunluo.github.io/2016/10/04/Cource/advanced-algorithm-1.html</id>
     <published>2016-10-04T12:41:02.000Z</published>
-    <updated>2016-10-04T14:14:14.973Z</updated>
+    <updated>2017-03-18T07:53:22.333Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;本学期修读了尹一通老师的高级算法课，感觉略有困难，故将学习过程中的知识点以博客的形式记录下来，温故而知新，本节总结NP完全性问题和近似算法的概念。&lt;/p&gt;
@@ -2052,17 +2052,17 @@ p(n) &amp;amp; = &amp;amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     </summary>
     
-      <category term="AdvancedAlgorithms" scheme="http://keyunluo.github.io/categories/AdvancedAlgorithms/"/>
+      <category term="Cource" scheme="http://keyunluo.github.io/categories/Cource/"/>
     
     
-      <category term="算法" scheme="http://keyunluo.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="高级算法" scheme="http://keyunluo.github.io/tags/%E9%AB%98%E7%BA%A7%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>Ubuntu16.04上编译OpenCV的Python3包</title>
-    <link href="http://keyunluo.github.io/2016/10/04/2016-10-04-ubuntu16.04-opencv3-python3.html"/>
-    <id>http://keyunluo.github.io/2016/10/04/2016-10-04-ubuntu16.04-opencv3-python3.html</id>
+    <link href="http://keyunluo.github.io/2016/10/04/Tools/ubuntu16.04-opencv3-python3.html"/>
+    <id>http://keyunluo.github.io/2016/10/04/Tools/ubuntu16.04-opencv3-python3.html</id>
     <published>2016-10-04T05:41:02.000Z</published>
     <updated>2016-10-04T09:10:44.979Z</updated>
     
@@ -2101,10 +2101,10 @@ p(n) &amp;amp; = &amp;amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
   
   <entry>
     <title>数据压缩(1) —— 概述</title>
-    <link href="http://keyunluo.github.io/2016/09/24/2016-09-24-compress-1.html"/>
-    <id>http://keyunluo.github.io/2016/09/24/2016-09-24-compress-1.html</id>
+    <link href="http://keyunluo.github.io/2016/09/24/Algorithm/compress-1.html"/>
+    <id>http://keyunluo.github.io/2016/09/24/Algorithm/compress-1.html</id>
     <published>2016-09-24T06:25:02.000Z</published>
-    <updated>2016-09-24T09:08:41.253Z</updated>
+    <updated>2017-03-18T07:48:53.086Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt; 数据压缩，是指在不丢失信息的前提下，缩减数据量以减少存储空间，提高传输、存储和处理效率的一种技术方法。或者是按照一定的算法对数据进行重新组织，减少数据的冗余和存储的空间。本系列博文具体学习经典的压缩算法以及最近流行的算法，并应用到FASTQ下一代基因数据的压缩过程中。&lt;/p&gt;
@@ -2192,17 +2192,17 @@ p(n) &amp;amp; = &amp;amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     </summary>
     
-      <category term="AlgorithmApplication" scheme="http://keyunluo.github.io/categories/AlgorithmApplication/"/>
+      <category term="Algorithm" scheme="http://keyunluo.github.io/categories/Algorithm/"/>
     
     
-      <category term="数据压缩" scheme="http://keyunluo.github.io/tags/%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/"/>
+      <category term="压缩" scheme="http://keyunluo.github.io/tags/%E5%8E%8B%E7%BC%A9/"/>
     
   </entry>
   
   <entry>
     <title>统计学习方法——决策树</title>
-    <link href="http://keyunluo.github.io/2016/09/23/2016-09-23-statical-learning-5.html"/>
-    <id>http://keyunluo.github.io/2016/09/23/2016-09-23-statical-learning-5.html</id>
+    <link href="http://keyunluo.github.io/2016/09/23/MachineLearning/statical-learning-5.html"/>
+    <id>http://keyunluo.github.io/2016/09/23/MachineLearning/statical-learning-5.html</id>
     <published>2016-09-23T01:25:02.000Z</published>
     <updated>2016-09-23T13:26:19.172Z</updated>
     
@@ -2366,10 +2366,10 @@ p(n) &amp;amp; = &amp;amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
   
   <entry>
     <title>Hadoop源码学习(15)——文件系统(1)</title>
-    <link href="http://keyunluo.github.io/2016/09/22/2016-09-22-hadoop-filesystem-1.html"/>
-    <id>http://keyunluo.github.io/2016/09/22/2016-09-22-hadoop-filesystem-1.html</id>
+    <link href="http://keyunluo.github.io/2016/09/22/BigData/hadoop-filesystem-1.html"/>
+    <id>http://keyunluo.github.io/2016/09/22/BigData/hadoop-filesystem-1.html</id>
     <published>2016-09-22T08:25:02.000Z</published>
-    <updated>2016-09-23T12:27:53.849Z</updated>
+    <updated>2017-03-18T07:50:19.084Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;为了提供对不同数据访问的一致接口，Hadoop借鉴了Linux虚拟文件系统的概念，引入了Hadoop抽象文件系统，并在Hadoop抽象文件系统上，提供了大量的具体文件系统的实现，满足构建于Hadoop应用之上的数据访问需求。本节学习Hadoop文件系统API。&lt;/p&gt;
@@ -2499,7 +2499,7 @@ p(n) &amp;amp; = &amp;amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     </summary>
     
-      <category term="SourceCodeLearning" scheme="http://keyunluo.github.io/categories/SourceCodeLearning/"/>
+      <category term="BigData" scheme="http://keyunluo.github.io/categories/BigData/"/>
     
     
       <category term="Hadoop" scheme="http://keyunluo.github.io/tags/Hadoop/"/>
@@ -2508,8 +2508,8 @@ p(n) &amp;amp; = &amp;amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
   
   <entry>
     <title>统计学习方法——朴素贝叶斯法</title>
-    <link href="http://keyunluo.github.io/2016/08/16/2016-08-16-statical-learning-4.html"/>
-    <id>http://keyunluo.github.io/2016/08/16/2016-08-16-statical-learning-4.html</id>
+    <link href="http://keyunluo.github.io/2016/08/16/MachineLearning/statical-learning-4.html"/>
+    <id>http://keyunluo.github.io/2016/08/16/MachineLearning/statical-learning-4.html</id>
     <published>2016-08-16T01:25:02.000Z</published>
     <updated>2016-09-07T11:49:49.527Z</updated>
     
@@ -2680,8 +2680,8 @@ $$&lt;/p&gt;
   
   <entry>
     <title>统计学习方法——K近邻算法</title>
-    <link href="http://keyunluo.github.io/2016/08/15/2016-08-15-statical-learning-3.html"/>
-    <id>http://keyunluo.github.io/2016/08/15/2016-08-15-statical-learning-3.html</id>
+    <link href="http://keyunluo.github.io/2016/08/15/MachineLearning/statical-learning-3.html"/>
+    <id>http://keyunluo.github.io/2016/08/15/MachineLearning/statical-learning-3.html</id>
     <published>2016-08-15T07:25:02.000Z</published>
     <updated>2016-10-22T06:52:31.742Z</updated>
     
@@ -2766,10 +2766,10 @@ $$&lt;/p&gt;
   
   <entry>
     <title>Hadoop源码学习(14)——压缩(2)</title>
-    <link href="http://keyunluo.github.io/2016/08/15/2016-08-15-hadoop-io-10.html"/>
-    <id>http://keyunluo.github.io/2016/08/15/2016-08-15-hadoop-io-10.html</id>
+    <link href="http://keyunluo.github.io/2016/08/15/BigData/hadoop-io-10.html"/>
+    <id>http://keyunluo.github.io/2016/08/15/BigData/hadoop-io-10.html</id>
     <published>2016-08-15T00:25:02.000Z</published>
-    <updated>2016-09-07T11:49:49.527Z</updated>
+    <updated>2017-03-18T07:50:29.502Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;数据压缩往往是计算密集型操作，考虑到性能，建议使用本地库(Native Library)来压缩和解压缩。Snappy在Google的生产环境中经过了PB级数据压缩的考验，具有优良的性能，以Snappy为例，学习在Hadoop提供的压缩框架下集成新的压缩算法。&lt;/p&gt;
@@ -2864,7 +2864,7 @@ $$&lt;/p&gt;
     
     </summary>
     
-      <category term="SourceCodeLearning" scheme="http://keyunluo.github.io/categories/SourceCodeLearning/"/>
+      <category term="BigData" scheme="http://keyunluo.github.io/categories/BigData/"/>
     
     
       <category term="Hadoop" scheme="http://keyunluo.github.io/tags/Hadoop/"/>
@@ -2873,10 +2873,10 @@ $$&lt;/p&gt;
   
   <entry>
     <title>Hadoop源码学习(13)——压缩(1)</title>
-    <link href="http://keyunluo.github.io/2016/08/14/2016-08-14-hadoop-io-9.html"/>
-    <id>http://keyunluo.github.io/2016/08/14/2016-08-14-hadoop-io-9.html</id>
+    <link href="http://keyunluo.github.io/2016/08/14/BigData/hadoop-io-9.html"/>
+    <id>http://keyunluo.github.io/2016/08/14/BigData/hadoop-io-9.html</id>
     <published>2016-08-14T00:25:02.000Z</published>
-    <updated>2016-09-07T11:49:49.527Z</updated>
+    <updated>2017-03-18T07:51:03.775Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;本节内容：&lt;/strong&gt;压缩广泛应用于海量数据处理中，对数据文件进行压缩，可以有效减少存储文件所需的空间，并加快数据在网络上或者磁盘上的传输速度。在Hadoop中，压缩应用于文件存储、Map阶段到Reduce阶段的数据交换等情景。&lt;/p&gt;
@@ -3003,7 +3003,7 @@ $$&lt;/p&gt;
     
     </summary>
     
-      <category term="SourceCodeLearning" scheme="http://keyunluo.github.io/categories/SourceCodeLearning/"/>
+      <category term="BigData" scheme="http://keyunluo.github.io/categories/BigData/"/>
     
     
       <category term="Hadoop" scheme="http://keyunluo.github.io/tags/Hadoop/"/>

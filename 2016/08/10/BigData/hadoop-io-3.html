@@ -1,0 +1,1234 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=monaco:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop,IO,Writable" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="流光" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本节内容：Writable是Hadoop的核心，Hadoop通过它定义了Hadoop中基本的数据类型及其操作，它是实现序列化的基础，本节学习其中的几个重要的工具类的实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop源码学习(7)——Writable(2)">
+<meta property="og:url" content="http://keyunluo.github.io/2016/08/10/BigData/hadoop-io-3.html">
+<meta property="og:site_name" content="流光">
+<meta property="og:description" content="本节内容：Writable是Hadoop的核心，Hadoop通过它定义了Hadoop中基本的数据类型及其操作，它是实现序列化的基础，本节学习其中的几个重要的工具类的实现。">
+<meta property="og:updated_time" content="2017-03-18T07:50:36.230Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop源码学习(7)——Writable(2)">
+<meta name="twitter:description" content="本节内容：Writable是Hadoop的核心，Hadoop通过它定义了Hadoop中基本的数据类型及其操作，它是实现序列化的基础，本节学习其中的几个重要的工具类的实现。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'FQBRJAIOP0',
+      apiKey: '62ea038e31dd7941c12b0cd5097e4a8c',
+      indexName: 'keyunindex',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索","hits_empty":"未找到任何: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://keyunluo.github.io/2016/08/10/BigData/hadoop-io-3.html"/>
+
+
+
+
+
+  <title> Hadoop源码学习(7)——Writable(2) | 流光 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76470846-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?945b21807344d0260f24455bbd82dfea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">流光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">他跑啊跑啊，只为追上那个曾经被寄予厚望的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/resource/share" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-download"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://keyunluo.github.io/2016/08/10/BigData/hadoop-io-3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="浮舟沧海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/resource/img/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="流光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hadoop源码学习(7)——Writable(2)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-10T10:25:02+08:00">
+                2016-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index">
+                    <span itemprop="name">BigData</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/10/BigData/hadoop-io-3.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/10/BigData/hadoop-io-3.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/08/10/BigData/hadoop-io-3.html" class="leancloud_visitors" data-flag-title="Hadoop源码学习(7)——Writable(2)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>本节内容：</strong>Writable是Hadoop的核心，Hadoop通过它定义了Hadoop中基本的数据类型及其操作，它是实现序列化的基础，本节学习其中的几个重要的工具类的实现。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="WritableUtils"><a href="#WritableUtils" class="headerlink" title="WritableUtils"></a>WritableUtils</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">返回值</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">readCompressedByteArray</td>
+<td style="text-align:left">DataInput in</td>
+<td style="text-align:left">byte []</td>
+<td style="text-align:left">读取压缩的GZIP字节数组</td>
+</tr>
+<tr>
+<td style="text-align:left">skipCompressedByteArray</td>
+<td style="text-align:left">DataInput in</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">跳过压缩的字节数组</td>
+</tr>
+<tr>
+<td style="text-align:left">writeCompressedByteArray</td>
+<td style="text-align:left">DataOutput out , byte[] bytes</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">写入压缩的字节数组</td>
+</tr>
+<tr>
+<td style="text-align:left">readCompressedString</td>
+<td style="text-align:left">DataInput in</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">读取压缩的字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">writeCompressedString</td>
+<td style="text-align:left">DataOutput out , String s</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">写入压缩的字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">writeString</td>
+<td style="text-align:left">DataOutput out ,String s</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">写字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">readString</td>
+<td style="text-align:left">DataInput in</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">读字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">writeStringArray</td>
+<td style="text-align:left">DataOutput out ,String[] s</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">写字符串数组</td>
+</tr>
+<tr>
+<td style="text-align:left">writeCompressedStringArray</td>
+<td style="text-align:left">DataOutput out ,String[] s</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">写压缩字符串数组</td>
+</tr>
+<tr>
+<td style="text-align:left">readStringArray</td>
+<td style="text-align:left">DataInput in</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">读字符串数组</td>
+</tr>
+<tr>
+<td style="text-align:left">readCompressedStringArray</td>
+<td style="text-align:left">DataInput in</td>
+<td style="text-align:left">String []</td>
+<td style="text-align:left">读压缩字符串数组</td>
+</tr>
+<tr>
+<td style="text-align:left">displayByteArray</td>
+<td style="text-align:left">byte[] record</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">显示ByteArray</td>
+</tr>
+<tr>
+<td style="text-align:left">clone</td>
+<td style="text-align:left">T orig,Configuration conf</td>
+<td style="text-align:left">&lt; T extends Writable> T</td>
+<td style="text-align:left">使用序列化拷贝一个writable object到buffer中</td>
+</tr>
+<tr>
+<td style="text-align:left">cloneInto</td>
+<td style="text-align:left">Writable dst , Writable src</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">已经弃用的方法，功能同上面拷贝一样</td>
+</tr>
+<tr>
+<td style="text-align:left">writeVInt</td>
+<td style="text-align:left">DataOutput stream, int i</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">写VInt型数据</td>
+</tr>
+<tr>
+<td style="text-align:left">writeVLong</td>
+<td style="text-align:left">DataOutput stream, long i</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">写VLong型数据</td>
+</tr>
+<tr>
+<td style="text-align:left">readLong</td>
+<td style="text-align:left">DataInput stream</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">读Long型数据</td>
+</tr>
+<tr>
+<td style="text-align:left">readVInt</td>
+<td style="text-align:left">DataInput stream</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">读VInt型数据</td>
+</tr>
+<tr>
+<td style="text-align:left">readVIntInRange</td>
+<td style="text-align:left">DataInput stream,int lower,int upper</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">读VInt型数据,验证其处于[lower,upper]之间</td>
+</tr>
+<tr>
+<td style="text-align:left">isNegativeVInt</td>
+<td style="text-align:left">byte value</td>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">判断byte第一位是否为负</td>
+</tr>
+<tr>
+<td style="text-align:left">decodeVIntSize</td>
+<td style="text-align:left">byte value</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">通过第一位返回bytes大小</td>
+</tr>
+<tr>
+<td style="text-align:left">getVIntSize</td>
+<td style="text-align:left">long i</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">获得变长存储的整数编码长度</td>
+</tr>
+<tr>
+<td style="text-align:left">readEnum</td>
+<td style="text-align:left">DataInput in,Class<t> enumType</t></td>
+<td style="text-align:left">&lt; T extends Enum &lt; T &gt;&gt; T</td>
+<td style="text-align:left">从DataInput中读取枚举值</td>
+</tr>
+<tr>
+<td style="text-align:left">writeEnum</td>
+<td style="text-align:left">DataOutput out,Enum &lt; ?&gt; enumVal</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">把字符串类型的枚举值写入DataOutput</td>
+</tr>
+<tr>
+<td style="text-align:left">skipFully</td>
+<td style="text-align:left">DataInput in, int len</td>
+<td style="text-align:left">void</td>
+<td style="text-align:left">在输入流中跳过len长度的字节</td>
+</tr>
+<tr>
+<td style="text-align:left">toByteArray</td>
+<td style="text-align:left">Wriatble… writables</td>
+<td style="text-align:left">byte[]</td>
+<td style="text-align:left">把Writable转换成byte array</td>
+</tr>
+<tr>
+<td style="text-align:left">readStringSafely</td>
+<td style="text-align:left">DataInput in,int maxLength</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">读取字符串，但是检查正确性</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h2><ul>
+<li>encode：将String使用UTF-8编码成字节bytes,如果replace参数为true，那么难看的输入将会被替换的字母U+FFFD代替，否则抛出一个MalformedInputException</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title">encode</span><span class="params">(String string, <span class="keyword">boolean</span> replace)</span></span><br><span class="line">    <span class="keyword">throws</span> CharacterCodingException </span>&#123;</span><br><span class="line">    CharsetEncoder encoder = ENCODER_FACTORY.get();</span><br><span class="line">    <span class="keyword">if</span> (replace) &#123;</span><br><span class="line">      encoder.onMalformedInput(CodingErrorAction.REPLACE);</span><br><span class="line">      encoder.onUnmappableCharacter(CodingErrorAction.REPLACE);</span><br><span class="line">    &#125;</span><br><span class="line">    ByteBuffer bytes =</span><br><span class="line">      encoder.encode(CharBuffer.wrap(string.toCharArray()));</span><br><span class="line">    <span class="keyword">if</span> (replace) &#123;</span><br><span class="line">      encoder.onMalformedInput(CodingErrorAction.REPORT);</span><br><span class="line">      encoder.onUnmappableCharacter(CodingErrorAction.REPORT);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> bytes;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>decode：将byte array使用UTF-8编码成字符串String,如果replace参数为true，那么难看的输入将会被替换的字母U+FFFD代替，否则抛出一个MalformedInputException</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">decode</span><span class="params">(ByteBuffer utf8, <span class="keyword">boolean</span> replace)</span></span><br><span class="line">  <span class="keyword">throws</span> CharacterCodingException </span>&#123;</span><br><span class="line">  CharsetDecoder decoder = DECODER_FACTORY.get();</span><br><span class="line">  <span class="keyword">if</span> (replace) &#123;</span><br><span class="line">    decoder.onMalformedInput(</span><br><span class="line">        java.nio.charset.CodingErrorAction.REPLACE);</span><br><span class="line">    decoder.onUnmappableCharacter(CodingErrorAction.REPLACE);</span><br><span class="line">  &#125;</span><br><span class="line">  String str = decoder.decode(utf8).toString();</span><br><span class="line">  <span class="comment">// set decoder back to its default value: REPORT</span></span><br><span class="line">  <span class="keyword">if</span> (replace) &#123;</span><br><span class="line">    decoder.onMalformedInput(CodingErrorAction.REPORT);</span><br><span class="line">    decoder.onUnmappableCharacter(CodingErrorAction.REPORT);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> str;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>readString：从输入流中读取UTF8 编码的String，附加最大尺寸</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">readString</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> readString(in, Integer.MAX_VALUE);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">readString</span><span class="params">(DataInput in, <span class="keyword">int</span> maxLength)</span></span><br><span class="line">    <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> length = WritableUtils.readVIntInRange(in, <span class="number">0</span>, maxLength);</span><br><span class="line">  <span class="keyword">byte</span> [] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[length];</span><br><span class="line">  in.readFully(bytes, <span class="number">0</span>, length);</span><br><span class="line">  <span class="keyword">return</span> decode(bytes);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="ObjectWritable"><a href="#ObjectWritable" class="headerlink" title="ObjectWritable"></a>ObjectWritable</h2><p>针对Java基本类型、字符串、枚举、Writable、空值、Writable的其他子类，ObjectWritable提供了一个封装，适用于字段需要使用多种类型。ObjectWritable可用于Hadoop的远程调用中参数的序列化和反序列化。ObjectWritable的另一个典型应用是在需要序列化不同类型的对象到某一个字段，如在一个SequenceFile的值保存不同类型的对象时，可以将该值声明为ObjectWritable。</p>
+<p>ObjectWritable包含三个成员变量：被封装的对象实例instance、该对象运行时类的class对象declaredClass、Configuration对象conf。</p>
+<p>ObjectWritable的write方法调用的是静态方法ObjectWritable.writeObject(),该方法可以向DataOutput接口中写入各种Java对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFields</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    readObject(in, <span class="keyword">this</span>, <span class="keyword">this</span>.conf);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(DataOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    writeObject(out, instance, declaredClass, conf);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(DataOutput out, Object instance,</span><br><span class="line">                                 Class declaredClass,</span><br><span class="line">                                 Configuration conf)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    writeObject(out, instance, declaredClass, conf, <span class="keyword">false</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(DataOutput out, Object instance,</span><br><span class="line">        Class declaredClass, Configuration conf, <span class="keyword">boolean</span> allowCompactArrays)</span></span><br><span class="line">    <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;                       <span class="comment">// null</span></span><br><span class="line">      instance = <span class="keyword">new</span> NullInstance(declaredClass, conf);</span><br><span class="line">      declaredClass = Writable.class;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Special case: must come before writing out the declaredClass.</span></span><br><span class="line">    <span class="comment">// If this is an eligible array of primitives,</span></span><br><span class="line">    <span class="comment">// wrap it in an ArrayPrimitiveWritable$Internal wrapper class.</span></span><br><span class="line">    <span class="keyword">if</span> (allowCompactArrays &amp;&amp; declaredClass.isArray()</span><br><span class="line">        &amp;&amp; instance.getClass().getName().equals(declaredClass.getName())</span><br><span class="line">        &amp;&amp; instance.getClass().getComponentType().isPrimitive()) &#123;</span><br><span class="line">      instance = <span class="keyword">new</span> ArrayPrimitiveWritable.Internal(instance);</span><br><span class="line">      declaredClass = ArrayPrimitiveWritable.Internal.class;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 写出declaredClass的规范名</span></span><br><span class="line">    UTF8.writeString(out, declaredClass.getName()); <span class="comment">// always write declared</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (declaredClass.isArray()) &#123;     <span class="comment">// non-primitive or non-compact array</span></span><br><span class="line">      <span class="keyword">int</span> length = Array.getLength(instance);</span><br><span class="line">      out.writeInt(length);</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">        writeObject(out, Array.get(instance, i),</span><br><span class="line">            declaredClass.getComponentType(), conf, allowCompactArrays);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == ArrayPrimitiveWritable.Internal.class) &#123;</span><br><span class="line">      ((ArrayPrimitiveWritable.Internal) instance).write(out);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == String.class) &#123;   <span class="comment">// String</span></span><br><span class="line">      UTF8.writeString(out, (String)instance);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass.isPrimitive()) &#123;     <span class="comment">// primitive type</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (declaredClass == Boolean.TYPE) &#123;        <span class="comment">// boolean</span></span><br><span class="line">        out.writeBoolean(((Boolean)instance).booleanValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Character.TYPE) &#123; <span class="comment">// char</span></span><br><span class="line">        out.writeChar(((Character)instance).charValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Byte.TYPE) &#123;    <span class="comment">// byte</span></span><br><span class="line">        out.writeByte(((Byte)instance).byteValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Short.TYPE) &#123;   <span class="comment">// short</span></span><br><span class="line">        out.writeShort(((Short)instance).shortValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Integer.TYPE) &#123; <span class="comment">// int</span></span><br><span class="line">        out.writeInt(((Integer)instance).intValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Long.TYPE) &#123;    <span class="comment">// long</span></span><br><span class="line">        out.writeLong(((Long)instance).longValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Float.TYPE) &#123;   <span class="comment">// float</span></span><br><span class="line">        out.writeFloat(((Float)instance).floatValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Double.TYPE) &#123;  <span class="comment">// double</span></span><br><span class="line">        out.writeDouble(((Double)instance).doubleValue());</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass == Void.TYPE) &#123;    <span class="comment">// void</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Not a primitive: "</span>+declaredClass);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (declaredClass.isEnum()) &#123;         <span class="comment">// enum</span></span><br><span class="line">      UTF8.writeString(out, ((Enum)instance).name());</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Writable.class.isAssignableFrom(declaredClass)) &#123; <span class="comment">// Writable</span></span><br><span class="line">      UTF8.writeString(out, instance.getClass().getName());</span><br><span class="line">      ((Writable)instance).write(out);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Message.class.isAssignableFrom(declaredClass)) &#123;</span><br><span class="line">      ((Message)instance).writeDelimitedTo(</span><br><span class="line">          DataOutputOutputStream.constructOutputStream(out));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Can't write: "</span>+instance+<span class="string">" as "</span>+declaredClass);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">readObject</span><span class="params">(DataInput in, Configuration conf)</span></span><br><span class="line">    <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> readObject(in, <span class="keyword">null</span>, conf);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">readObject</span><span class="params">(DataInput in, ObjectWritable objectWritable, Configuration conf)</span></span><br><span class="line">    <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    String className = UTF8.readString(in);</span><br><span class="line">    Class&lt;?&gt; declaredClass = PRIMITIVE_NAMES.get(className);</span><br><span class="line">    <span class="keyword">if</span> (declaredClass == <span class="keyword">null</span>) &#123;</span><br><span class="line">      declaredClass = loadClass(conf, className);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Object instance;</span><br><span class="line"></span><br><span class="line">    Writable writable = WritableFactories.newInstance(instanceClass, conf);</span><br><span class="line">    writable.readFields(in);</span><br><span class="line">    instance = writable;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>writeObject()方法首先输出对象的类名(通过对象对应的Class对象的getName()方法获得)，然后根据传入对象的模型，分情况序列化对象到输出流中。在ObjectWritable.writeObject()的逻辑中，需要分别处理null、Java数组、字符串、Java基本类型、枚举和Writable的子类6种情况，由于类的继承，处理Writable时，序列化的结果包含对象类名，对象实际类名和对象序列化结果三部分。</p>
+<p>需要对象实际类名：根据Java的单根继承规则，ObjectWritable中传入的declaredClass，可以是传入instance对象对应的类的对象，也可以是instance对象的父类的类对象。但是在序列化和反序列化时，往往不能使用父类的序列化方法(如write方法)来序列化子类对象，所以在序列化结果重必须记住对象的实际类名。</p>
+<p>和输出对应，ObjectWritable的readFields()方法调用的是静态方法ObjectWritable.readObject(),该方法的实现和writeObject()类似，但其依赖于WritableFactories类。WritableFactories类允许非公有的Writable子类定义一个对象工厂，有该工厂创建Writable对象，如在上面的readObject()代码中，通过WritableFactories的静态方法newInstance()，可以创建类型为instanceClass的Writable子对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 保存了类型和WritableFactory工厂的对应关系</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;Class, WritableFactory&gt; CLASS_TO_FACTORY =</span><br><span class="line">    <span class="keyword">new</span> ConcurrentHashMap&lt;Class, WritableFactory&gt;();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setFactory</span><span class="params">(Class c, WritableFactory factory)</span> </span>&#123;</span><br><span class="line">    CLASS_TO_FACTORY.put(c, factory);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> WritableFactory <span class="title">getFactory</span><span class="params">(Class c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> CLASS_TO_FACTORY.get(c);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Writable <span class="title">newInstance</span><span class="params">(Class&lt;? extends Writable&gt; c, Configuration conf)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 根据输入类型查找对应的工厂对象</span></span><br><span class="line">    WritableFactory factory = WritableFactories.getFactory(c);</span><br><span class="line">    <span class="keyword">if</span> (factory != <span class="keyword">null</span>) &#123;</span><br><span class="line">      Writable result = factory.newInstance();</span><br><span class="line">      <span class="comment">// 如果该对象是可配置的，newInstance会通过对象的setConf()方法配置对象</span></span><br><span class="line">      <span class="keyword">if</span> (result <span class="keyword">instanceof</span> Configurable) &#123;</span><br><span class="line">        ((Configurable) result).setConf(conf);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 采用传统的反射工具ReflectionUtils创建对象</span></span><br><span class="line">      <span class="keyword">return</span> ReflectionUtils.newInstance(c, conf);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用一个定义的工厂创建一个类的新实例</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Writable <span class="title">newInstance</span><span class="params">(Class&lt;? extends Writable&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> newInstance(c, <span class="keyword">null</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>WritableFactories提供注册机制，使得这些Writable的子类可以将该工厂登记到WritableFactories的静态成员变量CLASS_TO_FACTORY中。</p>
+<h2 id="GenericWritable"><a href="#GenericWritable" class="headerlink" title="GenericWritable"></a>GenericWritable</h2><p>ObjectWritable作为一种通用机制，相当浪费资源，它需要为每一个输出写入封装类型的名字，如果类型的数量不是很多，而且可以事先知道，则可以使用一个静态类型数组来提高效率，并使用数组索引作为类型的序列化引用。为此，引入了GenericWritable。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericWritable</span> <span class="keyword">implements</span> <span class="title">Writable</span>, <span class="title">Configurable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> NOT_SET = -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">byte</span> type = NOT_SET;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> Writable instance;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> Configuration conf = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span><br><span class="line">   * Set the instance that is wrapped.</span><br><span class="line">   *</span><br><span class="line">   * <span class="doctag">@param</span> obj</span><br><span class="line">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(Writable obj)</span> </span>&#123;</span><br><span class="line">    instance = obj;</span><br><span class="line">    Class&lt;? extends Writable&gt; instanceClazz = instance.getClass();</span><br><span class="line">    Class&lt;? extends Writable&gt;[] clazzes = getTypes();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; clazzes.length; i++) &#123;</span><br><span class="line">      Class&lt;? extends Writable&gt; clazz = clazzes[i];</span><br><span class="line">      <span class="keyword">if</span> (clazz.equals(instanceClazz)) &#123;</span><br><span class="line">        type = (<span class="keyword">byte</span>) i;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"The type of instance is: "</span></span><br><span class="line">                               + instance.getClass() + <span class="string">", which is NOT registered."</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span><br><span class="line">   * Return the wrapped instance.</span><br><span class="line">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Writable <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"GW["</span> + (instance != <span class="keyword">null</span> ? (<span class="string">"class="</span> + instance.getClass().getName() +</span><br><span class="line">        <span class="string">",value="</span> + instance.toString()) : <span class="string">"(null)"</span>) + <span class="string">"]"</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFields</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    type = in.readByte();</span><br><span class="line">    Class&lt;? extends Writable&gt; clazz = getTypes()[type &amp; <span class="number">0xff</span>];</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      instance = ReflectionUtils.newInstance(clazz, conf);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Cannot initialize the class: "</span> + clazz);</span><br><span class="line">    &#125;</span><br><span class="line">    instance.readFields(in);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(DataOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (type == NOT_SET || instance == <span class="keyword">null</span>)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"The GenericWritable has NOT been set correctly. type="</span></span><br><span class="line">                            + type + <span class="string">", instance="</span> + instance);</span><br><span class="line">    out.writeByte(type);</span><br><span class="line">    instance.write(out);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span><br><span class="line">   * Return all classes that may be wrapped.  Subclasses should implement this</span><br><span class="line">   * to return a constant array of classes.</span><br><span class="line">   */</span></span><br><span class="line">  <span class="keyword">abstract</span> <span class="keyword">protected</span> Class&lt;? extends Writable&gt;[] getTypes();</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Configuration <span class="title">getConf</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> conf;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setConf</span><span class="params">(Configuration conf)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.conf = conf;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当两个具有相同类型的key但是值类型不同的sequence file在map阶段结束到reduce阶段时，多种类型的值类型是不被允许的。在这种情况下，这个类能够帮助你包装不同类型的实例。</p>
+<p>和ObjectWritable相比，这个类效率更加高，因为ObjectWritable会在每一个Key-Value键值对中追加类声明到输出文件中。</p>
+<ul>
+<li><p>使用GenericWritable类的一般方法</p>
+<ul>
+<li>写自定义的class，例如GenericObject，它继承自GenericWritable</li>
+<li>实现抽象方法 getTypes(),定义在应用中在GenericObject里将要包装的类。注意：在getTypes()方法里定义的类必须实现Writable接口。</li>
+</ul>
+</li>
+</ul>
+<p>一个简单示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericObject</span> <span class="keyword">extends</span> <span class="title">GenericWritable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> Class[] CLASSES = &#123;</span><br><span class="line">               ClassType1.class,</span><br><span class="line">               ClassType2.class,</span><br><span class="line">               ClassType3.class,</span><br><span class="line">               &#125;;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">protected</span> Class[] getTypes() &#123;</span><br><span class="line">       <span class="keyword">return</span> CLASSES;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/09/BigData/hadoop-io-2.html" rel="next" title="Hadoop源码学习(6)——Writable(1)">
+                <i class="fa fa-chevron-left"></i> Hadoop源码学习(6)——Writable(1)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/10/BigData/hadoop-io-4.html" rel="prev" title="Hadoop源码学习(8)——序列化">
+                Hadoop源码学习(8)——序列化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/10/BigData/hadoop-io-3.html"
+           data-title="Hadoop源码学习(7)——Writable(2)" data-url="http://keyunluo.github.io/2016/08/10/BigData/hadoop-io-3.html">
+      </div>
+    
+    <script src="https://dn-hb0716.qbox.me/duoshuo.js"></script>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/resource/img/profile.jpg"
+               alt="浮舟沧海" />
+          <p class="site-author-name" itemprop="name">浮舟沧海</p>
+           
+              <p class="site-description motion-element" itemprop="description">Coder On The Road</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keyunluo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/streamerset" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item" style="margin-left: 8px; width:45%;">
+                  <a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#WritableUtils"><span class="nav-number">1.</span> <span class="nav-text">WritableUtils</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Text"><span class="nav-number">2.</span> <span class="nav-text">Text</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ObjectWritable"><span class="nav-number">3.</span> <span class="nav-text">ObjectWritable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GenericWritable"><span class="nav-number">4.</span> <span class="nav-text">GenericWritable</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">浮舟沧海</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+<div class="theme-info">粤ICP备17025554号-1</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"streamers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("AXBtbvjnaMP2cE34U1CAjLqF-gzGzoHsz", "6CKwM1armacelKCp8mh4StM4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+</body>
+</html>

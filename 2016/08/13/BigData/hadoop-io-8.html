@@ -1,0 +1,1056 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=monaco:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop,IO,MapFile" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="流光" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本节内容：MapFile是已经排过序的SequenceFile，它有索引，所以可以按键查找。可以将MapFile视为java.util.Map的持久化形式(尽管它并没有实现该接口)，它的大小可以超过保存在内存中一个map的大小。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop源码学习(12)——MapFile">
+<meta property="og:url" content="http://keyunluo.github.io/2016/08/13/BigData/hadoop-io-8.html">
+<meta property="og:site_name" content="流光">
+<meta property="og:description" content="本节内容：MapFile是已经排过序的SequenceFile，它有索引，所以可以按键查找。可以将MapFile视为java.util.Map的持久化形式(尽管它并没有实现该接口)，它的大小可以超过保存在内存中一个map的大小。">
+<meta property="og:image" content="http://keyunluo.github.io/resource/blog/2016-08/MapFile.png">
+<meta property="og:updated_time" content="2017-03-18T07:50:58.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop源码学习(12)——MapFile">
+<meta name="twitter:description" content="本节内容：MapFile是已经排过序的SequenceFile，它有索引，所以可以按键查找。可以将MapFile视为java.util.Map的持久化形式(尽管它并没有实现该接口)，它的大小可以超过保存在内存中一个map的大小。">
+<meta name="twitter:image" content="http://keyunluo.github.io/resource/blog/2016-08/MapFile.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'FQBRJAIOP0',
+      apiKey: '62ea038e31dd7941c12b0cd5097e4a8c',
+      indexName: 'keyunindex',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索","hits_empty":"未找到任何: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://keyunluo.github.io/2016/08/13/BigData/hadoop-io-8.html"/>
+
+
+
+
+
+  <title> Hadoop源码学习(12)——MapFile | 流光 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76470846-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?945b21807344d0260f24455bbd82dfea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">流光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">他跑啊跑啊，只为追上那个曾经被寄予厚望的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/resource/share" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-download"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://keyunluo.github.io/2016/08/13/BigData/hadoop-io-8.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="浮舟沧海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/resource/img/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="流光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hadoop源码学习(12)——MapFile
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-13T08:25:02+08:00">
+                2016-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index">
+                    <span itemprop="name">BigData</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/13/BigData/hadoop-io-8.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/13/BigData/hadoop-io-8.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/08/13/BigData/hadoop-io-8.html" class="leancloud_visitors" data-flag-title="Hadoop源码学习(12)——MapFile">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>本节内容：</strong>MapFile是已经排过序的SequenceFile，它有索引，所以可以按键查找。可以将MapFile视为java.util.Map的持久化形式(尽管它并没有实现该接口)，它的大小可以超过保存在内存中一个map的大小。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="MapFile相关类"><a href="#MapFile相关类" class="headerlink" title="MapFile相关类"></a>MapFile相关类</h2><p>与MapFile相关的类共有3个，它们都位于org.apache.hadoop.io包下：</p>
+<ul>
+<li>ArrayFile：一种稠密的基于文件的从整数到值的映射。整型表示数组元素的索引，值是Writable类型。</li>
+<li>BloomMapFile：使用动态Bloom过滤器来提供快速的键之间的测试，并且提供了一个快速的Reader.get(WritableComparable, Writable)操作，尤其在稀疏密度的MapFile中。该实现使用一个动态的布隆过滤器来检测某个给定的键是否在map文件中，这个操作在内存中实现，故而速度比较快，但可能误判。经过布隆过滤器过滤后，如果存在相应的结果，则调用get()方法。</li>
+<li>SetFile：一个基于文件的keys集合。用于存储Writable键的集合，键必须按照排好的顺序添加。</li>
+</ul>
+<p><img src="/resource/blog/2016-08/MapFile.png" alt="MapFile类"></p>
+<h2 id="MapFile写操作"><a href="#MapFile写操作" class="headerlink" title="MapFile写操作"></a>MapFile写操作</h2><p>MapFile的写操作类似于SequenceFile的写操作。新建一个MapFile.Writer实例，然后调用append()方法顺序写入文件内容。如果不按顺序写入，就会抛出一个IOException异常。键必须是WritableComparable类型的实例，值必须是Writable类型的实例，这与SequenceFile正好相反，后者可以为其条目使用任意序列化框架。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Text;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.MapFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MapFileWriteDemo</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] DATA = &#123;</span><br><span class="line">    <span class="string">"One, two, buckle my shoe"</span>,</span><br><span class="line">    <span class="string">"Three, four, shut the door"</span>,</span><br><span class="line">    <span class="string">"Five, six, pick up sticks"</span>,</span><br><span class="line">    <span class="string">"Seven, eight, lay them straight"</span>,</span><br><span class="line">    <span class="string">"Nine, ten, a big fat hen"</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line"></span><br><span class="line">    IntWritable key = <span class="keyword">new</span> IntWritable();</span><br><span class="line">    Text value = <span class="keyword">new</span> Text();</span><br><span class="line">    MapFile.Writer writer = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        writer = <span class="keyword">new</span> MapFile.Writer(conf,fs,url,key.getClass(),value.getClass());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">1024</span>;i++)&#123;</span><br><span class="line">            key.set(i+<span class="number">1</span>);</span><br><span class="line">            value.set(DATA[i % DATA.length]);</span><br><span class="line">            writer.append(key,value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(writer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">➜  project export CLASSPATH=$HADOOP_CLASSPATH:$CLASSPATH</span><br><span class="line">➜  project javac MapFileWriteDemo.java</span><br><span class="line">注: MapFileWriteDemo.java使用或覆盖了已过时的 API。</span><br><span class="line">注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。</span><br><span class="line">➜  project java MapFileWriteDemo  mapfile.map</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">15</span>:<span class="number">07</span>:<span class="number">57</span> WARN util.NativeCodeLoader: Unable to load native-hadoop library <span class="keyword">for</span> your platform... using builtin-java classes where applicable</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">15</span>:<span class="number">07</span>:<span class="number">58</span> INFO compress.CodecPool: Got brand-new compressor [.deflate]</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">15</span>:<span class="number">07</span>:<span class="number">59</span> INFO compress.CodecPool: Got brand-new compressor [.deflate]</span><br><span class="line">➜  project hdfs dfs -ls</span><br><span class="line">Found <span class="number">2</span> items</span><br><span class="line">drwxr-xr-x   - streamer supergroup          <span class="number">0</span> <span class="number">2016</span><span class="number">-05</span><span class="number">-25</span> <span class="number">22</span>:<span class="number">37</span> COPROCESSOR</span><br><span class="line">drwxr-xr-x   - streamer supergroup          <span class="number">0</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-13</span> <span class="number">15</span>:<span class="number">07</span> mapfile.map</span><br><span class="line">➜  project hdfs dfs -text mapfile.map/data | head</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">15</span>:<span class="number">10</span>:<span class="number">20</span> INFO zlib.ZlibFactory: Successfully loaded &amp; initialized native-zlib library</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">15</span>:<span class="number">10</span>:<span class="number">20</span> INFO compress.CodecPool: Got brand-new decompressor [.deflate]</span><br><span class="line"><span class="number">1</span>   One, two, buckle my shoe</span><br><span class="line"><span class="number">2</span>   Three, four, shut the door</span><br><span class="line"><span class="number">3</span>   Five, six, pick up sticks</span><br><span class="line"><span class="number">4</span>   Seven, eight, lay them straight</span><br><span class="line"><span class="number">5</span>   Nine, ten, a big fat hen</span><br><span class="line"><span class="number">6</span>   One, two, buckle my shoe</span><br><span class="line"><span class="number">7</span>   Three, four, shut the door</span><br><span class="line"><span class="number">8</span>   Five, six, pick up sticks</span><br><span class="line"><span class="number">9</span>   Seven, eight, lay them straight</span><br><span class="line"><span class="number">10</span>  Nine, ten, a big fat hen</span><br><span class="line"></span><br><span class="line">➜  project hdfs dfs -text mapfile.map/index</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">15</span>:<span class="number">10</span>:<span class="number">41</span> INFO zlib.ZlibFactory: Successfully loaded &amp; initialized native-zlib library</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">15</span>:<span class="number">10</span>:<span class="number">41</span> INFO compress.CodecPool: Got brand-new decompressor [.deflate]</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">15</span>:<span class="number">10</span>:<span class="number">41</span> INFO compress.CodecPool: Got brand-new decompressor [.deflate]</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">15</span>:<span class="number">10</span>:<span class="number">41</span> INFO compress.CodecPool: Got brand-new decompressor [.deflate]</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">15</span>:<span class="number">10</span>:<span class="number">41</span> INFO compress.CodecPool: Got brand-new decompressor [.deflate]</span><br><span class="line"><span class="number">1</span>   <span class="number">128</span></span><br><span class="line"><span class="number">129</span> <span class="number">6079</span></span><br><span class="line"><span class="number">257</span> <span class="number">12054</span></span><br><span class="line"><span class="number">385</span> <span class="number">18030</span></span><br><span class="line"><span class="number">513</span> <span class="number">24002</span></span><br><span class="line"><span class="number">641</span> <span class="number">29976</span></span><br><span class="line"><span class="number">769</span> <span class="number">35947</span></span><br><span class="line"><span class="number">897</span> <span class="number">41922</span></span><br></pre></td></tr></table></figure></p>
+<p>可以发现MapFile包含data和index两个文件，这两个文件都是SequenceFile，data文件包含所有记录，index文件包含一部分键和data文件键到其偏移量的映射。</p>
+<p>从输出中可以看见，默认情况下只有每隔128隔键才有一个包含在index文件中，当然也可以调整，调用MapFile.Writer实例的setIndexInterval()方法来设置io.map.index.interval属性即可。增加索引间隔大小可以有效减少MapFile存储索引所需要的内存，但降低了随机访问效率。</p>
+<p>因为索引只保留了一部分键，所以整个MapFile无法枚举所有键甚至计算它自己有多少键，唯一的办法是读取整个文件。</p>
+<h2 id="MapFile读操作"><a href="#MapFile读操作" class="headerlink" title="MapFile读操作"></a>MapFile读操作</h2><p>在MapFile中依次遍历文件中所有条目的过程类似于SequenceFile中的过程：首先新建一个MapFile.Reader实例，然后调用next()方法，直到返回值为false，表示没有条目返回，因为已经读到文件末尾，通过调用get()方法可以随机访问文件中的数据，返回值用于确定是否在MapFile中找到相应的条目，如果是null，说明指定key没有相应的条目。</p>
+<p>getClosest()方法与get()方法类似，只不过它返回的是与指定键匹配的最接近的键，而不是在不匹配时返回null，更准确地说，如果MapFile包含指定的键，则返回对应的条目，否则，返回MapFile中第一个大于(或小于，由相应的boolean参数指定)指定键的键。</p>
+<p>大型MapFile的索引会占据大量内存，不要在修改索引间隔之后重建索引，要在读取索引时设置io.mao.index.skip属性来加载一定比例的索引键。该属性通常设置为0，意味着不跳过索引键，如果设置为1，则表示每次跳过索引键中的一个。设置的越大，越节省内存，但会增加搜索时间，因为平均而言，扫描的键更多。</p>
+<h2 id="将SequenceFile转换成MapFile"><a href="#将SequenceFile转换成MapFile" class="headerlink" title="将SequenceFile转换成MapFile"></a>将SequenceFile转换成MapFile</h2><p>在MapFile中搜索相当于在加有索引和排过序的SequenceFile中搜索，下面例子显示了对MapFile调用fix()静态方法，将SequenceFile重建索引成MapFile。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.MapFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MapFileFixer</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line"></span><br><span class="line">    Path map = <span class="keyword">new</span> Path(url);</span><br><span class="line">    Path mapData = <span class="keyword">new</span> Path(map,MapFile.DATA_FILE_NAME);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从sequence 数据文件获得key和value的类型</span></span><br><span class="line">    SequenceFile.Reader reader = <span class="keyword">new</span> SequenceFile.Reader(fs,mapData,conf);</span><br><span class="line">    Class keyClass = reader.getKeyClass();</span><br><span class="line">    Class valueClass = reader.getValueClass();</span><br><span class="line">    reader.close();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建map索引文件</span></span><br><span class="line">    <span class="keyword">long</span> entries = MapFile.fix(fs,map,keyClass,valueClass,<span class="keyword">false</span>,conf);</span><br><span class="line">    System.out.printf(<span class="string">"创建MapFile %s ,入口是 %d"</span>,map,entries);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Fix()方法通常用于重建已损坏的索引，但它能够从头开始建立新的索引，所以此处我们可以使用此方法满足需求，具体用法如下：</p>
+<p>(1) 将名为 numbers.seq的顺序文件排序后，保存到名为number.map的文件夹下，该文件夹就是最终的MapFile(如果顺序文件已经排过序，则可以跳过这一步。只需要把这个文件复制到number.map/data文件，然后直接跳至第三步)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.4.jar sort -r 1 \</span><br><span class="line">-inFormat org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat \</span><br><span class="line">-outFormat org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat \</span><br><span class="line">-outKey org.apache.hadoop.io.IntWritable \</span><br><span class="line">-outValue org.apache.hadoop.io.Text \</span><br><span class="line">numbers.seq numbers.map</span><br></pre></td></tr></table></figure>
+<p>(2) 将MapReduce的输出重命名为data文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -mv numbers.map/part-r-00000 numbers.map/data</span><br></pre></td></tr></table></figure>
+<p>(3) 建立index文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java MapFileFixer numbers.map</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  project java MapFileFixer numbers.map</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">17</span>:<span class="number">45</span>:<span class="number">39</span> WARN util.NativeCodeLoader: Unable to load native-hadoop library <span class="keyword">for</span> your platform... using builtin-java classes where applicable</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">17</span>:<span class="number">45</span>:<span class="number">40</span> INFO compress.CodecPool: Got brand-new compressor [.deflate]</span><br><span class="line">创建MapFile numbers.map ,入口是 <span class="number">1024</span>%</span><br><span class="line">➜  project hdfs dfs -ls numbers.map</span><br><span class="line">Found <span class="number">2</span> items</span><br><span class="line">-rw-r--r--   <span class="number">1</span> streamer supergroup      <span class="number">40403</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-13</span> <span class="number">17</span>:<span class="number">43</span> numbers.map/data</span><br><span class="line">-rw-r--r--   <span class="number">1</span> streamer supergroup        <span class="number">336</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-13</span> <span class="number">17</span>:<span class="number">45</span> numbers.map/index</span><br></pre></td></tr></table></figure>
+<p>大功告成。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/12/BigData/hadoop-io-6.html" rel="next" title="Hadoop源码学习(10)——Avro(2)">
+                <i class="fa fa-chevron-left"></i> Hadoop源码学习(10)——Avro(2)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/13/BigData/hadoop-io-7.html" rel="prev" title="Hadoop源码学习(11)——SequenceFile">
+                Hadoop源码学习(11)——SequenceFile <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/13/BigData/hadoop-io-8.html"
+           data-title="Hadoop源码学习(12)——MapFile" data-url="http://keyunluo.github.io/2016/08/13/BigData/hadoop-io-8.html">
+      </div>
+    
+    <script src="https://dn-hb0716.qbox.me/duoshuo.js"></script>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/resource/img/profile.jpg"
+               alt="浮舟沧海" />
+          <p class="site-author-name" itemprop="name">浮舟沧海</p>
+           
+              <p class="site-description motion-element" itemprop="description">Coder On The Road</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keyunluo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/streamerset" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item" style="margin-left: 8px; width:45%;">
+                  <a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MapFile相关类"><span class="nav-number">1.</span> <span class="nav-text">MapFile相关类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MapFile写操作"><span class="nav-number">2.</span> <span class="nav-text">MapFile写操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MapFile读操作"><span class="nav-number">3.</span> <span class="nav-text">MapFile读操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将SequenceFile转换成MapFile"><span class="nav-number">4.</span> <span class="nav-text">将SequenceFile转换成MapFile</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">浮舟沧海</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+<div class="theme-info">粤ICP备17025554号-1</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"streamers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("AXBtbvjnaMP2cE34U1CAjLqF-gzGzoHsz", "6CKwM1armacelKCp8mh4StM4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1132 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=monaco:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Min-Cut , 最小割 , Max-Flow , 最大流" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="流光" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本节内容：对于一个图中的两个节点来说，如果把图中的一些边去掉，刚好让他们之间无法连通的话，这些被去掉的边组成的集合就叫做割了，最小割就是指所有割中权重之和最小的一个割。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法">
+<meta property="og:url" content="http://keyunluo.github.io/2016/10/05/Cource/advanced-algorithm-2.html">
+<meta property="og:site_name" content="流光">
+<meta property="og:description" content="本节内容：对于一个图中的两个节点来说，如果把图中的一些边去掉，刚好让他们之间无法连通的话，这些被去掉的边组成的集合就叫做割了，最小割就是指所有割中权重之和最小的一个割。">
+<meta property="og:image" content="http://keyunluo.github.io/resource/blog/2016-10/mincut.jpg">
+<meta property="og:updated_time" content="2017-03-18T07:53:18.973Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法">
+<meta name="twitter:description" content="本节内容：对于一个图中的两个节点来说，如果把图中的一些边去掉，刚好让他们之间无法连通的话，这些被去掉的边组成的集合就叫做割了，最小割就是指所有割中权重之和最小的一个割。">
+<meta name="twitter:image" content="http://keyunluo.github.io/resource/blog/2016-10/mincut.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'FQBRJAIOP0',
+      apiKey: '62ea038e31dd7941c12b0cd5097e4a8c',
+      indexName: 'keyunindex',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索","hits_empty":"未找到任何: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://keyunluo.github.io/2016/10/05/Cource/advanced-algorithm-2.html"/>
+
+
+
+
+
+  <title> 高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法 | 流光 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76470846-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?945b21807344d0260f24455bbd82dfea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">流光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">他跑啊跑啊，只为追上那个曾经被寄予厚望的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/resource/share" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-download"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://keyunluo.github.io/2016/10/05/Cource/advanced-algorithm-2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="浮舟沧海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/resource/img/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="流光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-05T13:41:02+08:00">
+                2016-10-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cource/" itemprop="url" rel="index">
+                    <span itemprop="name">Cource</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/05/Cource/advanced-algorithm-2.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/05/Cource/advanced-algorithm-2.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/10/05/Cource/advanced-algorithm-2.html" class="leancloud_visitors" data-flag-title="高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>本节内容：</strong>对于一个图中的两个节点来说，如果把图中的一些边去掉，刚好让他们之间无法连通的话，这些被去掉的边组成的集合就叫做割了，最小割就是指所有割中权重之和最小的一个割。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="图的割"><a href="#图的割" class="headerlink" title="图的割"></a>图的割</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>对于无向图 $G(V,E)$ 以及边的子集 $C \subseteq E$, 如果把C中所有的边都删除后图G不再连通则称边的子集C是图G的一个割。更加严格地，我们考虑割集断开了图的剩余部分的顶点的一个子集S。</p>
+<p>一对不相交集合： $S,T \subseteq V$ 如果S和T不为空，并且$S \bigcup T = V$成立，那么S,T称作V的二划分。</p>
+<p>给定一个顶点V的二划分 $\{S,T\}$，一个割集C定义如下：</p>
+<p>$$C = E(S,T), 其中 E(S,T) = \{ uv \in E \vert u \in S , v \in T \}$$</p>
+<p>对于一个图G，割可能有很多个，我们对找出最小的割集和最大的割集感兴趣。</p>
+<h3 id="最小割"><a href="#最小割" class="headerlink" title="最小割"></a>最小割</h3><blockquote>
+<p>输入：无向图 $G(V,E)$ , 输出：一个G中边数最小的割C。</p>
+</blockquote>
+<p>也就是说，将顶点集合$V$二划分成两个不相交的非空集合$\{S，T\}$，使得 $E|(S,T)|$ 最小。</p>
+<p>更一般地，允许点$(u,v)$之间存在不止一条边，即并行边，这样的图称为<strong>multi-graphs</strong>,此时割C包括并行边。</p>
+<h2 id="流网络"><a href="#流网络" class="headerlink" title="流网络"></a>流网络</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>流网络（Flow Networks）指的是一个有向图 $G = (V, E)$，其中每条边 $(u, v) ∈ E$ 均有一非负容量 $c(u, v) ≥ 0$。如果 $(u, v) ∉ E$ 则可以规定 $c(u, v) = 0$。流网络中有两个特殊的顶点：源点 s （source）和汇点 t（sink）。为方便起见，假定每个顶点均处于从源点到汇点的某条路径上，就是说，对每个顶点 $v ∈ E$，存在一条路径 s –&gt; v –&gt; t。因此，图 G 为连通图，且 $|E| ≥ |V| - 1$。</p>
+<h3 id="流-Flow-的基本性质"><a href="#流-Flow-的基本性质" class="headerlink" title="流(Flow)的基本性质"></a>流(Flow)的基本性质</h3><p>设$C_{uv}$代表边u到v最大允许流量(Capacity), $f_{uv}$代表u到v的当前流量, 那么有一下两个性质:</p>
+<ul>
+<li><p>$(u, v)$为有向图边, $0 \leq f_{uv} \leq C_{uv}$, 即对于所有的边, 当前流量不允许超过其Capacity</p>
+</li>
+<li><p>除了$s, t$之外, 对所有节点有 $\sum\limits_{(v, u)}f_{wu} = \sum\limits_{(u, v)}f_{uv}$, 即对于任何一点, 流入该点的流量等于留出该点的流量, 流量守恒原则(类似与能量守恒的概念)。</p>
+</li>
+</ul>
+<h3 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h3><ul>
+<li><p>残存网络 ：给定网络G和流量f, 残存网络$G_f$由那些仍有空间对流量进行调整的边构成.<strong>残存网络 = 容量网络capacity - 流量网络flow</strong>。</p>
+</li>
+<li><p>增广路径：增广路径p是残存网络中一条从源节点s到汇点t的简单路径,在一条增广路径p上能够为每条边增加的流量的最大值为路径p的残存容量$c_f(p) = min {c_f(u,v):(u,v) \in p }$。 在一条增广路径p上, 要增加整条增广路径的水流量, 则必须看最小能承受水流量的管道, 不然水管会爆掉, 这最小承受水流量就是<strong>残存容量</strong>。</p>
+</li>
+</ul>
+<h3 id="最大流"><a href="#最大流" class="headerlink" title="最大流"></a>最大流</h3><p>流的值定义为：$|f| =Σ_{v∈V}f(s, v)$，即从源点 s 出发的总流。</p>
+<p>最大流问题（Maximum-flow problem）中，给出源点 s 和汇点 t 的流网络 G，希望找出从 s 到 t 的最大值流。</p>
+<h2 id="最小割最大流定理"><a href="#最小割最大流定理" class="headerlink" title="最小割最大流定理"></a>最小割最大流定理</h2><h3 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h3><p>如果 f 是具有源点 s 和汇点 t 的流网络 $G = (V, E)$ 中的一个流，则下列条件是等价的：</p>
+<ul>
+<li><p>f 是 G 的一个最大流。</p>
+</li>
+<li><p>残留网络 $G_f$ 不包含增广路径。</p>
+</li>
+<li><p>对 G 的某个割 (S, T)，有 |f| = c(S, T)。</p>
+</li>
+</ul>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><ul>
+<li><p>min=MAXINT,确定一个源点</p>
+</li>
+<li><p>枚举汇点</p>
+</li>
+<li><p>计算最大流，并确定当前源汇的最小割集，若比min小更新min</p>
+</li>
+<li><p>转到2直到枚举完毕</p>
+</li>
+<li><p>min即为所求，输出min</p>
+</li>
+</ul>
+<p>不难看出复杂度很高：枚举汇点要$O(n)$，最短增广路最大流算法求最大流是$O((n^2)m)$复杂度，在复杂网络中$O(m)=O(n^2)$，算法总复杂度就是$O(n^5)$；哪怕采用最高标号预进流算法求最大流$O((n^2)(m^{0.5}))$，算法总复杂度也要$O(n^4)$</p>
+<h2 id="最小割的确定性算法"><a href="#最小割的确定性算法" class="headerlink" title="最小割的确定性算法"></a>最小割的确定性算法</h2><p>目前已知最好的求最小割的确定性算法是<strong> Stoer–Wagner algorithm</strong> $(O(mn + n^2\log n), m=|E|)$,包含并行边</p>
+<h3 id="算法思路："><a href="#算法思路：" class="headerlink" title="算法思路："></a>算法思路：</h3><p>1.min=MAXINT，固定一个顶点P</p>
+<p>2.从点P用“类似”prim的s算法扩展出“最大生成树”，记录最后扩展的顶点和最后扩展的边</p>
+<p>3.计算最后扩展到的顶点的切割值（即与此顶点相连的所有边权和），若比min小更新min</p>
+<p>4.合并最后扩展的那条边的两个端点为一个顶点（当然他们的边也要合并，这个好理解吧？）</p>
+<p>5.转到2，合并N-1次后结束</p>
+<p>6.min即为所求，输出min</p>
+<p>prim本身复杂度是$O(n^2)$，合并n-1次，算法复杂度即为$O(n^3)$</p>
+<p>如果在prim中加堆优化，复杂度会降为$O((n^2)logn)$</p>
+<p>其核心思想是迭代缩小规模, 算法基于这样一个事实:</p>
+<blockquote>
+<p>对于图中任意两点s和t, 它们要么属于最小割的两个不同集中, 要么属于同一个集.</p>
+</blockquote>
+<p>如果是后者, 那么合并s和t后并不影响最小割. 基于这么个思想, 如果每次能求出图中某两点之间的最小割, 然后更新答案后合并它们再继续求最小割, 就得到最终答案了. 算法步骤如下:</p>
+<ol>
+<li><p>设最小割cut=INF, 任选一个点s到集合A中, 定义W(A, p)为A中的所有点到A外一点p的权总和.</p>
+</li>
+<li><p>对刚才选定的s, 更新W(A,p)(该值递增).</p>
+</li>
+<li><p>选出A外一点p, 且W(A,p)最大的作为新的s, 若A!=G(V), 则继续2.</p>
+</li>
+<li><p>把最后进入A的两点记为s和t, 用W(A,t)更新cut.</p>
+</li>
+<li><p>新建顶点u, 边权w(u, v)=w(s, v)+w(t, v), 删除顶点s和t, 以及与它们相连的边.</p>
+</li>
+<li><p>若|V|!=1则继续1.</p>
+</li>
+</ol>
+<p>一个很详细的博客<a href="http://blog.coolstack.cc/2016/01/08/%E6%9C%9D%E8%8A%B1%E5%A4%95%E6%8B%BE%EF%BC%9A%E6%97%A0%E5%90%91%E5%9B%BE%E5%85%A8%E5%B1%80%E6%9C%80%E5%B0%8F%E5%89%B2/" target="_blank" rel="external">朝花夕拾：无向图全局最小割</a></p>
+<h3 id="基本步骤："><a href="#基本步骤：" class="headerlink" title="基本步骤："></a>基本步骤：</h3><p>用wage数组记录点的连通度，vis数组标记点是否在集合里面，In数组表示点被其它点合并。</p>
+<ul>
+<li><p>一：找到S - T的最小割Mincut，其中S 和 T为最后并入集合的两个点。</p>
+<ul>
+<li><p>1，初始化数组vis 和 wage；</p>
+</li>
+<li><p>2，遍历所有不在集合且没有被合并的点，找到最大wage值的点Next，并记录Mincut、S和T；</p>
+</li>
+<li><p>3，Next并入集合，叠加与Next相连的所有点（不在集合 且 没有被合并），更新这些点的wage值；</p>
+</li>
+<li><p>4，重复操作2和3一共N次 或者 找不到新的Next值时 跳出，返回Mincut；</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>二、找全局最小割ans，需要重复第一步N-1次，因为每次合并一个点，最多合并N-1个点；</p>
+<ul>
+<li><p>1，每次对返回的Mincut，更新ans = min(ans, Mincut)，当然ans为0时，说明图不连通；</p>
+</li>
+<li><p>2，把点T合并到S点，操作有：对 所有没有被合并的点j，Map[S][j] += Map[T][j]。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>来自<a href="http://blog.csdn.net/i_love_home/article/details/9698791" target="_blank" rel="external">CSDN博客</a></p>
+<p>步骤: <img src="/resource/blog/2016-10/mincut.jpg" alt="寻找 s, t 两点，然后合并于 s 点"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 500+10</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 0x3f3f3f3f</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> Map[MAXN][MAXN];</span><br><span class="line"><span class="keyword">bool</span> vis[MAXN];<span class="comment">//是否已并入集合</span></span><br><span class="line"><span class="keyword">int</span> wage[MAXN];<span class="comment">//记录每个点的连通度</span></span><br><span class="line"><span class="keyword">bool</span> In[MAXN];<span class="comment">//该点是否已经合并到其它点</span></span><br><span class="line"><span class="keyword">int</span> N, M;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getMap</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(Map, <span class="number">0</span>, <span class="keyword">sizeof</span>(Map));</span><br><span class="line">    <span class="keyword">int</span> a, b, c;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; M; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line">        a++, b++;</span><br><span class="line">        Map[a][b] += c;</span><br><span class="line">        Map[b][a] += c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> S, T;<span class="comment">//记录每次找s-t割  所遍历的最后两个点</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">work</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> Mincut;<span class="comment">//每一步找到的s-t割</span></span><br><span class="line">    <span class="built_in">memset</span>(wage, <span class="number">0</span>, <span class="keyword">sizeof</span>(wage));</span><br><span class="line">    <span class="built_in">memset</span>(vis, <span class="literal">false</span>, <span class="keyword">sizeof</span>(vis));</span><br><span class="line">    <span class="keyword">int</span> Next;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> Max = -INF;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= N; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(!In[j] &amp;&amp; !vis[j] &amp;&amp; Max &lt; wage[j])<span class="comment">//找最大的wage值</span></span><br><span class="line">            &#123;</span><br><span class="line">                Next = j;</span><br><span class="line">                Max = wage[j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(Next == T) <span class="keyword">break</span>;<span class="comment">//找不到点 图本身不连通</span></span><br><span class="line">        vis[Next] = <span class="literal">true</span>;<span class="comment">//标记 已经并入集合</span></span><br><span class="line">        Mincut = Max;<span class="comment">//每次更新</span></span><br><span class="line">        S = T, T = Next;<span class="comment">// 记录前、后点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= N; j++)<span class="comment">//继续找不在集合 且 没有被合并过的点</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(In[j] || vis[j]) <span class="keyword">continue</span>;</span><br><span class="line">            wage[j] += Map[Next][j];<span class="comment">//累加 连通度</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Mincut;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Stoer_wagner</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(In, <span class="literal">false</span>, <span class="keyword">sizeof</span>(In));</span><br><span class="line">    <span class="keyword">int</span> ans = INF;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N<span class="number">-1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        ans = min(ans, work());</span><br><span class="line">        <span class="keyword">if</span>(ans == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//本身不连通</span></span><br><span class="line">        In[T] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= N; j++)<span class="comment">//把T点合并到S点</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(In[j]) <span class="keyword">continue</span>;<span class="comment">//已经合并</span></span><br><span class="line">            Map[S][j] += Map[T][j];</span><br><span class="line">            Map[j][S] += Map[j][T];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;N, &amp;M) != EOF)</span><br><span class="line">    &#123;</span><br><span class="line">        getMap();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, Stoer_wagner());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/高级算法/" rel="tag"># 高级算法</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/04/Cource/advanced-algorithm-1.html" rel="next" title="高级算法(1)--NP完全性与近似算法">
+                <i class="fa fa-chevron-left"></i> 高级算法(1)--NP完全性与近似算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/06/Cource/advanced-algorithm-3.html" rel="prev" title="高级算法(3)--Min-Cut-Max-Flow(2)-近似算法">
+                高级算法(3)--Min-Cut-Max-Flow(2)-近似算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/05/Cource/advanced-algorithm-2.html"
+           data-title="高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法" data-url="http://keyunluo.github.io/2016/10/05/Cource/advanced-algorithm-2.html">
+      </div>
+    
+    <script src="https://dn-hb0716.qbox.me/duoshuo.js"></script>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/resource/img/profile.jpg"
+               alt="浮舟沧海" />
+          <p class="site-author-name" itemprop="name">浮舟沧海</p>
+           
+              <p class="site-description motion-element" itemprop="description">Coder On The Road</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keyunluo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/streamerset" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item" style="margin-left: 8px; width:45%;">
+                  <a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图的割"><span class="nav-number">1.</span> <span class="nav-text">图的割</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小割"><span class="nav-number">1.2.</span> <span class="nav-text">最小割</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流网络"><span class="nav-number">2.</span> <span class="nav-text">流网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-1"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流-Flow-的基本性质"><span class="nav-number">2.2.</span> <span class="nav-text">流(Flow)的基本性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关概念"><span class="nav-number">2.3.</span> <span class="nav-text">相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最大流"><span class="nav-number">2.4.</span> <span class="nav-text">最大流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最小割最大流定理"><span class="nav-number">3.</span> <span class="nav-text">最小割最大流定理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定理"><span class="nav-number">3.1.</span> <span class="nav-text">定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">3.2.</span> <span class="nav-text">算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最小割的确定性算法"><span class="nav-number">4.</span> <span class="nav-text">最小割的确定性算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法思路："><span class="nav-number">4.1.</span> <span class="nav-text">算法思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本步骤："><span class="nav-number">4.2.</span> <span class="nav-text">基本步骤：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">4.3.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">浮舟沧海</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+<div class="theme-info">粤ICP备17025554号-1</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"streamers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("AXBtbvjnaMP2cE34U1CAjLqF-gzGzoHsz", "6CKwM1armacelKCp8mh4StM4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+</body>
+</html>

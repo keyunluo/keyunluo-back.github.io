@@ -1,0 +1,1083 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=monaco:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java，序列化" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="流光" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本节内容：对象序列化的目标是将对象保存在磁盘中，或允许网络直接传输对象。对象序列化的机制允许把内存中的java对象转换成平台无关的二进制流，其他程序一旦获取了这种二进制流，则就可以将其恢复成原来的Java对象。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java中的序列化">
+<meta property="og:url" content="http://keyunluo.github.io/2016/08/07/Programming/java-serialize.html">
+<meta property="og:site_name" content="流光">
+<meta property="og:description" content="本节内容：对象序列化的目标是将对象保存在磁盘中，或允许网络直接传输对象。对象序列化的机制允许把内存中的java对象转换成平台无关的二进制流，其他程序一旦获取了这种二进制流，则就可以将其恢复成原来的Java对象。">
+<meta property="og:updated_time" content="2016-09-07T11:49:49.512Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java中的序列化">
+<meta name="twitter:description" content="本节内容：对象序列化的目标是将对象保存在磁盘中，或允许网络直接传输对象。对象序列化的机制允许把内存中的java对象转换成平台无关的二进制流，其他程序一旦获取了这种二进制流，则就可以将其恢复成原来的Java对象。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'FQBRJAIOP0',
+      apiKey: '62ea038e31dd7941c12b0cd5097e4a8c',
+      indexName: 'keyunindex',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索","hits_empty":"未找到任何: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://keyunluo.github.io/2016/08/07/Programming/java-serialize.html"/>
+
+
+
+
+
+  <title> Java中的序列化 | 流光 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76470846-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?945b21807344d0260f24455bbd82dfea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">流光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">他跑啊跑啊，只为追上那个曾经被寄予厚望的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/resource/share" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-download"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://keyunluo.github.io/2016/08/07/Programming/java-serialize.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="浮舟沧海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/resource/img/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="流光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java中的序列化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-07T18:25:02+08:00">
+                2016-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/07/Programming/java-serialize.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/07/Programming/java-serialize.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/08/07/Programming/java-serialize.html" class="leancloud_visitors" data-flag-title="Java中的序列化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>本节内容：</strong>对象序列化的目标是将对象保存在磁盘中，或允许网络直接传输对象。对象序列化的机制允许把内存中的java对象转换成平台无关的二进制流，其他程序一旦获取了这种二进制流，则就可以将其恢复成原来的Java对象。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="序列化的含义和意义"><a href="#序列化的含义和意义" class="headerlink" title="序列化的含义和意义"></a>序列化的含义和意义</h2><p>序列化机制允许将实现序列化的Java对象转换成字节序列，这些字节序列可以保存在磁盘上，或者通过网络传输。</p>
+<p>对象的序列化(Serialize)指将一个Java对象写入IO流，于此对应的是，对象的反序列化(Deserialize)则是指从IO流中恢复该Java对象。</p>
+<p>为了让某个对象支持序列化机制，该类必须实现如下两个接口之一：</p>
+<ul>
+<li>Serializable</li>
+<li>Externalizable</li>
+</ul>
+<p>Java的很多类已经实现了Serializable接口，该接口是一个标记接口，实现该接口无须实现任何方法，它只是表明该类的实例是可序列化的。</p>
+<p>所有可能在网络上传输的对象的类、所有需要保存到磁盘里的对象的类都必须可序列化。</p>
+<h2 id="使用对象流实现序列化"><a href="#使用对象流实现序列化" class="headerlink" title="使用对象流实现序列化"></a>使用对象流实现序列化</h2><p>一旦某个类实现了Serializable接口，该类的对象就是可序列化的：</p>
+<ul>
+<li>创建一个ObjectOutputStream，这个输出流是一个处理流，所以必须建立在其他节点流的基础之上：<code>ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&quot;object.txt&quot;))</code>;</li>
+<li>调用ObjectOutputStream对象的writeObject()方法输出可序列化对象：<code>oos.writeObject(per)</code>;</li>
+</ul>
+<p>如果希望从二进制流中恢复Java对象，则需要使用反序列化：</p>
+<ul>
+<li>创建一个ObjectInputStream输入流，必须建立在其他节点流的基础之上：<code>ObjectInputStream ois = new ObjectInputStream(new FileInputStream(&quot;object.txt&quot;));</code></li>
+<li>调用ObjectInputStream对象的readObject()方法读取流中的对象，该方法返回一个Object类型的java对象，如果知道该对象的类型，则可以将该对象强制转换成其真实的类型：<code>Person p = (Person)ois.readObject();</code></li>
+</ul>
+<p>反序列化读取的仅仅是Java对象的数据，而不是Java类，因此采用反序列化恢复Java对象时，必须提供该Java对象所属类的class文件，否则引发ClassNotFoundException异常。</p>
+<h2 id="对象引用的序列化"><a href="#对象引用的序列化" class="headerlink" title="对象引用的序列化"></a>对象引用的序列化</h2><p>如果某个类的成员变量的类型不是基本类型或String类型，而是另一个引用类型，那么这个引用类型必须是可序列化的，否则拥有该类型的成员变量的类也是不可序列化的。</p>
+<p>为了防止引用对象不一致的情况，Java序列化机制采用了一种特殊的序列化算法：</p>
+<ul>
+<li>所有保存到磁盘中的对象都有一个序列化编号。</li>
+<li>当程序试图序列化一个对象时，程序将先检查该对象是否已经被序列化过，只有该对象从未(在本次虚拟机中)被序列化过，系统才会将该对象转换成字节序列并输出。</li>
+<li>如果某个对象已经序列化过，程序将只是直接输出一个序列化编号，而不是再次重新序列化该对象。</li>
+</ul>
+<p>当然，这种机制也有一种潜在的问题：当程序序列化一个可变对象时，只有第一次使用writeObject()方法输出时才会将该对象转换成字节序列输出，当后面该对象的实例变量值改变后，当程序再次调用writeObject()方法时，也只是输出前面的序列化编号。</p>
+<h2 id="自定义序列化1"><a href="#自定义序列化1" class="headerlink" title="自定义序列化1"></a>自定义序列化1</h2><p>在一些特殊的场景下，如果一个类里面包含的某些实例变量是敏感信息，这时不希望将该实例变量进行序列化，或者某个实力变量的类型是不可序列化的，因此不希望对该变量进行递归序列化，以免引发java.io.NotSerializableException异常。</p>
+<p>通过在实例变量前面使用transient关键字修饰，可以指定Java序列化时无须理会该实例变量，反序列化是该变量的值为0。方法和静态变量也不会被序列化。</p>
+<p>使用transient关键字修饰实例变量虽然简单、方便，但该变量将被完全隔离在序列化机制之外，这样导致在反序列化恢复Java对象时无法取得该实例变量值。Java还提供了一种自定义序列化机制，可以让程序控制如何序列化各实例变量，甚至完全不序列化某些实例变量(与使用transient关键字的效果相同)。</p>
+<p>在序列化和反序列化过程中需要特殊处理的类应该提供如下特殊签名的方法，这些特殊的方法可以实现自定义序列化：</p>
+<ul>
+<li>private void writeObject(java.io.ObjectOutputStream out) throws IOException</li>
+<li>private void readObject(java.io.ObjectInputStream in) throws IOException,ClassNotFoundException;</li>
+<li>private void readObjectNoData() throws ObjectStreamException;</li>
+</ul>
+<p>当序列化流不完整时，readObjectNoData()方法可以用来正确地初始化反序列化的对象。</p>
+<ul>
+<li>例子</li>
+</ul>
+<p>Person类提供了writeObject()和readObject()两个方法，其中writeObject()方法在保存Person对象时将其name实例变量包装成StringBuffer，并将其字符序列反转后写入；在readObject()方法中处理name的策略与此对应——先将读取的数据强制转换成StringBuffer，再将其反转后赋给name实例变量。</p>
+<p>还有一种更加彻底的自定义机制，它甚至可以在序列化对象时将该对象替换成其它对象，使用特殊方法：<code>writeReplace</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="comment">// 注意：此处没有提供无参数的构造方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name , <span class="keyword">int</span> age)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"有参数的构造器"</span>);</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age  = age ;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123; <span class="keyword">return</span> name;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> age;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span>&#123; <span class="keyword">this</span>.name = name;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;<span class="keyword">this</span>.age  = age ;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(ObjectOutputStream out)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">        out.writeObject(<span class="keyword">new</span> StringBuffer(name).reverse());</span><br><span class="line">        out.writeInt(age);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObject</span><span class="params">(ObjectInputStream in)</span> <span class="keyword">throws</span> IOException,ClassNotFoundException</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = ((StringBuffer)in.readObject()).reverse().toString();</span><br><span class="line">        <span class="keyword">this</span>.age = in.readInt();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PersonReplace</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="comment">// 注意：此处没有提供无参数的构造方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PersonReplace</span><span class="params">(String name , <span class="keyword">int</span> age)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"有参数的构造器"</span>);</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age  = age ;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123; <span class="keyword">return</span> name;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> age;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span>&#123; <span class="keyword">this</span>.name = name;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;<span class="keyword">this</span>.age  = age ;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Object <span class="title">writeReplace</span><span class="params">()</span> <span class="keyword">throws</span> ObjectStreamException</span>&#123;</span><br><span class="line">        ArrayList&lt;Object&gt; list = <span class="keyword">new</span> ArrayList&lt;Object&gt;();</span><br><span class="line">        list.add(name);</span><br><span class="line">        list.add(age);</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializePerson</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"==测试自定义序列化=="</span>);</span><br><span class="line">        <span class="keyword">try</span>(</span><br><span class="line">            <span class="comment">// 创建一个ObjectOutputStream输出值</span></span><br><span class="line">            ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"serialize.txt"</span>));</span><br><span class="line">            <span class="comment">// 创建一个ObjectInputStream输入流</span></span><br><span class="line">            ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(<span class="string">"serialize.txt"</span>)))&#123;</span><br><span class="line">            Person per = <span class="keyword">new</span> Person(<span class="string">"孙悟空"</span>,<span class="number">500</span>);</span><br><span class="line">            oos.writeObject(per);</span><br><span class="line">            Person p = (Person)ois.readObject();</span><br><span class="line">            System.out.println(<span class="string">"姓名:"</span>+p.getName()+<span class="string">",年龄:"</span>+p.getAge());</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception ex)&#123;ex.printStackTrace();&#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"============"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"==测试writeReplace序列化=="</span>);</span><br><span class="line">        <span class="keyword">try</span>(</span><br><span class="line">            <span class="comment">// 创建一个ObjectOutputStream输出值</span></span><br><span class="line">            ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"serialize-replace.txt"</span>));</span><br><span class="line">            <span class="comment">// 创建一个ObjectInputStream输入流</span></span><br><span class="line">            ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(<span class="string">"serialize-replace.txt"</span>)))&#123;</span><br><span class="line">            PersonReplace per = <span class="keyword">new</span> PersonReplace(<span class="string">"孙悟空"</span>,<span class="number">500</span>);</span><br><span class="line">            oos.writeObject(per);</span><br><span class="line">            <span class="comment">// 反序列化读取ArrayList</span></span><br><span class="line">            ArrayList list = (ArrayList)ois.readObject();</span><br><span class="line">            System.out.println(<span class="string">"姓名:"</span>+list.get(<span class="number">0</span>)+<span class="string">",年龄:"</span>+list.get(<span class="number">1</span>));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception ex)&#123;ex.printStackTrace();&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>与writeReplace()方法相对，序列化机制里还有一个特殊的方法，它可以实现保护性复制整个对象：<code>readResolve()</code>,这个方法会紧接着readObject()之后被调用，该方法的返回值将替代原来的反序列化的对象，而原来的readObject()反序列化的对象将会被立即丢弃。</p>
+<h2 id="自定义序列化2"><a href="#自定义序列化2" class="headerlink" title="自定义序列化2"></a>自定义序列化2</h2><p>Java还提供了另一种序列化机制：Externalizable，这种序列化机制完全由程序员决定存储和恢复对象数据。该接口定义了如下两个方法：</p>
+<ul>
+<li>void readExternal(ObjectInput in):需要序列化的类实现readExternal()方法来实现反序列化。该方法调用DataInput(它是ObjectInput的父接口)的方法来恢复基本类型的实例变量值，调用ObjectInput的readObject()方法来恢复引用类型的实例变量值。</li>
+<li>void writeExternal(ObjectOutput out):需要序列化的类实现writeExternal()方法来实现序列化。该方法调用DataOutput(它是ObjectOutput的父接口)的方法来保存基本类型的实例变量值，调用ObjectOutput的writeObject()方法来保存引用类型的实例变量值。</li>
+</ul>
+<p>Externalizable的接口强制自定义序列化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Externalizable</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name,<span class="keyword">int</span> age)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"有参数的构造器"</span>);</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age  = age ;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput out)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">        <span class="comment">// 将name实例变量值反转后写入二进制流</span></span><br><span class="line">        out.writeObject(<span class="keyword">new</span> StringBuffer(name).reverse());</span><br><span class="line">        out.writeInt(age);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readExternal</span><span class="params">(ObjectInput in)</span> <span class="keyword">throws</span> IOException,ClassNotFoundException</span>&#123;</span><br><span class="line">        <span class="comment">// 将读取的字符串反转后赋给name实例变量</span></span><br><span class="line">        <span class="keyword">this</span>.name = ((StringBuffer)in.readObject()).reverse().toString();</span><br><span class="line">        <span class="keyword">this</span>.age = in.readInt();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果程序需要序列化实现Externalizable接口的对象，一样调用ObjectOutputStream的writeObject()方法输出该对象即可；反序列化该对象，则调用ObjectInputStream的readObject()方法。</p>
+<h2 id="版本兼容性"><a href="#版本兼容性" class="headerlink" title="版本兼容性"></a>版本兼容性</h2><p>Java序列化机制允许为序列化的类提供一个private static final的serialVersionUID值，该类变量的值用于标识该Java类的序列化版本，如果一个类升级后，它的serialVersionUID类变量值保持不变，序列化机制也会把它们当成同一个序列化版本。</p>
+<p>分配serialVersionUID:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">    <span class="comment">//为该类指定一个serialVersionUID类变量值</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">512L</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，即使在某个对象被序列化后，它所对应的类被修改了，该对象也依然可以被正确的反序列化。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/07/Programming/java-io-2.html" rel="next" title="Java中的IO流(2)">
+                <i class="fa fa-chevron-left"></i> Java中的IO流(2)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/08/Programming/java-nio.html" rel="prev" title="Java中的NIO块">
+                Java中的NIO块 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/07/Programming/java-serialize.html"
+           data-title="Java中的序列化" data-url="http://keyunluo.github.io/2016/08/07/Programming/java-serialize.html">
+      </div>
+    
+    <script src="https://dn-hb0716.qbox.me/duoshuo.js"></script>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/resource/img/profile.jpg"
+               alt="浮舟沧海" />
+          <p class="site-author-name" itemprop="name">浮舟沧海</p>
+           
+              <p class="site-description motion-element" itemprop="description">Coder On The Road</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keyunluo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/streamerset" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item" style="margin-left: 8px; width:45%;">
+                  <a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化的含义和意义"><span class="nav-number">1.</span> <span class="nav-text">序列化的含义和意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用对象流实现序列化"><span class="nav-number">2.</span> <span class="nav-text">使用对象流实现序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象引用的序列化"><span class="nav-number">3.</span> <span class="nav-text">对象引用的序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义序列化1"><span class="nav-number">4.</span> <span class="nav-text">自定义序列化1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义序列化2"><span class="nav-number">5.</span> <span class="nav-text">自定义序列化2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本兼容性"><span class="nav-number">6.</span> <span class="nav-text">版本兼容性</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">浮舟沧海</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+<div class="theme-info">粤ICP备17025554号-1</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"streamers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("AXBtbvjnaMP2cE34U1CAjLqF-gzGzoHsz", "6CKwM1armacelKCp8mh4StM4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+</body>
+</html>

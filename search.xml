@@ -5,7 +5,7 @@
     
     <entry>
       <title><![CDATA[分布式系统——试卷分析]]></title>
-      <url>http://keyunluo.github.io/2016/12/28/2016-12-28-distributed-system-2.html</url>
+      <url>http://keyunluo.github.io/2016/12/28/Cource/distributed-system-2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>2015年秋南京大学计算机系分布式系统期末试卷分析。</p>
 </blockquote>
@@ -137,7 +137,7 @@
     
     <entry>
       <title><![CDATA[数据挖掘——试卷分析]]></title>
-      <url>http://keyunluo.github.io/2016/12/27/2016-12-27-data-mining.html</url>
+      <url>http://keyunluo.github.io/2016/12/27/Cource/data-mining.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>2015年秋南京大学计算机系数据挖掘期末试卷分析。</p>
 </blockquote>
@@ -253,7 +253,7 @@ Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the ce
     
     <entry>
       <title><![CDATA[分布式系统——课程总结]]></title>
-      <url>http://keyunluo.github.io/2016/12/23/2016-12-23-distributed-system-1.html</url>
+      <url>http://keyunluo.github.io/2016/12/23/Cource/distributed-system-1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>2016年秋南京大学计算机系分布式系统课程总结。</p>
 </blockquote>
@@ -583,7 +583,7 @@ type(仅需要一种类型的资源是可用的，如彩色显示器)
     
     <entry>
       <title><![CDATA[数据挖掘——课程总结]]></title>
-      <url>http://keyunluo.github.io/2016/12/22/2016-12-22-data-mining.html</url>
+      <url>http://keyunluo.github.io/2016/12/22/Cource/data-mining-summary.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>2016年秋南京大学计算机系数据挖掘课程学期总结。</p>
 </blockquote>
@@ -977,7 +977,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
     
     <entry>
       <title><![CDATA[SkipList 跳跃表(1) ——基本介绍]]></title>
-      <url>http://keyunluo.github.io/2016/11/16/2016-11-16-skiplist1.html</url>
+      <url>http://keyunluo.github.io/2016/11/16/Storage/skiplist1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>跳跃列表（也称跳表）是一种随机化数据结构，基于并联的链表，其效率可比拟于二叉查找树（对于大多数操作需要$O(log\ n)$平均时间）。
 基本上，跳跃列表是对有序的链表增加上附加的前进链接，增加是以随机化的方式进行的，所以在列表中的查找可以快速的跳过部分列表，因此得名,所有操作都以对数随机化的时间进行。</p>
@@ -1010,7 +1010,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
     
     <entry>
       <title><![CDATA[LSM Tree (1)]]></title>
-      <url>http://keyunluo.github.io/2016/11/16/2016-11-16-lsm1.html</url>
+      <url>http://keyunluo.github.io/2016/11/16/Storage/lsm1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>LSM树的基本思想是将修改的数据保存在内存中，达到一定数量后在将修改的数据批量写入磁盘，在写入的过程中与之前已经存在的数据做合并。同B树存储模型一样，LSM存储模型也支持增、删、读、改以及顺序扫描操作。LSM模型利用批量写入解决了随机写入的问题，虽然牺牲了部分读的性能，但是大大提高了写的性能。</p>
 </blockquote>
@@ -1044,7 +1044,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
     
     <entry>
       <title><![CDATA[Hash存储引擎]]></title>
-      <url>http://keyunluo.github.io/2016/11/15/2016-11-15-hash.html</url>
+      <url>http://keyunluo.github.io/2016/11/15/Storage/hash.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>存储系统的基本功能包括：增删读改，读操作又分为<strong>随机读取</strong>和<strong>顺序扫描</strong>, 目前单机系统的存储引擎主要有：哈希存储、B树存储、LSM树存储。Hash存储是基于哈希表结构 ：数组+链表的，支持增删改以及随机读。</p>
 </blockquote>
@@ -1075,7 +1075,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
     
     <entry>
       <title><![CDATA[高级算法--作业2]]></title>
-      <url>http://keyunluo.github.io/2016/11/03/2016-11-03-advanced-algorithm-assignment2.html</url>
+      <url>http://keyunluo.github.io/2016/11/03/Cource/advanced-algorithm-assignment2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>高级算法：第二次作业。</p>
 </blockquote>
@@ -1283,7 +1283,7 @@ So, the approximation ratio is $f$.</p>
     
     <entry>
       <title><![CDATA[高级算法--作业1]]></title>
-      <url>http://keyunluo.github.io/2016/10/13/2016-10-13-advanced-algorithm-assignment1.html</url>
+      <url>http://keyunluo.github.io/2016/10/13/Cource/advanced-algorithm-assignment1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>高级算法：第一次作业。</p>
 </blockquote>
@@ -1535,14 +1535,14 @@ the probability of one edge cannot be  2-coloable in edge $e_i$ is $Pr[e_i]= 2 /
     
     <entry>
       <title><![CDATA[高级算法(3)--Min-Cut-Max-Flow(2)-近似算法]]></title>
-      <url>http://keyunluo.github.io/2016/10/06/2016-10-06-advanced-algorithm-3.html</url>
+      <url>http://keyunluo.github.io/2016/10/06/Cource/advanced-algorithm-3.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本节重点讨论Karger’s Contraction algorithm解决最小割问题及其运行复杂度分析。</p>
 </blockquote>
 <a id="more"></a>
 <h2 id="收缩操作"><a href="#收缩操作" class="headerlink" title="收缩操作"></a>收缩操作</h2><p>在上一博客的基础上，讨论收缩操作：</p>
 <blockquote>
-<p>The contraction operator Contract(G, e) </p>
+<p>The contraction operator Contract(G, e)</p>
 <p> say e = uv:</p>
 <ul>
 <li>replace $\{u,v\}$ by a new vertex x;</li>
@@ -1666,7 +1666,7 @@ p(n) &amp; = &amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     <entry>
       <title><![CDATA[高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法]]></title>
-      <url>http://keyunluo.github.io/2016/10/05/2016-10-05-advanced-algorithm-2.html</url>
+      <url>http://keyunluo.github.io/2016/10/05/Cource/advanced-algorithm-2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>对于一个图中的两个节点来说，如果把图中的一些边去掉，刚好让他们之间无法连通的话，这些被去掉的边组成的集合就叫做割了，最小割就是指所有割中权重之和最小的一个割。</p>
 </blockquote>
@@ -1780,7 +1780,7 @@ p(n) &amp; = &amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     <entry>
       <title><![CDATA[高级算法(1)--NP完全性与近似算法]]></title>
-      <url>http://keyunluo.github.io/2016/10/04/2016-10-04-advanced-algorithm-1.html</url>
+      <url>http://keyunluo.github.io/2016/10/04/Cource/advanced-algorithm-1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本学期修读了尹一通老师的高级算法课，感觉略有困难，故将学习过程中的知识点以博客的形式记录下来，温故而知新，本节总结NP完全性问题和近似算法的概念。</p>
 </blockquote>
@@ -1832,7 +1832,7 @@ p(n) &amp; = &amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     <entry>
       <title><![CDATA[Ubuntu16.04上编译OpenCV的Python3包]]></title>
-      <url>http://keyunluo.github.io/2016/10/04/2016-10-04-ubuntu16.04-opencv3-python3.html</url>
+      <url>http://keyunluo.github.io/2016/10/04/Tools/ubuntu16.04-opencv3-python3.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本篇博文记录在Ubuntu16.04上安装OpenCV。</p>
 </blockquote>
@@ -1854,7 +1854,7 @@ p(n) &amp; = &amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     <entry>
       <title><![CDATA[数据压缩(1) —— 概述]]></title>
-      <url>http://keyunluo.github.io/2016/09/24/2016-09-24-compress-1.html</url>
+      <url>http://keyunluo.github.io/2016/09/24/Algorithm/compress-1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong> 数据压缩，是指在不丢失信息的前提下，缩减数据量以减少存储空间，提高传输、存储和处理效率的一种技术方法。或者是按照一定的算法对数据进行重新组织，减少数据的冗余和存储的空间。本系列博文具体学习经典的压缩算法以及最近流行的算法，并应用到FASTQ下一代基因数据的压缩过程中。</p>
 </blockquote>
@@ -1936,7 +1936,7 @@ p(n) &amp; = &amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     <entry>
       <title><![CDATA[统计学习方法——决策树]]></title>
-      <url>http://keyunluo.github.io/2016/09/23/2016-09-23-statical-learning-5.html</url>
+      <url>http://keyunluo.github.io/2016/09/23/MachineLearning/statical-learning-5.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>决策树(decision tree)是一种基本的分类与回归方法。决策树模型呈树形结构，其主要优点是模型具有可读性，分类速度快，学习时，利用训练数据根据损失函数最小化的原则建立决策树模型，分类速度快。决策树的学习通常包括3个步骤：特征选择、决策树的生成和决策树的修建。本节对应于统计学习方法第五章的内容，主要学习ID3、C4.5和CART算法。</p>
 </blockquote>
@@ -2083,7 +2083,7 @@ p(n) &amp; = &amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     <entry>
       <title><![CDATA[Hadoop源码学习(15)——文件系统(1)]]></title>
-      <url>http://keyunluo.github.io/2016/09/22/2016-09-22-hadoop-filesystem-1.html</url>
+      <url>http://keyunluo.github.io/2016/09/22/BigData/hadoop-filesystem-1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>为了提供对不同数据访问的一致接口，Hadoop借鉴了Linux虚拟文件系统的概念，引入了Hadoop抽象文件系统，并在Hadoop抽象文件系统上，提供了大量的具体文件系统的实现，满足构建于Hadoop应用之上的数据访问需求。本节学习Hadoop文件系统API。</p>
 </blockquote>
@@ -2207,7 +2207,7 @@ p(n) &amp; = &amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     <entry>
       <title><![CDATA[统计学习方法——朴素贝叶斯法]]></title>
-      <url>http://keyunluo.github.io/2016/08/16/2016-08-16-statical-learning-4.html</url>
+      <url>http://keyunluo.github.io/2016/08/16/MachineLearning/statical-learning-4.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>朴素贝叶斯(native Bates)是基于贝叶斯定理与特征条件独立假设的分类法。对于给定的训练数据集，首先基于特征条件独立假设学习输入/输出的联合概率密度；然后基于此模型，对给定的输入x，利用贝叶斯定理求出后验概率的最大的输出y。朴素贝叶斯实现简单，学习和预测的效率都很高，是一种常用的方法。本节对应于统计学习方法第四章的内容。</p>
 </blockquote>
@@ -2361,7 +2361,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[统计学习方法——K近邻算法]]></title>
-      <url>http://keyunluo.github.io/2016/08/15/2016-08-15-statical-learning-3.html</url>
+      <url>http://keyunluo.github.io/2016/08/15/MachineLearning/statical-learning-3.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>k近邻算法(k-nearest neighbor,k-NN)是一种基本的分类与回归算法，不具有显式的学习过程。k值选择、距离度量以及分类决策规则是k近邻算法的三个基本要素。本节对应于统计学习方法第三章的内容。</p>
 </blockquote>
@@ -2429,7 +2429,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Hadoop源码学习(14)——压缩(2)]]></title>
-      <url>http://keyunluo.github.io/2016/08/15/2016-08-15-hadoop-io-10.html</url>
+      <url>http://keyunluo.github.io/2016/08/15/BigData/hadoop-io-10.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>数据压缩往往是计算密集型操作，考虑到性能，建议使用本地库(Native Library)来压缩和解压缩。Snappy在Google的生产环境中经过了PB级数据压缩的考验，具有优良的性能，以Snappy为例，学习在Hadoop提供的压缩框架下集成新的压缩算法。</p>
 </blockquote>
@@ -2518,7 +2518,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Hadoop源码学习(13)——压缩(1)]]></title>
-      <url>http://keyunluo.github.io/2016/08/14/2016-08-14-hadoop-io-9.html</url>
+      <url>http://keyunluo.github.io/2016/08/14/BigData/hadoop-io-9.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>压缩广泛应用于海量数据处理中，对数据文件进行压缩，可以有效减少存储文件所需的空间，并加快数据在网络上或者磁盘上的传输速度。在Hadoop中，压缩应用于文件存储、Map阶段到Reduce阶段的数据交换等情景。</p>
 </blockquote>
@@ -2638,8 +2638,42 @@ $$</p>
     </entry>
     
     <entry>
+      <title><![CDATA[Hadoop源码学习(11)——SequenceFile]]></title>
+      <url>http://keyunluo.github.io/2016/08/13/BigData/hadoop-io-7.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>SequenceFile为二进制键值对提供了一个持久数据结构，也可以作为小文件的容器，HDFS和MapReduce是针对大文件优化的，所以通过SequenceFile类型将小文件包装起来，可以获得更高效率的存储和处理。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="SequenceFile类"><a href="#SequenceFile类" class="headerlink" title="SequenceFile类"></a>SequenceFile类</h2><p>SequenceFile类位于org.apache.hadoop.io包内，类结构如下：</p>
+<p><img src="/resource/blog/2016-08/SequenceFile.png" alt="SequenceFile类"></p>
+<h2 id="SequenceFile的格式"><a href="#SequenceFile的格式" class="headerlink" title="SequenceFile的格式"></a>SequenceFile的格式</h2><p>SequenceFile文件由文件头和随后的一条或多条记录组成。顺序文件的前三个字节是SEQ，紧随其后的一个字节表示顺序文件的版本号。文件头还包括其他字段，例如键和值类的名称、数据压缩细节、用户定义的元数据以及同步标识。同步标识用于在读取文件时能够从任意位置开始识别边界记录。</p>
+<p>记录的内部结构取决于是否启用压缩。如果已经启用，则取决于记录压缩还是数据块压缩。</p>
+<p>如果没有启用压缩(默认情况)，那么每条记录则由记录长度(字节数)、键长度、键和值组成。长度字段为4字节长的整数，遵循java.io.DataOutput类中的writeInt()方法的约定，写入顺序文件的类定义Serialization类来实现键和值的序列化。</p>
+<p>记录压缩格式与无压缩情况基本相同，只不过值是用文件头定义的codec压缩的，但是键并没有被压缩。</p>
+<p><img src="/resource/blog/2016-08/sequencefilewithnocompression.jpg" alt="SequenceFile-无压缩和记录压缩"></p>
+<p>块压缩是指一次性压缩多条记录，因为它可以利用记录间的相似性进行压缩，所以相较于单条记录压缩方法，该方法的压缩效率更高，如下图所示。可以不断向数据块中压缩记录，直到块的字节数不小于io.seqfile.compress.blocksize属性中设置的字节数：默认为1MB。每一个新块的开始处都需要插入同步标识。数据块的格式如下：首先是一个指示数据块中字节数的字段；紧接着是4个压缩字段(键长度、键、值长度和值)</p>
+<p><img src="/resource/blog/2016-08/sequencefilewithblockcompression.jpg" alt="SequenceFile-块压缩"></p>
+<h2 id="SequenceFile写操作"><a href="#SequenceFile写操作" class="headerlink" title="SequenceFile写操作"></a>SequenceFile写操作</h2><p>通过createWriter()静态方法可以创建SequenceFile对象，并返回SequenceFile.Writer实例。该静态方法有多个重载版本，但都需要指定待写入的数据流(FSDataOutputStream或FileSystem对象和Path对象)，Configuration对象，以及键和值的类型，写入的参数信息等。另外，可选参数包括压缩类型以及相应的codec,Progressable回调函数用于通知写入的进度，以及在SequenceFile头文件中存储的Metadata实例。</p>
+<p>存储在SequenceFile中的键和值并不一定需要是Writable类型，只要能被Serialization序列化和反序列化，任何类型都可以。</p>
+<p>一旦拥有SequenceFile.Writer实例，就可以通过append()方法在文件末尾附加键值对。写完后，可以调用close()方法(SequenceFile.Writer实现了java.io.Closable接口)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Text;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceFileWriteDemo</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] DATA = &#123;</span><br><span class="line">    <span class="string">"One, two, buckle my shoe"</span>,</span><br><span class="line">    <span class="string">"Three, four, shut the door"</span>,</span><br><span class="line">    <span class="string">"Five, six, pick up sticks"</span>,</span><br><span class="line">    <span class="string">"Seven, eight, lay them straight"</span>,</span><br><span class="line">    <span class="string">"Nine, ten, a big fat hen"</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line">    Path path = <span class="keyword">new</span> Path(url);</span><br><span class="line"></span><br><span class="line">    IntWritable key = <span class="keyword">new</span> IntWritable();</span><br><span class="line">    Text value = <span class="keyword">new</span> Text();</span><br><span class="line">    SequenceFile.Writer writer = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        writer = SequenceFile.createWriter(fs,conf,path,key.getClass(),value.getClass());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">1024</span>;i++)&#123;</span><br><span class="line">            key.set(<span class="number">1024</span>-i);</span><br><span class="line">            value.set(DATA[i % DATA.length]);</span><br><span class="line">            writer.append(key,value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(writer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译与运行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  project export CLASSPATH=$HADOOP_CLASSPATH:$CLASSPATH</span><br><span class="line">➜  project javac SequenceFileWriteDemo.java</span><br><span class="line">➜  project java SequenceFileWriteDemo numbers.seq</span><br></pre></td></tr></table></figure>
+<h2 id="SequenceFile读操作"><a href="#SequenceFile读操作" class="headerlink" title="SequenceFile读操作"></a>SequenceFile读操作</h2><p>从头到尾读取顺序文件不外乎创建SequenceFile.Reader实例后反复调用next()方法迭代读取记录。读取的是哪条记录与你使用的序列化框架有关。如果使用Writable类型，那么通过键和值作为参数的next()方法可以将数据流中的下一条键值对读入变量中。<code>public boolean next(Writable key,Writable val)</code>。对于其他非Writable类型的序列化框架，例如Apache Thrift，则应该使用下面两个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">next</span><span class="params">(Object key)</span> <span class="keyword">throws</span> IOException</span><br><span class="line"><span class="keyword">public</span> Object <span class="title">getCurrentValue</span><span class="params">(Object val)</span> <span class="keyword">throws</span> IOException</span></span><br></pre></td></tr></table></figure>
+<p>在这种情况下，需要确保io.serializations属性已经设置了你想要的序列化框架。如果next()方法返回的是非null对象，则可以从数据流中读取键、值对，并且可以通过getCurrentValue()方法读取该值。否则，如果next()返回null值，表示已经读到文件末尾。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Writable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.util.ReflectionUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceFileReadDemo</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line">    Path path = <span class="keyword">new</span> Path(url);</span><br><span class="line"></span><br><span class="line">    SequenceFile.Reader reader = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        reader = <span class="keyword">new</span> SequenceFile.Reader(fs,path,conf);</span><br><span class="line">        Writable key = (Writable) ReflectionUtils.newInstance(reader.getKeyClass(),conf);</span><br><span class="line">        Writable value = (Writable) ReflectionUtils.newInstance(reader.getValueClass(),conf);</span><br><span class="line">        <span class="keyword">long</span> position = reader.getPosition();</span><br><span class="line">        <span class="keyword">while</span> (reader.next(key,value))&#123;</span><br><span class="line">            String syncSeen = reader.syncSeen() ? <span class="string">"*"</span> : <span class="string">" "</span>;</span><br><span class="line">            System.out.printf(<span class="string">"[%s%s]\t%s\t%s\n"</span>,position,syncSeen,key,value);</span><br><span class="line">            position = reader.getPosition();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(reader);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="通过命令行接口显示SequenceFile"><a href="#通过命令行接口显示SequenceFile" class="headerlink" title="通过命令行接口显示SequenceFile"></a>通过命令行接口显示SequenceFile</h2><p>hdfs dfs命令有一个-text选项可以以文本形式显示顺序文件，该选项可以查看文件的代码，由此检测出文件的类型并将其转换成相应的文本。该选项可以识别gzip压缩文件和顺序文件；否则，假设输入为纯文本文件。</p>
+<p>对于顺序文件，如果键和值是由具体含义的字符串表示，那么这个命令就非常有用(通过toString()方法定义)，同样，如果有自己定义的键或值的类，则应该确保它们在Hadoop类路径目录下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  project hdfs dfs -text numbers.seq | head</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">23</span> INFO zlib.ZlibFactory: Successfully loaded &amp; initialized native-zlib library</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">23</span> INFO compress.CodecPool: Got brand-new decompressor [.deflate]</span><br><span class="line"><span class="number">1024</span>    One, two, buckle my shoe</span><br><span class="line"><span class="number">1023</span>    Three, four, shut the door</span><br><span class="line"><span class="number">1022</span>    Five, six, pick up sticks</span><br><span class="line"><span class="number">1021</span>    Seven, eight, lay them straight</span><br><span class="line"><span class="number">1020</span>    Nine, ten, a big fat hen</span><br><span class="line"><span class="number">1019</span>    One, two, buckle my shoe</span><br><span class="line"><span class="number">1018</span>    Three, four, shut the door</span><br><span class="line"><span class="number">1017</span>    Five, six, pick up sticks</span><br><span class="line"><span class="number">1016</span>    Seven, eight, lay them straight</span><br><span class="line"><span class="number">1015</span>    Nine, ten, a big fat hen</span><br></pre></td></tr></table></figure>
+<h2 id="SequenceFile的排序和合并"><a href="#SequenceFile的排序和合并" class="headerlink" title="SequenceFile的排序和合并"></a>SequenceFile的排序和合并</h2><p>MapReduce是对多个顺序文件进行排序或合并的最有效的方法。MapReduce本身是并行的，并且可由用户指定要使用多少个reducer，该数决定这输出分区数。例如，通过指定一个reducer，可以得到一个输出文件。</p>
+<p>除了MapReduce实现排序/归并，还有一种方法是使用SequenceFile.Sorter类中的sort()方法和merge()方法。它们比MapReduce更早出现，比MapReduce更底层，为了实现并行，需要手动对数据进行分区，因此不建议使用。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Hadoop源码学习(12)——MapFile]]></title>
-      <url>http://keyunluo.github.io/2016/08/13/2016-08-13-hadoop-io-8.html</url>
+      <url>http://keyunluo.github.io/2016/08/13/BigData/hadoop-io-8.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>MapFile是已经排过序的SequenceFile，它有索引，所以可以按键查找。可以将MapFile视为java.util.Map的持久化形式(尽管它并没有实现该接口)，它的大小可以超过保存在内存中一个map的大小。</p>
 </blockquote>
@@ -2676,42 +2710,8 @@ $$</p>
     </entry>
     
     <entry>
-      <title><![CDATA[Hadoop源码学习(11)——SequenceFile]]></title>
-      <url>http://keyunluo.github.io/2016/08/13/2016-08-13-hadoop-io-7.html</url>
-      <content type="html"><![CDATA[<blockquote>
-<p><strong>本节内容：</strong>SequenceFile为二进制键值对提供了一个持久数据结构，也可以作为小文件的容器，HDFS和MapReduce是针对大文件优化的，所以通过SequenceFile类型将小文件包装起来，可以获得更高效率的存储和处理。</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="SequenceFile类"><a href="#SequenceFile类" class="headerlink" title="SequenceFile类"></a>SequenceFile类</h2><p>SequenceFile类位于org.apache.hadoop.io包内，类结构如下：</p>
-<p><img src="/resource/blog/2016-08/SequenceFile.png" alt="SequenceFile类"></p>
-<h2 id="SequenceFile的格式"><a href="#SequenceFile的格式" class="headerlink" title="SequenceFile的格式"></a>SequenceFile的格式</h2><p>SequenceFile文件由文件头和随后的一条或多条记录组成。顺序文件的前三个字节是SEQ，紧随其后的一个字节表示顺序文件的版本号。文件头还包括其他字段，例如键和值类的名称、数据压缩细节、用户定义的元数据以及同步标识。同步标识用于在读取文件时能够从任意位置开始识别边界记录。</p>
-<p>记录的内部结构取决于是否启用压缩。如果已经启用，则取决于记录压缩还是数据块压缩。</p>
-<p>如果没有启用压缩(默认情况)，那么每条记录则由记录长度(字节数)、键长度、键和值组成。长度字段为4字节长的整数，遵循java.io.DataOutput类中的writeInt()方法的约定，写入顺序文件的类定义Serialization类来实现键和值的序列化。</p>
-<p>记录压缩格式与无压缩情况基本相同，只不过值是用文件头定义的codec压缩的，但是键并没有被压缩。</p>
-<p><img src="/resource/blog/2016-08/sequencefilewithnocompression.jpg" alt="SequenceFile-无压缩和记录压缩"></p>
-<p>块压缩是指一次性压缩多条记录，因为它可以利用记录间的相似性进行压缩，所以相较于单条记录压缩方法，该方法的压缩效率更高，如下图所示。可以不断向数据块中压缩记录，直到块的字节数不小于io.seqfile.compress.blocksize属性中设置的字节数：默认为1MB。每一个新块的开始处都需要插入同步标识。数据块的格式如下：首先是一个指示数据块中字节数的字段；紧接着是4个压缩字段(键长度、键、值长度和值)</p>
-<p><img src="/resource/blog/2016-08/sequencefilewithblockcompression.jpg" alt="SequenceFile-块压缩"></p>
-<h2 id="SequenceFile写操作"><a href="#SequenceFile写操作" class="headerlink" title="SequenceFile写操作"></a>SequenceFile写操作</h2><p>通过createWriter()静态方法可以创建SequenceFile对象，并返回SequenceFile.Writer实例。该静态方法有多个重载版本，但都需要指定待写入的数据流(FSDataOutputStream或FileSystem对象和Path对象)，Configuration对象，以及键和值的类型，写入的参数信息等。另外，可选参数包括压缩类型以及相应的codec,Progressable回调函数用于通知写入的进度，以及在SequenceFile头文件中存储的Metadata实例。</p>
-<p>存储在SequenceFile中的键和值并不一定需要是Writable类型，只要能被Serialization序列化和反序列化，任何类型都可以。</p>
-<p>一旦拥有SequenceFile.Writer实例，就可以通过append()方法在文件末尾附加键值对。写完后，可以调用close()方法(SequenceFile.Writer实现了java.io.Closable接口)。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Text;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceFileWriteDemo</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] DATA = &#123;</span><br><span class="line">    <span class="string">"One, two, buckle my shoe"</span>,</span><br><span class="line">    <span class="string">"Three, four, shut the door"</span>,</span><br><span class="line">    <span class="string">"Five, six, pick up sticks"</span>,</span><br><span class="line">    <span class="string">"Seven, eight, lay them straight"</span>,</span><br><span class="line">    <span class="string">"Nine, ten, a big fat hen"</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line">    Path path = <span class="keyword">new</span> Path(url);</span><br><span class="line"></span><br><span class="line">    IntWritable key = <span class="keyword">new</span> IntWritable();</span><br><span class="line">    Text value = <span class="keyword">new</span> Text();</span><br><span class="line">    SequenceFile.Writer writer = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        writer = SequenceFile.createWriter(fs,conf,path,key.getClass(),value.getClass());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">1024</span>;i++)&#123;</span><br><span class="line">            key.set(<span class="number">1024</span>-i);</span><br><span class="line">            value.set(DATA[i % DATA.length]);</span><br><span class="line">            writer.append(key,value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(writer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>编译与运行：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  project export CLASSPATH=$HADOOP_CLASSPATH:$CLASSPATH</span><br><span class="line">➜  project javac SequenceFileWriteDemo.java</span><br><span class="line">➜  project java SequenceFileWriteDemo numbers.seq</span><br></pre></td></tr></table></figure>
-<h2 id="SequenceFile读操作"><a href="#SequenceFile读操作" class="headerlink" title="SequenceFile读操作"></a>SequenceFile读操作</h2><p>从头到尾读取顺序文件不外乎创建SequenceFile.Reader实例后反复调用next()方法迭代读取记录。读取的是哪条记录与你使用的序列化框架有关。如果使用Writable类型，那么通过键和值作为参数的next()方法可以将数据流中的下一条键值对读入变量中。<code>public boolean next(Writable key,Writable val)</code>。对于其他非Writable类型的序列化框架，例如Apache Thrift，则应该使用下面两个方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">next</span><span class="params">(Object key)</span> <span class="keyword">throws</span> IOException</span><br><span class="line"><span class="keyword">public</span> Object <span class="title">getCurrentValue</span><span class="params">(Object val)</span> <span class="keyword">throws</span> IOException</span></span><br></pre></td></tr></table></figure>
-<p>在这种情况下，需要确保io.serializations属性已经设置了你想要的序列化框架。如果next()方法返回的是非null对象，则可以从数据流中读取键、值对，并且可以通过getCurrentValue()方法读取该值。否则，如果next()返回null值，表示已经读到文件末尾。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Writable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.util.ReflectionUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceFileReadDemo</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line">    Path path = <span class="keyword">new</span> Path(url);</span><br><span class="line"></span><br><span class="line">    SequenceFile.Reader reader = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        reader = <span class="keyword">new</span> SequenceFile.Reader(fs,path,conf);</span><br><span class="line">        Writable key = (Writable) ReflectionUtils.newInstance(reader.getKeyClass(),conf);</span><br><span class="line">        Writable value = (Writable) ReflectionUtils.newInstance(reader.getValueClass(),conf);</span><br><span class="line">        <span class="keyword">long</span> position = reader.getPosition();</span><br><span class="line">        <span class="keyword">while</span> (reader.next(key,value))&#123;</span><br><span class="line">            String syncSeen = reader.syncSeen() ? <span class="string">"*"</span> : <span class="string">" "</span>;</span><br><span class="line">            System.out.printf(<span class="string">"[%s%s]\t%s\t%s\n"</span>,position,syncSeen,key,value);</span><br><span class="line">            position = reader.getPosition();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(reader);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="通过命令行接口显示SequenceFile"><a href="#通过命令行接口显示SequenceFile" class="headerlink" title="通过命令行接口显示SequenceFile"></a>通过命令行接口显示SequenceFile</h2><p>hdfs dfs命令有一个-text选项可以以文本形式显示顺序文件，该选项可以查看文件的代码，由此检测出文件的类型并将其转换成相应的文本。该选项可以识别gzip压缩文件和顺序文件；否则，假设输入为纯文本文件。</p>
-<p>对于顺序文件，如果键和值是由具体含义的字符串表示，那么这个命令就非常有用(通过toString()方法定义)，同样，如果有自己定义的键或值的类，则应该确保它们在Hadoop类路径目录下。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  project hdfs dfs -text numbers.seq | head</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">23</span> INFO zlib.ZlibFactory: Successfully loaded &amp; initialized native-zlib library</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">23</span> INFO compress.CodecPool: Got brand-new decompressor [.deflate]</span><br><span class="line"><span class="number">1024</span>    One, two, buckle my shoe</span><br><span class="line"><span class="number">1023</span>    Three, four, shut the door</span><br><span class="line"><span class="number">1022</span>    Five, six, pick up sticks</span><br><span class="line"><span class="number">1021</span>    Seven, eight, lay them straight</span><br><span class="line"><span class="number">1020</span>    Nine, ten, a big fat hen</span><br><span class="line"><span class="number">1019</span>    One, two, buckle my shoe</span><br><span class="line"><span class="number">1018</span>    Three, four, shut the door</span><br><span class="line"><span class="number">1017</span>    Five, six, pick up sticks</span><br><span class="line"><span class="number">1016</span>    Seven, eight, lay them straight</span><br><span class="line"><span class="number">1015</span>    Nine, ten, a big fat hen</span><br></pre></td></tr></table></figure>
-<h2 id="SequenceFile的排序和合并"><a href="#SequenceFile的排序和合并" class="headerlink" title="SequenceFile的排序和合并"></a>SequenceFile的排序和合并</h2><p>MapReduce是对多个顺序文件进行排序或合并的最有效的方法。MapReduce本身是并行的，并且可由用户指定要使用多少个reducer，该数决定这输出分区数。例如，通过指定一个reducer，可以得到一个输出文件。</p>
-<p>除了MapReduce实现排序/归并，还有一种方法是使用SequenceFile.Sorter类中的sort()方法和merge()方法。它们比MapReduce更早出现，比MapReduce更底层，为了实现并行，需要手动对数据进行分区，因此不建议使用。</p>
-]]></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[Hadoop源码学习(10)——Avro(2)]]></title>
-      <url>http://keyunluo.github.io/2016/08/12/2016-08-12-hadoop-io-6.html</url>
+      <url>http://keyunluo.github.io/2016/08/12/BigData/hadoop-io-6.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>Avro是一个独立于编程语言的数据序列化系统，该项目由Hadoop之父Doug Cutting创建，旨在解决Hadoop中Writable类型的不足：缺乏语言的可移植性。拥有一个可被多种语言(C/C++/C#/Java/PHP/Python/Ruby)处理的数据格式与绑定到单一语言的数据格式相比，前者更容易与公众共享数据。本节学习Avro数据文件、互操作性、模式解析和排列顺序。</p>
 </blockquote>
@@ -2808,7 +2808,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Hadoop源码学习(9)——Avro(1)]]></title>
-      <url>http://keyunluo.github.io/2016/08/11/2016-08-11-hadoop-io-5.html</url>
+      <url>http://keyunluo.github.io/2016/08/11/BigData/hadoop-io-5.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>Avro是一个独立于编程语言的数据序列化系统，该项目由Hadoop之父Doug Cutting创建，旨在解决Hadoop中Writable类型的不足：缺乏语言的可移植性。拥有一个可被多种语言(C/C++/C#/Java/PHP/Python/Ruby)处理的数据格式与绑定到单一语言的数据格式相比，前者更容易与公众共享数据。本节学习Avro数据序列化系统。</p>
 </blockquote>
@@ -3040,7 +3040,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Hadoop源码学习(8)——序列化]]></title>
-      <url>http://keyunluo.github.io/2016/08/10/2016-08-10-hadoop-io-4.html</url>
+      <url>http://keyunluo.github.io/2016/08/10/BigData/hadoop-io-4.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>序列化是指将结构化对象转换成字节流以便在网络上传输或写到磁盘进行永久存储的过程。序列化在分布式数据处理的两大领域经常出现：进程间通信和永久存储。本节学习Hadoop序列化的实现机制。</p>
 </blockquote>
@@ -3078,7 +3078,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Hadoop源码学习(7)——Writable(2)]]></title>
-      <url>http://keyunluo.github.io/2016/08/10/2016-08-10-hadoop-io-3.html</url>
+      <url>http://keyunluo.github.io/2016/08/10/BigData/hadoop-io-3.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>Writable是Hadoop的核心，Hadoop通过它定义了Hadoop中基本的数据类型及其操作，它是实现序列化的基础，本节学习其中的几个重要的工具类的实现。</p>
 </blockquote>
@@ -3296,7 +3296,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Hadoop源码学习(6)——Writable(1)]]></title>
-      <url>http://keyunluo.github.io/2016/08/09/2016-08-09-hadoop-io-2.html</url>
+      <url>http://keyunluo.github.io/2016/08/09/BigData/hadoop-io-2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>Writable是Hadoop的核心，Hadoop通过它定义了Hadoop中基本的数据类型及其操作，它是实现序列化的基础，本节学习其中的Writable接口和Java基础类型包装。</p>
 </blockquote>
@@ -3393,7 +3393,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Java中的NIO2]]></title>
-      <url>http://keyunluo.github.io/2016/08/08/2016-08-08-java-nio2.html</url>
+      <url>http://keyunluo.github.io/2016/08/08/Programming/java-nio2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>Java7对原有的NIO进行了重大改进，提供了全面的文件IO和文件系统的访问支持，基于异步Channel的IO。</p>
 </blockquote>
@@ -3490,7 +3490,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Java中的NIO块]]></title>
-      <url>http://keyunluo.github.io/2016/08/08/2016-08-08-java-nio.html</url>
+      <url>http://keyunluo.github.io/2016/08/08/Programming/java-nio.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>Java中的IO的输入流和输出流都是阻塞式的，如果没有读到有效数据则程序会在此处阻塞该线程的执行，并且，传统的输入流、输出流都是通过字节的移动来处理的，通常效率不高，新的IO(NIO)从JDK1.4版本开始，新增了许多用于处理输入/输出的类。</p>
 </blockquote>
@@ -3569,7 +3569,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Java中的序列化]]></title>
-      <url>http://keyunluo.github.io/2016/08/07/2016-08-07-java-serialize.html</url>
+      <url>http://keyunluo.github.io/2016/08/07/Programming/java-serialize.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>对象序列化的目标是将对象保存在磁盘中，或允许网络直接传输对象。对象序列化的机制允许把内存中的java对象转换成平台无关的二进制流，其他程序一旦获取了这种二进制流，则就可以将其恢复成原来的Java对象。</p>
 </blockquote>
@@ -3636,7 +3636,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Java中的IO流(2)]]></title>
-      <url>http://keyunluo.github.io/2016/08/07/2016-08-07-java-io-2.html</url>
+      <url>http://keyunluo.github.io/2016/08/07/Programming/java-io-2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本节学习输入输出重定向，Java虚拟机读取进程数据以及随机访问文件等IO内容。</p>
 </blockquote>
@@ -3680,7 +3680,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Java中的IO流(1)]]></title>
-      <url>http://keyunluo.github.io/2016/08/06/2016-08-06-java-io-1.html</url>
+      <url>http://keyunluo.github.io/2016/08/06/Programming/java-io-1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>Java中的IO流是实现输入输出的基础，在Java中把不同的输入/输出源(键盘、文件、网络连接等)抽象表述为“流(stream)”,通过流的方式Java可以使用相同的方式来访问不同的输入/输出源。stream是从起源(source)到接受(sink)的有序数据。</p>
 </blockquote>
@@ -3872,7 +3872,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Hadoop源码学习(5)——Hadoop-Common-IO]]></title>
-      <url>http://keyunluo.github.io/2016/08/06/2016-08-06-hadoop-io-1.html</url>
+      <url>http://keyunluo.github.io/2016/08/06/BigData/hadoop-io-1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本节学习Hadoop-Common-Project中的hadoop-common-io模块，该模块由传统的I/O系统发展而来，但又有些不同，Hadoop需要处理P、T级别的数据，所以在org.apache.hadoop.io包中包含了一些面向海量数据处理的基本输入输出工具，本节主要学习IOUtils类。</p>
 </blockquote>
@@ -3901,7 +3901,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[统计学习方法——感知机]]></title>
-      <url>http://keyunluo.github.io/2016/08/05/2016-08-05-statical-learning-2.html</url>
+      <url>http://keyunluo.github.io/2016/08/05/MachineLearning/statical-learning-2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>感知机(perceptron)是二类分类的线性分类模型，其输入为实例的特征向量，输出为实例的类别取+1和-1二值，感知机对应于输入空间(特征空间)中将实例划分为正负两类的分离超平面，本节对应于统计学习方法第二章的内容。</p>
 </blockquote>
@@ -4038,7 +4038,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Hadoop源码学习(4)——Hadoop-Common-Conf(2)]]></title>
-      <url>http://keyunluo.github.io/2016/08/04/2016-08-04-hadoop-common-conf-2.html</url>
+      <url>http://keyunluo.github.io/2016/08/04/BigData/hadoop-common-conf-2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本节学习Hadoop-Common-Project中的hadoop-common-conf模块，该模块主要实现了hadoop项目中的配置信息处理，学习设置配置等内容。</p>
 </blockquote>
@@ -4084,7 +4084,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Hadoop源码学习(3)——Hadoop-Common-Conf(1)]]></title>
-      <url>http://keyunluo.github.io/2016/08/03/2016-08-03-hadoop-common-conf-1.html</url>
+      <url>http://keyunluo.github.io/2016/08/03/BigData/hadoop-common-conf-1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本节学习Hadoop-Common-Project中的hadoop-common-conf模块，该模块主要实现了hadoop项目中的配置信息处理，从总体上了解configuration类。</p>
 </blockquote>
@@ -4137,7 +4137,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Hadoop源码学习(2)——Hadoop-Common-Annotations]]></title>
-      <url>http://keyunluo.github.io/2016/08/02/2016-08-02-hadoop-common--annotation.html</url>
+      <url>http://keyunluo.github.io/2016/08/02/BigData/hadoop-common--annotation.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本节学习Hadoop-Common-Project中的hadoop-annotation模块，该模块主要实现了hadoop项目中的注解。</p>
 </blockquote>
@@ -4173,7 +4173,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Java中的注解(2)]]></title>
-      <url>http://keyunluo.github.io/2016/08/02/2016-08-02-java-annotation-2.html</url>
+      <url>http://keyunluo.github.io/2016/08/02/Programming/java-annotation-2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>JDK除了在java.lang下提供了5个基本的Annotation之外，还在java.lang.annotation包下提供了6个Meta Annotation，其中有五个元Annotation都用于修饰其他Annotation定义。</p>
 </blockquote>
@@ -4253,7 +4253,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Hadoop源码学习(1)——Hadoop-Common-Project]]></title>
-      <url>http://keyunluo.github.io/2016/08/01/2016-08-01-hadoop-common-project.html</url>
+      <url>http://keyunluo.github.io/2016/08/01/BigData/hadoop-common-project.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>Hadoop-Common-Project模块包括了一系列支撑其他Hadoop模块的公共工具，本系列文章从源代码的角度分析其实现。本文主要从总体上了解Hadoop-Common-Project模块。</p>
 </blockquote>
@@ -4288,7 +4288,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Java中的注解(1)]]></title>
-      <url>http://keyunluo.github.io/2016/08/01/2016-08-01-java-annotation-1.html</url>
+      <url>http://keyunluo.github.io/2016/08/01/Programming/java-annotation-1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>从JDK1.5开始，Java增加了对元数据(MetaData)的支持，也就是Annotation。Annotation是代码里的特殊标记，这些标记可以在编译，类加载，运行时被读取，并进行相应的处理。通过使用注解，程序开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充信息。</p>
 </blockquote>
@@ -4335,7 +4335,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[搭建Cloudera集群]]></title>
-      <url>http://keyunluo.github.io/2016/07/28/2016-07-28-cloudera-cluster.html</url>
+      <url>http://keyunluo.github.io/2016/07/28/Tools/cloudera-cluster.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>使用Cloudera Manager 5 利用镜像搭建Hadoop/Spark集群。</p>
 </blockquote>
@@ -4416,7 +4416,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[搭建Cloudera离线parcel源]]></title>
-      <url>http://keyunluo.github.io/2016/07/28/2016-07-28-cloudera-repo.html</url>
+      <url>http://keyunluo.github.io/2016/07/28/Tools/cloudera-repo.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>Cloudera外网访问速度比较慢，并且服务器集群内部访问外网比较麻烦，因此在外网服务器中搭建Cloudera源，供安装使用。</p>
 </blockquote>
@@ -4464,7 +4464,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[RedHat7.0更换CentOS源]]></title>
-      <url>http://keyunluo.github.io/2016/07/27/2016-07-27-redhat-centos.html</url>
+      <url>http://keyunluo.github.io/2016/07/27/Tools/redhat-centos.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>服务器默认安装的是RedHat Linux，Redhat 的更新包只对注册的用户生效，所以我们自己手动更改成CentOS 的更新包，CentOS几乎和redhat是一样的，所以无需担心软件包是否可安装，安装之后是否有问题，本文记录配置过程。</p>
 </blockquote>
@@ -4491,7 +4491,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[统计学习方法——概论]]></title>
-      <url>http://keyunluo.github.io/2016/07/26/2016-07-26-statical-learning-1.html</url>
+      <url>http://keyunluo.github.io/2016/07/26/MachineLearning/statical-learning-1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>统计学习(statistical learning)做的事情是：基于数据建立概率统计模型，然后用模型对数据进行预测和分析。</p>
 </blockquote>
@@ -4637,7 +4637,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[PlantUML时序图绘制]]></title>
-      <url>http://keyunluo.github.io/2016/07/25/2016-07-25-plantuml-sequence.html</url>
+      <url>http://keyunluo.github.io/2016/07/25/Tools/plantuml-sequence.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>PlantUML是一个开源项目，并支持快速绘制常见的UML图像,本节主要学习其时序图的用法,时序图通过描述对象之间发送消息的时间顺序显示多个对象之间的动态协作。</p>
 </blockquote>
@@ -4727,7 +4727,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Hexo博客中的绘图]]></title>
-      <url>http://keyunluo.github.io/2016/07/25/2016-07-25-hexo-uml.html</url>
+      <url>http://keyunluo.github.io/2016/07/25/Tools/hexo-uml.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>UML是一种开放的方法，用于说明、可视化、构建和编写一个正在开发的、面向对象的、软件密集系统的制品的开放方法。本文介绍在Hexo中的两种绘图组件。</p>
 </blockquote>
@@ -4774,7 +4774,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Python Pandas数据处理入门]]></title>
-      <url>http://keyunluo.github.io/2016/07/23/2016-07-23-python-pandas.html</url>
+      <url>http://keyunluo.github.io/2016/07/23/Programming/python-pandas.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>Pandas包含高级的数据结构和精巧的工具，使得在Python中处理数据非常快速和简单。Pandas建造在NumPy之上，它使得以NumPy为中心的应用很容易使用。</p>
 </blockquote>
@@ -4804,7 +4804,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Markdown中编写LaTex数学公式]]></title>
-      <url>http://keyunluo.github.io/2016/07/19/2016-07-19-markdown-math.html</url>
+      <url>http://keyunluo.github.io/2016/07/19/Tools/markdown-math.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>目前hexo中写博客使用Markdown语言，而写博客经常要用到一些数学公式，在Markdown中写LaTeX数学公式则显得非常重要，本节将一些常用的数学公式的写法记录下来，以备日后查询。</p>
 </blockquote>
@@ -5448,7 +5448,7 @@ $$</p>
     
     <entry>
       <title><![CDATA[Python Scipy学习(1)]]></title>
-      <url>http://keyunluo.github.io/2016/07/19/2016-07-19-python-scipy.html</url>
+      <url>http://keyunluo.github.io/2016/07/19/Programming/python-scipy.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>SciPy是另一种使用NumPy来做高等数学、信号处理、优化、统计和许多其它科学任务的语言扩展,SciPy在NumPy的基础上增加了众多的数学、科学以及工程计算中常用的模块。例如线性代数、常微分方程数值求解、信号处理、图像处理、稀疏矩阵等等,本节主要学习其统计和优化模块。</p>
 </blockquote>
@@ -5525,7 +5525,7 @@ $$ 5x_1 +3 =0;4x_0^2 - 2sin(x_1x_2)=0;x_1x_2-1.5=0$$</p>
     
     <entry>
       <title><![CDATA[Python Matplotlib绘图基础]]></title>
-      <url>http://keyunluo.github.io/2016/07/18/2016-07-18-python-matplotlib.html</url>
+      <url>http://keyunluo.github.io/2016/07/18/Programming/python-matplotlib.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>Matplotlib 是python最著名的绘图库，它提供了一整套和matlab相似的命令API，十分适合交互式地进行制图。而且也可以方便地将它作为绘图控件，嵌入GUI应用程序中。。</p>
 </blockquote>
@@ -5563,7 +5563,7 @@ $$ 5x_1 +3 =0;4x_0^2 - 2sin(x_1x_2)=0;x_1x_2-1.5=0$$</p>
     
     <entry>
       <title><![CDATA[Python Numpy中的矩阵]]></title>
-      <url>http://keyunluo.github.io/2016/07/18/2016-07-18-python-numpy-matrix.html</url>
+      <url>http://keyunluo.github.io/2016/07/18/Programming/python-numpy-matrix.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本篇博文记录Numpy的矩阵一般用法，主要学习numpy在线性代数中的应用。</p>
 </blockquote>
@@ -5655,7 +5655,7 @@ $$ 5x_1 +3 =0;4x_0^2 - 2sin(x_1x_2)=0;x_1x_2-1.5=0$$</p>
     
     <entry>
       <title><![CDATA[Python Numpy中的数组]]></title>
-      <url>http://keyunluo.github.io/2016/07/18/2016-07-18-python-numpy-array.html</url>
+      <url>http://keyunluo.github.io/2016/07/18/Programming/python-numpy-array.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>NumPy 是 Numerical Python 的简称，是高性能计算和数据分析的基础包。本篇博文记录Numpy的数组一般用法，主要学习多维数组等用法。</p>
 </blockquote>
@@ -5902,7 +5902,7 @@ $$ 5x_1 +3 =0;4x_0^2 - 2sin(x_1x_2)=0;x_1x_2-1.5=0$$</p>
     
     <entry>
       <title><![CDATA[Python 基本数据结构]]></title>
-      <url>http://keyunluo.github.io/2016/07/18/2016-07-18-python-datastructure.html</url>
+      <url>http://keyunluo.github.io/2016/07/18/Programming/python-datastructure.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本篇博文学习并总结Python的基本数据结构常用用法，包括基本数据类型和四个比较重要的基本数据结构：列表，元组，字典，集合。
 <a id="more"></a></p>
@@ -6108,7 +6108,7 @@ Python支持四种不同的数字类型：<ul>
     
     <entry>
       <title><![CDATA[使用Anaconda Python科学计算包]]></title>
-      <url>http://keyunluo.github.io/2016/07/17/2016-07-17-anaconda-python.html</url>
+      <url>http://keyunluo.github.io/2016/07/17/Tools/anaconda-python.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本篇博文记录在Ubuntu16.04上配置Python的科学计算环境包，使用anaconda发行版和清华大学的镜像服务。</p>
 </blockquote>
@@ -6136,7 +6136,7 @@ Python支持四种不同的数字类型：<ul>
     
     <entry>
       <title><![CDATA[Ubuntu16.04配置L2TP-VPN]]></title>
-      <url>http://keyunluo.github.io/2016/07/17/2016-07-17-ubuntu16-l2tp-vpn.html</url>
+      <url>http://keyunluo.github.io/2016/07/17/Tools/ubuntu16-l2tp-vpn.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本篇博文记录在Ubuntu16.04上安装L2TP插件,之前记录了在<a href="/2016/03/20/2016-03-20-ubuntu14-l2tp-vpn.html">Ubuntu14.04</a>上安装L2TP插件，但ppa上还没有更新这个软件包，故只有手动从源代码编译安装。</p>
 </blockquote>
@@ -6160,7 +6160,7 @@ Python支持四种不同的数字类型：<ul>
     
     <entry>
       <title><![CDATA[正当毕业时]]></title>
-      <url>http://keyunluo.github.io/2016/06/21/2016-06-21-graduation.html</url>
+      <url>http://keyunluo.github.io/2016/06/21/Life/graduation.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p>就算新的开始依旧美丽，而此刻的心情也必然暗淡。</p>
 </blockquote>
@@ -6186,7 +6186,7 @@ Python支持四种不同的数字类型：<ul>
     
     <entry>
       <title><![CDATA[Elasticsearch入门学习(3)——查询]]></title>
-      <url>http://keyunluo.github.io/2016/05/27/2016-05-27-elasticsearch-3.html</url>
+      <url>http://keyunluo.github.io/2016/05/27/BigData/elasticsearch-3.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>ElasticSearch</strong>提供了丰富的REST风格的API来满足不同的场景需求，本篇介绍Elasticsearch的查询相关的基础和高级操作。</p>
 </blockquote>
@@ -6233,7 +6233,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
     <entry>
       <title><![CDATA[Elasticsearch入门学习(2)——服务URL]]></title>
-      <url>http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-2.html</url>
+      <url>http://keyunluo.github.io/2016/04/11/BigData/elasticsearch-2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>ElasticSearch</strong> 将各种功能、配置、服务都以API的形式暴露，这也是elasticsearch区别于其他搜索引擎框架的一个特征，本文将ES中常用的URL整理以供查询。</p>
 </blockquote>
@@ -6470,7 +6470,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
     <entry>
       <title><![CDATA[Elasticsearch入门学习(1)——安装]]></title>
-      <url>http://keyunluo.github.io/2016/04/11/2016-04-11-elasticsearch-1.html</url>
+      <url>http://keyunluo.github.io/2016/04/11/BigData/elasticsearch-1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>ElasticSearch</strong>是一个基于Lucene的接近实时的搜索平台。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口，是当前流行的企业级搜索引擎。本文先从安装Elasticsearch开始，一步一步探索。</p>
 </blockquote>
@@ -6509,7 +6509,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
     <entry>
       <title><![CDATA[使用Sqoop从Oracle中导入数据到hadoop]]></title>
-      <url>http://keyunluo.github.io/2016/04/09/2016-04-09-using-sqoop2-oracledb-hadoop.html</url>
+      <url>http://keyunluo.github.io/2016/04/09/BigData/using-sqoop2-oracledb-hadoop.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本篇博文记录从Oracle12c导入数据到Hadoop中的流程，使用Sqoop2工具,目前Sqoop2只支持将oracle/mysql数据库中的数据与HDFS中数据相互导入导出，目前并不支持导入到HBase/Hive中，因此在实际业务中并不好用，后面介绍使用Sqoop1导入数据到Hbase的流程。</p>
 </blockquote>
@@ -6593,7 +6593,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
     <entry>
       <title><![CDATA[Oracle 12c 使用入门(1) ——SQL*Plus]]></title>
-      <url>http://keyunluo.github.io/2016/03/25/2016-03-25-oracle-12c-using.html</url>
+      <url>http://keyunluo.github.io/2016/03/25/DataBase/oracle-12c-using.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本篇博文记录开始使用Oracle12c的一些步骤以及注意事项。</p>
 </blockquote>
@@ -6621,7 +6621,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
     <entry>
       <title><![CDATA[Ubuntu14.04配置L2TP-VPN]]></title>
-      <url>http://keyunluo.github.io/2016/03/20/2016-03-20-ubuntu14-l2tp-vpn.html</url>
+      <url>http://keyunluo.github.io/2016/03/20/Tools/ubuntu14-l2tp-vpn.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本篇博文记录在Ubuntu14.04上安装L2TP插件。</p>
 </blockquote>
@@ -6639,7 +6639,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
     <entry>
       <title><![CDATA[大数据二次排序]]></title>
-      <url>http://keyunluo.github.io/2016/03/07/2016-03-07-hadoop-secondary-sort.html</url>
+      <url>http://keyunluo.github.io/2016/03/07/BigData/hadoop-secondary-sort.html</url>
       <content type="html"><![CDATA[<h2 id="问题概述"><a href="#问题概述" class="headerlink" title="问题概述"></a>问题概述</h2><blockquote>
 <p>在hadoop中每个reduce的输入的key都是有序的，而value则是无序的。而且同一个job运行多次，由于map完成顺序不同，reduce收到的value顺序是不固定的,为了使reduce收到有序的value,便产生了二次排序的概念。</p>
 </blockquote>
@@ -6661,7 +6661,7 @@ DSL(Domain Specific Language特定领域语言)以JSON请求体的形式出现�
     
     <entry>
       <title><![CDATA[Git 常用命令整理]]></title>
-      <url>http://keyunluo.github.io/2016/03/07/2016-03-07-git-common-command.html</url>
+      <url>http://keyunluo.github.io/2016/03/07/Tools/git-common-command.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>Git</strong>简单记录Git的常用方法，以备查询。</p>
 </blockquote>
