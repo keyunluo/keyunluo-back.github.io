@@ -3,7 +3,7 @@ title: 高级算法(1)--NP完全性与近似算法
 comments: true
 toc: true
 date: 2016-10-04 20:41:02
-categories: Cource
+categories: Course
 tags : 高级算法
 keywords: NP完全性
 mathjax : true

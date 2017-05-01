@@ -3,7 +3,7 @@ title: 数据挖掘——试卷分析
 comments: true
 toc: true
 date: 2016-12-27 14:25:02
-categories: Cource
+categories: Course
 tags : 数据挖掘
 keywords: 数据挖掘, 南京大学
 mathjax: true

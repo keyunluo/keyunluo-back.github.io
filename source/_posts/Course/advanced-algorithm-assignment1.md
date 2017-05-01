@@ -3,7 +3,7 @@ title: 高级算法--作业1
 comments: true
 toc: false
 date: 2016-10-13 20:41:02
-categories: Cource
+categories: Course
 tags : 高级算法
 keywords: 作业
 mathjax : true

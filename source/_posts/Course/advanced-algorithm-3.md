@@ -3,7 +3,7 @@ title: 高级算法(3)--Min-Cut-Max-Flow(2)-近似算法
 comments: true
 toc: true
 date: 2016-10-06 14:41:02
-categories: Cource
+categories: Course
 tags : 高级算法
 keywords: Karger's Contraction algorithm
 mathjax : true

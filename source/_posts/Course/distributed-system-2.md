@@ -3,7 +3,7 @@ title: 分布式系统——试卷分析
 comments: true
 toc: false
 date: 2016-12-28 14:25:02
-categories: Cource
+categories: Course
 tags : 分布式系统
 keywords: 分布式系统, 南京大学
 mathjax: true

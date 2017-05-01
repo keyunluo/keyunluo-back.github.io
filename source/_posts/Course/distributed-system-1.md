@@ -3,7 +3,7 @@ title: 分布式系统——课程总结
 comments: true
 toc: true
 date: 2016-12-23 14:25:02
-categories: Cource
+categories: Course
 tags : 分布式系统
 keywords: 分布式系统, 南京大学
 mathjax: true

@@ -3,7 +3,7 @@ title: 高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法
 comments: true
 toc: true
 date: 2016-10-05 13:41:02
-categories: Cource
+categories: Course
 tags : 高级算法
 keywords: Min-Cut , 最小割 , Max-Flow , 最大流
 mathjax : true
