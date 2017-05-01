@@ -4,6 +4,504 @@
   
     
     <entry>
+      <title><![CDATA[计算模型导引——递归函数论]]></title>
+      <url>http://keyunluo.github.io/2017/05/01/Course/computational-models-1.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>2017年研究生课程——计算模型导引第一章课后习题(习题课整理)。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="知识点概要"><a href="#知识点概要" class="headerlink" title="知识点概要"></a>知识点概要</h2><h3 id="数论函数"><a href="#数论函数" class="headerlink" title="数论函数"></a>数论函数</h3><blockquote>
+<p>以下三类数论函数称为本原函数(<strong>Initial Function, IF</strong>)</p>
+<ul>
+<li>零函数Z:$\mathbb{N} \rightarrow \mathbb{N}, \forall x \in \mathbb{N}.Z(x)=0$</li>
+<li>后继函数S:$\mathbb{N} \rightarrow \mathbb{N}, \forall x \in \mathbb{N}.S(x)=x+1$</li>
+<li>投影函数$P_i^n:\mathbb{N}^n \rightarrow \mathbb{N}, \forall x_1, x_2, \ldots, x_n \in \mathbb{N}. P_i^n(x_1, x_2, \ldots, x_n) = x_i$</li>
+</ul>
+</blockquote>
+<p><strong>基本函数(Basic Function, BF)</strong>:</p>
+<ul>
+<li>$\mathcal{IF} \subseteq \mathcal{BF}$</li>
+<li>$\mathcal{BF}$对复合封闭，即对任意的$m,n \in \mathbb{N}^+, f:\mathbb{N}^m \rightarrow \mathbb{N}, g_1, g_2, \ldots, g_m:\mathbb{N}^n \rightarrow \mathbb{N}, \ 若 \ f, g_1, \ldots, g_m \in \mathcal{BF},\ 则 \ Comp_m^n[f,g_1, \ldots, g_m] \in \mathcal{BF} $</li>
+</ul>
+<h3 id="配对函数"><a href="#配对函数" class="headerlink" title="配对函数"></a>配对函数</h3><blockquote>
+<p>设$pg(x,y):\mathbb{N}^2 \rightarrow \mathbb{N}, K(x): \mathbb{N} \rightarrow \mathbb{N}, L(x):\mathbb{N} \rightarrow \mathbb{N}$为数论函数， 若它们对任意的$x,y \in \mathbb{N}$, 满足：$K(pg(x,y)) = x, L(pg(x,y)) = y$, 则称pg为配对函数， K和L分别称为左函数、右函数，{pg, K, L}称为配对组。</p>
+</blockquote>
+<h3 id="初等函数"><a href="#初等函数" class="headerlink" title="初等函数"></a>初等函数</h3><blockquote>
+<p>初等函数(Elementary Function)类$\mathcal{EF}$是满足以下条件的最小集：</p>
+<ul>
+<li>$\mathcal{IF} \subseteq \mathcal{EF}$</li>
+<li>$x+y, x\ddot{-}y, x × y， \left \lfloor x/y \right \rfloor \in \mathcal{EF}$</li>
+<li>$\mathcal{EF}$对于复合、有界迭加算子$\Sigma[ \cdot ]$和有界迭乘算子$\prod[\cdot ]$封闭</li>
+</ul>
+</blockquote>
+<h3 id="原始递归函数"><a href="#原始递归函数" class="headerlink" title="原始递归函数"></a>原始递归函数</h3><blockquote>
+<p>(1)设$n \in \mathbb{N}^+, f:\mathbb{N}^n \rightarrow \mathbb{N}, g:\mathbb{N}^{n+2} \rightarrow \mathbb{N}$, 定义函数$h: \mathbb{N}^{n+1} \rightarrow \mathbb{N}$如下：$h(\vec{x}, 0) = f(\vec{x}), h(\vec{x}, y+1) = g(\vec{x}, y, h(\vec{x}, y))$称h由f和g经带参原始递归算子$Prim^n[\cdot, \cdot]$而得，记作$h=Prim^n[f,g]$.
+(2)设$a\in \mathbb{N}, g:\mathbb{N}^2 \rightarrow \mathbb{N},$ 定义函数$h:\mathbb{N} \rightarrow \mathbb{N}$如下：$h(0) = a, h(y+1) = g(y, h(y))$, 这时则称h由g经无参原始递归算子$Prim^0[\cdot, \cdot]$而得，记作$h=Prim^0[a,g]$</p>
+</blockquote>
+<p><strong>原始递归函数(Primitive Recursive Functions, PRF)</strong>:</p>
+<ul>
+<li>$\mathcal{IF} \subseteq \mathcal{BF}$</li>
+<li>$\mathcal{PRF}$对于复合、带参原始递归算子和无参原始递归算子封闭。</li>
+</ul>
+<h3 id="递归函数"><a href="#递归函数" class="headerlink" title="递归函数"></a>递归函数</h3><blockquote>
+<p>一般递归函数<strong>(General Recursive Functions,GRF)</strong>为满足如下条件的最小集合：</p>
+<ul>
+<li>$\mathcal{IF} \subseteq \mathcal{GRF}$</li>
+<li>$\mathcal{GRF}$对于复合和原始递归算子封闭</li>
+<li>$\mathcal{GRF}$对于正则$\mu-$算子封闭</li>
+</ul>
+</blockquote>
+<h2 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h2><h3 id="1-1"><a href="#1-1" class="headerlink" title="1.1"></a>1.1</h3><blockquote>
+<p>证明： 对于固定的$k$, 一元数论函数 $x+k \in \mathcal{BF}$</p>
+</blockquote>
+<p>解答：
+$x + 0 = P_1^1 \in \mathcal{BF}, x + k = \underbrace{S ◦ S ◦ \ldots ◦ S}_{k-1 \ 次}  = S^{k-1}(x) \in \mathcal{BF}, \forall k &gt; 1$, 故结论成立。</p>
+<h3 id="1-2"><a href="#1-2" class="headerlink" title="1.2"></a>1.2</h3><blockquote>
+<p>证明：对任意 $k \in \mathbb{N}^{+}$$，$$f: \mathbb{N}^k \rightarrow \mathbb{N}$，若 $f \in \mathcal{BF}$，则存在 $h$，使得 $f(\vec{x}) &lt; |\vec{x}|+h$
+其中$|\vec{x}| = \max{x_i; 1\leq i \leq k}.$</p>
+</blockquote>
+<p>解答：设$f \in \mathcal{BF}$</p>
+<ul>
+<li>case 1：如果 $f$ 为零函数 $Z$，后继函数 $S$，或投影函数$P_i^n$ 之一，
+$Z(x) &lt; x+1, \quad S(x)&lt;x+2, \quad P_i^n(\vec{x})&lt;|\vec{x}|+1$
+显然存在这样的 $h$；</li>
+<li>case 2：设 $f(\vec{x}) = g(g_1(\vec{x}), g_2(\vec{x}), \cdots, g_m(\vec{x}))$
+设 $g(\vec{y}) &lt; |\vec{y}| + h_0，g_i(\vec{x_i}) &lt; |\vec{x}|+h_i\ (i = 1,2,3, \cdots, m)$
+从而$f(\vec{x}) &lt; \max_{1\leq i \leq m} g_i(\vec{x}) + h_0&lt;\max_{1\leq i \leq m}(|\vec{x}|+ h_i) + h_0 &lt; |\vec{x}|+ h_0+h_1+ \cdots + h_m$
+取 $h = h_0+h_1+ \cdots + h_m$ 即可。</li>
+</ul>
+<h3 id="1-3"><a href="#1-3" class="headerlink" title="1.3"></a>1.3</h3><blockquote>
+<p>证明：二元数论函数 $x+y \notin \mathcal{BF}$</p>
+</blockquote>
+<p>解答： 假设$ x+y \in \mathcal{BF}$, 根据上述习题1.2， 从而有h使得$x + y &lt; \max (x,y) + h$, 令$x=y=h+1$, 得到$2h+2 &lt; 2h+1$矛盾， 故假设不成立。</p>
+<h3 id="1-4"><a href="#1-4" class="headerlink" title="1.4"></a>1.4</h3><blockquote>
+<p>证明：二元数论函数 $x \dot{-}y \notin \mathcal{BF}$.</p>
+</blockquote>
+<p>解答： 假设$x \dot{-} y \in \mathcal{BF}$, 从而$x\dot{-}1 \in \mathcal{BF}$， 然而$f(x) \in \mathcal{BF}\ 时，f(x)\geq 0 \ 或 \ =0$，得出矛盾！</p>
+<h3 id="1-5"><a href="#1-5" class="headerlink" title="1.5"></a>1.5</h3><blockquote>
+<p>设 $pg(x, y) = 2^x(2y+1)\dot{-}1$，证明：存在初等函数 $K(z)$ 和 $ L(z)$ 使得
+$$
+K(pg(x,y))=x, L(pg(x,y))=y, pg(K(x), L(y)) = z.
+$$</p>
+</blockquote>
+<p>解答：$z = 2^x(2y+1) \dot{-}1,\ iff\  z+1 = 2^x(2y+1), \ iff\ x = ep_0(z+1), 且 \ 2y +1 = \frac{z+1}{2^x}$, 带人x, 得$2y+1 = \left[\frac{z+1}{2^{\text{ep}_0(z+1)}}\right], \ iff \ x = K(z), 且 \ y=L(z)$, 这里$K(z) = ep_0(z+1), L(z) = \left[\frac{\left[\frac{z+1}{2^{\text{ep}_0(z+1)}}\right]\dot{-}1}{2}\right]$</p>
+<h3 id="1-6"><a href="#1-6" class="headerlink" title="1.6"></a>1.6</h3><blockquote>
+<p>设 $f: \mathbb{N} \rightarrow \mathbb{N}$，证明：$f$ 可以作为配对函数的左函数当且仅当对任何 $i \in \mathbb{N}$，
+$|\ {\ x\in \mathbb{N}: f(x)=i\ }\ | = \aleph_0.$</p>
+</blockquote>
+<p>解答：</p>
+<ul>
+<li>“$\Rightarrow$”，设 $f$ 为配对函数 $pg(x,y)$ 的左函数
+$\because f(pg(i, j)) = i,  \forall j$
+从而对任何 $i \in \mathbb{N}$，$\therefore {\ x\ |\ f(x) = i\ } \supseteq {\ pg(i,j) \ |\  j \in \mathbb{N}\ } \sim {\ j \ | \ j \in \mathbb{N}\ } \sim \mathbb{N}$
+因此，${\ x\ |\ f(x) = i\ }$ 无穷。</li>
+</ul>
+<ul>
+<li><p>“$\Leftarrow$”，设任何 $i \in \mathbb{N}$，$f^{-1}[{i}]$ 无穷，
+$\because \mathbb{N}$ 良序，
+$\therefore$ 可设 $f^{-1}[{i}] = {\ a_{ij}\  |\ j \in \mathbb{N}\ }$
+$g: \mathbb{N} \rightarrow \mathbb{N}$ 定义如下：</p>
+<p>$$
+g(x) =
+\begin{cases}
+j, &amp; \text{if } x = a_{ij} \\
+0, &amp; \text{else}
+\end{cases}
+$$
+从而对任何 $i,j \in \mathbb{N}$，$f(a_{ij}) = i$，$g(a_{ij}) = j$，</p>
+<p>令 $pg(i, j) = a_{ij}$，$f$ 即为左函数。</p>
+</li>
+</ul>
+<h3 id="1-7"><a href="#1-7" class="headerlink" title="1.7"></a>1.7</h3><blockquote>
+<p>证明：从本原函数出发，经复合和算子 $\prod\limits_{i=n}^{m}[\cdot]$ 可以生成所有的初等函数，这里</p>
+</blockquote>
+<p>$$
+\prod\limits_{i=n}^{m}[f(\vec{i})] =
+\begin{cases}
+f(n) \cdot f(n-1) \cdot\ \cdots \ \cdot f(m), &amp; \text{if } m\geq n\\
+1, &amp; \text{if } m &lt; n
+\end{cases}
+$$</p>
+<p>解答：</p>
+<p>只需证 $\sum\limits_{i=0}^n$ ， $\prod\limits_{i=0}^n$ 和函数 $\ddot{-}$ 可表示出。</p>
+<ol>
+<li>$\prod\limits_{i=0}^n$ 为 $\prod\limits_{i=n}^{m}$ 的特例，取 $n=0$ 即可；</li>
+<li>$x^y = \prod\limits_{i=1}^{y}P_1^1(x)$，从而 $2^y = \prod\limits_{i=1}^{y}SSZ(i)$；</li>
+<li>$N(x) = \prod\limits_{i=1}^{x}Z(i)$ ；</li>
+<li>$\text{leq}(x,y) = \prod\limits_{i=x}^{y}Z(i) = \begin{cases}0, &amp; \text{if } x \leq y \\
+1, &amp; \text{if } x &gt; y\end{cases}$</li>
+<li>$\text{geq}(x, y) = \prod\limits_{i=y}^{x} Z(i)= \begin{cases}0, &amp; \text{if } x \geq y \\
+1, &amp; \text{if } x &lt; y
+\end{cases}$</li>
+<li><p>$\text{eq}(x,y) = \text{leq}(x,y)^{N\text{geq}(x,y)}=\begin{cases}0, &amp; \text{if } x = y \\
+1, &amp; \text{if } x \neq y
+\end{cases}$</p>
+</li>
+<li><p>$\log(x) = \prod\limits_{i=0}^x i^{N \text{ eq}(2^i,x)}$
+注意：$\log(2^y) = \prod\limits_{i=0}^{2^y}i^{N\text{ eq}(2^i, 2^y)}$</p>
+</li>
+<li>$\sum\limits_{i=n}^{m} f(i, \vec{x}) = \log(2^{\sum_{i=n}^mf(i, \vec{x})}) = \log(\prod\limits_{i=n}^{m}2^{f(i, \vec{x})})$</li>
+<li>$x \cdot y = \sum\limits_{i=1}^{x}P_1^1(y)$</li>
+<li>$x+y = \log(2^x \cdot 2^y)$</li>
+<li>$x \ddot{-} y = \left(\sum\limits_{i=y+1}^{x}SZ(i)\right) + \left(\sum\limits_{i=x+1}^{y}SZ(i)\right)$</li>
+</ol>
+<h3 id="1-8"><a href="#1-8" class="headerlink" title="1.8"></a>1.8</h3><blockquote>
+<p>设
+$$
+M(x) =
+\begin{cases}
+M(M(x+11)), &amp; \text{if } x \leq 100, \\
+x-10, &amp; \text{if } x&gt;100,
+\end{cases}
+$$
+证明：
+$$
+M(x) =
+\begin{cases}
+91, &amp; \text{if } x \leq 100, \\
+x-10, &amp; \text{else.}
+\end{cases}
+$$</p>
+</blockquote>
+<p>解答：
+只需证，当 $0\leq x \leq 100$$ 时，$$M(x) = 91$</p>
+<ul>
+<li>$M(90) = M(M(101))=M(91)=M(92) = \cdots = M(100) = M(M(111))=M(101)=91$；</li>
+<li>当 $0\leq x \leq 100$ 时，存在 $k$ 使得 $90 \leq x+11k \leq 100$，从而 $M(x) = M^2(x+1*11)= M^{k+1}(x+11k) = M^kM(x+11k)=M^k(91) = 91$。</li>
+</ul>
+<h3 id="1-9"><a href="#1-9" class="headerlink" title="1.9"></a>1.9</h3><blockquote>
+<p>证明：
+$$
+\min x \leq n. [f(x, \vec{y})] = n \dot{-}\max x \leq n. [f(n \dot{-}x, \vec{y})], \\
+\max x \leq n. [f(x, \vec{y})] = n \dot{-}\min x \leq n. [f(n \dot{-}x, \vec{y})].
+$$</p>
+</blockquote>
+<p>解答：</p>
+<ul>
+<li>case 1: $f(x)\ 在 \ [0, n]$ 中有零点。
+设 $\min{x\leq n.}[f(x)] = k$，故 $f(k) = 0$，从而 $f(n \dot{-}(n\dot{-}k)) = 0$，$n-k$ 为 $g(x) = f(n\dot{-}x)$ 的零点。
+当 $k$ 为 $f(x)$ 的最小零点时，$n \dot{-} k$ 为 $g(x)$ 的最大零点，从而$n \dot{-} k = \max{x \leq n}. [f(n\dot{-}x)]$
+因此，$k = n \dot{-} \max{x\leq n}. [f(n \dot{-}x)]</li>
+<li>case 2: $f(x)$ 在 $[0, n]$ 中无零点，等式左边$=n$，右边$=n\dot{-}0=n$，相等。
+同理，可证 $\max x \leq n. [f(x, \vec{y})] = n \dot{-}\min x \leq n. [f(n \dot{-}x, \vec{y})].$</li>
+</ul>
+<h3 id="1-10"><a href="#1-10" class="headerlink" title="1.10"></a>1.10</h3><blockquote>
+<p>证明：$\mathcal{EF}$ 对有界 $\max$-算子封闭.</p>
+</blockquote>
+<p>解答：
+$\because \max x \leq n. f(x, \vec{y}) = n \dot{-} \min x\leq n. f(n \dot{-}x, \vec{y})$ (习题 1.9)
+$\therefore \mathcal{EF}$ 对有界 $\max$-算子封闭.</p>
+<h3 id="1-11"><a href="#1-11" class="headerlink" title="1.11"></a>1.11</h3><blockquote>
+<p>Euler 函数 $\varphi : \mathbb{N} \rightarrow \mathbb{N}$ 定义为
+$\varphi(n) = |{\ x: 0&lt;x\leq n \wedge \gcd(x,n) = 1\ }|,$
+即 $\varphi(n)$ 表示小于等于$n$ 且与 $n$ 互素的正整数个数，例如 $\varphi(1)=1$，因为 1 与其本身互素；$\varphi(9) = 6$，因为 9 与 1, 2, 4, 5, 7, 8 互素。证明：$\varphi \in \mathcal{EF}$.</p>
+</blockquote>
+<p>解答：
+我们有 $\varphi(n) = n \prod\limits_{p\ \vert \ n}(1- \frac{1}{p})$
+$\because \prod\limits_{p\ \vert \ n} p = \prod\limits_{i=0}^n\ \text{ IF } \  P_i|n \ \text{ THEN }\ P_i \ \text{ ELSE }\ 1$
+$=\prod\limits_{i=0}^n\ \text{ IF } \  \text{ep}_i \geq 1 \ \text{ THEN }\ P_i \ \text{ ELSE }\ 1$
+$=\prod\limits_{i=0}^n(P_iN(1\dot{-} \text{ep}_i(n))+N^2(1\dot{-}\text{ep}_i(n))) \in \mathcal{EF}$
+同理，$\prod\limits_{p\ \vert \ n} (p-1) =\prod\limits_{i=0}^n((P_i-1)N(1\dot{-} \text{ep}_i(n))+N^2(1\dot{-}\text{ep}_i(n))) \in \mathcal{EF} $
+$\therefore \varphi(n) = N(n\dot{-}1)+N^2(n \dot{-}1)\left[\dfrac{\prod\limits_{p\ \vert \ n} (p-1)}{\prod\limits_{p\ \vert \ n} p}\right] \in \mathcal{EF}$.</p>
+<h3 id="1-12"><a href="#1-12" class="headerlink" title="1.12"></a>1.12</h3><blockquote>
+<p>设 $h(x)$ 为 $x$ 的最大素因子的下标，约定 $h(0)=0, h(1) = 0$。例如 $h(88) = 4$，因为 $88=2^3 \times 11$ 的最大素因子 11 是第 4 个素数 $p_4$，其下标为 4。证明：$h \in \mathcal{EF}$。</p>
+</blockquote>
+<p>解答：$h(0)=h(1) = 0$，当 $x \geq 2$ 时：</p>
+<p>$\because h(x) = \max y\leq x. [\text{ep}_y{x} \geq 1]$
+$h(x) = \max y \leq x. [1 \dot{-}\text{ep}_y(x)]$
+$\therefore h \in \mathcal{EF}$</p>
+<h3 id="1-13"><a href="#1-13" class="headerlink" title="1.13"></a>1.13</h3><blockquote>
+<p>设 $f:\mathbb{N} \rightarrow \mathbb{N}$ 满足$f(0) = 1, f(1) = 1,f(x+2) =f(x)+f(x+1)$
+证明：
+(1) $f \in \mathcal{PRF}$；
+(2) $f \in \mathcal{EF}$。</p>
+</blockquote>
+<p>解答：
+(1) 令$[a_0, a_1, \cdots, a_n] \prod\limits_{i=0}^{n} p_i^{a_i}$
+这里 $p_i$ 为第 $i$ 个素数，比如$p_0=2，p_1=3，p_2=5$，那么 $[a_0, a_1, a_2] = 2^{a_0} \cdot 3^{a_1} \cdot 5^{a_2}$，为 Gödel 编码形式$ep_i(a) = a$ 的素因子分解式中第 $i$ 个素数的指数。易见
+$$
+ep_i[a_0, a_1, \cdots, a_n] =
+\begin{cases}
+ a_i, &amp; i\leq n \\
+0, &amp; i&gt;n
+\end{cases}
+$$
+从而令 $F(n) = [f(n), f(n+1)]，F(0) = [f(0), f(1)] = 2^1 \cdot 3^1 = 6$
+$$
+\begin{array}{rl} F(n+1) &amp; = [f(n+1), f(n+2)]\\
+&amp; = [f(n+1), f(n+1)+f(n)] \\
+&amp; = [ep_1F(n), ep_1F(n)+ep_0F(n)] \\
+&amp; = H(F(n))\end{array}
+$$
+这里，$$H(x) = [ep_1x, ep_1x+ep_0x] = 2^{ep_1x} \cdot 3^{ep_1x} \cdot 3^{ep_0x}$$</p>
+<p>$\therefore H(x)$ 是初等的。
+又 $\because F(0)=6, F(n+1) = H(F(n))$ ，以及 $H$ 为原始递归函数
+$\therefore F(n)$ 为原始递归函数
+又 $\because f(n)=ep_0F(x)$
+$\therefore f(n)$ 为原始递归函数。</p>
+<p>(2) 现在证明 $f(n)$ 是初等的。</p>
+<p><u><strong>证法一：</strong></u></p>
+<p>首先有 $f(n) \leq 2^n$ ，归纳证明如下：
+当 $n=0,1$ 时，$f(0)=1 \leq 2^0 ，f(1) = 1 \leq 2^1$
+归纳假设：$\forall k \leq n, f(k) \leq 2^k$
+归纳步骤：当 $n&lt;2$ 时，$f(n) \leq 2^n$ 为真，当 $ n \geq 2$ 时，
+$f(n) = f(n-1)+f(n-2) \leq 2^{n-1} +2^{n-2} \leq 2^{n-2} \cdot 3 \leq 2^{n-2} \cdot 4 \leq 2^n$</p>
+<p>其次，还有 $F(n) \leq G(n)$ ，这里 $G(n) = 2^{2^n}\cdot 3^{2^{n+1}}$，且 $G(n)$ 是初等的。</p>
+<p>$F(n) = [f(n), f(n+1)] = 2^{f(n)} \cdot 3^{f(n+1)} \leq  2^{2^n}\cdot 3^{2^{n+1}} = G(n)$，易见 $G(n)$ 的初等性。</p>
+<p>令$\alpha(n) = [F(0), \cdots, F(n)] \leq [G(0), \cdots, G(n)]$，有
+$\alpha(n) \leq \prod\limits_{i=0}^np_i^{G(i)} \leq \prod\limits_{i=0}^np_n^{(2^{2^n}\cdot 3^{2^{n+1}} \cdot (n+1))} = \beta(n)
+$
+易见，$\beta(n)$ 为初等函数。
+因为
+$$
+\begin{array}{rl}\alpha(n)  &amp; = \mu x \leq \beta(n) \cdot (ep0x = F(0)) \wedge \forall i&lt;n, ep{i+1}x = H(ep_ix)  \
+ &amp; = \mu x \leq \beta(n) \cdot[ep_0x=6 \wedge \forall i &lt;n , (ep_{i+1}x \ddot{-}H(ep_ix)=0)] \
+  &amp;= \mu x \leq \beta(n) \cdot\left[ep_0x=6 + \sum_{i \rightarrow n \ddot{-}1}(ep_{i+1}x\ddot{-}H(ep_ix))N^2n\right] \
+   &amp; = \mu x \leq \beta(n) \cdot \gamma(n)
+\end{array}
+$$
+易见，$\gamma(n)$ 是初等的，所以 $\alpha(n)$ 是初等的。
+因为 $f(n) = ep_0(F(n)) = ep_0(ep_n(\alpha(n)))$，所以 $f(n)$ 是初等的。</p>
+<p><strong><u>证法二：</u></strong>
+$f(n) = \frac{1}{\sqrt{5}}\left(\frac{1+\sqrt{5}}{2}\right)^{n+1} - \frac{1}{\sqrt{5}}\left(\frac{1-\sqrt{5}}{2}\right)^{n+1}
+$
+（该公式的证明参见 Kolman B, Busby R C. Ross S. Discrete mathematical structures. Prentice-Hall, Inc. 1996 (3rd) ）</p>
+<p>从而
+$$
+\begin{array}{rl}f(n) &amp; = \frac{1}{2^{n+1}\sqrt5}\left[(1+\sqrt 5)^{n+1} - (1-\sqrt 5)^{n+1}\right] \\
+&amp; = \frac{1}{2^{n+1}\sqrt5}\left[\sum_{i=0}^{n+1}C_{n+1}^i (\sqrt 5)^i - \sum_{i=0}^{n+1}C_{n+1}^i (-\sqrt 5)^i \right] \\
+&amp; = \frac{1}{2^{n+1}\sqrt5}\left[\sum_{i=0}^{n+1}C_{n+1}^i 2(\sqrt 5)^i N^2rs(i,2) \right] \\
+&amp; = \frac{1}{2^{n}}\left[\sum_{i=0}^{n+1}C_{n+1}^i 5^{\lfloor\frac{i}{2}\rfloor} N^2rs(i,2) \right] \\
+\end{array}
+$$</p>
+<h3 id="1-14"><a href="#1-14" class="headerlink" title="1.14"></a>1.14</h3><blockquote>
+<p>设数论谓词 $Q(x,y,z,v)$ 定义为
+$Q(x, y, z, v) \equiv p(\langle x,y,z\rangle) ~|~ v,$其中，$p(n)$ 表示第 $n$ 个素数，$\langle x,y,z\rangle$ 是 $x,y,z$ 的 Godel 编码。证明：$Q(x,y,z,v)$ 是初等的。</p>
+</blockquote>
+<p>解答：$\because \langle x,y,z\rangle= 2^x \cdot 3^y \cdot 5^z \in \mathcal{EF} $
+又 $Q(x,y,z,v)$ 的特征函数为 $N^2rs(v, p(\langle x,y,z\rangle))$
+$\therefore Q \in \mathcal{EF}$</p>
+<h3 id="1-15"><a href="#1-15" class="headerlink" title="1.15"></a>1.15</h3><blockquote>
+<p>设 $f:\mathbb{N} \rightarrow \mathbb{N}$ 满足
+$f(0) = 1,f(1) = 4,f(2)=6, f(x+3) = f(x)+(f(x+1))^2+(f(x+2))^3$
+证明：$f(x) \in \mathcal{PRF}$。</p>
+</blockquote>
+<p>解答：
+令 $g(x) = \langle f(x), f(x+1), f(x+2) \rangle, f(x) = (g(x))_1$
+$g(0) = \langle 1, 4, 6 \rangle$，
+$g(x+1) = \langle (g(x))_2, (g(x))_3, (g(x))_1+(g(x))_2^2+(g(x))_3^3 \rangle = B(g(x)) $
+这里，$B(z) = \langle (z)_2, (z)_3, (z)_1+((z)_2)^2+((z)_3)^3 \rangle \in \mathcal{PRF}$
+故 $g \in \mathcal{PRF}$，从而 $f \in \mathcal{PRF}$。</p>
+<h3 id="1-16"><a href="#1-16" class="headerlink" title="1.16"></a>1.16</h3><blockquote>
+<p>设 $f: \mathbb{N}\rightarrow \mathbb{N}$ 满足
+$f(0)=0,f(1) = 1,f(2) = 2^2,f(3) = 3^{3^3} \cdots \cdots,
+f(n) = n^{.^{.^{.^n}}} (\text{the number of } n \text{ is } n) $
+证明：$f \in \mathcal{PRF} - \mathcal{EF}$</p>
+</blockquote>
+<p>解答：</p>
+<p>令 $g(m,n) = n^{.^{.^{.^n}}}$，具有 $m$ 个 $n$ 的形式，
+$$
+\begin{cases}
+ g(0, n) = N^2n \\
+ g(m+1, n) = n^{g(m,n)}
+ \end{cases}
+ $$，从而 $f(n) = g(n, n)$
+$\because g \in \mathcal{PRF}$
+$\therefore f \in \mathcal{PRF}$
+以下证 $ f \notin \mathcal{EF}$
+从而 $\exists k ~\forall n, f(n) &lt; 2^{.^{.^{.^{2^n}}}} } k$ 个 2，取 $n = k+2$，从而
+$(k+2)^{.^{.^{.^{(k+2)}}}} }k+2$ 个 $&lt; 2^{.^{.^{.^{2^{(k+2)}}}}} }k$ 个 2，矛盾。</p>
+<h3 id="1-17"><a href="#1-17" class="headerlink" title="1.17"></a>1.17</h3><p>设 $g: \mathbb{N}\rightarrow \mathbb{N} \in \mathcal{PRF}, f: \mathbb{N}^2 \rightarrow \mathbb{N}$ ，满足
+$
+f(x, 0)=g(x)， f(x,y+1) = f(f(\cdots f(f(x,y), y-1), \cdots),0),$
+证明：$f \in \mathcal{PRF}$</p>
+<p>解答：
+证明 $f(x,y)$ 呈形 $g^{a(y)}(x)$
+Basis: $ y = 0, f(x,y) = f(x,0) = g(x), a(0) = 1$
+假设 $f(x,y) = g^{a(y)}(x)$，那么，
+$$
+\begin{array}{rl}
+f(x, y+1) &amp;=f(f(\cdots f(f(x,y), y-1), \cdots), 0) \\
+&amp; = g^{a(0)}(f(\cdots f(f(x,y), y-1), \cdots), 1) \\
+&amp; = g^{a(0)+a(1)}(f(\cdots f(f(x,y), y-1), \cdots), 2) \\
+&amp; = g^{a(0)+a(1)+ \cdots a(n)}(x)
+\end{array}
+$$
+从而，$a(0)=1, a(y+1) = a(0)+a(1)+\cdots +a(y)$
+易见 $a(y) \in \mathcal{PRF}$，故 $f(x,y) = g^{a(y)} (x)$
+令 $h(x,y) = g^y(x)$，因为
+$$
+\begin{cases}
+h(x, 0) = x \\
+h(x, y+1) = g(h(x,y))
+\end{cases}
+$$</p>
+<p>$\therefore h \in \mathcal{PRF}$
+$\because f(x,y)= h(x, a(y))$
+$\therefore f \in \mathcal{PRF}$</p>
+<h3 id="1-18"><a href="#1-18" class="headerlink" title="1.18"></a>1.18</h3><blockquote>
+<p>设 $k \in \mathbb{N}^+$，函数 $f: \mathbb{N}^ k\rightarrow \mathbb{N}$ 和 $g: \mathbb{N}^k \rightarrow \mathbb{N}$尽在有穷个点取不同值，证明：$f $ 为递归函数当且仅当 $g$ 为递归函数。</p>
+</blockquote>
+<p>解答：
+设 $f$ 与 $g$ 在有穷个点取不同值，从而有 $k \in \mathbb{N}$，使当 $x &gt; k$ 时，$f(x) =g(x)$ ，从而，</p>
+<p>$$
+f(x) =
+\begin{cases}
+f(x), &amp; \text{if } x \leq k\\
+g(x), &amp; \text{if } x &gt;k
+\end{cases}
+$$
+令
+$$
+f^\prime(x) =
+\begin{cases}
+f(x), &amp; \text{if }x \leq k\\
+0, &amp;\text{if }x &gt; k
+\end{cases}
+$$
+易见，$f^\prime \in \mathcal{PRF}$
+$f(x) = f^\prime(x)N(x\dot{-}k) + g(x)N^2(x\dot{-}k)$
+易见，$g \in \mathcal{PRF} \Rightarrow f \in \mathcal{PRF}$
+同理，$f \in \mathcal{PRF} \Rightarrow g\in \mathcal{PRF}$</p>
+<h3 id="1-19"><a href="#1-19" class="headerlink" title="1.19"></a>1.19</h3><blockquote>
+<p>证明：$f(n) = \Bigl\lfloor\left(\frac{\sqrt{5}+1}{2}\right)n\Bigr\rfloor$
+为初等函数。</p>
+</blockquote>
+<p>解答：
+$f(n) = \max x \leq 2n. x \leq \frac{\sqrt{5}+1}{2}n$
+$f(n) = \max x \leq 2n. 2x \leq \sqrt{5} n+n$
+$f(n) = \max x \leq 2n. 2x \ddot{-}n \leq \sqrt{5}n$
+$f(n) = \max x \leq 2n. (2x \ddot{-}n)^2 \leq 5n^2$
+$f(n) = \max x \leq 2n. 4x^2  \leq 4n^2 + 4xn$
+$f(n) = \max x \leq 2n. x^2 \dot{-} (n^2 + xn) \in \mathcal{EF}$</p>
+<h3 id="1-20"><a href="#1-20" class="headerlink" title="1.20"></a>1.20</h3><blockquote>
+<p>证明：$Ack(4,n) \in \mathcal{PRF} - \mathcal{EF}$，其中 $Ack(x,y)$ 是 Ackermann 函数。</p>
+</blockquote>
+<p>解答：
+令 $f(n) = Ack(4,n)$，
+$f(0) = Ack(4,0) = Ack(3,1) = f_3(1)=2^{1+3}-3=13$
+$f(n+1) = Ack(4, n+1) = Ack(3, A(4,n)) = Ack(3, f(n)) = 2^{f(n)+3}\dot{-}3$
+令 $g(n) = f(n)+3$，从而$g(0) = 16 = 2^4$，$g(n+1) = g(n)$</p>
+<p>因此，$g(n) = \left . 2^{\cdot^{\cdot^{\cdot^2}}}  \right \} n+3 $ 个2.</p>
+<p>从而，$Ack(4,n) = 2^{\cdot^{\cdot^{\cdot^2}}} \dot{-}3 \in \mathcal{PRF}$</p>
+<p>又因为：
+$\lim \limits_{n \rightarrow \infty} \frac{\left. 2^{\cdot^{\cdot^{\cdot^2}}}  \right\} k \text{ 个 }2}{g(n)} = 0$</p>
+<p>$\therefore g \notin \mathcal{EF}$，$\therefore f \notin \mathcal{EF}$ 。</p>
+<h3 id="1-21"><a href="#1-21" class="headerlink" title="1.21"></a>1.21</h3><blockquote>
+<p>设 $f: \mathbb{N} \rightarrow \mathbb{N}$，$f$ 为单射（1-1）且满射（onto），证明：$f\in \mathcal{GRF} \Leftrightarrow f^{-1} \in \mathcal{GRF}$</p>
+</blockquote>
+<p>解答：
+设 $f$ 为单射且满射，令 $g(x) =f^{-1}(x)$，从而
+$y=g(x) \text{ iff } f(y) = x \text{ iff } y = \mu z. f(z) = x$
+从而，$g(x) = \mu z. (f(z) \ddot{-}z)$
+因此，$g \in \mathcal{GRF} \Leftarrow f \in \mathcal{GRF}$
+同理，$f\in \mathcal{GRF} \Leftarrow g \in \mathcal{GRF}$</p>
+<h3 id="1-22"><a href="#1-22" class="headerlink" title="1.22"></a>1.22</h3><blockquote>
+<p>设 $p(x)$ 为整系数多项式，令 $f: \mathbb{N} \rightarrow \mathbb{N}$ 定义为 $f(a) = p(x)-a$ 对于 $x$ 的非负整数根，证明：$f \in \mathcal{RF}$。</p>
+</blockquote>
+<p>解答：
+$f(n) = \mu x. (p(x) = n), \because p(x)$ 为整系数多项式, $\therefore$ 存在正整系数多项式 $s(x)$ 与 $t(x)$ 使 $p(x) = s(x)-t(x)$,从而$f(n) = \mu x. (s(x) \ddot{-} (n+t(x)))$. 易见，$s(x), t(x) \in \mathcal{PRF}$，故 $f \in \mathcal{RF}$。</p>
+<h3 id="1-23"><a href="#1-23" class="headerlink" title="1.23"></a>1.23</h3><blockquote>
+<p>设
+$$
+f(x) =
+\begin{cases}
+x / y, &amp; \text{if } y \neq 0 \text{ and } y~|~x,\\
+\uparrow, &amp; \text{else.}
+\end{cases}
+$$
+证明：$f \in \mathcal{RF}$。</p>
+</blockquote>
+<p>解答：$f(x) = \mu z. (zy =x) \text{ and } (y \neq 0) = \mu z.(x \ddot{-}zy)\cdot Ny$</p>
+<h3 id="1-24"><a href="#1-24" class="headerlink" title="1.24"></a>1.24</h3><blockquote>
+<p>设 $g: \mathbb{N} \rightarrow \mathbb{N}$ 满足
+$g(0)=0,g(1) = 1,g(n+2) = rs((2002g(n+1)+2003g(n)), 2005)$
+(1) 试求 $g(2006)$，
+(2) 证明：$g \in \mathcal{EF}$。</p>
+</blockquote>
+<p>解答：</p>
+<p>先证明(2)，令 $h: \mathbb{N} \rightarrow \mathbb{Z}$ 如下：
+$h(0) = 0,h(1) = 1,h(n+2) = -3h(n+1)-2h(n)$
+易见 $g(n) = rs(h(n), 2005)$
+(注：为何这样构造？$g(n+2) = rs((2005-3)g(n+1)+(2005-2)g(n), 2005) $)</p>
+<p>这是因为 $h(n)$ 的特征方程 $\lambda^2= -3\lambda-2$，其根为 $-1, -2$，从而 $h(n)$ 呈形 $a(-1)^n+b(-2)^n$，由 $h(0)=0, h(1) = 1$，故得 $a = 1, b = -1$，因此 $h(n) = (-1)^n-(-2)^n = (-1)^{n+1}(2^n \dot{-}1)$</p>
+<p>从而，</p>
+<p>$$g(n) =
+\begin{cases}
+2005 \dot{-} rs(2^n \dot{-}1, 2005), &amp; \text{if } n \text{ is even,}\\
+rs(2^n \dot{-}1, 2005), &amp; \text{if } n \text{ is odd.}
+\end{cases}$$</p>
+<p>$g(n) = (2005 \dot{-}rs(2^n\dot{-}1, 2005) Nrs(n,2)) + rs(2^n\dot{-}1, 2005)N^2rs(n,2)$
+故 $g \in \mathcal{EF}$。
+再计算(1)，$2005 = 5 \times 401$，$5, 401$ 均为素数</p>
+<p>由Fermat’s little theorem（费马小定理：假如 $p$ 是素数，且 $(a,p) =1$，那么 $a^{p-1} \equiv 1 (\text{mod } p)$)知，
+$2^4 \equiv 1 \mod 5, 2^{400} \equiv 1 \mod 401$
+$\because (5, 401) = 1, \therefore 2^{400} \equiv 1(\text{mod }5 \times 401)$$，即 $$rs(2^{400}, 2005) = 1$
+从而，$g(n+400) = g(n)$，$g$ 的周期为 $400$
+故 $g(2006) = g(6) = rs(h(6), 2005)) = 2005 \dot{-} rs(2^6-1, 2005) = 1942$。</p>
+<h3 id="1-25"><a href="#1-25" class="headerlink" title="1.25"></a>1.25</h3><blockquote>
+<p>设 $f: \mathbb{N} \rightarrow \mathbb{N}$ 定义为
+$f(n)=\pi \text{ 的十进制展开式中第 }n\text{ 位数字}$
+例如 $f(0) = 3, f(1) = 1, f(2) = 4$。证明：$f \in \mathcal{GRF}$</p>
+</blockquote>
+<p>解答：
+首先，我们有$\frac{1}{1+x^2} = \sum\limits_{i=0}^{n}(-1)^ix^{2i} + \frac{(-1)^{n+1}x^{2n+2}}{1+x^2}$
+$\therefore \arctan x = \int_0^x\frac{\text{d}t}{1+t^2} =\sum\limits_{i=0}^{n}(-1)^i\int_0^xt^{2i}\text{d}t + \int_0^x\frac{(-1)^{n+1}}{1+t^2}t^{2n+2}\text{d}t$
+$
+=\sum\limits_{i=0}^{n}(-1)^i\frac{x^{2i+1}}{2i+1} + \int_0^x\frac{(-1)^{n+1}}{1+t^2}t^{2n+2}\text{d}t \quad \cdots (*)
+$</p>
+<p>由 Hutton’s Formula 知，
+$
+\frac{\pi}{4} = 2\arctan\frac{1}{3}+\arctan\frac{1}{7} \Rightarrow \pi = 8\arctan\frac{1}{3}+4\arctan\frac{1}{7}
+$
+在 (*) 式中取 $$n = 2k+1$$，这是使余项为正且估计更精确
+$
+\pi = 8 \sum\limits_{i=0}^{2k+1}(-1)^i\frac{1}{(2i+1)3^{2i+1}} + 8 \int_0^{\frac{1}{3}}\frac{t^{4k+4}}{1+t^2}\text{d}t + 4 \sum\limits_{i=0}^{2k+1}(-1)^i\frac{1}{(2i+1)7^{2i+1}}+ 4 \int_0^{\frac{1}{7}}\frac{t^{4k+4}}{1+t^2}\text{d}t
+$
+$
+t_k =8 \sum\limits_{i=0}^{2k+1}(-1)^i\frac{1}{(2i+1)}\left(\frac{1}{3^{2i+1}} + \frac{1}{2 \cdot 7^{2i+1}}\right)
+$
+$
+r_k =8 \int_0^{\frac{1}{3}}\frac{t^{4k+4}}{1+t^2}\text{d}t + 4\int_0^{\frac{1}{7}}\frac{t^{4k+4}}{1+t^2}\text{d}t
+$
+$
+\leq 8 \int_0^{\frac{1}{3}}t^{4k+4}\text{d}t + 4\int_0^{\frac{1}{7}}t^{4k+4}\text{d}t
+$
+$
+\leq 8 \cdot \frac{1}{3}\cdot \frac{1}{3^{4k+4}} + 4\cdot \frac{1}{7} \cdot \frac{1}{7^{4k+4}} \leq \frac{1}{3^{4k}} \leq \frac{1}{80^k}
+$</p>
+<p>因此，$\pi = t_k + r_k$，且 $0 &lt;r_k &lt; \frac{1}{80^k}$，$t$ 为有理数，设 $t_k$ 的十进制展开式为
+$t_k = a_{k0}a_{k1} a_{k2} \cdots a_{kn} \cdots$
+对于 $n \in \mathbb{N}$，存在 $l \geq n+1$ 使在 $t_l$ 中并非$a_{l,n+1}, a_{l, n+2}, \cdots, a_{l,l}$ 皆为 $9$，若不然，对任何 $l \geq n+1$，$a_l, a_{l,n+1}, a_{l, n+2}, \cdots, a_{l,l}$ 皆为 $9$。</p>
+<p>$\because 10^{l}\pi = 10^lt_l + 10^lr_l$，$\therefore 10^lt_l &lt; 10^l \pi &lt; 10^lt_l+\frac{1}{8^l}$
+这样在 $\pi$ 的展开式中，从某位起皆为 $9$，从而 $\pi$ 为有理数
+令$l=l(n) = \mu l. (l\geq n+1$ 且在 $a_{l, n+1}, \cdots, a_{l,l}$ 中并非皆为 $9)$
+$\because a(l,i) = a_{l, i} = t_l$ 展开式的第 $i$ 个数字 $\in \mathcal{EF}$
+$\therefore l(n) = \mu l .((l \geq n+1) \wedge \prod\limits_{i = n+1}^l(a_{l,i}\dot{-}9 \neq 0)) \in\mathcal{GRF}$
+（注：若知道 $\pi$ 展开式中连续 $9$ 的个数有上限，则 $l(n) \in \mathcal{EF}$）
+我们有 $t_k &lt; \pi &lt; t_l+\frac{1}{80^l}$，
+对于 $n \in \mathbb{N}$，取 $l = l(n)$
+$\because a_{l, n+1}, \cdots, a_{l,l}$ 并非皆为 $9$，</p>
+<p>$\therefore$ 设 $a_{l,m} &lt; 9$，这里 $n+1 \leq m \leq l$$，设 $$\pi = \pi_0\pi_1\pi_2\cdots$</p>
+<p>从而 $t_l &lt; \pi &lt; t_l + \frac{1}{80^m}$，$10^mt_l &lt; 10^m\pi&lt;10^mt_l + \frac{1}{8^m}$</p>
+<p>从而
+$a_{l0}a_{l1}a_{l2}\cdots a_{ln}a_{l\overline{n+1}} \cdots a_{lm}a_{l\overline{m+1}} \cdots$
+$&lt;\pi_0\pi_1\pi_2 \cdots \pi_n\pi_{n+1}\cdots \pi_m \pi_{m+1} \cdots$
+$&lt; a_{l0}a_{l1}a_{l2}\cdots a_{ln}a_{l\overline{n+1}} \cdots a_{lm}a_{l\overline{m+1}} \cdots + \frac{1}{8^m}(m \geq 1)$
+$&lt; a_{l0}a_{l1}a_{l2}\cdots a_{ln}a_{l\overline{n+1}} \cdots (a_{lm}+1)a_{l\overline{m+1}} \cdots$</p>
+<p>因此，
+$$
+\begin{array}{rl}
+a_{l0}a_{l1}\cdots a_{ln}a_{l\overline{n+1}} \cdots a_{lm} &amp; \leq \pi_0\pi_1\pi_2 \cdots \pi_n\pi_{n+1}\cdots \pi_m \
+&amp; \leq a_{l0}a_{l1}a_{l2}\cdots a_{ln}a_{l\overline{n+1}} \cdots (a_{lm}+1)
+\end{array}
+$$
+$\because m \geq n+1$， $\therefore \pi_n = a_{ln}$</p>
+<p>因此，$f(n) = \pi_n = a(l(n), n) \in \mathcal{GRF}$。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Paxos分布式一致性算法]]></title>
       <url>http://keyunluo.github.io/2017/03/18/DistributedSystem/paxos-algorithm.html</url>
       <content type="html"><![CDATA[<blockquote>
@@ -120,7 +618,7 @@
     
     <entry>
       <title><![CDATA[分布式系统——试卷分析]]></title>
-      <url>http://keyunluo.github.io/2016/12/28/Cource/distributed-system-2.html</url>
+      <url>http://keyunluo.github.io/2016/12/28/Course/distributed-system-2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>2015年秋南京大学计算机系分布式系统期末试卷分析。</p>
 </blockquote>
@@ -252,7 +750,7 @@
     
     <entry>
       <title><![CDATA[数据挖掘——试卷分析]]></title>
-      <url>http://keyunluo.github.io/2016/12/27/Cource/data-mining.html</url>
+      <url>http://keyunluo.github.io/2016/12/27/Course/data-mining.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>2015年秋南京大学计算机系数据挖掘期末试卷分析。</p>
 </blockquote>
@@ -368,7 +866,7 @@ Notations: I is the identity matrix, and $H = I - \frac{1}{n}1_n1_n^T$ is the ce
     
     <entry>
       <title><![CDATA[分布式系统——课程总结]]></title>
-      <url>http://keyunluo.github.io/2016/12/23/Cource/distributed-system-1.html</url>
+      <url>http://keyunluo.github.io/2016/12/23/Course/distributed-system-1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>2016年秋南京大学计算机系分布式系统课程总结。</p>
 </blockquote>
@@ -698,7 +1196,7 @@ type(仅需要一种类型的资源是可用的，如彩色显示器)
     
     <entry>
       <title><![CDATA[数据挖掘——课程总结]]></title>
-      <url>http://keyunluo.github.io/2016/12/22/Cource/data-mining-summary.html</url>
+      <url>http://keyunluo.github.io/2016/12/22/Course/data-mining-summary.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>2016年秋南京大学计算机系数据挖掘课程学期总结。</p>
 </blockquote>
@@ -1190,7 +1688,7 @@ $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p
     
     <entry>
       <title><![CDATA[高级算法--作业2]]></title>
-      <url>http://keyunluo.github.io/2016/11/03/Cource/advanced-algorithm-assignment2.html</url>
+      <url>http://keyunluo.github.io/2016/11/03/Course/advanced-algorithm-assignment2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>高级算法：第二次作业。</p>
 </blockquote>
@@ -1398,7 +1896,7 @@ So, the approximation ratio is $f$.</p>
     
     <entry>
       <title><![CDATA[高级算法--作业1]]></title>
-      <url>http://keyunluo.github.io/2016/10/13/Cource/advanced-algorithm-assignment1.html</url>
+      <url>http://keyunluo.github.io/2016/10/13/Course/advanced-algorithm-assignment1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>高级算法：第一次作业。</p>
 </blockquote>
@@ -1650,7 +2148,7 @@ the probability of one edge cannot be  2-coloable in edge $e_i$ is $Pr[e_i]= 2 /
     
     <entry>
       <title><![CDATA[高级算法(3)--Min-Cut-Max-Flow(2)-近似算法]]></title>
-      <url>http://keyunluo.github.io/2016/10/06/Cource/advanced-algorithm-3.html</url>
+      <url>http://keyunluo.github.io/2016/10/06/Course/advanced-algorithm-3.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本节重点讨论Karger’s Contraction algorithm解决最小割问题及其运行复杂度分析。</p>
 </blockquote>
@@ -1781,7 +2279,7 @@ p(n) &amp; = &amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     <entry>
       <title><![CDATA[高级算法(2)--Min-Cut-Max-Flow(1)-确定性算法]]></title>
-      <url>http://keyunluo.github.io/2016/10/05/Cource/advanced-algorithm-2.html</url>
+      <url>http://keyunluo.github.io/2016/10/05/Course/advanced-algorithm-2.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>对于一个图中的两个节点来说，如果把图中的一些边去掉，刚好让他们之间无法连通的话，这些被去掉的边组成的集合就叫做割了，最小割就是指所有割中权重之和最小的一个割。</p>
 </blockquote>
@@ -1895,7 +2393,7 @@ p(n) &amp; = &amp; \Pr[C\text{ is returned by }\textit{FastCut}(G)]\\
     
     <entry>
       <title><![CDATA[高级算法(1)--NP完全性与近似算法]]></title>
-      <url>http://keyunluo.github.io/2016/10/04/Cource/advanced-algorithm-1.html</url>
+      <url>http://keyunluo.github.io/2016/10/04/Course/advanced-algorithm-1.html</url>
       <content type="html"><![CDATA[<blockquote>
 <p><strong>本节内容：</strong>本学期修读了尹一通老师的高级算法课，感觉略有困难，故将学习过程中的知识点以博客的形式记录下来，温故而知新，本节总结NP完全性问题和近似算法的概念。</p>
 </blockquote>
@@ -2753,6 +3251,40 @@ $$</p>
     </entry>
     
     <entry>
+      <title><![CDATA[Hadoop源码学习(11)——SequenceFile]]></title>
+      <url>http://keyunluo.github.io/2016/08/13/BigData/hadoop-io-7.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>本节内容：</strong>SequenceFile为二进制键值对提供了一个持久数据结构，也可以作为小文件的容器，HDFS和MapReduce是针对大文件优化的，所以通过SequenceFile类型将小文件包装起来，可以获得更高效率的存储和处理。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="SequenceFile类"><a href="#SequenceFile类" class="headerlink" title="SequenceFile类"></a>SequenceFile类</h2><p>SequenceFile类位于org.apache.hadoop.io包内，类结构如下：</p>
+<p><img src="/resource/blog/2016-08/SequenceFile.png" alt="SequenceFile类"></p>
+<h2 id="SequenceFile的格式"><a href="#SequenceFile的格式" class="headerlink" title="SequenceFile的格式"></a>SequenceFile的格式</h2><p>SequenceFile文件由文件头和随后的一条或多条记录组成。顺序文件的前三个字节是SEQ，紧随其后的一个字节表示顺序文件的版本号。文件头还包括其他字段，例如键和值类的名称、数据压缩细节、用户定义的元数据以及同步标识。同步标识用于在读取文件时能够从任意位置开始识别边界记录。</p>
+<p>记录的内部结构取决于是否启用压缩。如果已经启用，则取决于记录压缩还是数据块压缩。</p>
+<p>如果没有启用压缩(默认情况)，那么每条记录则由记录长度(字节数)、键长度、键和值组成。长度字段为4字节长的整数，遵循java.io.DataOutput类中的writeInt()方法的约定，写入顺序文件的类定义Serialization类来实现键和值的序列化。</p>
+<p>记录压缩格式与无压缩情况基本相同，只不过值是用文件头定义的codec压缩的，但是键并没有被压缩。</p>
+<p><img src="/resource/blog/2016-08/sequencefilewithnocompression.jpg" alt="SequenceFile-无压缩和记录压缩"></p>
+<p>块压缩是指一次性压缩多条记录，因为它可以利用记录间的相似性进行压缩，所以相较于单条记录压缩方法，该方法的压缩效率更高，如下图所示。可以不断向数据块中压缩记录，直到块的字节数不小于io.seqfile.compress.blocksize属性中设置的字节数：默认为1MB。每一个新块的开始处都需要插入同步标识。数据块的格式如下：首先是一个指示数据块中字节数的字段；紧接着是4个压缩字段(键长度、键、值长度和值)</p>
+<p><img src="/resource/blog/2016-08/sequencefilewithblockcompression.jpg" alt="SequenceFile-块压缩"></p>
+<h2 id="SequenceFile写操作"><a href="#SequenceFile写操作" class="headerlink" title="SequenceFile写操作"></a>SequenceFile写操作</h2><p>通过createWriter()静态方法可以创建SequenceFile对象，并返回SequenceFile.Writer实例。该静态方法有多个重载版本，但都需要指定待写入的数据流(FSDataOutputStream或FileSystem对象和Path对象)，Configuration对象，以及键和值的类型，写入的参数信息等。另外，可选参数包括压缩类型以及相应的codec,Progressable回调函数用于通知写入的进度，以及在SequenceFile头文件中存储的Metadata实例。</p>
+<p>存储在SequenceFile中的键和值并不一定需要是Writable类型，只要能被Serialization序列化和反序列化，任何类型都可以。</p>
+<p>一旦拥有SequenceFile.Writer实例，就可以通过append()方法在文件末尾附加键值对。写完后，可以调用close()方法(SequenceFile.Writer实现了java.io.Closable接口)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Text;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceFileWriteDemo</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] DATA = &#123;</span><br><span class="line">    <span class="string">"One, two, buckle my shoe"</span>,</span><br><span class="line">    <span class="string">"Three, four, shut the door"</span>,</span><br><span class="line">    <span class="string">"Five, six, pick up sticks"</span>,</span><br><span class="line">    <span class="string">"Seven, eight, lay them straight"</span>,</span><br><span class="line">    <span class="string">"Nine, ten, a big fat hen"</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line">    Path path = <span class="keyword">new</span> Path(url);</span><br><span class="line"></span><br><span class="line">    IntWritable key = <span class="keyword">new</span> IntWritable();</span><br><span class="line">    Text value = <span class="keyword">new</span> Text();</span><br><span class="line">    SequenceFile.Writer writer = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        writer = SequenceFile.createWriter(fs,conf,path,key.getClass(),value.getClass());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">1024</span>;i++)&#123;</span><br><span class="line">            key.set(<span class="number">1024</span>-i);</span><br><span class="line">            value.set(DATA[i % DATA.length]);</span><br><span class="line">            writer.append(key,value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(writer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译与运行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  project export CLASSPATH=$HADOOP_CLASSPATH:$CLASSPATH</span><br><span class="line">➜  project javac SequenceFileWriteDemo.java</span><br><span class="line">➜  project java SequenceFileWriteDemo numbers.seq</span><br></pre></td></tr></table></figure>
+<h2 id="SequenceFile读操作"><a href="#SequenceFile读操作" class="headerlink" title="SequenceFile读操作"></a>SequenceFile读操作</h2><p>从头到尾读取顺序文件不外乎创建SequenceFile.Reader实例后反复调用next()方法迭代读取记录。读取的是哪条记录与你使用的序列化框架有关。如果使用Writable类型，那么通过键和值作为参数的next()方法可以将数据流中的下一条键值对读入变量中。<code>public boolean next(Writable key,Writable val)</code>。对于其他非Writable类型的序列化框架，例如Apache Thrift，则应该使用下面两个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">next</span><span class="params">(Object key)</span> <span class="keyword">throws</span> IOException</span><br><span class="line"><span class="keyword">public</span> Object <span class="title">getCurrentValue</span><span class="params">(Object val)</span> <span class="keyword">throws</span> IOException</span></span><br></pre></td></tr></table></figure>
+<p>在这种情况下，需要确保io.serializations属性已经设置了你想要的序列化框架。如果next()方法返回的是非null对象，则可以从数据流中读取键、值对，并且可以通过getCurrentValue()方法读取该值。否则，如果next()返回null值，表示已经读到文件末尾。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Writable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.util.ReflectionUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceFileReadDemo</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line">    Path path = <span class="keyword">new</span> Path(url);</span><br><span class="line"></span><br><span class="line">    SequenceFile.Reader reader = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        reader = <span class="keyword">new</span> SequenceFile.Reader(fs,path,conf);</span><br><span class="line">        Writable key = (Writable) ReflectionUtils.newInstance(reader.getKeyClass(),conf);</span><br><span class="line">        Writable value = (Writable) ReflectionUtils.newInstance(reader.getValueClass(),conf);</span><br><span class="line">        <span class="keyword">long</span> position = reader.getPosition();</span><br><span class="line">        <span class="keyword">while</span> (reader.next(key,value))&#123;</span><br><span class="line">            String syncSeen = reader.syncSeen() ? <span class="string">"*"</span> : <span class="string">" "</span>;</span><br><span class="line">            System.out.printf(<span class="string">"[%s%s]\t%s\t%s\n"</span>,position,syncSeen,key,value);</span><br><span class="line">            position = reader.getPosition();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(reader);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="通过命令行接口显示SequenceFile"><a href="#通过命令行接口显示SequenceFile" class="headerlink" title="通过命令行接口显示SequenceFile"></a>通过命令行接口显示SequenceFile</h2><p>hdfs dfs命令有一个-text选项可以以文本形式显示顺序文件，该选项可以查看文件的代码，由此检测出文件的类型并将其转换成相应的文本。该选项可以识别gzip压缩文件和顺序文件；否则，假设输入为纯文本文件。</p>
+<p>对于顺序文件，如果键和值是由具体含义的字符串表示，那么这个命令就非常有用(通过toString()方法定义)，同样，如果有自己定义的键或值的类，则应该确保它们在Hadoop类路径目录下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  project hdfs dfs -text numbers.seq | head</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">23</span> INFO zlib.ZlibFactory: Successfully loaded &amp; initialized native-zlib library</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">23</span> INFO compress.CodecPool: Got brand-new decompressor [.deflate]</span><br><span class="line"><span class="number">1024</span>    One, two, buckle my shoe</span><br><span class="line"><span class="number">1023</span>    Three, four, shut the door</span><br><span class="line"><span class="number">1022</span>    Five, six, pick up sticks</span><br><span class="line"><span class="number">1021</span>    Seven, eight, lay them straight</span><br><span class="line"><span class="number">1020</span>    Nine, ten, a big fat hen</span><br><span class="line"><span class="number">1019</span>    One, two, buckle my shoe</span><br><span class="line"><span class="number">1018</span>    Three, four, shut the door</span><br><span class="line"><span class="number">1017</span>    Five, six, pick up sticks</span><br><span class="line"><span class="number">1016</span>    Seven, eight, lay them straight</span><br><span class="line"><span class="number">1015</span>    Nine, ten, a big fat hen</span><br></pre></td></tr></table></figure>
+<h2 id="SequenceFile的排序和合并"><a href="#SequenceFile的排序和合并" class="headerlink" title="SequenceFile的排序和合并"></a>SequenceFile的排序和合并</h2><p>MapReduce是对多个顺序文件进行排序或合并的最有效的方法。MapReduce本身是并行的，并且可由用户指定要使用多少个reducer，该数决定这输出分区数。例如，通过指定一个reducer，可以得到一个输出文件。</p>
+<p>除了MapReduce实现排序/归并，还有一种方法是使用SequenceFile.Sorter类中的sort()方法和merge()方法。它们比MapReduce更早出现，比MapReduce更底层，为了实现并行，需要手动对数据进行分区，因此不建议使用。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Hadoop源码学习(12)——MapFile]]></title>
       <url>http://keyunluo.github.io/2016/08/13/BigData/hadoop-io-8.html</url>
       <content type="html"><![CDATA[<blockquote>
@@ -2787,40 +3319,6 @@ $$</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java MapFileFixer numbers.map</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  project java MapFileFixer numbers.map</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">17</span>:<span class="number">45</span>:<span class="number">39</span> WARN util.NativeCodeLoader: Unable to load native-hadoop library <span class="keyword">for</span> your platform... using builtin-java classes where applicable</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">17</span>:<span class="number">45</span>:<span class="number">40</span> INFO compress.CodecPool: Got brand-new compressor [.deflate]</span><br><span class="line">创建MapFile numbers.map ,入口是 <span class="number">1024</span>%</span><br><span class="line">➜  project hdfs dfs -ls numbers.map</span><br><span class="line">Found <span class="number">2</span> items</span><br><span class="line">-rw-r--r--   <span class="number">1</span> streamer supergroup      <span class="number">40403</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-13</span> <span class="number">17</span>:<span class="number">43</span> numbers.map/data</span><br><span class="line">-rw-r--r--   <span class="number">1</span> streamer supergroup        <span class="number">336</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-13</span> <span class="number">17</span>:<span class="number">45</span> numbers.map/index</span><br></pre></td></tr></table></figure>
 <p>大功告成。</p>
-]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Hadoop源码学习(11)——SequenceFile]]></title>
-      <url>http://keyunluo.github.io/2016/08/13/BigData/hadoop-io-7.html</url>
-      <content type="html"><![CDATA[<blockquote>
-<p><strong>本节内容：</strong>SequenceFile为二进制键值对提供了一个持久数据结构，也可以作为小文件的容器，HDFS和MapReduce是针对大文件优化的，所以通过SequenceFile类型将小文件包装起来，可以获得更高效率的存储和处理。</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="SequenceFile类"><a href="#SequenceFile类" class="headerlink" title="SequenceFile类"></a>SequenceFile类</h2><p>SequenceFile类位于org.apache.hadoop.io包内，类结构如下：</p>
-<p><img src="/resource/blog/2016-08/SequenceFile.png" alt="SequenceFile类"></p>
-<h2 id="SequenceFile的格式"><a href="#SequenceFile的格式" class="headerlink" title="SequenceFile的格式"></a>SequenceFile的格式</h2><p>SequenceFile文件由文件头和随后的一条或多条记录组成。顺序文件的前三个字节是SEQ，紧随其后的一个字节表示顺序文件的版本号。文件头还包括其他字段，例如键和值类的名称、数据压缩细节、用户定义的元数据以及同步标识。同步标识用于在读取文件时能够从任意位置开始识别边界记录。</p>
-<p>记录的内部结构取决于是否启用压缩。如果已经启用，则取决于记录压缩还是数据块压缩。</p>
-<p>如果没有启用压缩(默认情况)，那么每条记录则由记录长度(字节数)、键长度、键和值组成。长度字段为4字节长的整数，遵循java.io.DataOutput类中的writeInt()方法的约定，写入顺序文件的类定义Serialization类来实现键和值的序列化。</p>
-<p>记录压缩格式与无压缩情况基本相同，只不过值是用文件头定义的codec压缩的，但是键并没有被压缩。</p>
-<p><img src="/resource/blog/2016-08/sequencefilewithnocompression.jpg" alt="SequenceFile-无压缩和记录压缩"></p>
-<p>块压缩是指一次性压缩多条记录，因为它可以利用记录间的相似性进行压缩，所以相较于单条记录压缩方法，该方法的压缩效率更高，如下图所示。可以不断向数据块中压缩记录，直到块的字节数不小于io.seqfile.compress.blocksize属性中设置的字节数：默认为1MB。每一个新块的开始处都需要插入同步标识。数据块的格式如下：首先是一个指示数据块中字节数的字段；紧接着是4个压缩字段(键长度、键、值长度和值)</p>
-<p><img src="/resource/blog/2016-08/sequencefilewithblockcompression.jpg" alt="SequenceFile-块压缩"></p>
-<h2 id="SequenceFile写操作"><a href="#SequenceFile写操作" class="headerlink" title="SequenceFile写操作"></a>SequenceFile写操作</h2><p>通过createWriter()静态方法可以创建SequenceFile对象，并返回SequenceFile.Writer实例。该静态方法有多个重载版本，但都需要指定待写入的数据流(FSDataOutputStream或FileSystem对象和Path对象)，Configuration对象，以及键和值的类型，写入的参数信息等。另外，可选参数包括压缩类型以及相应的codec,Progressable回调函数用于通知写入的进度，以及在SequenceFile头文件中存储的Metadata实例。</p>
-<p>存储在SequenceFile中的键和值并不一定需要是Writable类型，只要能被Serialization序列化和反序列化，任何类型都可以。</p>
-<p>一旦拥有SequenceFile.Writer实例，就可以通过append()方法在文件末尾附加键值对。写完后，可以调用close()方法(SequenceFile.Writer实现了java.io.Closable接口)。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Text;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceFileWriteDemo</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] DATA = &#123;</span><br><span class="line">    <span class="string">"One, two, buckle my shoe"</span>,</span><br><span class="line">    <span class="string">"Three, four, shut the door"</span>,</span><br><span class="line">    <span class="string">"Five, six, pick up sticks"</span>,</span><br><span class="line">    <span class="string">"Seven, eight, lay them straight"</span>,</span><br><span class="line">    <span class="string">"Nine, ten, a big fat hen"</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line">    Path path = <span class="keyword">new</span> Path(url);</span><br><span class="line"></span><br><span class="line">    IntWritable key = <span class="keyword">new</span> IntWritable();</span><br><span class="line">    Text value = <span class="keyword">new</span> Text();</span><br><span class="line">    SequenceFile.Writer writer = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        writer = SequenceFile.createWriter(fs,conf,path,key.getClass(),value.getClass());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">1024</span>;i++)&#123;</span><br><span class="line">            key.set(<span class="number">1024</span>-i);</span><br><span class="line">            value.set(DATA[i % DATA.length]);</span><br><span class="line">            writer.append(key,value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(writer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>编译与运行：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  project export CLASSPATH=$HADOOP_CLASSPATH:$CLASSPATH</span><br><span class="line">➜  project javac SequenceFileWriteDemo.java</span><br><span class="line">➜  project java SequenceFileWriteDemo numbers.seq</span><br></pre></td></tr></table></figure>
-<h2 id="SequenceFile读操作"><a href="#SequenceFile读操作" class="headerlink" title="SequenceFile读操作"></a>SequenceFile读操作</h2><p>从头到尾读取顺序文件不外乎创建SequenceFile.Reader实例后反复调用next()方法迭代读取记录。读取的是哪条记录与你使用的序列化框架有关。如果使用Writable类型，那么通过键和值作为参数的next()方法可以将数据流中的下一条键值对读入变量中。<code>public boolean next(Writable key,Writable val)</code>。对于其他非Writable类型的序列化框架，例如Apache Thrift，则应该使用下面两个方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">next</span><span class="params">(Object key)</span> <span class="keyword">throws</span> IOException</span><br><span class="line"><span class="keyword">public</span> Object <span class="title">getCurrentValue</span><span class="params">(Object val)</span> <span class="keyword">throws</span> IOException</span></span><br></pre></td></tr></table></figure>
-<p>在这种情况下，需要确保io.serializations属性已经设置了你想要的序列化框架。如果next()方法返回的是非null对象，则可以从数据流中读取键、值对，并且可以通过getCurrentValue()方法读取该值。否则，如果next()返回null值，表示已经读到文件末尾。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.FileSystem;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Writable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.SequenceFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.util.ReflectionUtils;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceFileReadDemo</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    String url = args[<span class="number">0</span>];</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">    FileSystem fs = FileSystem.get(URI.create(url),conf);</span><br><span class="line">    Path path = <span class="keyword">new</span> Path(url);</span><br><span class="line"></span><br><span class="line">    SequenceFile.Reader reader = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        reader = <span class="keyword">new</span> SequenceFile.Reader(fs,path,conf);</span><br><span class="line">        Writable key = (Writable) ReflectionUtils.newInstance(reader.getKeyClass(),conf);</span><br><span class="line">        Writable value = (Writable) ReflectionUtils.newInstance(reader.getValueClass(),conf);</span><br><span class="line">        <span class="keyword">long</span> position = reader.getPosition();</span><br><span class="line">        <span class="keyword">while</span> (reader.next(key,value))&#123;</span><br><span class="line">            String syncSeen = reader.syncSeen() ? <span class="string">"*"</span> : <span class="string">" "</span>;</span><br><span class="line">            System.out.printf(<span class="string">"[%s%s]\t%s\t%s\n"</span>,position,syncSeen,key,value);</span><br><span class="line">            position = reader.getPosition();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">        IOUtils.closeStream(reader);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="通过命令行接口显示SequenceFile"><a href="#通过命令行接口显示SequenceFile" class="headerlink" title="通过命令行接口显示SequenceFile"></a>通过命令行接口显示SequenceFile</h2><p>hdfs dfs命令有一个-text选项可以以文本形式显示顺序文件，该选项可以查看文件的代码，由此检测出文件的类型并将其转换成相应的文本。该选项可以识别gzip压缩文件和顺序文件；否则，假设输入为纯文本文件。</p>
-<p>对于顺序文件，如果键和值是由具体含义的字符串表示，那么这个命令就非常有用(通过toString()方法定义)，同样，如果有自己定义的键或值的类，则应该确保它们在Hadoop类路径目录下。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  project hdfs dfs -text numbers.seq | head</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">23</span> INFO zlib.ZlibFactory: Successfully loaded &amp; initialized native-zlib library</span><br><span class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">13</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">23</span> INFO compress.CodecPool: Got brand-new decompressor [.deflate]</span><br><span class="line"><span class="number">1024</span>    One, two, buckle my shoe</span><br><span class="line"><span class="number">1023</span>    Three, four, shut the door</span><br><span class="line"><span class="number">1022</span>    Five, six, pick up sticks</span><br><span class="line"><span class="number">1021</span>    Seven, eight, lay them straight</span><br><span class="line"><span class="number">1020</span>    Nine, ten, a big fat hen</span><br><span class="line"><span class="number">1019</span>    One, two, buckle my shoe</span><br><span class="line"><span class="number">1018</span>    Three, four, shut the door</span><br><span class="line"><span class="number">1017</span>    Five, six, pick up sticks</span><br><span class="line"><span class="number">1016</span>    Seven, eight, lay them straight</span><br><span class="line"><span class="number">1015</span>    Nine, ten, a big fat hen</span><br></pre></td></tr></table></figure>
-<h2 id="SequenceFile的排序和合并"><a href="#SequenceFile的排序和合并" class="headerlink" title="SequenceFile的排序和合并"></a>SequenceFile的排序和合并</h2><p>MapReduce是对多个顺序文件进行排序或合并的最有效的方法。MapReduce本身是并行的，并且可由用户指定要使用多少个reducer，该数决定这输出分区数。例如，通过指定一个reducer，可以得到一个输出文件。</p>
-<p>除了MapReduce实现排序/归并，还有一种方法是使用SequenceFile.Sorter类中的sort()方法和merge()方法。它们比MapReduce更早出现，比MapReduce更底层，为了实现并行，需要手动对数据进行分区，因此不建议使用。</p>
 ]]></content>
     </entry>
     

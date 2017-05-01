@@ -1,0 +1,1537 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=monaco:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据挖掘, 南京大学" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="流光" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本节内容：2016年秋南京大学计算机系数据挖掘课程学期总结。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据挖掘——课程总结">
+<meta property="og:url" content="http://keyunluo.github.io/2016/12/22/Course/data-mining-summary.html">
+<meta property="og:site_name" content="流光">
+<meta property="og:description" content="本节内容：2016年秋南京大学计算机系数据挖掘课程学期总结。">
+<meta property="og:image" content="http://keyunluo.github.io/resource/blog/2016-12/apriori.png">
+<meta property="og:updated_time" content="2017-05-01T13:14:17.593Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据挖掘——课程总结">
+<meta name="twitter:description" content="本节内容：2016年秋南京大学计算机系数据挖掘课程学期总结。">
+<meta name="twitter:image" content="http://keyunluo.github.io/resource/blog/2016-12/apriori.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'FQBRJAIOP0',
+      apiKey: '62ea038e31dd7941c12b0cd5097e4a8c',
+      indexName: 'keyunindex',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索","hits_empty":"未找到任何: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://keyunluo.github.io/2016/12/22/Course/data-mining-summary.html"/>
+
+
+
+
+
+  <title> 数据挖掘——课程总结 | 流光 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76470846-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?945b21807344d0260f24455bbd82dfea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">流光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">他跑啊跑啊，只为追上那个曾经被寄予厚望的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/resource/share" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-download"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://keyunluo.github.io/2016/12/22/Course/data-mining-summary.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="浮舟沧海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/resource/img/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="流光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据挖掘——课程总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-22T14:25:02+08:00">
+                2016-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Course/" itemprop="url" rel="index">
+                    <span itemprop="name">Course</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/22/Course/data-mining-summary.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/22/Course/data-mining-summary.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/12/22/Course/data-mining-summary.html" class="leancloud_visitors" data-flag-title="数据挖掘——课程总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>本节内容：</strong>2016年秋南京大学计算机系数据挖掘课程学期总结。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h2><h3 id="Distance-Measure"><a href="#Distance-Measure" class="headerlink" title="Distance Measure"></a>Distance Measure</h3><ul>
+<li><p><strong>$L_p-Norm$</strong>(Minkowski distance)</p>
+<p>形式：给定$\bar{X}=(x_1,x_2,\ldots, x_d), \bar{Y}=(y_1,y_2,\ldots, y_d)$, 他们之间的Lp范数距离为：
+$$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert x_i - y_i |^p \right )^{1/p}$$</p>
+<p>特例：p=1时为曼哈顿距离：各分量绝对值之和；p=2时为欧式距离：根号下和的平方；$p=\infty$时为无穷范数，又称为切比雪夫距离 ：绝对值最大的数；p=0时为0范数：非零元素个数，非凸；0&lt;p&lt;1时为分数范数，非凸。</p>
+</li>
+<li><p>Standardized Euclidean distance</p>
+<p>  标准化欧式距离，两个分量间减去均值除以标准差进行标准化：</p>
+<p>  $$Dist(\bar{X}, \bar{Y}) = \left( \sum_{i=1}^d \vert \frac{x_i - y_i}{s_i} |^2 \right )^{1/2}$$</p>
+</li>
+<li><p><strong>Mahalanobis Distance</strong></p>
+<p>  马氏距离用来消除不同维度之间的相关性和和尺度不同的性质。样本矩阵$X$的协方差矩阵为$\Sigma$,则它的各个向量间的马氏距离为：</p>
+<p>  $$Dist(X_i, X_j) = \sqrt{(X_i - X_j)^T\Sigma^{-1}(X_i-X_j)}$$</p>
+<p>  若对协方差矩阵进行正交投影分解，即：$\Sigma = U \Lambda U^T = \sum_{i=1}^{d} \sigma_i u_iu_i^T$, 那么，$\Sigma^{-1} = U \Lambda U^T= \sum_{i=1}^{d} \sigma_i^{-1} u_iu_i^T$, 马氏距离可表示成如下：</p>
+<p>  $$Dist(X_i, X_j) = \sqrt{(X_i - X_j)(\sum_{i=1}^d \sigma_i^{-1}u_iu_i^T)(X_i - X_j)^T} = \sqrt{\sum_{i=1}^d \frac{((X_i - X_j)u_i)^2}{\sigma_i}}$$</p>
+</li>
+<li><p>Cosine</p>
+<p>  夹角余弦越大表示两个向量的夹角越小,越相似，夹角余弦越小表示两向量的夹角越大，越不相似。当两个向量的方向重合时夹角余弦取最大值1，当两个向量的方向完全相反夹角余弦取最小值-1。</p>
+<p>  $$\cos(\theta) = \frac{\sum_{i=1}^d x_iy_i}{\sqrt{\sum_{i=1}^d x_i^2} \sqrt{\sum_{i=1}^d y_i^2}}$$</p>
+</li>
+<li><p>Hamming distance</p>
+<p>  两个等长字符串s1与s2之间的汉明距离定义为将其中一个变为另外一个所需要作的最小替换次数。</p>
+</li>
+<li><p>Jaccard similarity coefficient</p>
+<ul>
+<li><p>杰卡德相似系数：两个集合A和B的交集元素在A，B的并集中所占的比例: $J(A,B) = \frac{A \bigcap B}{A \bigcup B}$</p>
+</li>
+<li><p>杰卡德距离:两个集合中不同元素占所有元素的比例， $J_\delta(A,B) = 1 - \frac{A \bigcap B}{A \bigcup B}$</p>
+</li>
+</ul>
+</li>
+<li><p>Correlation coefficient And Correlation distance</p>
+<ul>
+<li><p>相关系数：相关系数是衡量随机变量X与Y相关程度的一种方法，相关系数的取值范围是[-1,1]。相关系数的绝对值越大，则表明X与Y相关度越高。当X与Y线性相关时，相关系数取值为1（正线性相关）或-1（负线性相关）。$\rho_{XY} = \frac{Cov(X,Y)}{\sqrt{D(X)} \sqrt{D(Y)}} = \frac{E((X-E(X))(Y-E(Y)))}{\sqrt{D(X)} \sqrt{D(Y)}}$</p>
+</li>
+<li><p>相关距离：$D_{xy} = 1 - \rho_{XY}$</p>
+</li>
+</ul>
+</li>
+<li><p>Information Entropy</p>
+<p>  信息熵是衡量分布的混乱程度或分散程度的一种度量。$Entropy(X) = - \sum_{i=1}^{n} p_i \log_2 p_i$</p>
+</li>
+<li><p><strong>Nonlinear Distributions: ISOMAP</strong></p>
+<ul>
+<li>对每个点计算其k个近邻</li>
+<li>构造一个带权图G，结点代表数据点，边的权值代表k个近邻间的欧式距离。</li>
+<li>计算任意两点间的距离$Dist(\bar{X}, \bar{Y})$为图中点$\bar{X}, \bar{Y}$之间的最短距离。</li>
+<li>计算 MDS(multidimensional scaling)：得到图的向量表示，即映设矩阵。</li>
+</ul>
+</li>
+</ul>
+<h3 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h3><ol>
+<li><p>轴旋转： $x = [x^1, x^2, \ldots, x^d]^T \in \mathcal{R}^d \Leftrightarrow x = x^1e_1 + x^2e_2 + \ldots + x^de_d$，W:正交矩阵，$W = [w_1, w_2, \ldots, w_d]$, 则$x = WW^Tx = (\sum_{i=1}^dw_iw_i^T)x = \sum_{i=1}^dw_i(w_i^Tx) = (w_1^Tx)w_1 + \ldots + (w_d^Tx)w_d$, 因而，在坐标W的投影下，新坐标是$y = [w_1^Tx, w_2^Tx, \ldots, w_d^Tx]^T \in \mathcal{R}^d$. $w_i^T = <w\_i, x="">$表示新的坐标，含义是将$x$沿着$w_i$的方向投影。</w\_i,></p>
+</li>
+<li><p>降维目标：给定数据点集合${x_1,x_2, \ldots, x_n}, x_i \in \mathcal{R}^d$，寻找一个投影方向${w_1,w_2,\ldots,w_k}$，使得方差$y_1 = [w_1^Tx_1, w_2^Tx_1,\ldots, w_k^Tx_1]^T, y_2 = [w_1^Tx_2, w_2^Tx_2,\ldots, w_k^Tx_2]^T, \ldots, y_n = [w_1^Tx_n, w_2^Tx_n,\ldots, w_k^Tx_n]^T$ 最大，即最大化类间方差。</p>
+<p>考虑一维的情况，形式化为：新坐标：$w_1^Tx_1,w_1^Tx_2, \ldots, w_1^Tx_n$,方差：$\frac{1}{n} \sum_{i=1}^n(w_1^Tx_i - \mu )^2, \mu = \frac{1}{n} \sum_{i=1}^nw_1^Tx_i$.</p>
+</li>
+<li><p>问题推导过程</p>
+<ul>
+<li>令$\bar{x} = \frac{1}{n} \sum_{i=1}^nx_i$为均值向量</li>
+<li><p>那么，$\mu = w_1^T\bar{x}$,</p>
+<p>  $$\begin{array} {lcl}
+  \frac{1}{n} \sum_{i=1}^n(w_1^Tx_i - \mu)^2 &amp; = &amp; \frac{1}{n} \sum_{i=1}^n(w_1^Tx_i - w_1^T\bar{x})^2 \\
+  &amp; = &amp; \frac{1}{n} \sum_{i=1}^n(w_1^T(x_i - \bar{x}))^2 \\
+  &amp; = &amp; \frac{1}{n} \sum_{i=1}^nw_1^T(x_i - \bar{x})(x_i - \bar{x})^Tw_1 \\
+  &amp; = &amp; w_1^T(\frac{1}{n} \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)w_1
+  \end{array}$$</p>
+</li>
+<li><p>于是， PCA转变成一个优化问题：</p>
+<blockquote>
+<p>$\max_{w \in \mathcal{R}^d}\ w^TCw$</p>
+<p>$s.t. \Vert w \Vert_2^2 = 1$</p>
+</blockquote>
+<p>这里， $C = \frac{1}{n}\sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$为协方差矩阵。该协方差矩阵具有如下特征：对称性，半正定，矩阵的秩最大为n-1。</p>
+</li>
+</ul>
+</li>
+<li><p>解决方法</p>
+<ul>
+<li><p>拉格朗日法：$-w^TCw + \lambda(\Vert w \Vert_2^2 -1)$</p>
+</li>
+<li><p>对$w$求导，令导数为0：$-2Cw + 2\lambda w  = 0$, 得出$Cw = \lambda w$</p>
+</li>
+<li><p>$(w, \lambda)$ 是协方差矩阵C的特征向量和特征值</p>
+</li>
+<li><p>目标函数变成：$w^TCw = \lambda w^T w = \lambda$</p>
+</li>
+<li><p>因此， 我们选择C中最大的特征值和特征向量</p>
+</li>
+</ul>
+</li>
+<li><p><strong>PCA算法(1维)</strong></p>
+<ul>
+<li>计算均值向量：$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$</li>
+<li>计算协方差矩阵：$C = \frac{1}{n} \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$</li>
+<li>计算C中最大的特征值对应的特征向量</li>
+</ul>
+</li>
+<li><p><strong>PCA算法(k维)</strong></p>
+<ul>
+<li><p><strong>优化目标</strong>:</p>
+<blockquote>
+<p>$\max_{w \in \mathcal{R}^{d*k}}\ trace(W^TCW)$</p>
+<p>$s.t. W^TW = I$</p>
+</blockquote>
+<p>其中， $W=[w_1, \ldots, w_k]$ 是C的k个大的特征向量。</p>
+</li>
+<li><p><strong>算法流程</strong></p>
+<ul>
+<li>计算均值向量：$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$</li>
+<li>计算协方差矩阵：$C = \frac{1}{n} \sum_{i=1}^n(x_i - \bar{x})(x_i - \bar{x})^T)$</li>
+<li>计算C中最大的k个特征值对应的特征向量</li>
+</ul>
+</li>
+<li><p><strong>特征值含义</strong></p>
+<ul>
+<li>$\lambda_i$是第i个特征坐标间的方差</li>
+<li>度量PCA质量的好坏：所取的前k个特征值之和与所有的特征值和之比。</li>
+</ul>
+</li>
+<li><p><strong>另一个思考视角</strong>：最小化投影误差</p>
+</li>
+<li><p>PCA算法是线性的，无监督的</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="SVD"><a href="#SVD" class="headerlink" title="SVD"></a>SVD</h3><ol>
+<li><p>奇异值分解: $X=U\Sigma V^T = \sum_{i=1}^d \sigma_iu_iv_i^T$:</p>
+<ul>
+<li>$U = [u_1, u_2,\ldots, u_d] \in \mathcal{R}^{d*d}, U^TU=UU^T = I$</li>
+<li>$V = [v_1,v_2, \ldots,v_d] \in \mathcal{R}^{n*d}, V^TV=I$</li>
+<li>$\Sigma = diag(\sigma_1, \sigma_2,\ldots, \sigma_d),\in \mathcal{R}^{d*d}, \sigma_1 \ge \sigma_2 \ge \ldots \ge \sigma_d \ge 0$</li>
+</ul>
+</li>
+<li><p>紧凑SVD：$X=U_r\Sigma_r V_r^T = \sum_{i=1}^r \sigma_iu_iv_i^T$， <strong>rank(r) &lt; min(d,n)</strong>:</p>
+<ul>
+<li>$U_r = [u_1, u_2,\ldots, u_r] \in \mathcal{R}^{d*r}, U_r^TU_r=I$</li>
+<li>$V_r = [v_1,v_2, \ldots,v_r] \in \mathcal{R}^{n*r}, V_r^TV_r=I$</li>
+<li>$\Sigma_r = diag(\sigma_1, \sigma_2,\ldots, \sigma_r),\in \mathcal{R}^{r*r}, \sigma_1 \ge \sigma_2 \ge \ldots \ge \sigma_r \ge 0$</li>
+</ul>
+</li>
+<li><p>使用SVD降维</p>
+<ul>
+<li>计算X的k个最大的左奇异向量$u_1,u_2,\ldots,u_k$</li>
+<li>x的新坐标：$U_k^Tx = [u_1^Tx, u_2^Tx, \ldots, u_k^Tx] \in \mathcal{R}^k, U_k = [u_1, u_2,\ldots,u_k] \in \mathcal{R}^{d*k}$</li>
+<li>X的新坐标：$U_k^TX=U_k^TU_r\Sigma_rV_r^T = \Sigma_kV_k^T$</li>
+</ul>
+</li>
+<li><p>SVD的优化问题：</p>
+<ul>
+<li>一维：<blockquote>
+<p>$\max_{w \in \mathcal{R}^d}\ w^T(XX^T)w$</p>
+<p>$s.t. \Vert w \Vert_2^2 = 1$</p>
+</blockquote>
+</li>
+<li>k维：<blockquote>
+<p>$\max_{w \in \mathcal{R}^{d*k}}\ trace(W^T(XX^T)W)$</p>
+<p>$s.t. W^TW = I$</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>PCA by SVD</p>
+<ul>
+<li>计算均值向量$\bar{x}$:$ \frac{1}{n} \sum_{i=1}^n x_i$</li>
+<li>计算$\bar{X}=[x_1 - \bar{x},\ldots, x_n - \bar{x}]$最大的k个左奇异值</li>
+</ul>
+</li>
+</ol>
+<h3 id="MDS"><a href="#MDS" class="headerlink" title="MDS"></a>MDS</h3><ol>
+<li><p>输入</p>
+<ul>
+<li>图G：n个结点</li>
+<li>距离:$\delta_{ij} = \delta_{ji}$</li>
+</ul>
+</li>
+<li><p>输出</p>
+<ul>
+<li>适配于距离的坐标集</li>
+</ul>
+</li>
+<li><p>优化问题</p>
+<p> $\min_{x_1,x_2,\ldots, x_n \in \mathcal{R}^k} \sum_{i,j:i&lt;j}(\Vert x_i - x_j \Vert_2 - \delta_{ij})^2$</p>
+</li>
+<li><p>MDS算法</p>
+<ul>
+<li>计算点积：$S= -\frac{1}{2}(I - \frac{np.ones^T}{n})G^2(I - \frac{np.ones^T}{n})$</li>
+<li>对S进行奇异值分解：$S=U \Lambda U^T = \sum_{i=1}^n\lambda_iu_iu_i^T$</li>
+<li>新坐标：$U_k\Lambda_k^{1/2} \in \mathcal{R}^{n*k}$</li>
+</ul>
+</li>
+</ol>
+<h2 id="关联规则挖掘"><a href="#关联规则挖掘" class="headerlink" title="关联规则挖掘"></a>关联规则挖掘</h2><h3 id="The-Frequent-Pattern-Mining-Model"><a href="#The-Frequent-Pattern-Mining-Model" class="headerlink" title="The Frequent Pattern Mining Model"></a>The Frequent Pattern Mining Model</h3><ol>
+<li>U : d个item集合</li>
+<li>T ：n个交易的集合,$T_1,T_2, \ldots, T_n, T_i \in U$</li>
+<li>$T_i$二进制表示</li>
+<li>Itemset,k-itemset: item集合， k个items的集合</li>
+<li>Support(支持度)：包含itemset I的数据集T的一个子集，用sup(I)表示，表示某个item集合在数据表中出现的比例。</li>
+<li>minsup(最小支持度)：预先定义的阈值，只有支持度大于minsup的子集才被视为一个频繁项。</li>
+<li>frequent itemset(频繁项集)：项集X的支持度超过最小门限值minsup时，称X为频繁项集</li>
+</ol>
+<h3 id="Property"><a href="#Property" class="headerlink" title="Property"></a>Property</h3><ul>
+<li><p>支持单调性
+(Support Monotonicity Property)： $\sup(J) \ge \sup(I), \forall J \in I$, 这就意味着一个itemset I 包含在一个交易中，那么它的所有子集也包含在这个交易中。</p>
+</li>
+<li><p>向下闭包属性(Downward Closure Property)：每一个频繁项的子集也是一个频繁项。</p>
+</li>
+</ul>
+<h3 id="Association-Rule"><a href="#Association-Rule" class="headerlink" title="Association Rule"></a>Association Rule</h3><ol>
+<li><p>置信度：$conf(X \Rightarrow Y) = \frac{sup(X \bigcup Y)}{sup(X)}$</p>
+</li>
+<li><p>关联规则：同时满足最小支持度阈值和最小置信度阈值的规则称为关联规则。这分别保证了有效数量的交易是相关的和在条件概率方面有足够的强度。</p>
+</li>
+<li><p>一般框架：</p>
+<ul>
+<li>找出所有频繁项集，即候选规则</li>
+<li>对所有候选规则计算置信度，找出其中的关联规则</li>
+</ul>
+</li>
+<li><p>一个直观的实现：</p>
+<ul>
+<li>给定一个频繁集I</li>
+<li>产生所有可能的划分X,Y:Y=I-X</li>
+<li>检测置信度：$X \Rightarrow Y$</li>
+</ul>
+</li>
+<li><p>置信度单调性：$X_1 \subset X_2 \subset I, conf(X_2 \Rightarrow I - X_2) \ge conf(X_1 \Rightarrow I - X_1)$</p>
+</li>
+</ol>
+<h3 id="Apriori-Algorithm"><a href="#Apriori-Algorithm" class="headerlink" title="Apriori Algorithm"></a><a href="http://blog.csdn.net/golden1314521/article/details/41457019" target="_blank" rel="external">Apriori Algorithm</a></h3><ul>
+<li><p>基本思想：为了减少频繁项集的生成时间，我们应该尽早的消除一些完全不可能是频繁项集的集合，Apriori的两条定律如下：</p>
+<ul>
+<li>如果一个集合是频繁项集，则它的所有子集都是频繁项集。举例：假设一个集合{A,B}是频繁项集，即A、B同时出现在一条记录的次数大于等于最小支持度minsup，则它的子集{A},{B}出现次数必定大于等于minsup，即它的子集都是频繁项集。</li>
+<li>如果一个集合不是频繁项集，则它的所有超集都不是频繁项集。举例：假设集合{A}不是频繁项集，即A出现的次数小于minsup，则它的任何超集如{A,B}出现的次数必定小于minsup，因此其超集必定也不是频繁项集。</li>
+</ul>
+</li>
+<li><p>算法</p>
+<ul>
+<li>使用k-itemsets频繁项产生(k+1)-itemsets候选集</li>
+<li>在计数前对候选集剪枝</li>
+<li>对余下的(k+1)-candidates计算支持度</li>
+<li>当(k+1)-candidates中没有频繁项时停止，否则循环
+<img src="/resource/blog/2016-12/apriori.png" alt="Apriori算法"></li>
+</ul>
+</li>
+<li><p>优化1： Candidates Generation</p>
+<ul>
+<li>思路：U中的Item使用字典序排列，Itemsets按字符串排序</li>
+<li>方法：<ul>
+<li>对k-itemsets频繁项排序</li>
+<li>如果两个itemset的前k-1 items相同则合并</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>优化2：Level-wise Pruning Trick</p>
+<ul>
+<li>令$F_k$为k-itemsets频繁项，$C_{k+1}$为(k+1)-candidates 集</li>
+<li>对于一个集合I:$I \in C_{k+1}$为频繁集当且仅当I中的所有的k-subsets都是频繁项</li>
+<li>剪枝：<ul>
+<li>产生I的所有的k-subsets</li>
+<li>如果它们当中的一个不属于$F_k$，那么移除I</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>上述优化后的算法</strong>：</p>
+<ul>
+<li>将数据库中的事务的数据排序，首先将每条事务记录中多个元素排序，然后将事务整体排序。</li>
+<li>令k=1，扫描数据库，得到候选的1-项集并统计其出现次数，由此得到各个1-项集的支持度，然后根据最小支持度来提出掉非频繁的1-项集进而得到频繁的1-项集。</li>
+<li>令k=k+1.通过频繁（k-1）-项集产生k-项集候选集的方法（也称“连接步”）：如果两个（k-1）-项集，如果只有最后一个元素不同，其他都相同，那么这两个(k-1)-项集项集可以“连接”为一个k-项集。不能连接的就不用考虑了，不会频繁的。</li>
+<li>从候选集中剔除非频繁项集的方法（也称“剪枝步”）：对任一候选集，看其所有子项集(其实只需要对k-2个子项集进行判别即可)是否存在于频繁的(k-1)-项集中，如果不在，直接剔除；扫描数据库，计数，最终确认得到的频繁的k-项集。</li>
+<li>如果得到的频繁的k-项集的数目&lt;=1，则搜索频繁项集的过程结束；否则转到第3步。</li>
+</ul>
+</li>
+<li><p>优化3：Support Counting</p>
+<ul>
+<li>朴素的方法：对于每一个候选集:$I_i \in C_{k+1}$,对于每一个交易$T_j$,检查$T_i$是否在$T_j$出现。</li>
+<li>优化方法：将$C_{k+1}$中的候选集模式组织成一个Hash tree，使用Hash tree加速计数:先将所有的k-阶候选集存储在哈希树的结构的叶节点上，然后对每个transaction记录找到其包含的所有k-阶候选集，所以这个过程只需要浏览一遍数据库。</li>
+</ul>
+</li>
+<li><p>Hash Tree</p>
+<ul>
+<li>1.用k表示插入进行到第几层，初始值为1.</li>
+<li>2.对输入项集的第k项进行hash，得到n</li>
+<li>3.判断当前层的根节点的第n个子节点是否为叶节点，若非则跳到1继续</li>
+<li>4.将项集插入到该叶子节点是否</li>
+<li>5.判断该叶子节点是否已满，若是则进行分裂，否则插入结束，分裂过程是将该节点原有的项集和新项集按第level项进行hash，然后分别插入到下一层的新叶节点中，而原叶节点变为非叶节点</li>
+</ul>
+</li>
+<li><p>基于Hash Tree的计数</p>
+<ul>
+<li>对于每一个$T_j$，识别那些在Hash Tree中可能包含子集项的叶子节点</li>
+<li>过程：<ul>
+<li>根节点：对$T_j$中的所有项进行Hash</li>
+<li>如果在叶子节点上，则寻找$T_j$中所有的子集项</li>
+<li>如果在内部节点，则在给定位置之后Hash每一个项</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h2><h3 id="K-Means"><a href="#K-Means" class="headerlink" title="K-Means"></a>K-Means</h3><ul>
+<li><p>思想</p>
+<ul>
+<li>基于代表的算法，错误平方和,即类间平方和最小：$\min_{\bar{Y_1},\ldots, \bar{Y_k}} O = \sum_{i=1}^n[\min_j \ Dist(\bar{X_i},\bar{Y_j})]$</li>
+<li>距离度量：$Dist(\bar{X_i}, \bar{Y_j}) = \Vert \bar{X_i} - \bar{Y_j} \Vert_2^2$</li>
+<li>指定聚类：$C_1,\ldots, C_k$</li>
+<li>优化步骤：$\bar{Y_j} = argmin_{\bar{Y}} \sum_{\bar{X_i} \in C_j} \Vert \bar{X_i} - \bar{Y} \Vert_2^2 = \frac{1}{C_j}\sum_{\bar{X_i} \in C_j} \bar{X_i}$</li>
+</ul>
+</li>
+<li><p>算法流程</p>
+<ul>
+<li>为每个聚类确定一个初始聚类中心，这样就有K 个初始聚类中心。</li>
+<li>将样本集中的样本按照最小距离原则分配到最邻近聚类。</li>
+<li>使用每个聚类中的样本均值作为新的聚类中心。</li>
+<li>重复步骤2.3直到聚类中心不再变化。</li>
+<li>结束，得到K个聚类。</li>
+</ul>
+</li>
+<li><p>本地马氏距离度量：$Dist(\bar{X_i}, \bar{Y_j}) = (\bar{X_i} - \bar{Y_j} ) \Sigma_r^{-1}(\bar{X_i} - \bar{Y_j})^T$</p>
+</li>
+<li><p>基于核的方法</p>
+</li>
+<li><p>k-Medians 算法：</p>
+<ul>
+<li>使用曼哈顿距离：$Dist(\bar{X_i}, \bar{Y_j}) = \Vert \bar{X_i} - \bar{Y_j} \Vert_1 = \sum_{p=1}^d \vert X_i^p - Y_j^p \vert$</li>
+<li>优化步骤：$Y_j^p = argmin_Y \sum_{\bar{X_i} \in C_j} |X_i^p -Y| = median{X_i^p | \bar{X_i} \in C_j}$</li>
+<li>缺点：$\bar{Y} = [Y_j^1,\ldots,Y_j^d]$可能不在数据集合中。</li>
+</ul>
+</li>
+</ul>
+<h3 id="K-Medoids"><a href="#K-Medoids" class="headerlink" title="K-Medoids"></a>K-Medoids</h3><ul>
+<li>核心：代表点是从数据中选出来的：$\min_{\bar{Y_1},\ldots, \bar{Y_k} \in D} O = \sum_{i=1}^n[\min_j \ Dist(\bar{X_i},\bar{Y_j})]$</li>
+<li>基于爬山法的优化：代表点S初始化为D中的k个点，S通过不断迭代地与D中的点交换来改善。</li>
+<li>交换方法：所有点|S||D|交换；随机选择r对$(\bar{X_i},\bar{Y_j}$点然后选择最好的。</li>
+</ul>
+<h3 id="Spectral-Clustering"><a href="#Spectral-Clustering" class="headerlink" title="Spectral Clustering"></a>Spectral Clustering</h3><ul>
+<li>思想：把数据映射到一个新空间,该空间里具有约化的维度,使得相似性更加显而易见,然后对新空间的数据进行聚类。</li>
+<li>优化问题：(k=1)<ul>
+<li>$\min_{y \in \mathcal{R}^n} \ y^TLy$</li>
+<li>s.t. $y^TDy = 1$</li>
+<li>解决方案：$Ly = \lambda Dy$, 最小值为$y^1=1$,使用第二最小值$y^2$</li>
+</ul>
+</li>
+<li>拉普拉斯特征值映设(k&gt;1):<ul>
+<li>向量形式：$O = \sum_{i=1}^n\sum_{j=1}^nw_{ij} \Vert y_i - y_j \Vert_2^2 = 2 trace(Y^TLY)$</li>
+<li>$Y = [y_1,\ldots,y_n]^T \in \mathcal{R}^{n*k}$</li>
+<li>$L = D -W \in \mathcal{R}^{n*n}$:图的拉普拉斯表示</li>
+<li>$W=[w_{ij}] \in \mathcal{R}^{n*n}$:相似度矩阵</li>
+<li>$D \in \mathcal{R}^{n*n}$是一个对角矩阵，$D_{ii} = \sum_{j=1}^nw_{ij}$</li>
+</ul>
+</li>
+<li>优化问题：(k&gt;1)<ul>
+<li>$\min_{y \in \mathcal{R}^{n*k}} \ trace(Y^TLY)$</li>
+<li>s.t. $Y^TDY = I$</li>
+<li>解决方案：$Ly = \lambda Dy$, 最小值为$y^1=1$,$Y = [y^2,\ldots,y^{k+1}] \in \mathcal{R}^{n*k}$</li>
+</ul>
+</li>
+<li>步骤：<ul>
+<li>构建带权图相似度矩阵 W:使用 k 近邻算法,对每个点选取前 k 个邻居为 1,其余为 0,并对称化该矩阵;</li>
+<li>构建拉普拉斯图矩阵 L=D-W,并归一化:构建 W 的对角元素矩阵 D($d_i = \sum_iW_{ij}$), $L = D^{-0.5}LD^{-0.5} = I - D^{-0.5}WD^{-0.5}$；</li>
+<li>特征值分解,得到新的数据:eig_values, eig_vectors = np.linalg.eigh(L),将特征值排序,选取特征值最小的 k 个对应的特征向量列组成显得数据;</li>
+<li>调用 KMedoids 算法</li>
+</ul>
+</li>
+</ul>
+<h3 id="Non-negative-Matrix-Factorization"><a href="#Non-negative-Matrix-Factorization" class="headerlink" title="Non-negative Matrix Factorization"></a>Non-negative Matrix Factorization</h3><ul>
+<li>优化问题：<ul>
+<li>$\min_{U \in \mathcal{R}^{d*k}, V \in \mathcal{R}^{v*k}} \ \Vert X - UV^T \Vert_F^2 $</li>
+<li>$s.t. \ U \ge 0, V \ge 0$</li>
+<li>非负矩阵分解是非凸的</li>
+</ul>
+</li>
+<li>解释<ul>
+<li>矩阵近似：$X  \approx UV^T， x_i \approx Uv_i = \sum_{j=1}^ku_jv_{ij}$</li>
+<li>向量近似：$x_i \approx Uv_i = \sum_{j=1}^ku_jv_{ij}, u_1,\ldots,u_k \in \mathcal{R}^d$可视为基向量。$v_i = [v_{i1},\ldots,v_{ik}]^T$可视为原始$x_i$的新的k维表示。</li>
+</ul>
+</li>
+</ul>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h3><ul>
+<li>两分类问题</li>
+</ul>
+<h3 id="Naive-Bayes"><a href="#Naive-Bayes" class="headerlink" title="Naive Bayes"></a>Naive Bayes</h3><h3 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h3><h3 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h3><h2 id="凸优化"><a href="#凸优化" class="headerlink" title="凸优化"></a>凸优化</h2><h3 id="The-Dual-Problem"><a href="#The-Dual-Problem" class="headerlink" title="The Dual Problem"></a>The Dual Problem</h3><h2 id="高级分类方法"><a href="#高级分类方法" class="headerlink" title="高级分类方法"></a>高级分类方法</h2><h3 id="Semisupervised-Learning"><a href="#Semisupervised-Learning" class="headerlink" title="Semisupervised Learning"></a>Semisupervised Learning</h3><h3 id="Active-Learning"><a href="#Active-Learning" class="headerlink" title="Active Learning"></a>Active Learning</h3><h3 id="Ensemble-Methods"><a href="#Ensemble-Methods" class="headerlink" title="Ensemble Methods"></a>Ensemble Methods</h3><h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><h3 id="Least-Square"><a href="#Least-Square" class="headerlink" title="Least Square"></a>Least Square</h3><h3 id="Ridge-Regression"><a href="#Ridge-Regression" class="headerlink" title="Ridge Regression"></a>Ridge Regression</h3><h2 id="Web挖掘"><a href="#Web挖掘" class="headerlink" title="Web挖掘"></a>Web挖掘</h2><h3 id="Page-Ranking"><a href="#Page-Ranking" class="headerlink" title="Page Ranking"></a>Page Ranking</h3><h3 id="Collaborative-Filtering"><a href="#Collaborative-Filtering" class="headerlink" title="Collaborative Filtering"></a>Collaborative Filtering</h3>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据挖掘/" rel="tag"># 数据挖掘</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/16/Storage/skiplist1.html" rel="next" title="SkipList 跳跃表(1) ——基本介绍">
+                <i class="fa fa-chevron-left"></i> SkipList 跳跃表(1) ——基本介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/23/Course/distributed-system-1.html" rel="prev" title="分布式系统——课程总结">
+                分布式系统——课程总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/22/Course/data-mining-summary.html"
+           data-title="数据挖掘——课程总结" data-url="http://keyunluo.github.io/2016/12/22/Course/data-mining-summary.html">
+      </div>
+    
+    <script src="https://dn-hb0716.qbox.me/duoshuo.js"></script>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/resource/img/profile.jpg"
+               alt="浮舟沧海" />
+          <p class="site-author-name" itemprop="name">浮舟沧海</p>
+           
+              <p class="site-description motion-element" itemprop="description">Coder On The Road</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keyunluo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/streamerset" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item" style="margin-left: 8px; width:45%;">
+                  <a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#降维"><span class="nav-number">1.</span> <span class="nav-text">降维</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Distance-Measure"><span class="nav-number">1.1.</span> <span class="nav-text">Distance Measure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PCA"><span class="nav-number">1.2.</span> <span class="nav-text">PCA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVD"><span class="nav-number">1.3.</span> <span class="nav-text">SVD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MDS"><span class="nav-number">1.4.</span> <span class="nav-text">MDS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关联规则挖掘"><span class="nav-number">2.</span> <span class="nav-text">关联规则挖掘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Frequent-Pattern-Mining-Model"><span class="nav-number">2.1.</span> <span class="nav-text">The Frequent Pattern Mining Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Property"><span class="nav-number">2.2.</span> <span class="nav-text">Property</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Association-Rule"><span class="nav-number">2.3.</span> <span class="nav-text">Association Rule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Apriori-Algorithm"><span class="nav-number">2.4.</span> <span class="nav-text">Apriori Algorithm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚类"><span class="nav-number">3.</span> <span class="nav-text">聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#K-Means"><span class="nav-number">3.1.</span> <span class="nav-text">K-Means</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-Medoids"><span class="nav-number">3.2.</span> <span class="nav-text">K-Medoids</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spectral-Clustering"><span class="nav-number">3.3.</span> <span class="nav-text">Spectral Clustering</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Non-negative-Matrix-Factorization"><span class="nav-number">3.4.</span> <span class="nav-text">Non-negative Matrix Factorization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">4.</span> <span class="nav-text">分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LDA"><span class="nav-number">4.1.</span> <span class="nav-text">LDA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Naive-Bayes"><span class="nav-number">4.2.</span> <span class="nav-text">Naive Bayes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVM"><span class="nav-number">4.3.</span> <span class="nav-text">SVM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic-Regression"><span class="nav-number">4.4.</span> <span class="nav-text">Logistic Regression</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#凸优化"><span class="nav-number">5.</span> <span class="nav-text">凸优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Dual-Problem"><span class="nav-number">5.1.</span> <span class="nav-text">The Dual Problem</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级分类方法"><span class="nav-number">6.</span> <span class="nav-text">高级分类方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Semisupervised-Learning"><span class="nav-number">6.1.</span> <span class="nav-text">Semisupervised Learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Active-Learning"><span class="nav-number">6.2.</span> <span class="nav-text">Active Learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ensemble-Methods"><span class="nav-number">6.3.</span> <span class="nav-text">Ensemble Methods</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性回归"><span class="nav-number">7.</span> <span class="nav-text">线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Least-Square"><span class="nav-number">7.1.</span> <span class="nav-text">Least Square</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ridge-Regression"><span class="nav-number">7.2.</span> <span class="nav-text">Ridge Regression</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web挖掘"><span class="nav-number">8.</span> <span class="nav-text">Web挖掘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Page-Ranking"><span class="nav-number">8.1.</span> <span class="nav-text">Page Ranking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collaborative-Filtering"><span class="nav-number">8.2.</span> <span class="nav-text">Collaborative Filtering</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">浮舟沧海</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"streamers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("0jqhg9soB94ez37zCyJc9RC9-gzGzoHsz", "50xzSR3HFQzP8OokRhw3EdPK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
