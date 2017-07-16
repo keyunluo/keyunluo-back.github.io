@@ -107,5 +107,4 @@ deploy:
   type: git
   repository: 
         github: git@github.com:keyunluo/keyunluo.github.io.git 
-        coding: git@git.coding.net:keyun/keyun.git
   branch: master
