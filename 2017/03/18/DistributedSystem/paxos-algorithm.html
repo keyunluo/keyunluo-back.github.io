@@ -1,0 +1,1254 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=monaco:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Paxos, 分布式一致性算法" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="流光" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本节内容：Paxos算法是莱斯利·兰伯特（英语：Leslie Lamport，LaTeX中的“La”）于1990年提出的一种基于消息传递且具有高度容错特性的一致性算法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paxos分布式一致性算法">
+<meta property="og:url" content="http://keyunluo.github.io/2017/03/18/DistributedSystem/paxos-algorithm.html">
+<meta property="og:site_name" content="流光">
+<meta property="og:description" content="本节内容：Paxos算法是莱斯利·兰伯特（英语：Leslie Lamport，LaTeX中的“La”）于1990年提出的一种基于消息传递且具有高度容错特性的一致性算法。">
+<meta property="og:updated_time" content="2017-07-06T08:08:06.891Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Paxos分布式一致性算法">
+<meta name="twitter:description" content="本节内容：Paxos算法是莱斯利·兰伯特（英语：Leslie Lamport，LaTeX中的“La”）于1990年提出的一种基于消息传递且具有高度容错特性的一致性算法。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'FQBRJAIOP0',
+      apiKey: '62ea038e31dd7941c12b0cd5097e4a8c',
+      indexName: 'keyunindex',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索","hits_empty":"未找到任何: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://keyunluo.github.io/2017/03/18/DistributedSystem/paxos-algorithm.html"/>
+
+
+
+
+
+  <title> Paxos分布式一致性算法 | 流光 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76470846-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?945b21807344d0260f24455bbd82dfea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">流光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">他跑啊跑啊，只为追上那个曾经被寄予厚望的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/resource/share" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-download"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://keyunluo.github.io/2017/03/18/DistributedSystem/paxos-algorithm.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="浮舟沧海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/resource/img/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="流光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Paxos分布式一致性算法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-18T10:50:02+08:00">
+                2017-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DistributedSystem/" itemprop="url" rel="index">
+                    <span itemprop="name">DistributedSystem</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/18/DistributedSystem/paxos-algorithm.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/18/DistributedSystem/paxos-algorithm.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/18/DistributedSystem/paxos-algorithm.html" class="leancloud_visitors" data-flag-title="Paxos分布式一致性算法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>本节内容：</strong>Paxos算法是莱斯利·兰伯特（英语：Leslie Lamport，LaTeX中的“La”）于1990年提出的一种基于消息传递且具有高度容错特性的一致性算法。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h2><h3 id="环境假设"><a href="#环境假设" class="headerlink" title="环境假设"></a>环境假设</h3><p>异步(执行时间和消息传递时间不确定)的没有拜占庭式错误(即：消息可能重复传输或丢失，但不会被篡改)。</p>
+<h3 id="基本问题"><a href="#基本问题" class="headerlink" title="基本问题"></a>基本问题</h3><p>在分布式系统中经常会发生机器宕机以及网络异常，需要快速正确的在集群内部实现对某个数据的值达成一致，并且保证上述异常不会破坏整个系统的一致性。</p>
+<p>一致性问题是分布式系统中的经典问题。</p>
+<h3 id="一致性基本要求"><a href="#一致性基本要求" class="headerlink" title="一致性基本要求"></a>一致性基本要求</h3><ul>
+<li>在这些被提出的提案中，只有一个会被选中</li>
+<li>如果没有提案被提出，那么就不会有被选定的提案</li>
+<li>当一个提案被选定后，进程可以获取被选定的提案的信息。</li>
+</ul>
+<p>同时，基于安全性考虑，一致性需要满足：</p>
+<ul>
+<li>只有被提出的提案才能被选定</li>
+<li>只能有一个值被选定</li>
+<li>如果某个进程认为某个提案被选定了，那么这个提案必须是真的被选定的那个。</li>
+</ul>
+<h3 id="基本假设"><a href="#基本假设" class="headerlink" title="基本假设"></a>基本假设</h3><p>在Paxos一致性算法中，有三种参与角色：Proposer(提案提出者)、Acceptor(提案批准者)、Learner(提案学习者)，另外为了防止死锁问题，可以引入一个主Proposer：Leader，规定只有主Proposer才可以提出提案,提案编号$M_n$,提案内容为$v_n$。</p>
+<p>假设参与者充当上述角色，那么基本假设如下：</p>
+<ul>
+<li>参与者： 每个参与者可以以任意的速度执行，可能会因为出错而停止，也可能会重启， 同时，即使一个提案被选定后，所有的参与者也可能失败或重启，因此除非那些失败或重启的参与者可以记录某些信息，否则将无法确定最终的值。</li>
+<li>消息：消息在传输的过程中可能会出现不可预知的延迟，也有可能会重复或丢失，但是消息不会被篡改。</li>
+</ul>
+<h2 id="具体算法"><a href="#具体算法" class="headerlink" title="具体算法"></a>具体算法</h2><h3 id="提案批准"><a href="#提案批准" class="headerlink" title="提案批准"></a>提案批准</h3><p>Paxos协议流程划分为两个阶段，第一阶段是准备阶段，Proposer学习提案最新的状态；第二阶段是提交阶段，根据学习到的状态组成正确提案，完整的协议过程如下：</p>
+<ul>
+<li><p>Prepare阶段</p>
+<ul>
+<li>选择一个提案编号$M_n$,并向半数以上的Acceptor发送编号为$M_n$的Prepare请求；</li>
+<li>如果一个Acceptor收到一个编号为$M_n$的Prepare请求，并且$M_n$大于它已经响应的所有Prepare请求的编号，那么它就会保证不会再批准(Accept)任何编号小于$M_n$的提案，同时将它已经通过的最大编号的提案(如果存在的话)作为响应。</li>
+</ul>
+</li>
+<li><p>Accept阶段</p>
+<ul>
+<li>如果Proposer收到来自半数以上的Acceptor对于它的prepare请求(编号为$M_n$)的响应，那么它就会发送一个针对编号为$M_n$，value值为$v_n$的提案的Accept请求给Acceptor，在这里$v_n$是收到的响应中编号最大的提案的值，如果响应中不包含提案，那么它可以是任意值;<ul>
+<li>如果Acceptor收到一个针对编号$v_n$的提案的Accept请求，只要它还未对编号大于$v_n$的Prepare请求作出响应，它就可以通过这个提案。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="提案学习"><a href="#提案学习" class="headerlink" title="提案学习"></a>提案学习</h3><p>为了减少通信开销以及防止单点故障问题，将主Learner的范围扩大，Acceptor可以将已经批准的提案发送给一个指定的Learner的集合，该集合中的每一个Learner都可以在一个提案被通过后通知其他的Learner。</p>
+<h3 id="活锁问题"><a href="#活锁问题" class="headerlink" title="活锁问题"></a>活锁问题</h3><p>如果两个Proposer依次交叉提出一系列编号递增的提案，但是最终都没有被选定通过，则会陷入死循环状态。因此必须选择一个主Proposer，只有主Proposer才能提出提案，即选举出一个Proposer作为Leader，所有的Proposal都通过Leader来提交，当Leader宕机时马上再选举其他的Leader。</p>
+<h3 id="推导过程"><a href="#推导过程" class="headerlink" title="推导过程"></a>推导过程</h3><p>分析：</p>
+<ul>
+<li><p>单个Acceptor:
+  所有的Proposal都发给这个Acceptor,它接受最先收到的Proposal，若这个Acceptor发生故障，则整个系统都将无法工作，因此不可取(单点问题)。</p>
+</li>
+<li><p>多个Acceptor:
+  可以解决单点问题, 某个Acceptor故障不会影响到提案批准，如果超半数的Acceptor批准某个具有编号$M_n$的值$v_n$，则该值被选择。</p>
+</li>
+</ul>
+<p>Acceptor只能Accept一个Proposal. 并为了保证当只有一个value的情况下也会被choose,在没有失败和消息丢失的情况下，可将上述多个Acceptor加强为：</p>
+<p><strong>P1:Acceptor必须批准它接收到的第一个决议。</strong></p>
+<p>上面这个要求导致如下问题：如果多个提案被不同的Proposer同时提出，这可能导致每个Acceptor都批准了它收到的第一个提案，但没有一个提案是由多数人选择批准的；或者即使只有两个提案被提出，每个提案都差不多被一半的Acceptor批准，此时当一个Acceptor出错，都导致无法选择任意一个提案。</p>
+<p>因此，在P1的基础上，需要避免多个value被选择批准，即允许多个提案被选定，但必须保证所有被选定的提案都有相同的值value，引出如下定义：</p>
+<p><strong>P2： 如果一个提案{n, v}被选择，那么所有被选择的提案（编号更高）包含的决议都是v。</strong></p>
+<p>得到P2后关键是如何保持P2成立，需要进一步的具体和细化。</p>
+<p>因为提案的编号是全序的，条件P2保证了只有一个value值被选定，同时一个提案被选定，首先必须被至少一个Acceptor批准，因而可以通过如下条件满足P2：</p>
+<p><strong> $P2^a$： 如果一个提案{n, v}被选择，那么任何acceptor批准的提案（编号更高）包含的决议都是v。</strong></p>
+<p>同时，我们仍然需要P1来保证提案被选定，同时因为通信是异步的，一个提案可能会在某个Acceptor还没有收到任何提案时就被选定了，因此，如果要同时满足P1和$P2^a$，需要对$P2^a$进行如下强化：</p>
+<p><strong> $P2^b$:如果一个提案{n, v}被选择，那么此后，任何proposer提出的提案（编号更高）包含的决议都是v。</strong></p>
+<p>因为一个提案必须在被Proposer提出后才能被Acceptor批准，因此$P2^b$包含了$P2^a$，进而包含了$P2$， 于是，下一步就是证明$P2^b$成立。为此，我们使用第二是数学归纳法证明如下结论：</p>
+<p><strong> 假设编号为M0到Mn的提案已经被选定，其值都是v，证明编号为Mn的提案的值也为v。</strong></p>
+<p>因为编号为M0的提案已经被选定了，这就意味着肯定存在一个由半数以上的Acceptor组成的集合C，C中的每个Acceptor都批准了这个提案，由归纳假设知，“编号为M0的提案被选定”意味着：C中的每一个Acceptor都批准了一个编号在M0到Mn-1范围内的提案，并且每个编号在M0到Mn-1范围内的被批准的提案，它的值也是v。</p>
+<p>因为任何包含半数以上的Acceptor的集合都至少包含C中的一个成员，因此如果一下$P2^c$保持不变，那么编号为Mn的提案的值也为v:</p>
+<p><strong> $P2^c$: 对于任意的v和n，如果提案{n, v}被提出，那么存在一个由acceptor的多数派组成的集合S,满足如下两个条件中的任意一个</strong>：</p>
+<ul>
+<li>S中没有acceptor批准过编号小于n的提案</li>
+<li>在S的任何acceptor批准的所有提案（编号小于n）中，v是编号最大的提案的决议。}</li>
+</ul>
+<p>$P2^c$包含$P2^b$是显而易见的,因此，如果能保证$P2^c$,就满足了$P2^b$。</p>
+<p>为了保持$P2^c$的不变性，准备提出议案（编号为Mn）的Proposer必须知道所有编号小于Mn的议案中编号最大的那个，如果存在的话，它已经或将要被Acceptor的某个多数派批准。获取已经批准的议案是简单的，但是预知将来可能批准的议案是困难的。Proposer并不做预测，而是假定不会有这样的情况。也就是说，Proposer要求Acceptor不能批准任何编号小于Mn的议案。这引出了下面提出议案的两阶段算法:</p>
+<ul>
+<li>第一步：准备阶段： Proposer选择一个新编号Mn，向某个Acceptor集合中的所有成员发送请求，并要求Acceptor集合回应：<ul>
+<li>向Proposer承诺永不批准编号小于Mn的议案</li>
+<li>如果Acceptor已经批准过任何提案，那么其就向Acceptor反馈当前已经批准的编号小于Mn的编号最大的议案。</li>
+</ul>
+</li>
+<li>第二步：接收请求： 如果Proposer收到了多数Acceptor的回应，那么它就可以提出议案{Mn, v}，其中v是所有回应中编号最高的议案的决议，或者是如果Acceptor回应说还没有批准过议案,Proposer则回应任意值。</li>
+</ul>
+<p>在确定提案后，Proposer就会将该提案再次发送给某个Acceptor集合，并期望获得它们的批准，我们称此请求为Accept请求。</p>
+<p>对于Acceptor,其批准提案如下：</p>
+<p>一个Acceptor可能会收到来自Proposer的两种请求，分别是Prepare和Accept，对这两类请求做出的响应条件分别如下：</p>
+<ul>
+<li>Prepare: Acceptor可以在任何时候响应一个Prepare请求</li>
+<li>Accept: 在不违背Accept现有承诺的前提下，可以任意响应Accept请求</li>
+</ul>
+<p>因此，对于Acceptor处理的约束条件为：</p>
+<p><strong>$P1^a$: acceptor可以批准一个编号为n的提案，当且仅当它没有回应过一个编号大于n的prepare请求。</strong></p>
+<h2 id="主要贡献与存在问题"><a href="#主要贡献与存在问题" class="headerlink" title="主要贡献与存在问题"></a>主要贡献与存在问题</h2><h3 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h3><p>Paxos算法解决的问题是在一个可能发生异常（进程可能会慢、被杀死或者重启，消息可能会延迟、丢失、重复，不考虑消息篡改即拜占庭错误的情况）的分布式系统中如何就某个值达成一致，保证不论发生以上任何异常，都不会破坏决议的一致性。</p>
+<p>Paxos协议提出只要系统中2f+1个节点中的f+1个节点可用，那么系统整体就可用并且能保证数据的强一致性，它对于可用性的提升是极大的。</p>
+<p>Paxos算法是分布式计算领域的一个开创性算法，后面有很多算法都是在其基础上改进演化的。</p>
+<h3 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h3><ul>
+<li>如何保证全局编号问题</li>
+</ul>
+<p>在分布式环境下, 编号无法直接确定, 只能根据自身知道的最大number先提一个Proposal, 如果被拒绝, 那么拒绝的Acceptor应该通知他知道的最大的number是多少.</p>
+<ul>
+<li>活锁问题</li>
+</ul>
+<p>如前文所述，需要Proposer Leader,而这个问题又引入Leader选举问题，存在称之为PaxosLease的Paxos算法简化版可以完成leader的选举.</p>
+<ul>
+<li>持久存储问题
+在算法执行的过程中会产生很多的异常情况, 各种角色都可能失败，为了保证paxos算法的正确性，需要各个节点都做持久存储，以便重启后还能恢复，典型的有：<ul>
+<li>Proposer存储已提交的最大Proposal编号</li>
+<li>Learner存储已学习过的Proposal被Accepted情况</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分布式一致性/" rel="tag"><i class="fa fa-tag"></i> 分布式一致性</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/28/Course/distributed-system-2.html" rel="next" title="分布式系统——试卷分析">
+                <i class="fa fa-chevron-left"></i> 分布式系统——试卷分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/01/Course/computational-models-1.html" rel="prev" title="计算模型导引——递归函数论">
+                计算模型导引——递归函数论 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/18/DistributedSystem/paxos-algorithm.html"
+           data-title="Paxos分布式一致性算法" data-url="http://keyunluo.github.io/2017/03/18/DistributedSystem/paxos-algorithm.html">
+      </div>
+    
+    <script src="https://dn-hb0716.qbox.me/duoshuo.js"></script>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/resource/img/profile.jpg"
+               alt="浮舟沧海" />
+          <p class="site-author-name" itemprop="name">浮舟沧海</p>
+           
+              <p class="site-description motion-element" itemprop="description">Coder On The Road</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keyunluo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/streamerset" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item" style="margin-left: 8px; width:45%;">
+                  <a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本模型"><span class="nav-number">1.</span> <span class="nav-text">基本模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境假设"><span class="nav-number">1.1.</span> <span class="nav-text">环境假设</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本问题"><span class="nav-number">1.2.</span> <span class="nav-text">基本问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性基本要求"><span class="nav-number">1.3.</span> <span class="nav-text">一致性基本要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本假设"><span class="nav-number">1.4.</span> <span class="nav-text">基本假设</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体算法"><span class="nav-number">2.</span> <span class="nav-text">具体算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提案批准"><span class="nav-number">2.1.</span> <span class="nav-text">提案批准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提案学习"><span class="nav-number">2.2.</span> <span class="nav-text">提案学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#活锁问题"><span class="nav-number">2.3.</span> <span class="nav-text">活锁问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推导过程"><span class="nav-number">2.4.</span> <span class="nav-text">推导过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主要贡献与存在问题"><span class="nav-number">3.</span> <span class="nav-text">主要贡献与存在问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#贡献"><span class="nav-number">3.1.</span> <span class="nav-text">贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存在问题"><span class="nav-number">3.2.</span> <span class="nav-text">存在问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">浮舟沧海</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"streamers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("0jqhg9soB94ez37zCyJc9RC9-gzGzoHsz", "50xzSR3HFQzP8OokRhw3EdPK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

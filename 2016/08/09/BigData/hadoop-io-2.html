@@ -1,0 +1,1238 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=monaco:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop,IO,Writable" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="流光" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本节内容：Writable是Hadoop的核心，Hadoop通过它定义了Hadoop中基本的数据类型及其操作，它是实现序列化的基础，本节学习其中的Writable接口和Java基础类型包装。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop源码学习(6)——Writable(1)">
+<meta property="og:url" content="http://keyunluo.github.io/2016/08/09/BigData/hadoop-io-2.html">
+<meta property="og:site_name" content="流光">
+<meta property="og:description" content="本节内容：Writable是Hadoop的核心，Hadoop通过它定义了Hadoop中基本的数据类型及其操作，它是实现序列化的基础，本节学习其中的Writable接口和Java基础类型包装。">
+<meta property="og:image" content="http://keyunluo.github.io/resource/blog/2016-08/Comparator.png">
+<meta property="og:updated_time" content="2017-07-06T08:08:06.872Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop源码学习(6)——Writable(1)">
+<meta name="twitter:description" content="本节内容：Writable是Hadoop的核心，Hadoop通过它定义了Hadoop中基本的数据类型及其操作，它是实现序列化的基础，本节学习其中的Writable接口和Java基础类型包装。">
+<meta name="twitter:image" content="http://keyunluo.github.io/resource/blog/2016-08/Comparator.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'FQBRJAIOP0',
+      apiKey: '62ea038e31dd7941c12b0cd5097e4a8c',
+      indexName: 'keyunindex',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索","hits_empty":"未找到任何: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://keyunluo.github.io/2016/08/09/BigData/hadoop-io-2.html"/>
+
+
+
+
+
+  <title> Hadoop源码学习(6)——Writable(1) | 流光 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76470846-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?945b21807344d0260f24455bbd82dfea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">流光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">他跑啊跑啊，只为追上那个曾经被寄予厚望的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/resource/share" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-download"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://keyunluo.github.io/2016/08/09/BigData/hadoop-io-2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="浮舟沧海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/resource/img/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="流光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hadoop源码学习(6)——Writable(1)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-09T09:25:02+08:00">
+                2016-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index">
+                    <span itemprop="name">BigData</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/09/BigData/hadoop-io-2.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/09/BigData/hadoop-io-2.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/08/09/BigData/hadoop-io-2.html" class="leancloud_visitors" data-flag-title="Hadoop源码学习(6)——Writable(1)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>本节内容：</strong>Writable是Hadoop的核心，Hadoop通过它定义了Hadoop中基本的数据类型及其操作，它是实现序列化的基础，本节学习其中的Writable接口和Java基础类型包装。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Writable接口"><a href="#Writable接口" class="headerlink" title="Writable接口"></a>Writable接口</h2><p>Writable接口作为所有可序列化对象必须实现的接口，定义了如下接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Writable</span> </span>&#123;</span><br><span class="line">  <span class="comment">/**</span><br><span class="line">   * 输出序列化对象到流中.</span><br><span class="line">   *</span><br><span class="line">   * <span class="doctag">@param</span> out DataOuput 流，序列化的结果保存在流中.</span><br><span class="line">   * <span class="doctag">@throws</span> IOException</span><br><span class="line">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">write</span><span class="params">(DataOutput out)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span><br><span class="line">   * 从流中读取反序列化对象</span><br><span class="line">   * 为了效率，请尽可能复用现有对象</span><br><span class="line">   *</span><br><span class="line">   * <span class="doctag">@param</span> in DataInput流，从该流中读取数据.</span><br><span class="line">   * <span class="doctag">@throws</span> IOException</span><br><span class="line">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">readFields</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Writable.write()方法用于将对象状态写入二进制的DataOutput中，反序列化的过程由readFields()从DataInput流中读取状态完成。</p>
+<h2 id="WritableComparable和RawComparator"><a href="#WritableComparable和RawComparator" class="headerlink" title="WritableComparable和RawComparator"></a>WritableComparable和RawComparator</h2><h3 id="相关类"><a href="#相关类" class="headerlink" title="相关类"></a>相关类</h3><ul>
+<li>WritableComparable : 它提供了类型比较的能力</li>
+<li>WritableComparator : WritableComparator是WritableComparable的比较器，它是RawComparator针对WritableComparator类的一个通用实现。首先，提供了一个RawComparator的compare()默认实现，该实现从数据流中反序列化要比较的对象，然后调用对象的compare()方法进行比较；其次，它充当了RawComparator实例的一个工厂方法，例如，可以通过如下代码获得IntWritable的RawComparator：<code>RawComparator&lt;IntWritable&gt; comparator = WritableComparator.get(IntWritable.class)</code></li>
+<li>RawComparator ： 允许执行者比较流中读取的未被序列化为对象的记录，从而省去了创建对象的开销</li>
+</ul>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><p><img src="/resource/blog/2016-08/Comparator.png" alt="Comparator"></p>
+<p>Hadoop将很多Writable类归入org.apache.hadoop.io包中，在这些类中比较重要的有Java基本类型类、Text、Writable集合、ObjectWritable等。</p>
+<h2 id="Java基本类型的Writable封装"><a href="#Java基本类型的Writable封装" class="headerlink" title="Java基本类型的Writable封装"></a>Java基本类型的Writable封装</h2><h3 id="Java基本类型封装对照"><a href="#Java基本类型封装对照" class="headerlink" title="Java基本类型封装对照"></a>Java基本类型封装对照</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">Java基本类型</th>
+<th style="text-align:left">Writable</th>
+<th style="text-align:left">序列化后长度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">布尔型(boolean)</td>
+<td style="text-align:left">BooleanWritable</td>
+<td style="text-align:left">1</td>
+</tr>
+<tr>
+<td style="text-align:left">字节型(byte)</td>
+<td style="text-align:left">ByteWritable</td>
+<td style="text-align:left">1</td>
+</tr>
+<tr>
+<td style="text-align:left">整型(int)</td>
+<td style="text-align:left">IntWritable/VIntWritable</td>
+<td style="text-align:left">4/1~5</td>
+</tr>
+<tr>
+<td style="text-align:left">浮点型(float)</td>
+<td style="text-align:left">FloatWritable</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td style="text-align:left">长整型long()</td>
+<td style="text-align:left">LongWritable/VLongWritable</td>
+<td style="text-align:left">8/1~9</td>
+</tr>
+<tr>
+<td style="text-align:left">双精度浮点型(double)</td>
+<td style="text-align:left">DoubleWritable</td>
+<td style="text-align:left">8</td>
+</tr>
+</tbody>
+</table>
+<p>对整型(int、long)进行编码的时候,有固定长度格式(IntWritable、LongWritable)和可变长度格式(VIntWritable、VLongWritable)两种选择。固定长度格式的整型序列化后的数据是定长的，而可变长度格式对于数值比较小的整型往往比较节省空间。同时，由于VIntWritable和VLongWritable的编码规则一致，所以VIntWritable的输出可以用VLongWritable读入。</p>
+<h3 id="Writable的基本类封装"><a href="#Writable的基本类封装" class="headerlink" title="Writable的基本类封装"></a>Writable的基本类封装</h3><p>下面以VIntWritable为例，了解其封装。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VIntWritable</span> <span class="keyword">implements</span> <span class="title">WritableComparable</span>&lt;<span class="title">VIntWritable</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">VIntWritable</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">VIntWritable</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123; set(value); &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 设置VIntWritable的值 */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123; <span class="keyword">this</span>.value = value; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 获取VIntWritable的值*/</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> value; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 实现writable里面的接口readFields和write方法</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFields</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    value = WritableUtils.readVInt(in);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(DataOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    WritableUtils.writeVInt(out, value);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 判断VIntWritable的值是否相等*/</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> VIntWritable))</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    VIntWritable other = (VIntWritable)o;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value == other.value;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 比较两个VIntWritables. */</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(VIntWritable o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> thisValue = <span class="keyword">this</span>.value;</span><br><span class="line">    <span class="keyword">int</span> thatValue = o.value;</span><br><span class="line">    <span class="keyword">return</span> (thisValue &lt; thatValue ? -<span class="number">1</span> : (thisValue == thatValue ? <span class="number">0</span> : <span class="number">1</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Integer.toString(value);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>VIntWritable通过调用VWritable工具类中提供的readVInt()和writeVInt()来读写数据，方法readVInt()和writeVInt()只是简单调用了readVLong()和writeVLong()方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeVLong</span><span class="params">(DataOutput stream, <span class="keyword">long</span> i)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    处于[-<span class="number">112</span>,<span class="number">127</span>]的整数，直接写入</span><br><span class="line">    <span class="keyword">if</span> (i &gt;= -<span class="number">112</span> &amp;&amp; i &lt;= <span class="number">127</span>) &#123;</span><br><span class="line">      stream.writeByte((<span class="keyword">byte</span>)i);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 计算情况2的第一个字节</span></span><br><span class="line">    <span class="keyword">int</span> len = -<span class="number">112</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      i ^= -<span class="number">1L</span>; <span class="comment">// take one's complement'</span></span><br><span class="line">      len = -<span class="number">120</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">long</span> tmp = i;</span><br><span class="line">    <span class="keyword">while</span> (tmp != <span class="number">0</span>) &#123;</span><br><span class="line">      tmp = tmp &gt;&gt; <span class="number">8</span>;</span><br><span class="line">      len--;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    stream.writeByte((<span class="keyword">byte</span>)len);</span><br><span class="line"></span><br><span class="line">    len = (len &lt; -<span class="number">120</span>) ? -(len + <span class="number">120</span>) : -(len + <span class="number">112</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出后续字节</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> idx = len; idx != <span class="number">0</span>; idx--) &#123;</span><br><span class="line">      <span class="keyword">int</span> shiftbits = (idx - <span class="number">1</span>) * <span class="number">8</span>;</span><br><span class="line">      <span class="keyword">long</span> mask = <span class="number">0xFFL</span> &lt;&lt; shiftbits;</span><br><span class="line">      stream.writeByte((<span class="keyword">byte</span>)((i &amp; mask) &gt;&gt; shiftbits));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>writeVLong()方法实现了对整型数值的变长编码，它的编码规则如下：</p>
+<p>如果输入的整数大于会等于-112并且小于或等于127，那么编码需要1字节，否则，序列化结果的第一个字节，保存了输入整数的符号和后续编码的字节数。符号和后续字节数依据下面的编码规则：</p>
+<ul>
+<li>如果是正数，则编码值范围落在-113和-120之间(闭区间)，后续字节数可以通过-(v+112)计算</li>
+<li>如果是负数，则编码值范围落在-121和-128之间(闭区间)，后续字节数可以通过-(v+120)计算</li>
+</ul>
+<p>后续编码将高位在前，写入输入的整数(除去前面的全0字节)</p>
+<h2 id="Text类型"><a href="#Text类型" class="headerlink" title="Text类型"></a>Text类型</h2><p>Text类型是针对UTF-8序列的Writable类，一般可认为它等价于java.lang.String的Writable。Text替代了UTF8类,但这并不是一个很好的替代，一者因为不支持对字节数超过32767的字符串进行编码，二者因为它使用的是Java的UTF-8修订版。</p>
+<p>Text类使用整型(通过边长编码的方式)来存储字符串编码中所需要的字节数，因此该最大值为2GB。另外Text使用标准的UTF-8编码，这使得能够更加简便的与其他理解UTF-8编码的工具进行交互操作。</p>
+<p>Text类型与String类型的主要差别如下：</p>
+<ul>
+<li>String的长度定义为String包含的字符个数；Text的长度定义为UTF-8编码的字节数</li>
+<li>String类的indexOf()方法返回的是char类型字符的索引，比如字符串”1234”,字符3的位置是2；而Text的find()方法返回的是字节偏移量。</li>
+<li>String的CharAt()方法返回的是指定位置的char字符，而Text的charAT()方法需要指定偏移量</li>
+</ul>
+<p>另外，在Text类中定义了一个方法toString(),它用于将Text类型转换成String类型。</p>
+<h2 id="BytesWritable"><a href="#BytesWritable" class="headerlink" title="BytesWritable"></a>BytesWritable</h2><p>它是一个二进制数据数组的封装，其序列化格式为一个指定锁包含数据字节的整数域(4字节)，后跟数据内容本身。例如，长度为2的字节数组包含数值3和5，序列化形成为一个4字节的整数(00000002)和该数组中的两个字节(03和05)：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BytesWritable b = <span class="keyword">new</span> BytesWritable( <span class="keyword">new</span> <span class="keyword">byte</span>[] &#123;<span class="number">3</span>,<span class="number">5</span>&#125;);</span><br><span class="line"><span class="keyword">byte</span>[] bytes = serialize(b);</span><br><span class="line">assertThat(StringUtils.byteToHexString(bytes),is(<span class="string">"000000020305"</span>));</span><br></pre></td></tr></table></figure>
+<p>BytesWritable是可变的，其值可以通过set()方法进行修改。和Text相似，BytesWritable类的getBytes()方法返回的字节数组长度——容量可能无法体现BytesWritable所存储数据的实际大小。可以通过getLength()方法来确定BytesWritable的大小。</p>
+<h2 id="NullWritable"><a href="#NullWritable" class="headerlink" title="NullWritable"></a>NullWritable</h2><p>这是一个占位符，它的序列化长度为零，没有数值从流中读出或者是写入流中。这个类型不可以与其他类型比较，在MapReduce中，如果不需要使用键或值的序列化地址，就可以将键或值声明为NullWritable，结果是高效的存储常量空值。如果希望存储一系列数值，与键/值对相对，NullWritable也可以用作在SequenceFile中的键，它是一个不可变的单实例类型，通过调用NullWritable.get()方法可以获取这个实例。</p>
+<h2 id="ObjectWritable和GenericWritable"><a href="#ObjectWritable和GenericWritable" class="headerlink" title="ObjectWritable和GenericWritable"></a>ObjectWritable和GenericWritable</h2><p>ObjectWritable是对Java基本类型(String,enum,Writable,null或这些类型组成的数组)的一个通用封装，它在Hadoop RPC中用于对方法的参数和返回类型进行封装和解封装。</p>
+<p>当一个字段中包含多个类型时，ObjectWritable非常有用：例如，如果SequenceFile中的值包含多个类型，就可以将值类型声明为ObjectWritable，并将每个类型封装在一个ObjectWritable中。作为一个通用的机制，每次序列化都写封装类型的名称将非常浪费空间。如果封装的类型数量比较少并且能够提前知道，那么可以通过使用静态类型的数组，并使用对序列化后的类型的引用加入位置索引来提高性能。GenericWritable类采取的就是这种方式，所以你得在继承的子类中指定支持什么类型。</p>
+<h2 id="Writable集合类"><a href="#Writable集合类" class="headerlink" title="Writable集合类"></a>Writable集合类</h2><p>org.apache.hadoop.io软件包中一共有6隔Writable集合类：ArrayWritable、ArrayPrimitiveWritable、TwoDArrayWritable、MapWritable、SortedMapWritable和EnumMapWritable。</p>
+<p>ArrayWritable和TwoDArrayWritable是对Writable的数组和二维数组的实现。ArrayWritable或TwoDArrayWritable中的所有元素必须是同一类的实例(在构造函数中指定)：<code>ArrayWritable writable = new ArrayWritable(Text.class)</code>
+如果Writable根据类型来定义，例如SequenceFile的键或值，或更多时候作为MapReduce的输入，则需要继承ArrayWritable(或相应的TwoDArrayWritable类)并设置静态类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TextArrayWritable</span> <span class="keyword">extends</span> <span class="title">ArrayWritable</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TextArrayWritable</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(Text.class);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ArrayWritable和TwoDArrayWritable都有get()、set()和toArray()方法。toArray()方法用于新建该数组(或二维数组)的一个“浅拷贝”。</p>
+<p>ArrayPrimitiveWritable是对Java基本数组类型的一个封装。调用set()方法时，可以识别相应组件类型，因此无需通过继承该类来设置类型。</p>
+<p>MapWritable和SortedMapWritable分别实现了java.util.Map<writable,writable>和java.util.SortedMap<writablecomparator,writable>。每个键值对字段使用的类型是相应字段序列化形式的一部分。类型存储为单个字节(充当类型数组的索引)。在org.apache.hadoop.io包中，数组经常与标准类型结合使用，而定制的Writable类型也通常结合使用，但对于非标准类型，则需要在包头指明所使用的数组类型。根据实现，MapWritable类和SortedMapWritable类通过正byte值来指示定制的类型，所以在MapWritable和SortedMapWritable实例中最多可使用127隔不同的非标准Writable类。下面显示使用了不同键和值类型的MapWritable实例：</writablecomparator,writable></writable,writable></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MapWritable src = <span class="keyword">new</span> MapWritable();</span><br><span class="line">src.put(<span class="keyword">new</span> IntWritable(<span class="number">1</span>),<span class="keyword">new</span> Text(<span class="string">"cat"</span>));</span><br><span class="line">src.put(<span class="keyword">new</span> VIntWritable(<span class="number">2</span>),<span class="keyword">new</span> LongWritable(<span class="number">163</span>));</span><br><span class="line"></span><br><span class="line">MapWritable dest = <span class="keyword">new</span>  MapWritable();</span><br><span class="line">WritableUtils.cloneInto(dest , src);</span><br><span class="line">assertThat((Text) dest.get(<span class="keyword">new</span> IntWritable(<span class="number">1</span>)),is(<span class="keyword">new</span> Text(<span class="string">"cat"</span>)));</span><br><span class="line">assertThat((LongWritable) dest.get(<span class="keyword">new</span> VIntWritable(<span class="number">2</span>)),is(<span class="keyword">new</span> LongWritable(<span class="number">163</span>)));</span><br></pre></td></tr></table></figure>
+<p>显然，可以通过Writable集合类来实现集合和列表。可以使用MapWritable类型(或针对排序集合，使用SortedMapWritable)来枚举集合中的元素，用NullWritable类型枚举值。对集合的枚举类型可采用EnumSetWritable。对于单类型的Writable列表，使用ArrayWritable就足够了，但如果需要把不同的Writable类型存储在单个列表中，可以用GenericWritable将元素封装在一个ArrayWritable中。另一个可选方案是借鉴MapWritable的思路写一个通用的ListWritable。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"><i class="fa fa-tag"></i> Hadoop</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/08/Programming/java-nio2.html" rel="next" title="Java中的NIO2">
+                <i class="fa fa-chevron-left"></i> Java中的NIO2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/10/BigData/hadoop-io-3.html" rel="prev" title="Hadoop源码学习(7)——Writable(2)">
+                Hadoop源码学习(7)——Writable(2) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/09/BigData/hadoop-io-2.html"
+           data-title="Hadoop源码学习(6)——Writable(1)" data-url="http://keyunluo.github.io/2016/08/09/BigData/hadoop-io-2.html">
+      </div>
+    
+    <script src="https://dn-hb0716.qbox.me/duoshuo.js"></script>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/resource/img/profile.jpg"
+               alt="浮舟沧海" />
+          <p class="site-author-name" itemprop="name">浮舟沧海</p>
+           
+              <p class="site-description motion-element" itemprop="description">Coder On The Road</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keyunluo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/streamerset" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item" style="margin-left: 8px; width:45%;">
+                  <a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Writable接口"><span class="nav-number">1.</span> <span class="nav-text">Writable接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WritableComparable和RawComparator"><span class="nav-number">2.</span> <span class="nav-text">WritableComparable和RawComparator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关类"><span class="nav-number">2.1.</span> <span class="nav-text">相关类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类图"><span class="nav-number">2.2.</span> <span class="nav-text">类图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java基本类型的Writable封装"><span class="nav-number">3.</span> <span class="nav-text">Java基本类型的Writable封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java基本类型封装对照"><span class="nav-number">3.1.</span> <span class="nav-text">Java基本类型封装对照</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Writable的基本类封装"><span class="nav-number">3.2.</span> <span class="nav-text">Writable的基本类封装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Text类型"><span class="nav-number">4.</span> <span class="nav-text">Text类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BytesWritable"><span class="nav-number">5.</span> <span class="nav-text">BytesWritable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NullWritable"><span class="nav-number">6.</span> <span class="nav-text">NullWritable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ObjectWritable和GenericWritable"><span class="nav-number">7.</span> <span class="nav-text">ObjectWritable和GenericWritable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Writable集合类"><span class="nav-number">8.</span> <span class="nav-text">Writable集合类</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">浮舟沧海</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"streamers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("0jqhg9soB94ez37zCyJc9RC9-gzGzoHsz", "50xzSR3HFQzP8OokRhw3EdPK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

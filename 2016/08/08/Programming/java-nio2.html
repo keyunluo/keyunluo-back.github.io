@@ -1,0 +1,1236 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=monaco:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java，NIO2" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="流光" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本节内容：Java7对原有的NIO进行了重大改进，提供了全面的文件IO和文件系统的访问支持，基于异步Channel的IO。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java中的NIO2">
+<meta property="og:url" content="http://keyunluo.github.io/2016/08/08/Programming/java-nio2.html">
+<meta property="og:site_name" content="流光">
+<meta property="og:description" content="本节内容：Java7对原有的NIO进行了重大改进，提供了全面的文件IO和文件系统的访问支持，基于异步Channel的IO。">
+<meta property="og:updated_time" content="2017-07-06T08:08:07.060Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java中的NIO2">
+<meta name="twitter:description" content="本节内容：Java7对原有的NIO进行了重大改进，提供了全面的文件IO和文件系统的访问支持，基于异步Channel的IO。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'FQBRJAIOP0',
+      apiKey: '62ea038e31dd7941c12b0cd5097e4a8c',
+      indexName: 'keyunindex',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索","hits_empty":"未找到任何: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://keyunluo.github.io/2016/08/08/Programming/java-nio2.html"/>
+
+
+
+
+
+  <title> Java中的NIO2 | 流光 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76470846-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?945b21807344d0260f24455bbd82dfea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">流光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">他跑啊跑啊，只为追上那个曾经被寄予厚望的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/resource/share" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-download"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://keyunluo.github.io/2016/08/08/Programming/java-nio2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="浮舟沧海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/resource/img/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="流光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java中的NIO2
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-08T09:25:02+08:00">
+                2016-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/08/Programming/java-nio2.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/08/Programming/java-nio2.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/08/08/Programming/java-nio2.html" class="leancloud_visitors" data-flag-title="Java中的NIO2">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>本节内容：</strong>Java7对原有的NIO进行了重大改进，提供了全面的文件IO和文件系统的访问支持，基于异步Channel的IO。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Path、Paths和Files核心API"><a href="#Path、Paths和Files核心API" class="headerlink" title="Path、Paths和Files核心API"></a>Path、Paths和Files核心API</h2><p>早起的JAVA只提供了一个File类来访问文件系统，功能有限并且性能低下。NIO.2引入了一个Path接口，Path接口代表一个平台无关的平台路径，此外，NIO.2还提供了Files和Paths两个工具类，其中Files包含了大量的静态的工具方法来操作文件，Paths则包含了两个返回Path的静态工厂方法。</p>
+<h3 id="Path接口的功能和用法"><a href="#Path接口的功能和用法" class="headerlink" title="Path接口的功能和用法"></a>Path接口的功能和用法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NioPath</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 以当前路径来创建Path对象</span></span><br><span class="line">        Path path = Paths.get(<span class="string">"/home/streamer/tmp/NioPath.java"</span>);</span><br><span class="line">        System.out.println(<span class="string">"path里包含的路径数量:"</span>+path.getNameCount());</span><br><span class="line">        System.out.println(<span class="string">"path的根路径:"</span>+path.getRoot());</span><br><span class="line">        <span class="comment">// 获取path对应的绝对路径</span></span><br><span class="line">        Path absolutePath = path.toAbsolutePath();</span><br><span class="line">        System.out.println(<span class="string">"path的绝对路径:"</span>+absolutePath);</span><br><span class="line">        <span class="comment">// 获取绝对路径的根路径</span></span><br><span class="line">        System.out.println(<span class="string">"绝对路径的根路径:"</span>+absolutePath.getRoot());</span><br><span class="line">        <span class="comment">// 获取绝对路径所包含的路径数量</span></span><br><span class="line">        System.out.println(<span class="string">"绝对路径包含的路径数量:"</span>+absolutePath.getNameCount());</span><br><span class="line">        System.out.println(<span class="string">"绝对路径第三层路径:"</span>+absolutePath.getName(<span class="number">3</span>));</span><br><span class="line">        <span class="comment">// 以多个String来构建Path对象</span></span><br><span class="line">        Path path2= Paths.get(<span class="string">"/usr"</span>,<span class="string">"local"</span>,<span class="string">"anaconda3"</span>);</span><br><span class="line">        System.out.println(<span class="string">"构建的PATH:"</span>+path2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>显示的如下结果：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">path里包含的路径数量:<span class="number">4</span></span><br><span class="line">path的根路径:/</span><br><span class="line">path的绝对路径:/home/streamer/tmp/NioPath.java</span><br><span class="line">绝对路径的根路径:/</span><br><span class="line">绝对路径包含的路径数量:<span class="number">4</span></span><br><span class="line">绝对路径第三层路径:NioPath.java</span><br><span class="line">构建的PATH:/usr/local/anaconda3</span><br></pre></td></tr></table></figure></p>
+<h3 id="Files类的用法"><a href="#Files类的用法" class="headerlink" title="Files类的用法"></a>Files类的用法</h3><p>Files是一个操作文件的工具类，它提供了大量便捷的工具方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.FileStore;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.Charset;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NioFile</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">// 复制文件</span></span><br><span class="line">        Files.copy(Paths.get(<span class="string">"NioFile.java"</span>),<span class="keyword">new</span> FileOutputStream(<span class="string">"NioFile.txt"</span>));</span><br><span class="line">        <span class="comment">// 判断NioFile.java是否为隐藏文件</span></span><br><span class="line">        System.out.println(<span class="string">"NioFile.java是否为隐藏文件:"</span>+Files.isHidden(Paths.get(<span class="string">"NioFile.java"</span>)));</span><br><span class="line">        <span class="comment">// 一次性读取NioFile.java文件的所有行</span></span><br><span class="line">        List&lt;String&gt; lines = Files.readAllLines(Paths.get(<span class="string">"NioFile.java"</span>),Charset.forName(<span class="string">"UTF-8"</span>));</span><br><span class="line">        System.out.println(lines);</span><br><span class="line">        <span class="comment">// 判断指定文件的大小</span></span><br><span class="line">        System.out.println(<span class="string">"NioFile.java文件的大小："</span>+Files.size(Paths.get(<span class="string">"NioFile.java"</span>)));</span><br><span class="line">        <span class="comment">// 直接将多个字符串写入到指定文件中</span></span><br><span class="line">        List&lt;String&gt; poem = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        poem.add(<span class="string">"水晶潭底银鱼跃"</span>);</span><br><span class="line">        poem.add(<span class="string">"清徐风中碧竿横"</span>);</span><br><span class="line">        Files.write(Paths.get(<span class="string">"poem.txt"</span>),poem,Charset.forName(<span class="string">"gbk"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用Java8新增的Stream API列出当前目录下所有文件和子目录</span></span><br><span class="line">        Files.list(Paths.get(<span class="string">"."</span>)).forEach(path -&gt; System.out.println(path));</span><br><span class="line">        <span class="comment">// 使用Java8新增的Stream API读取文件内容</span></span><br><span class="line">        Files.lines(Paths.get(<span class="string">"poem.txt"</span>),Charset.forName(<span class="string">"gbk"</span>)).forEach(line -&gt; System.out.println(line));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断/data的总空间、可用空间</span></span><br><span class="line">        FileStore cStore = Files.getFileStore(Paths.get(<span class="string">"/data/"</span>));</span><br><span class="line">        System.out.println(<span class="string">"/data:共有空间："</span>+cStore.getTotalSpace());</span><br><span class="line">        System.out.println(<span class="string">"/data:可用空间："</span>+cStore.getUsableSpace());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用FileVisitor遍历文件和目录"><a href="#使用FileVisitor遍历文件和目录" class="headerlink" title="使用FileVisitor遍历文件和目录"></a>使用FileVisitor遍历文件和目录</h2><p>Files类提供了如下两个方法来遍历文件和子目录：</p>
+<ul>
+<li>walkFileTree(Path start,FileVisitor&lt;? super Path&gt; visitor):遍历start目录下的所有文件和子目录</li>
+<li>walkFileTree(Path start,Set<filevisitoption> options,int maxDepth,FileVisitor&lt;? super Path&gt; visitor):与上一个方法类似，该方法最多遍历maxDepth深度的文件</filevisitoption></li>
+</ul>
+<p>上面两个方法都需要FileVisitor参数，FileVisitor代表一个文件访问器，walkFileTree()方法会自动遍历start路径下的所有文件和子目录，遍历文件和子目录都会触发FileVisitor中的相应方法。FileVisitor中定义了如下四种方法：</p>
+<ul>
+<li>FileVisitResult postVisitDirectory(T dir,IOException exc):访问子目录之后触发该方法</li>
+<li>FileVisitResult preVisitDirectory(T dir,BasicFileAttributes attrs):访问子目录之前触发该方法</li>
+<li>FileVisitResult visitFile(T dir,BasicFileAttributes attrs):访问file文件时触发该方法</li>
+<li>FileVisitResult visitFileFailed(T dir,IOException exc):访问file文件失败时触发该方法</li>
+</ul>
+<p>上面4个方法都返回一个FileVisitResult对象，它是一个枚举类，代表访问之后的后续行为，FileVisitResult定义了如下几种后续行为：</p>
+<ul>
+<li>CONTINUE:代表”继续访问”的后续行为</li>
+<li>SKIP_SIBLINGS:代表”继续访问”的后续行为,但不访问该文件或目录的兄弟文件或目录</li>
+<li>SKIP_SUBTREE:代表”继续访问”的后续行为,但不访问该文件或目录的子目录树</li>
+<li>TERMINATE:代表”终止访问”的后续行为</li>
+</ul>
+<p>实际编程时没必要为FileVisitor的四个方法都提供实现，可以通过继承SimpleFileVisitor(FileVisitor的实现类)来实现自己的”文件访问器”。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.FileVisitor;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.SimpleFileVisitor;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.FileVisitResult;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.attribute.BasicFileAttributes;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NioFileVisitor</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">// 遍历/usr/local/anaconda3/include 目录下的所有文件和子目录</span></span><br><span class="line">        Files.walkFileTree(Paths.get(<span class="string">"/usr"</span>,<span class="string">"local"</span>,<span class="string">"anaconda3"</span>,<span class="string">"include"</span>), <span class="keyword">new</span> SimpleFileVisitor&lt;Path&gt;()&#123;</span><br><span class="line">            <span class="comment">// 访问文件时触发该方法</span></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> FileVisitResult <span class="title">visitFile</span><span class="params">(Path file, BasicFileAttributes attrs)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"正在访问："</span>+file+<span class="string">"文件"</span>);</span><br><span class="line">                <span class="comment">// 找到了Python.h文件</span></span><br><span class="line">                <span class="keyword">if</span> (file.endsWith(<span class="string">"Python.h"</span>))&#123;</span><br><span class="line">                    System.out.println(<span class="string">"--已经找到目标文件--"</span>);</span><br><span class="line">                    <span class="keyword">return</span> FileVisitResult.TERMINATE;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> FileVisitResult.CONTINUE;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 开始访问目录时触发该方法</span></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> FileVisitResult <span class="title">preVisitDirectory</span><span class="params">(Path dir,BasicFileAttributes attrs)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"正在访问:"</span>+dir+<span class="string">"路径"</span>);</span><br><span class="line">                <span class="keyword">return</span> FileVisitResult.CONTINUE;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用WatchService监控文件变化"><a href="#使用WatchService监控文件变化" class="headerlink" title="使用WatchService监控文件变化"></a>使用WatchService监控文件变化</h2><p>NIO.2的Path类提供了如下方法来监听文件系统的变化：</p>
+<ul>
+<li>register(WatchService watcher,WatchEvent.Kind&lt;?&gt; … events):用watcher监听该path代表的目录下的文件变化，events参数指定要监听哪些类型的事件。</li>
+</ul>
+<p>一旦使用register()方法完成注册后，接下来就可以调用WatchService的如下三个方法来获取被监听目录的文件变化事件。</p>
+<ul>
+<li>WatchKey poll():获取下一个WatchKey，如果没有WatchKey发生就立即返回null</li>
+<li>WatchKey poll(long timeout,TimeUnit unit):尝试等待timeout时间去获取下一个WatchKey</li>
+<li>WatchKey take():获取下一个WatchKey，如果没有WatchKey发生就一直等待</li>
+</ul>
+<p>如果程序需要一直监控，则应该选择使用take()方法；如果程序只需要监控指定时间，择可以考虑使用poll方法，下面的程序使用WatchService来监控/data根目录下文件的变化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.WatchKey;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.WatchEvent;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.WatchService;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.StandardWatchEventKinds;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.FileSystems;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NioWatchService</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">// 获取文件系统的WatchService对象</span></span><br><span class="line">        WatchService watchService = FileSystems.getDefault().newWatchService();</span><br><span class="line">        <span class="comment">// 为/data根路径注册监听</span></span><br><span class="line">        Paths.get(<span class="string">"/data/"</span>).register(watchService</span><br><span class="line">                , StandardWatchEventKinds.ENTRY_CREATE</span><br><span class="line">                , StandardWatchEventKinds.ENTRY_MODIFY</span><br><span class="line">                , StandardWatchEventKinds.ENTRY_DELETE);</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            <span class="comment">// 获取下一个文件变化事件</span></span><br><span class="line">            WatchKey key = watchService.take();</span><br><span class="line">            <span class="keyword">for</span> (WatchEvent&lt;?&gt; event : key.pollEvents())&#123;</span><br><span class="line">                System.out.println(event.context()+ <span class="string">" 文件发生了 "</span>+ event.kind() +<span class="string">"事件!"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 重设WatchKey</span></span><br><span class="line">            <span class="keyword">boolean</span> valid = key.reset();</span><br><span class="line">            <span class="comment">// 如果重设失败，退出监听</span></span><br><span class="line">            <span class="keyword">if</span> (!valid) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>事件:
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  data touch test.txt</span><br><span class="line">➜  data echo <span class="string">"test"</span> &gt;&gt; test.txt</span><br><span class="line">➜  data rm test.txt</span><br></pre></td></tr></table></figure></p>
+<p>结果：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test.txt 文件发生了 ENTRY_CREATE事件!</span><br><span class="line">test.txt 文件发生了 ENTRY_MODIFY事件!</span><br><span class="line">test.txt 文件发生了 ENTRY_MODIFY事件!</span><br><span class="line">test.txt 文件发生了 ENTRY_DELETE事件!</span><br></pre></td></tr></table></figure></p>
+<h2 id="访问文件属性"><a href="#访问文件属性" class="headerlink" title="访问文件属性"></a>访问文件属性</h2><p>Java7的NIO.2在java.nio.file.attribute包下提供了大量的工具类，通过这些工具类，开发者可以非常简单地读取、修改文件属性，这些工具类主要分为如下两类：</p>
+<ul>
+<li>XxxAttributeView：代表某种文件属性的视图</li>
+<li>XxxAttributes:代表某种文件属性的集合，程序一般通过XxxAttributeView对象来获取XxxAttributes</li>
+</ul>
+<p>在这些工具类中，FileAttributeView是其他XxxAttributeView的父接口</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">View</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">AclFileAttributeView</td>
+<td style="text-align:left">开发者可以为特定文件设置ACL(Access Control List) 及文件所有者属性，它的getAcl()方法返回List<aclentry>对象，该返回值代表了该文件的权限集，通过setAcl(List)方法可以修改该文件的ACL</aclentry></td>
+</tr>
+<tr>
+<td style="text-align:left">BasicFileAttributeView</td>
+<td style="text-align:left">它可以获取或修改文件的基本属性，包括文件的最后修改时间、最后访问时间、创建时间、大小、是否为目录、是否为符号链接等，它的readAttribute方法返回一个BasicFileAttribute对象，对文件夹基本属性的修改是通过BasicFileAttribute对象完成的。</td>
+</tr>
+<tr>
+<td style="text-align:left">DosFileAttributeView</td>
+<td style="text-align:left">主要用于获取或修改文件DOS相关属性，如文件是否只读、隐藏，是否为系统文件、存档文件等</td>
+</tr>
+<tr>
+<td style="text-align:left">FileOwnerAttributeView</td>
+<td style="text-align:left">获取或修改文件的所有者</td>
+</tr>
+<tr>
+<td style="text-align:left">PosixFileAttributeView</td>
+<td style="text-align:left">用于获取或修改POSIX属性，它的readAttribute()方法返回一个PosixFileAttribute对象，该对象可用于获取或修改文件的所有者、组所有者和访问权限信息，仅在*nx系统上有用</td>
+</tr>
+<tr>
+<td style="text-align:left">UserDefinedFileAttributeView</td>
+<td style="text-align:left">让开发者为文件设置一些自定义属性</td>
+</tr>
+</tbody>
+</table>
+<p>下面程序示范了如何读取、修改文件的属性</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.FileSystems;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.attribute.BasicFileAttributeView;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.attribute.BasicFileAttributes;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.attribute.FileOwnerAttributeView;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.attribute.UserPrincipal;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.attribute.UserDefinedFileAttributeView;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.attribute.PosixFileAttributeView;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.attribute.PosixFileAttributes;</span><br><span class="line"><span class="keyword">import</span> java.nio.ByteBuffer;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.Charset;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NioAttributeView</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">// 获取将要操作的文件</span></span><br><span class="line">        Path path = Paths.get(<span class="string">"NioAttributeView.java"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取访问基本属性的BasicFileAttributeView</span></span><br><span class="line">        BasicFileAttributeView basicView = Files.getFileAttributeView(path,BasicFileAttributeView.class);</span><br><span class="line">        <span class="comment">// 获取访问基本属性的BasicFileAttributes</span></span><br><span class="line">        BasicFileAttributes basicAttr = basicView.readAttributes();</span><br><span class="line">        <span class="comment">// 访问文件的基本属性</span></span><br><span class="line">        System.out.println(<span class="string">"创建时间："</span>+ <span class="keyword">new</span> Date(basicAttr.creationTime().toMillis()));</span><br><span class="line">        System.out.println(<span class="string">"最后访问时间："</span>+ <span class="keyword">new</span> Date(basicAttr.lastAccessTime().toMillis()));</span><br><span class="line">        System.out.println(<span class="string">"最后修改时间："</span>+ <span class="keyword">new</span> Date(basicAttr.lastModifiedTime().toMillis()));</span><br><span class="line">        System.out.println(<span class="string">"文件大小："</span>+ basicAttr.size());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取访问文件属主属性的FileOwnerAttributeView</span></span><br><span class="line">        FileOwnerAttributeView ownerView = Files.getFileAttributeView(path,FileOwnerAttributeView.class);</span><br><span class="line">        <span class="comment">// 获取该文件所属用户</span></span><br><span class="line">        System.out.println(<span class="string">"所有者："</span>+ ownerView.getOwner());</span><br><span class="line">        <span class="comment">// 获取系统中streamer对应的用户</span></span><br><span class="line">        UserPrincipal user = FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName(<span class="string">"streamer"</span>);</span><br><span class="line">        <span class="comment">// 修改用户</span></span><br><span class="line">        ownerView.setOwner(user);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取访问自定义属性的FileOwnerAttributeView</span></span><br><span class="line">        UserDefinedFileAttributeView userView = Files.getFileAttributeView(path,UserDefinedFileAttributeView.class);</span><br><span class="line">        <span class="comment">// 添加一个自定义属性</span></span><br><span class="line">        userView.write(<span class="string">"发行版"</span>,Charset.defaultCharset().encode(<span class="string">"streamer"</span>));</span><br><span class="line">        userView.write(<span class="string">"编辑器"</span>,Charset.defaultCharset().encode(<span class="string">"vim/gedit"</span>));</span><br><span class="line">        List&lt;String&gt; attrNames = userView.list();</span><br><span class="line">        <span class="comment">// 遍历所有的自定义属性</span></span><br><span class="line">        <span class="keyword">for</span> (String name : attrNames)&#123;</span><br><span class="line">        ByteBuffer buf = ByteBuffer.allocate(userView.size(name));</span><br><span class="line">        userView.read(name,buf);</span><br><span class="line">        buf.flip();</span><br><span class="line">        String value = Charset.defaultCharset().decode(buf).toString();</span><br><span class="line">        System.out.println(name + <span class="string">"-----&gt;"</span> + value);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取访问Posix属性的PosixFileAttributeView</span></span><br><span class="line">        PosixFileAttributeView posixView = Files.getFileAttributeView(path,PosixFileAttributeView.class);</span><br><span class="line">        <span class="comment">// 获取访问基本属性的PosixFileAttributes</span></span><br><span class="line">        PosixFileAttributes posixAttr = posixView.readAttributes();</span><br><span class="line">        <span class="comment">// 访问文件的基本属性</span></span><br><span class="line">        System.out.println(<span class="string">"创建者："</span>+ posixAttr.owner().toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果如下：
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">➜  tmp sudo chown root:root NioAttributeView.java</span><br><span class="line">➜  tmp sudo chmod 777 NioAttributeView.java</span><br><span class="line">➜  tmp javac NioAttributeView.java</span><br><span class="line">➜  tmp sudo java NioAttributeView</span><br><span class="line">创建时间：Mon Aug 08 18:14:40 UTC 2016</span><br><span class="line">最后访问时间：Mon Aug 08 18:15:04 UTC 2016</span><br><span class="line">最后修改时间：Mon Aug 08 18:14:40 UTC 2016</span><br><span class="line">文件大小：3211</span><br><span class="line">所有者：root</span><br><span class="line">发行版-----&gt;streamer</span><br><span class="line">编辑器-----&gt;vim/gedit</span><br><span class="line">创建者：streamer</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/08/Programming/java-nio.html" rel="next" title="Java中的NIO块">
+                <i class="fa fa-chevron-left"></i> Java中的NIO块
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/09/BigData/hadoop-io-2.html" rel="prev" title="Hadoop源码学习(6)——Writable(1)">
+                Hadoop源码学习(6)——Writable(1) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/08/Programming/java-nio2.html"
+           data-title="Java中的NIO2" data-url="http://keyunluo.github.io/2016/08/08/Programming/java-nio2.html">
+      </div>
+    
+    <script src="https://dn-hb0716.qbox.me/duoshuo.js"></script>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/resource/img/profile.jpg"
+               alt="浮舟沧海" />
+          <p class="site-author-name" itemprop="name">浮舟沧海</p>
+           
+              <p class="site-description motion-element" itemprop="description">Coder On The Road</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keyunluo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/streamerset" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item" style="margin-left: 8px; width:45%;">
+                  <a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Path、Paths和Files核心API"><span class="nav-number">1.</span> <span class="nav-text">Path、Paths和Files核心API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Path接口的功能和用法"><span class="nav-number">1.1.</span> <span class="nav-text">Path接口的功能和用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Files类的用法"><span class="nav-number">1.2.</span> <span class="nav-text">Files类的用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用FileVisitor遍历文件和目录"><span class="nav-number">2.</span> <span class="nav-text">使用FileVisitor遍历文件和目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用WatchService监控文件变化"><span class="nav-number">3.</span> <span class="nav-text">使用WatchService监控文件变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问文件属性"><span class="nav-number">4.</span> <span class="nav-text">访问文件属性</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">浮舟沧海</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"streamers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("0jqhg9soB94ez37zCyJc9RC9-gzGzoHsz", "50xzSR3HFQzP8OokRhw3EdPK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

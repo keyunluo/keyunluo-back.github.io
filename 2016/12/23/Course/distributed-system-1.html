@@ -1,0 +1,1473 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=monaco:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="分布式系统, 南京大学" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="流光" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本节内容：2016年秋南京大学计算机系分布式系统课程总结。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统——课程总结">
+<meta property="og:url" content="http://keyunluo.github.io/2016/12/23/Course/distributed-system-1.html">
+<meta property="og:site_name" content="流光">
+<meta property="og:description" content="本节内容：2016年秋南京大学计算机系分布式系统课程总结。">
+<meta property="og:image" content="http://keyunluo.github.io/resource/blog/2016-12/middleware.png">
+<meta property="og:image" content="http://keyunluo.github.io/resource/blog/2016-12/multithreadedserver.png">
+<meta property="og:image" content="http://keyunluo.github.io/resource/blog/2016-12/localresources.png">
+<meta property="og:updated_time" content="2017-07-06T08:08:06.890Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式系统——课程总结">
+<meta name="twitter:description" content="本节内容：2016年秋南京大学计算机系分布式系统课程总结。">
+<meta name="twitter:image" content="http://keyunluo.github.io/resource/blog/2016-12/middleware.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'FQBRJAIOP0',
+      apiKey: '62ea038e31dd7941c12b0cd5097e4a8c',
+      indexName: 'keyunindex',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索","hits_empty":"未找到任何: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://keyunluo.github.io/2016/12/23/Course/distributed-system-1.html"/>
+
+
+
+
+
+  <title> 分布式系统——课程总结 | 流光 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76470846-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?945b21807344d0260f24455bbd82dfea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">流光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">他跑啊跑啊，只为追上那个曾经被寄予厚望的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/resource/share" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-download"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://keyunluo.github.io/2016/12/23/Course/distributed-system-1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="浮舟沧海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/resource/img/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="流光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                分布式系统——课程总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-23T14:25:02+08:00">
+                2016-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Course/" itemprop="url" rel="index">
+                    <span itemprop="name">Course</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/23/Course/distributed-system-1.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/23/Course/distributed-system-1.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/12/23/Course/distributed-system-1.html" class="leancloud_visitors" data-flag-title="分布式系统——课程总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>本节内容：</strong>2016年秋南京大学计算机系分布式系统课程总结。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="分布式系统模型"><a href="#分布式系统模型" class="headerlink" title="分布式系统模型"></a>分布式系统模型</h2><p>1 分布式系统定义：</p>
+<p><strong>一个分布式系统是一些独立的计算机集合，但是对这个系统的用户来说，系统就像一台计算机一样</strong>。 这个定义有两方面的含义：第一，从硬件角度来讲，每台计算机都是自主的；第二，从软件角度来讲，用户将整个系统看做是一台计算机。这两者都是必需的，缺一不可。</p>
+<p>2 涉及到的技术：网络、处理器、内存、存储、协议。</p>
+<p>3 需要分布式的原因</p>
+<ul>
+<li>相对于集中系统，分布式系统的优点</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>优点</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Economics（经济性）</td>
+<td>微处理器能提供比大型机更好的性价比</td>
+</tr>
+<tr>
+<td>Speed（速度）</td>
+<td>分布式系统能提供比大型机更强的计算能力</td>
+</tr>
+<tr>
+<td>Inherent distribution（固有的分布性）</td>
+<td>有一些应用包含物理上分布的机器</td>
+</tr>
+<tr>
+<td>Reliability（可靠性）</td>
+<td>当某台机器崩溃时，整个系统仍能正常工作</td>
+</tr>
+<tr>
+<td>Incremental growth（可扩展性）</td>
+<td>计算能力逐步增加</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>相对于独立的PC，分布式系统的优点</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>优点</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据共享</td>
+<td>允许用户共享一个数据库</td>
+</tr>
+<tr>
+<td>外设共享</td>
+<td>允许用户共享昂贵的外设，如彩色打印机</td>
+</tr>
+<tr>
+<td>通信</td>
+<td>使得个人与个人之间的通信更为方便，如Email</td>
+</tr>
+<tr>
+<td>灵活性</td>
+<td>将工作负载更有效的分派到合适的机器上</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>缺点</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>缺点</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>软件</td>
+<td>分布式系统的软件开发困难</td>
+</tr>
+<tr>
+<td>通信网络</td>
+<td>网络可能饱和或有损传输</td>
+</tr>
+<tr>
+<td>安全</td>
+<td>数据共享造成机密数据容易被窃取</td>
+</tr>
+</tbody>
+</table>
+<p>4 分布式系统的目标</p>
+<ul>
+<li>资源可用性：系统资源被所有计算机共享</li>
+<li>分布透明:Access,Location,Migration,Relocation,Replication,Concurrency,Failure</li>
+<li>开放性：能够与其他开放系统进行服务交互，能够使分布式系统独立于底层环境的异构性</li>
+<li>可扩展：用户、处理可扩展（大小扩展性），节点之间最大距离（地理可扩展性），管理主机的数目（管理可扩展性）</li>
+</ul>
+<p>5 分布式系统透明性和开放性</p>
+<p>透明性：将它的进程和资源实际上在多台计算机上分布这样一个事实隐藏起来，如果一个分布式系统能够在用户和应用程序面前呈现为单个计算机系统，这样的分布式系统就称为是透明的。</p>
+<ul>
+<li>访问透明性：对不同数据表示形式以及资源访问方式的隐藏。</li>
+<li>位置透明性：用户无法判别资源在系统中的物理位置。</li>
+<li>迁移透明性：如果一个分布式系统中的资源移动不会影响该资源的访问方式，就可以说这种分布式系统能够提供迁移透明性。</li>
+<li>重定位透明性：如果资源可以在接受访问的同时进行重新定位，而不引起用户和应用程序的注意，拥有这种资源的系统无疑会更加强壮。</li>
+<li>复制透明性：对同一个资源存在多个副本这样一个事实的隐藏。</li>
+<li>并发透明性：让任何一个用户都不会感觉到他人也在使用自己所使用的资源。</li>
+<li>故障透明性：意味着用户不会注意到某个资源无法正常工作，以及系统随后从故障中恢复的过程。</li>
+</ul>
+<p>开放性：一个开放的分布式系统，它根据一系列准则来提供服务，这些准则描述了所提供服务的语法和语义。</p>
+<ul>
+<li>能够与其他通过服务交互而不用考虑底层环境：<ul>
+<li>符合明确定义的接口</li>
+<li>支持应用的可移植性</li>
+<li>易于互操作</li>
+<li>屏蔽底层环境的区别</li>
+</ul>
+</li>
+<li>开放性要求分布式系统的策略与机制分离：<ul>
+<li>单一系统趋向于封闭</li>
+<li>为分离提供相对应的开放接口</li>
+</ul>
+</li>
+</ul>
+<p>6 分布式系统类型</p>
+<ul>
+<li>分布式计算系统：集群计算、网格计算</li>
+<li>分布式信息系统：事务处理系统（ACID:原子性、一致性、隔离性、持久性）</li>
+<li>分布式普适系统：普适计算、移动计算、传感器网络</li>
+</ul>
+<h2 id="分布式系统架构"><a href="#分布式系统架构" class="headerlink" title="分布式系统架构"></a>分布式系统架构</h2><p>1 分布式系统架构风格</p>
+<ul>
+<li><p>组织成逻辑上的不同组件，并分发这些组件到各个机器上：分层样式用于客户端-服务器系统、基于对象样式的分布式对象系统</p>
+</li>
+<li><p>空间(匿名)和时间(异步)的解耦过程导致多种风格：发布/订阅模式(空间解耦)、共享空间(时间和空间解耦)</p>
+</li>
+</ul>
+<p>或：</p>
+<ul>
+<li>分层体系结构</li>
+<li>基于对象的体系结构</li>
+<li>以数据为中心的体系结构</li>
+<li>基于事件的体系结构</li>
+</ul>
+<p>2 分布式系统组织形式</p>
+<ul>
+<li>中心化：<ul>
+<li>基本的客户端-服务器模式：服务器提供服务，客户端使用服务，客户端和服务器端可以位于不同的机器上，客户端遵从请求/响应模式来使用服务。</li>
+<li>多客户端-服务器模式：服务器形成瓶颈，容易产生单点故障，系统调用困难。</li>
+<li>多客户端-多服务器：Web代理，Web Applets</li>
+<li>应用分层(应用于传统分布式信息系统)：传统三层视图：用户接口层，处理层，数据层</li>
+<li>多层架构(User interface, Application, DataBase)：单层(哑终端/主机配置)、两层(客户端-单服务器配置)、三层(每一层都在一个独立的机器上)</li>
+</ul>
+</li>
+<li>去中心化：<ul>
+<li>结构化的P2P系统：将节点组织成一个结构化覆盖网络，例如一个逻辑环或超立方体，并创建负责仅基于其ID的服务的特定节点。</li>
+<li>非结构化的P2P系统：组织成一个随机的覆盖层，两个节点连接的概率是p,因而不能够确定性地查找信息，而不不得不求助于搜索：洪泛发送信息到周围节点；以及随机游走：随机选择一个邻居。</li>
+<li>混合P2P：有时选择一些特殊节点来做一些特殊事务(保存索引，监控网络状态，建立连接)有助于系统性能。</li>
+</ul>
+</li>
+<li>混合模式：客户端-服务器端结合P2P；边缘服务器架构，通常用来实现内容分发网络。</li>
+</ul>
+<p>3 分布式系统组织为中间件</p>
+<p>在通常情况下，分布式系统/应用依照具体的架构风格开发，所选择的分布式系统架构风格在所有的案例下可能不是最佳的，因而需要动态地适应中间件的行为。</p>
+<p>拦截器：当激发一个远程调用对象时拦截普通的控制流。</p>
+<p><img src="/resource/blog/2016-12/middleware.png" alt="分布式中间件"></p>
+<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><p>1 进程</p>
+<ul>
+<li>进程： 进程状态上下文中的执行流</li>
+<li>执行流：执行指令流、运行的一块代码、顺序指令序列、控制的线程</li>
+<li>进程状态：运行的代码能够影响或被影响的一切</li>
+<li>进程与程序：程序是静态的代码和静态的数据，进程是代码和数据的动态实例，进程和代码间不存在一对一的映设，同一份程序能对应多个进程实例，一个程序能调用多个进程。</li>
+<li>进程运行过程中的三种状态：运行态(仅在CPU里的一个核里)、准备状态(等待CPU)、阻塞状态(睡眠状态，等待IO或同步来完成)</li>
+<li>进程的性能低下：资源管理(创建进程需要分配空间，拷贝数据)、调度(上下文切换：CPU和存储上下文)、协作(IPC,内部通信，共享内存)</li>
+</ul>
+<p>2 线程</p>
+<ul>
+<li>线程：是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。</li>
+<li>上下文切换：处理器上下文(寄存器：栈指针，地址寄存器，程序计数器)、线程上下文(寄存器和内存中：处理器上下文，状态)、进程上下文(寄存器和内存中：线程上下文，MMU寄存器值)</li>
+<li>上下文切换：线程共享地址空间，线程上传下文切换能够独立于操作系统完成；进程切换上下文的代价更高，涉及到在循环中获取系统信息，陷入到系统内核；创建和销毁线程的代价比进程要便宜。</li>
+<li>用户级线程：所有的线程在用户地址空间创建，优点是所有的操作能在单个进程中完全处理，实现起来效率高，缺点是很难获取系统以及块的支持。</li>
+<li>系统级线程：系统内核包含线程包的实现，所有的操作都返回一个系统调用：阻塞一个线程的操作将不再是问题，处理外部事件变得简单，缺点是损失一些效率，因为每一个线程操作都陷入到内核里面了。</li>
+<li>总结：尽量融合用户级和内核级线程到一个概念中，然而然而性能的增加并没有抵消复杂度的增加。</li>
+</ul>
+<p>3 线程和分布式系统</p>
+<ul>
+<li>隐藏了网络延时：多个线程预取文件同时响应一个HTTP请求</li>
+<li>对其他机器的多个请求-响应调用(RPC):客户端同时做多个调用，每个调用由一个不同的线程完成</li>
+<li>提高性能：启动线程比启动进程代价低，单个线程服务器禁止简单扩容到一个多处理器系统，客户端：当前一个请求应用后通过响应下一个请求隐藏了网络延时</li>
+<li>更好的结构：IO请求多时能有效简化整个结构，由于简化的控制流多线程程序会更小和更容易理解</li>
+</ul>
+<p>4 多线程下的分布式C/S架构：</p>
+<ul>
+<li>客户端软件：完全透明:获取透明性、位置/迁移透明性、错误透明性、复制透明性</li>
+<li>服务端软件：端口和服务间一对一映设，组织成dispatcher/worker模型</li>
+<li>服务器类型：超级server：监听多个端口，提供多个独立的服务</li>
+<li>有状态：保持跟踪客户端状态：记录文件打开情况以及缓存情况，性能好，客户端能保存本地缓存</li>
+<li>无状态：服务器不保存客户端的处理请求状态，客户端和服务器端完全独立，它们之间的状态不一致性以及冲突避免了，可能丢失一些性能</li>
+</ul>
+<p><img src="/resource/blog/2016-12/multithreadedserver.png" alt="多线程服务器"></p>
+<p>5 代码迁移：代码段、数据段、执行状态</p>
+<ul>
+<li>强弱移动性：<ul>
+<li>仅移动代码段和数据段：相对简单，区分代码推送和拉取</li>
+<li>移动所有组件，包括执行状态：迁移：将整个对象从一台机器迁移到另一台机器；拷贝：开始拷贝，并设置成相同的执行状态</li>
+</ul>
+</li>
+<li><p>管理本地资源</p>
+<ul>
+<li>使用本地资源的对象的资源在目标点可能不可用</li>
+<li>资源类型：固定资源(资源不能迁移，如本地硬件)，紧固资源(理论上能够迁移，但代价高昂)，未附加的(能轻易地移动资源，例如缓存)</li>
+<li>对象和资源间的绑定：identifier(对象需要一个具体资源的实例，如特定的数据库)、value(对象需要资源的内容，如缓存的入口)、
+type(仅需要一种类型的资源是可用的，如彩色显示器)
+<img src="/resource/blog/2016-12/localresources.png" alt="管理本地资源"></li>
+</ul>
+</li>
+<li><p>异构系统中的迁移问题</p>
+<ul>
+<li>目标机器可能不适合执行迁移的代码</li>
+<li>进程/线程/处理器上下文强烈依赖于本地硬件，操作系统和运行系统</li>
+<li>解决方案：充分利用在不同平台上的抽象机器的实现</li>
+</ul>
+</li>
+</ul>
+<h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><p>1 通信的类型</p>
+<ul>
+<li>瞬间通信(数据无法传送就丢弃)与持久通信(数据被暂存在通行服务器上直到被传送出去)、异步通信与同步通信</li>
+</ul>
+<p>2 远程过程调用</p>
+<ul>
+<li>RPC的工作过程：客户端过程调用客户端stub;Stub 构建消息，调用本地OS；OS发送消息到远程OS；远程OS接收消息至stub；Stub解包参数并调用服务器；服务器生成本地调用并返回结果至stub；Stub构建消息，调用OS；OS发送消息到客户端OS；客户端OS传送消息至stub；客户端Stub解压结果并返回给客户端。</li>
+<li><p>故障处理：</p>
+<ul>
+<li>客户端无法定位服务器：可能原因：服务器关闭，服务器使用了新版本的存根而客户端使用了较旧版本的存根；解决方法：使用一个特殊码，例如-1作为过程的返回值来指示失败；让错误触发一个异常或信号。</li>
+<li>客户端向服务器端发送的请求消息丢失：当发送一个消息的时候内核开启一个计时器：在响应或ACK到来之前定时器过期，则内核重发；如果消息真的丢失：服务器不会区分原始和重传的消息，一切正常；如果许多请求都丢失，内核放弃并假装服务器已经关闭了。</li>
+<li>服务器端向客户端发送的应答消息丢失：当发送一个消息的时候内核开启一个计时器：在回复到来之前定时器过期则重传请求；如果服务器速度很慢，则该过程被执行多次；使用序列数字标志请求号，让服务器内核区分是重传消息还是原始消息。</li>
+<li>服务器端接收到一个消息后崩溃：等待服务器重启后继续重复该操作；立即放弃并报告故障；客户端得不到任何帮助。</li>
+<li>客户端发送请求后崩溃：客户端发送请求后崩溃：客户端stub发送RPC之前先写log，重启后检查log然后杀死孤立进程；把时间划分成连续的时隙，客户端重启后广播一个新的时隙，所有的计算都被杀死；每一个RPC都给定了一个标准的时间T来完成工作，如果不能完成则需要明确地向其他法官申请额外配额。</li>
+</ul>
+</li>
+<li><p>动态绑定</p>
+</li>
+<li><p>优点：</p>
+<ul>
+<li>灵活性</li>
+<li>能支持多个支持同一接口的服务器<ul>
+<li>绑定程序(binder)可以随机地将服务器上的客户端传播到均匀负载</li>
+<li>绑定程序(binder)可以定期轮询服务器，自动取消注册失败的服务器，以达到一定的容错能力</li>
+<li>绑定程序(binder)可以帮助身份验证</li>
+</ul>
+</li>
+<li>绑定程序(binder)可以验证客户端和服务器都使用相同版本的接口</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>导出/导入接口的额外开销花费时间</li>
+<li>绑定程序(binder)可能成为大型分布式系统中的瓶颈</li>
+</ul>
+</li>
+</ul>
+<p>3 基于消息的通信</p>
+<ul>
+<li>持久性/非持久性通信<ul>
+<li>持久性通信：通信机制本身会对消息进行持久存储，直到它被传递给目的。</li>
+<li>非持久性通信：消息的发送者和接收者必须同时存在才能进行，传输服务仅仅提供临时的对消息的存储。</li>
+</ul>
+</li>
+<li>同步/异步<ul>
+<li>同步通信：发信方在到达同步点前保持阻塞</li>
+<li>异步通信：发信方发信后立即继续，消息存储在发信方主机或者通信服务器的缓冲区中</li>
+</ul>
+</li>
+<li>流数据<ul>
+<li>流式数据：一组消息按照指定的顺序排序后构成一个有意义的数据流</li>
+</ul>
+</li>
+</ul>
+<h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><p>1 命名方式</p>
+<ul>
+<li>Human-friendly name</li>
+<li>Address</li>
+<li>Identifier</li>
+</ul>
+<p>2 移动实体的定位</p>
+<ul>
+<li>广播(Broadcasting)</li>
+<li>转发指针(Forwarding Pointers)</li>
+<li>基于家(Home-based)的方法</li>
+<li>分布式哈希表(Distributed Hash Table)</li>
+</ul>
+<p>3 命名解析</p>
+<ul>
+<li>迭代命名解析：每次解析一个节点以后都会把结果返回给客户名称解析程序，然后将由客户重新向下一级服务器发送请求。</li>
+<li>递归命名解析：直接把解析的中间结果传递给下一级服务器，并且逐级解析直到返回指定文件结果：要求名称服务器都具有较高性能，增加了额外负担，减少通信开销，而且可以更好地使用缓存来提高性能</li>
+</ul>
+<h2 id="同步与资源管理"><a href="#同步与资源管理" class="headerlink" title="同步与资源管理"></a>同步与资源管理</h2><p>1 同步问题</p>
+<p>2 时钟同步机制</p>
+<p>3 逻辑时钟</p>
+<ul>
+<li>Lamport时钟</li>
+<li>向量时戳</li>
+</ul>
+<p>4 分布式系统中的互斥访问</p>
+<p>5 分布式系统中的选举机制</p>
+<h2 id="复制与一致性"><a href="#复制与一致性" class="headerlink" title="复制与一致性"></a>复制与一致性</h2><p>1 复制的优势与不足</p>
+<p><strong>2 数据一致性模型</strong></p>
+<p>3 数据一致性协议</p>
+<ul>
+<li>基于法定数量的一致性</li>
+</ul>
+<h2 id="容错"><a href="#容错" class="headerlink" title="容错"></a>容错</h2><p>1 可信系统的特征</p>
+<p>2 提高系统可信性的途径</p>
+<p>3 K容错系统</p>
+<p>4 拜占庭问题</p>
+<p>5 系统恢复</p>
+<ul>
+<li>回退恢复</li>
+<li>前向恢复</li>
+</ul>
+<p>6 检查点</p>
+<h2 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h2><h2 id="OpenStack"><a href="#OpenStack" class="headerlink" title="OpenStack"></a>OpenStack</h2>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分布式系统/" rel="tag"><i class="fa fa-tag"></i> 分布式系统</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/22/Course/data-mining-summary.html" rel="next" title="数据挖掘——课程总结">
+                <i class="fa fa-chevron-left"></i> 数据挖掘——课程总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/27/Course/data-mining.html" rel="prev" title="数据挖掘——试卷分析">
+                数据挖掘——试卷分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/23/Course/distributed-system-1.html"
+           data-title="分布式系统——课程总结" data-url="http://keyunluo.github.io/2016/12/23/Course/distributed-system-1.html">
+      </div>
+    
+    <script src="https://dn-hb0716.qbox.me/duoshuo.js"></script>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/resource/img/profile.jpg"
+               alt="浮舟沧海" />
+          <p class="site-author-name" itemprop="name">浮舟沧海</p>
+           
+              <p class="site-description motion-element" itemprop="description">Coder On The Road</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keyunluo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/streamerset" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item" style="margin-left: 8px; width:45%;">
+                  <a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式系统模型"><span class="nav-number">1.</span> <span class="nav-text">分布式系统模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式系统架构"><span class="nav-number">2.</span> <span class="nav-text">分布式系统架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程与线程"><span class="nav-number">3.</span> <span class="nav-text">进程与线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通信"><span class="nav-number">4.</span> <span class="nav-text">通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命名"><span class="nav-number">5.</span> <span class="nav-text">命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步与资源管理"><span class="nav-number">6.</span> <span class="nav-text">同步与资源管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制与一致性"><span class="nav-number">7.</span> <span class="nav-text">复制与一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容错"><span class="nav-number">8.</span> <span class="nav-text">容错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#云计算"><span class="nav-number">9.</span> <span class="nav-text">云计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenStack"><span class="nav-number">10.</span> <span class="nav-text">OpenStack</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">浮舟沧海</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"streamers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("0jqhg9soB94ez37zCyJc9RC9-gzGzoHsz", "50xzSR3HFQzP8OokRhw3EdPK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

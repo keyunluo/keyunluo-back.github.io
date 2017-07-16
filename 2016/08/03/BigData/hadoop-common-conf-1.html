@@ -1,0 +1,1194 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=monaco:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop，配置" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="流光" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本节内容：本节学习Hadoop-Common-Project中的hadoop-common-conf模块，该模块主要实现了hadoop项目中的配置信息处理，从总体上了解configuration类。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop源码学习(3)——Hadoop-Common-Conf(1)">
+<meta property="og:url" content="http://keyunluo.github.io/2016/08/03/BigData/hadoop-common-conf-1.html">
+<meta property="og:site_name" content="流光">
+<meta property="og:description" content="本节内容：本节学习Hadoop-Common-Project中的hadoop-common-conf模块，该模块主要实现了hadoop项目中的配置信息处理，从总体上了解configuration类。">
+<meta property="og:image" content="http://keyunluo.github.io/resource/blog/2016-08/hadoop-common-conf.png">
+<meta property="og:updated_time" content="2017-07-06T08:08:06.871Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop源码学习(3)——Hadoop-Common-Conf(1)">
+<meta name="twitter:description" content="本节内容：本节学习Hadoop-Common-Project中的hadoop-common-conf模块，该模块主要实现了hadoop项目中的配置信息处理，从总体上了解configuration类。">
+<meta name="twitter:image" content="http://keyunluo.github.io/resource/blog/2016-08/hadoop-common-conf.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'FQBRJAIOP0',
+      apiKey: '62ea038e31dd7941c12b0cd5097e4a8c',
+      indexName: 'keyunindex',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索","hits_empty":"未找到任何: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://keyunluo.github.io/2016/08/03/BigData/hadoop-common-conf-1.html"/>
+
+
+
+
+
+  <title> Hadoop源码学习(3)——Hadoop-Common-Conf(1) | 流光 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76470846-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?945b21807344d0260f24455bbd82dfea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">流光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">他跑啊跑啊，只为追上那个曾经被寄予厚望的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/resource/share" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-download"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://keyunluo.github.io/2016/08/03/BigData/hadoop-common-conf-1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="浮舟沧海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/resource/img/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="流光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hadoop源码学习(3)——Hadoop-Common-Conf(1)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-03T09:25:02+08:00">
+                2016-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index">
+                    <span itemprop="name">BigData</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/03/BigData/hadoop-common-conf-1.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/03/BigData/hadoop-common-conf-1.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/08/03/BigData/hadoop-common-conf-1.html" class="leancloud_visitors" data-flag-title="Hadoop源码学习(3)——Hadoop-Common-Conf(1)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>本节内容：</strong>本节学习Hadoop-Common-Project中的hadoop-common-conf模块，该模块主要实现了hadoop项目中的配置信息处理，从总体上了解configuration类。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="hadoop-common-源代码结构"><a href="#hadoop-common-源代码结构" class="headerlink" title="hadoop-common 源代码结构"></a>hadoop-common 源代码结构</h2><p>hadoop-common是hadoop项目中的核心模块，在src/main中定义了很多基础功能，此外还有protobuf等定义，本文学习org.apache.hadoop.conf配置类的设计。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">java</span><br><span class="line">├── org</span><br><span class="line">│   └── apache</span><br><span class="line">│       └── hadoop</span><br><span class="line">│           ├── conf</span><br><span class="line">│           ├── crypto</span><br><span class="line">│           ├── fs</span><br><span class="line">│           ├── ha</span><br><span class="line">│           ├── HadoopIllegalArgumentException.java</span><br><span class="line">│           ├── http</span><br><span class="line">│           ├── io</span><br><span class="line">│           ├── ipc</span><br><span class="line">│           ├── jmx</span><br><span class="line">│           ├── log</span><br><span class="line">│           ├── metrics</span><br><span class="line">│           ├── metrics2</span><br><span class="line">│           ├── net</span><br><span class="line">│           ├── record</span><br><span class="line">│           ├── security</span><br><span class="line">│           ├── service</span><br><span class="line">│           ├── tools</span><br><span class="line">│           ├── tracing</span><br><span class="line">│           └── util</span><br><span class="line">└── overview.html</span><br><span class="line"></span><br><span class="line">21 directories, 2 files</span><br></pre></td></tr></table></figure>
+<h2 id="Java中的配置文件"><a href="#Java中的配置文件" class="headerlink" title="Java中的配置文件"></a>Java中的配置文件</h2><p>JDK提供了java.util.Properties类，用于处理简单的配置文件，它只支持键值对，形式如下：<code>ENTRY=VALUE</code>。由于Properties是基于HashTable的，它部支持节，对配置文件进行分类。</p>
+<p>java.util.Properties中处理属性列表的主要方法：
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用指定的键在此属性列表中搜索属性</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getProperty</span><span class="params">(String key)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 功能同上，参数defaultValue提供了默认值</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title">getProperty</span><span class="params">(String key,String defaultValue)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Properties.setProperty()最终调用Hashtable的方法put</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> object <span class="title">setProperty</span><span class="params">(String key,String value)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>由于Java本身提供的配置文件功能简单，Java社区出现了大量的配置信息的读/写方案，其中比较有名的是Apache Jakarta Commons提供的Commons Configuration，其支持文本，XML配置文件格式，支持加载多个配置文件，支持分层或多级配置等。</p>
+<p>Hadoop没有使用Java自带的配置文件类以及第三方类，而是自己实现了一套独有的配置文件管理系统，并提供了自己的API，即使用org.apache.hadoop.conf.Configuration处理配置信息。</p>
+<h2 id="Configuration配置文件概述"><a href="#Configuration配置文件概述" class="headerlink" title="Configuration配置文件概述"></a>Configuration配置文件概述</h2><p>Hadoop配置文件采用ＸＭＬ格式，一个例子如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapred.child.java.opts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>-Xmx4096m<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Hadoop配置文件的根元素是configuration，一般只包含子元素property。同时，Hadoop可以将多个配置文件合并，产生一个配置，如core-site.xml和core-default.xml，通过Configure类的loadResource()方法，把它们合并成一个配置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">conf.addResource(<span class="string">"core-default.xml"</span>);</span><br><span class="line">conf.addResource(<span class="string">"core-site.xml"</span>);</span><br></pre></td></tr></table></figure>
+<p>如果这两个资源都包含了相同的配置项。并且前面的一个资源配置项没有标记为final，那么后面的配置将覆盖前面的配置。</p>
+<p>Hadoop配置系统还有一个很重要的功能，就是属性扩展，即可以使用<code>${}</code>进行引用。</p>
+<p>使用Configuration类的一般过程是：构造Configuration对象，通过类的addResource()方法添加需要加载的资源；然后通过get<em>和set</em>方法访问/设置配置项，资源会在第一次使用的时候自动加载到对象中。</p>
+<h2 id="Configuration-类分析"><a href="#Configuration-类分析" class="headerlink" title="Configuration 类分析"></a>Configuration 类分析</h2><ul>
+<li>类图</li>
+</ul>
+<p><img src="/resource/blog/2016-08/hadoop-common-conf.png" alt="hadoop-common-conf"></p>
+<ul>
+<li>Configuration.addSource</li>
+</ul>
+<p>资源Resource由Object和Name构成。数组resources保存了所有通过addResource()方法添加Configuration对象的资源，Configuration.addSource()有如下六种形式：</p>
+<ul>
+<li>public void addResource(String name) ：CLASSPATH资源,如 “core-site.xml”</li>
+<li>public void addResource(URL url) : 如 “<a href="http://server.com/core-site.xml" target="_blank" rel="external">http://server.com/core-site.xml</a>“</li>
+<li>public void addResource(Path file) : hadoop文件路径，如 “hdfs://server:54300/conf/core-site.xml”</li>
+<li>public void addResource(InputStream in) : 一个已经打开的输入流</li>
+<li>public void addResource(InputStream in, String name) ：一个已经打开的输入流，传入Resource的名称</li>
+<li>public void addResource(Configuration conf) ： Configuration对象</li>
+</ul>
+<ul>
+<li>资源加载</li>
+</ul>
+<p>资源加载通过对象的addResource()方法或类的静态addDefaultResource()方法添加到Configuration对象中，添加的资源不会被立即加载，而是通过reloadConfiguration()方法清空properties和finalParameters。</p>
+<p>静态方法addDefaultResource()也能清空Configuration对象中的数据，这是通过静态成员REGISTRY作为媒介进行的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResource</span><span class="params">(InputStream in, String name)</span> </span>&#123;</span><br><span class="line">  addResourceObject(<span class="keyword">new</span> Resource(in, name));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">reloadConfiguration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  properties = <span class="keyword">null</span>;                            <span class="comment">// trigger reload</span></span><br><span class="line">  finalParameters.clear();                      <span class="comment">// clear site-limits</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">addResourceObject</span><span class="params">(Resource resource)</span> </span>&#123;</span><br><span class="line">  resources.add(resource);                      <span class="comment">// add to resources</span></span><br><span class="line">  reloadConfiguration();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">addDefaultResource</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!defaultResources.contains(name)) &#123;</span><br><span class="line">    defaultResources.add(name);</span><br><span class="line">    <span class="keyword">for</span>(Configuration conf : REGISTRY.keySet()) &#123;</span><br><span class="line">      <span class="keyword">if</span>(conf.loadDefaults) &#123;</span><br><span class="line">        conf.reloadConfiguration();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>成员变量properties中的数据，直到需要的时候才会加载进来，在getProps()方法中，如果发现properties为空，将触发loadResource()方法加载配置资源。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">synchronized</span> Properties <span class="title">getProps</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (properties == <span class="keyword">null</span>) &#123;</span><br><span class="line">      properties = <span class="keyword">new</span> Properties();</span><br><span class="line">      HashMap&lt;String, String[]&gt; backup =</span><br><span class="line">        <span class="keyword">new</span> HashMap&lt;String, String[]&gt;(updatingResource);</span><br><span class="line">      loadResources(properties, resources, quietmode);</span><br><span class="line">      <span class="keyword">if</span> (overlay!= <span class="keyword">null</span>) &#123;</span><br><span class="line">        properties.putAll(overlay);</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;Object,Object&gt; item: overlay.entrySet()) &#123;</span><br><span class="line">          String key = (String)item.getKey();</span><br><span class="line">          updatingResource.put(key, backup.get(key));</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> properties;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="XML处理"><a href="#XML处理" class="headerlink" title="XML处理"></a>XML处理</h2><p>Hadoop的配置文件都是XML的形式，JAXP(Java API for XML Processing)是一种稳定的、可靠的XML处理API，支持SAX(Simple API for XML)和DOM(Document Object Model)两种XML处理方法。</p>
+<p>SAX提供了一种流式的、时间驱动的XML处理方式，但是编写逻辑比较复杂，比较适合处理大的XML文件。</p>
+<p>DOM和SAX不同，期工作方式是：首先将XML文档一次性的装入内存；然后根据文档中定义的元素和属性在内存中创建一个”树形结构”，也就是一个文档对象模型，将文档对象化，文档中每个节点对应着模型中一个对象；然后使用对象提供的编程接口，访问XML文档进而操作XML文档。由于Hadoop的配置文件都是很小的文件，因此Configuration使用DOM处理XML。</p>
+<p>DOM加载部分的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Resource <span class="title">loadResource</span><span class="params">(Properties properties, Resource wrapper, <span class="keyword">boolean</span> quiet)</span> </span>&#123;</span><br><span class="line">    String name = UNKNOWN_RESOURCE;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      Object resource = wrapper.getResource();</span><br><span class="line">      name = wrapper.getName();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 得到用于创建DOM解析器的工厂</span></span><br><span class="line">      DocumentBuilderFactory docBuilderFactory</span><br><span class="line">        = DocumentBuilderFactory.newInstance();</span><br><span class="line">      <span class="comment">//忽略xml中的注释</span></span><br><span class="line">      docBuilderFactory.setIgnoringComments(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">//提供对XML名称空间的支持，允许xml中的Include机制</span></span><br><span class="line">      docBuilderFactory.setNamespaceAware(<span class="keyword">true</span>);</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          docBuilderFactory.setXIncludeAware(<span class="keyword">true</span>);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (UnsupportedOperationException e) &#123;</span><br><span class="line">        LOG.error(<span class="string">"Failed to set setXIncludeAware(true) for parser "</span></span><br><span class="line">                + docBuilderFactory</span><br><span class="line">                + <span class="string">":"</span> + e,</span><br><span class="line">                e);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 获取解析XML的DocumentBuilder对象</span></span><br><span class="line">      DocumentBuilder builder = docBuilderFactory.newDocumentBuilder();</span><br><span class="line">      Document doc = <span class="keyword">null</span>;</span><br><span class="line">      Element root = <span class="keyword">null</span>;</span><br><span class="line">      <span class="keyword">boolean</span> returnCachedProperties = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 根据不同资源，做预处理并调用相应形式的DocumentBuilder.parse</span></span><br><span class="line">      <span class="keyword">if</span> (resource <span class="keyword">instanceof</span> URL) &#123;                  <span class="comment">// an URL resource</span></span><br><span class="line">        doc = parse(builder, (URL)resource);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (resource <span class="keyword">instanceof</span> String) &#123;        <span class="comment">// a CLASSPATH resource</span></span><br><span class="line">        URL url = getResource((String)resource);</span><br><span class="line">        doc = parse(builder, url);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (resource <span class="keyword">instanceof</span> Path) &#123;          <span class="comment">// a file resource</span></span><br><span class="line">        <span class="comment">// Can't use FileSystem API or we get an infinite loop</span></span><br><span class="line">        <span class="comment">// since FileSystem uses Configuration API.  Use java.io.File instead.</span></span><br><span class="line">        File file = <span class="keyword">new</span> File(((Path)resource).toUri().getPath())</span><br><span class="line">          .getAbsoluteFile();</span><br><span class="line">        <span class="keyword">if</span> (file.exists()) &#123;</span><br><span class="line">          <span class="keyword">if</span> (!quiet) &#123;</span><br><span class="line">            LOG.debug(<span class="string">"parsing File "</span> + file);</span><br><span class="line">          &#125;</span><br><span class="line">          doc = parse(builder, <span class="keyword">new</span> BufferedInputStream(</span><br><span class="line">              <span class="keyword">new</span> FileInputStream(file)), ((Path)resource).toString());</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (resource <span class="keyword">instanceof</span> InputStream) &#123;</span><br><span class="line">        doc = parse(builder, (InputStream) resource, <span class="keyword">null</span>);</span><br><span class="line">        returnCachedProperties = <span class="keyword">true</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (resource <span class="keyword">instanceof</span> Properties) &#123;</span><br><span class="line">        overlay(properties, (Properties)resource);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (resource <span class="keyword">instanceof</span> Element) &#123;</span><br><span class="line">        root = (Element)resource;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// root 获取文档元素</span></span><br><span class="line">      <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (doc == <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">if</span> (quiet) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(resource + <span class="string">" not found"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        root = doc.getDocumentElement();</span><br><span class="line">      &#125;</span><br><span class="line">      Properties toAddTo = properties;</span><br><span class="line">      <span class="keyword">if</span>(returnCachedProperties) &#123;</span><br><span class="line">        toAddTo = <span class="keyword">new</span> Properties();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">//确保根节点是configuration</span></span><br><span class="line">      <span class="keyword">if</span> (!<span class="string">"configuration"</span>.equals(root.getTagName()))</span><br><span class="line">        LOG.fatal(<span class="string">"bad conf file: top-level element not &lt;configuration&gt;"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">//获取根节点的所有子节点</span></span><br><span class="line">      NodeList props = root.getChildNodes();</span><br><span class="line">      DeprecationContext deprecations = deprecationContext.get();</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; props.getLength(); i++) &#123;</span><br><span class="line">        Node propNode = props.item(i);</span><br><span class="line">        <span class="keyword">if</span> (!(propNode <span class="keyword">instanceof</span> Element))  <span class="comment">// 如果子节点不是Element,忽略</span></span><br><span class="line">          <span class="keyword">continue</span>;</span><br><span class="line">        Element prop = (Element)propNode;</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"configuration"</span>.equals(prop.getTagName())) &#123;</span><br><span class="line">          <span class="comment">// 如果子节点是configuration，递归调用loadResource进行处理</span></span><br><span class="line">          <span class="comment">// 这意味着configuration的子节点可以是configuration</span></span><br><span class="line">          loadResource(toAddTo, <span class="keyword">new</span> Resource(prop, name), quiet);</span><br><span class="line">          <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 子节点是property</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="string">"property"</span>.equals(prop.getTagName()))</span><br><span class="line">          LOG.warn(<span class="string">"bad conf file: element not &lt;property&gt;"</span>);</span><br><span class="line">        NodeList fields = prop.getChildNodes();</span><br><span class="line">        String attr = <span class="keyword">null</span>;</span><br><span class="line">        String value = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">boolean</span> finalParameter = <span class="keyword">false</span>;</span><br><span class="line">        LinkedList&lt;String&gt; source = <span class="keyword">new</span> LinkedList&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//查找name、value、final的值</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; fields.getLength(); j++) &#123;</span><br><span class="line">          Node fieldNode = fields.item(j);</span><br><span class="line">          <span class="keyword">if</span> (!(fieldNode <span class="keyword">instanceof</span> Element))</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">          Element field = (Element)fieldNode;</span><br><span class="line">          <span class="keyword">if</span> (<span class="string">"name"</span>.equals(field.getTagName()) &amp;&amp; field.hasChildNodes())</span><br><span class="line">            attr = StringInterner.weakIntern(</span><br><span class="line">                ((Text)field.getFirstChild()).getData().trim());</span><br><span class="line">          <span class="keyword">if</span> (<span class="string">"value"</span>.equals(field.getTagName()) &amp;&amp; field.hasChildNodes())</span><br><span class="line">            value = StringInterner.weakIntern(</span><br><span class="line">                ((Text)field.getFirstChild()).getData());</span><br><span class="line">          <span class="keyword">if</span> (<span class="string">"final"</span>.equals(field.getTagName()) &amp;&amp; field.hasChildNodes())</span><br><span class="line">            finalParameter = <span class="string">"true"</span>.equals(((Text)field.getFirstChild()).getData());</span><br><span class="line">          <span class="keyword">if</span> (<span class="string">"source"</span>.equals(field.getTagName()) &amp;&amp; field.hasChildNodes())</span><br><span class="line">            source.add(StringInterner.weakIntern(</span><br><span class="line">                ((Text)field.getFirstChild()).getData()));</span><br><span class="line">        &#125;</span><br><span class="line">        source.add(name);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Ignore this parameter if it has already been marked as 'final'</span></span><br><span class="line">        <span class="comment">// 替换弃用key,忽略finalParameter</span></span><br><span class="line">        <span class="keyword">if</span> (attr != <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">if</span> (deprecations.getDeprecatedKeyMap().containsKey(attr)) &#123;</span><br><span class="line">            DeprecatedKeyInfo keyInfo =</span><br><span class="line">                deprecations.getDeprecatedKeyMap().get(attr);</span><br><span class="line">            keyInfo.clearAccessed();</span><br><span class="line">            <span class="keyword">for</span> (String key:keyInfo.newKeys) &#123;</span><br><span class="line">              <span class="comment">// update new keys with deprecated key's value</span></span><br><span class="line">              loadProperty(toAddTo, name, key, value, finalParameter,</span><br><span class="line">                  source.toArray(<span class="keyword">new</span> String[source.size()]));</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span> &#123;</span><br><span class="line">            loadProperty(toAddTo, name, attr, value, finalParameter,</span><br><span class="line">                source.toArray(<span class="keyword">new</span> String[source.size()]));</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (returnCachedProperties) &#123;</span><br><span class="line">        overlay(properties, toAddTo);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Resource(toAddTo, name);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      LOG.fatal(<span class="string">"error parsing conf "</span> + name, e);</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (DOMException e) &#123;</span><br><span class="line">      LOG.fatal(<span class="string">"error parsing conf "</span> + name, e);</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SAXException e) &#123;</span><br><span class="line">      LOG.fatal(<span class="string">"error parsing conf "</span> + name, e);</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ParserConfigurationException e) &#123;</span><br><span class="line">      LOG.fatal(<span class="string">"error parsing conf "</span> + name , e);</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 载入属性</span></span><br><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadProperty</span><span class="params">(Properties properties, String name, String attr,</span><br><span class="line">      String value, <span class="keyword">boolean</span> finalParameter, String[] source)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!finalParameters.contains(attr)) &#123;</span><br><span class="line">        properties.setProperty(attr, value);</span><br><span class="line">        updatingResource.put(attr, source);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!value.equals(properties.getProperty(attr))) &#123;</span><br><span class="line">        LOG.warn(name+<span class="string">":an attempt to override final parameter: "</span>+attr</span><br><span class="line">            +<span class="string">";  Ignoring."</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (finalParameter) &#123;</span><br><span class="line">      finalParameters.add(attr);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"><i class="fa fa-tag"></i> Hadoop</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/02/BigData/hadoop-common--annotation.html" rel="next" title="Hadoop源码学习(2)——Hadoop-Common-Annotations">
+                <i class="fa fa-chevron-left"></i> Hadoop源码学习(2)——Hadoop-Common-Annotations
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/04/BigData/hadoop-common-conf-2.html" rel="prev" title="Hadoop源码学习(4)——Hadoop-Common-Conf(2)">
+                Hadoop源码学习(4)——Hadoop-Common-Conf(2) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/03/BigData/hadoop-common-conf-1.html"
+           data-title="Hadoop源码学习(3)——Hadoop-Common-Conf(1)" data-url="http://keyunluo.github.io/2016/08/03/BigData/hadoop-common-conf-1.html">
+      </div>
+    
+    <script src="https://dn-hb0716.qbox.me/duoshuo.js"></script>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/resource/img/profile.jpg"
+               alt="浮舟沧海" />
+          <p class="site-author-name" itemprop="name">浮舟沧海</p>
+           
+              <p class="site-description motion-element" itemprop="description">Coder On The Road</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keyunluo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/streamerset" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item" style="margin-left: 8px; width:45%;">
+                  <a href="http://keyunluo.github.io/algorithm" title="个人算法练习" target="_blank">个人算法练习</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#hadoop-common-源代码结构"><span class="nav-number">1.</span> <span class="nav-text">hadoop-common 源代码结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java中的配置文件"><span class="nav-number">2.</span> <span class="nav-text">Java中的配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuration配置文件概述"><span class="nav-number">3.</span> <span class="nav-text">Configuration配置文件概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuration-类分析"><span class="nav-number">4.</span> <span class="nav-text">Configuration 类分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XML处理"><span class="nav-number">5.</span> <span class="nav-text">XML处理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">浮舟沧海</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"streamers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("0jqhg9soB94ez37zCyJc9RC9-gzGzoHsz", "50xzSR3HFQzP8OokRhw3EdPK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
